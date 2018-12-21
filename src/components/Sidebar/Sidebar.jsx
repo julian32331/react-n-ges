@@ -85,6 +85,7 @@ class Sidebar extends React.Component {
       logo,
       image,
       logoText,
+      logoText2,
       routes,
       bgColor,
       rtlActive
@@ -388,6 +389,7 @@ class Sidebar extends React.Component {
           rtlActive && this.props.miniActive && this.state.miniActive,
         [classes.logoNormalRTL]: rtlActive
       });
+    const logoSpan = classes.logoSpan
     const logoMini =
       classes.logoMini +
       " " +
@@ -402,11 +404,11 @@ class Sidebar extends React.Component {
       });
     var brand = (
       <div className={logoClasses}>
-        <a href="https://www.creative-tim.com" className={logoMini}>
+        {/* <a href="https://www.creative-tim.com" className={logoMini}>
           <img src={logo} alt="logo" className={classes.img} />
-        </a>
+        </a> */}
         <a href="https://www.creative-tim.com" className={logoNormal}>
-          {logoText}
+          {logoText}<span className={logoSpan}>{logoText2}</span>
         </a>
       </div>
     );
@@ -506,6 +508,7 @@ Sidebar.propTypes = {
   ]),
   logo: PropTypes.string,
   logoText: PropTypes.string,
+  logoText2: PropTypes.string,
   image: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object)
 };

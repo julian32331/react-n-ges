@@ -153,7 +153,12 @@ const sidebarStyle = theme => ({
     overflow: "hidden",
     "&,&:hover,&:focus": {
       color: "inherit"
-    }
+    },
+    textAlign: "center",
+    fontSize:"24px",
+  },
+  logoSpan: {
+    color: "green"
   },
   logoNormalRTL: {
     textAlign: "right"
