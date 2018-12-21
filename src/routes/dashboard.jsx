@@ -1,5 +1,7 @@
 // import Dashboard from "views/Dashboard/Dashboard.jsx";
 import Dashboard from "views/Dashboard1/Dashboard.jsx";
+import SalongInformasjon from "views/MinSalong/SalongInformasjon.jsx";
+
 import Buttons from "views/Components/Buttons.jsx";
 import GridSystem from "views/Components/GridSystem.jsx";
 import Panels from "views/Components/Panels.jsx";
@@ -28,6 +30,8 @@ import pagesRoutes from "./pages.jsx";
 
 // @material-ui/icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
+import Home from "@material-ui/icons/Home";
+
 import Image from "@material-ui/icons/Image";
 import Apps from "@material-ui/icons/Apps";
 // import ContentPaste from "@material-ui/icons/ContentPaste";
@@ -221,33 +225,33 @@ var dashRoutes = [
   //   component: MyProfile
   // },
 
-  // {
-  //   collapse: true,
-  //   path: "/salonginfomation",
-  //   name: "Salong Information",
-  //   state: "openComponents",
-  //   icon: Apps,
-  //   views: [
-  //     {
-  //       path: "/salonginfomation/businessinformation",
-  //       name: "Business Information",
-  //       mini: "BI",
-  //       component: BusinessInformation
-  //     },
-  //     {
-  //       path: "/salonginfomation/services",
-  //       name: "Services",
-  //       mini: "S",
-  //       component: Services
-  //     },
-  //     {
-  //       path: "/salonginfomation/openinghours",
-  //       name: "Opening Hours",
-  //       mini: "OH",
-  //       component: OpeningHours
-  //     }
-  //   ]
-  // },
+  {
+    collapse: true,
+    path: "/minsalong",
+    name: "Min salong",
+    state: "openMinSalong",
+    icon: Home,
+    views: [
+      {
+        path: "/minsalong/salongInformasjon",
+        name: "Salong Informasjon",
+        mini: "SI",
+        component: SalongInformasjon
+      },
+      // {
+      //   path: "/salonginfomation/services",
+      //   name: "Services",
+      //   mini: "S",
+      //   component: Services
+      // },
+      // {
+      //   path: "/salonginfomation/openinghours",
+      //   name: "Opening Hours",
+      //   mini: "OH",
+      //   component: OpeningHours
+      // }
+    ]
+  },
   // {
   //   collapse: true,
   //   path: "/timelist",
