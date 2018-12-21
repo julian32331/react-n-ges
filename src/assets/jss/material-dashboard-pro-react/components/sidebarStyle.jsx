@@ -266,7 +266,8 @@ const sidebarStyle = theme => ({
     position: "relative",
     display: "block",
     height: "auto",
-    whiteSpace: "nowrap"
+    whiteSpace: "nowrap",
+    // textAlign: 'center'
   },
   userItemText: {
     lineHeight: "22px"
@@ -468,14 +469,17 @@ const sidebarStyle = theme => ({
   },
   photo: {
     transition: "all 300ms linear",
-    width: "34px",
-    height: "34px",
+    // width: "34px",
+    // height: "34px",
+    width: "50px",
+    height: "50px",
     overflow: "hidden",
-    float: "left",
+    // float: "left",
     zIndex: "5",
-    marginRight: "11px",
+    // marginRight: "11px",
     borderRadius: "50%",
-    marginLeft: "23px",
+    // marginLeft: "23px",
+    margin: 'auto',
     ...boxShadow
   },
   photoRTL: {

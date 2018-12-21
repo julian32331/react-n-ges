@@ -156,10 +156,12 @@ class Sidebar extends React.Component {
                       " " +
                       (this.state.openAvatar ? classes.caretActive : "")
                     }
+                    style={{right: 'auto'}}
                   />
                 }
                 disableTypography={true}
                 className={itemText + " " + classes.userItemText}
+                style={{textAlign: 'center'}}
               />
             </NavLink>
             <Collapse in={this.state.openAvatar} unmountOnExit>
