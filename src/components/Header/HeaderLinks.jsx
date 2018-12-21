@@ -18,6 +18,7 @@ import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Search from "@material-ui/icons/Search";
+import Select from "@material-ui/core/Select";
 
 // core components
 import CustomInput from "components/CustomInput/CustomInput.jsx";
@@ -27,13 +28,17 @@ import headerLinksStyle from "assets/jss/material-dashboard-pro-react/components
 
 class HeaderLinks extends React.Component {
   state = {
-    open: false
+    open: false,
+    saloonSelect: "",
   };
   handleClick = () => {
     this.setState({ open: !this.state.open });
   };
   handleClose = () => {
     this.setState({ open: false });
+  };  
+  handleSaloon = event => {
+    this.setState({ [event.target.name]: event.target.value });
   };
   render() {
     const { classes, rtlActive } = this.props;
@@ -59,7 +64,7 @@ class HeaderLinks extends React.Component {
     });
     return (
       <div className={wrapper}>
-        <CustomInput
+        {/* <CustomInput
           rtlActive={rtlActive}
           formControlProps={{
             className: classes.top + " " + classes.search
@@ -107,7 +112,49 @@ class HeaderLinks extends React.Component {
               {rtlActive ? "لوحة القيادة" : "Dashboard"}
             </span>
           </Hidden>
-        </Button>
+        </Button> */}
+        <Select
+          MenuProps={{
+            className: classes.selectMenu
+          }}
+          classes={{
+            select: classes.select
+          }}
+          value={this.state.saloonSelect}
+          onChange={this.handleSaloon}
+          inputProps={{
+            name: "saloonSelect",
+            id: "saloon-select"
+          }}
+          style={{width: '150px'}}
+        >
+          <MenuItem
+            disabled
+            classes={{
+              root: classes.selectMenuItem
+            }}
+          >
+            Choose Saloon
+          </MenuItem>
+          <MenuItem
+            classes={{
+              root: classes.selectMenuItem,
+              selected: classes.selectMenuItemSelected
+            }}
+            value="2"
+          >
+            Saloon1
+          </MenuItem>
+          <MenuItem
+            classes={{
+              root: classes.selectMenuItem,
+              selected: classes.selectMenuItemSelected
+            }}
+            value="3"
+          >
+            Saloon2
+          </MenuItem>
+        </Select>
         <div className={managerClasses}>
           <Button
             color="transparent"

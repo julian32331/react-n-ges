@@ -8,9 +8,11 @@ import {
 } from "assets/jss/material-dashboard-pro-react.jsx";
 
 import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/customDropdownStyle.jsx";
+import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
 const headerLinksStyle = theme => ({
   ...customDropdownStyle(theme),
+  ...customSelectStyle,
   search: {
     margin: "0",
     paddingTop: "7px",
