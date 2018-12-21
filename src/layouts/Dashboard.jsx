@@ -112,7 +112,11 @@ class Dashboard extends React.Component {
           miniActive={this.state.miniActive}
           {...rest}
         />
-        <div className={mainPanel} ref="mainPanel">
+        <div
+          className={mainPanel}
+          style={{backgroundImage: `url(${image})`}}
+          ref="mainPanel"
+        >
           <Header
             sidebarMinimize={this.sidebarMinimize.bind(this)}
             miniActive={this.state.miniActive}
