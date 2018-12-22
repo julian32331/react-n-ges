@@ -1,6 +1,7 @@
 // import Dashboard from "views/Dashboard/Dashboard.jsx";
 import Dashboard from "views/Dashboard1/Dashboard.jsx";
 import SalongInformasjon from "views/MinSalong/SalongInformasjon.jsx";
+import SaloonService from "views/MinSalong/SaloonService.jsx";
 
 import Buttons from "views/Components/Buttons.jsx";
 import GridSystem from "views/Components/GridSystem.jsx";
@@ -238,12 +239,12 @@ var dashRoutes = [
         mini: "SI",
         component: SalongInformasjon
       },
-      // {
-      //   path: "/salonginfomation/services",
-      //   name: "Services",
-      //   mini: "S",
-      //   component: Services
-      // },
+      {
+        path: "/minsalong/saloonService",
+        name: "SaloonService",
+        mini: "SS",
+        component: SaloonService
+      },
       // {
       //   path: "/salonginfomation/openinghours",
       //   name: "Opening Hours",

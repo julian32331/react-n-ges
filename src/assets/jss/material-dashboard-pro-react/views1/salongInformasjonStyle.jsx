@@ -9,7 +9,14 @@ import customCheckboxRadioSwitch from "assets/jss/material-dashboard-pro-react/c
 
 const salongInformasjonStyle = {
     ...commonStyle,
-    ...customCheckboxRadioSwitch
+    ...customCheckboxRadioSwitch,
+    submit_container: {
+      alignItems: 'flex-end !important',
+      textAlign: 'right'
+    },
+    submit: {
+      marginBottom: '15px',
+    }
   };
   
 export default salongInformasjonStyle;

@@ -22,6 +22,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
+import Button from "components/CustomButtons/Button.jsx";
 
 import salongInformasjonStyle from "assets/jss/material-dashboard-pro-react/views1/salongInformasjonStyle.jsx";
 
@@ -38,7 +39,7 @@ class SalongInformasjon extends React.Component {
         <CardBody>
             <form>
                 <GridContainer>
-                    <GridItem sm={12} md={6}>
+                    <GridItem xs={12} sm={12} md={6}>
                         <CustomInput
                             labelText="Salongens navn"
                             id="name"
@@ -50,7 +51,7 @@ class SalongInformasjon extends React.Component {
                             }}
                         />
                     </GridItem>
-                    <GridItem sm={12} md={6}>
+                    <GridItem xs={12} sm={12} md={6}>
                         <CustomInput
                             labelText="Addresse"
                             id="address"
@@ -64,7 +65,7 @@ class SalongInformasjon extends React.Component {
                     </GridItem>
                 </GridContainer>
                 <GridContainer>
-                    <GridItem sm={12} md={6}>
+                    <GridItem xs={12} sm={12} md={6}>
                         <CustomInput
                             labelText="Postnummer"
                             id="post_number"
@@ -76,7 +77,7 @@ class SalongInformasjon extends React.Component {
                             }}
                         />
                     </GridItem>
-                    <GridItem sm={12} md={6}>
+                    <GridItem xs={12} sm={12} md={6}>
                         <CustomInput
                             labelText="By"
                             id="by"
@@ -90,7 +91,7 @@ class SalongInformasjon extends React.Component {
                     </GridItem>
                 </GridContainer>
                 <GridContainer>
-                    <GridItem sm={12} md={6}>
+                    <GridItem xs={12} sm={12} md={6}>
                         <CustomInput
                             labelText="Telefonummer"
                             id="tel_number"
@@ -102,7 +103,7 @@ class SalongInformasjon extends React.Component {
                             }}
                         />
                     </GridItem>
-                    <GridItem sm={12} md={6}>
+                    <GridItem xs={12} sm={12} md={6}>
                         <CustomInput
                             labelText="Epost"
                             id="email"
@@ -116,7 +117,7 @@ class SalongInformasjon extends React.Component {
                     </GridItem>
                 </GridContainer>
                 <GridContainer>
-                    <GridItem sm={12} md={6}>
+                    <GridItem xs={12} sm={12} md={6}>
                         <CustomInput
                             labelText="Nettadresse"
                             id="network"
@@ -173,8 +174,8 @@ class SalongInformasjon extends React.Component {
                         </div>
                     </GridItem>
                 </GridContainer>
-                <GridContainer>
-                    <GridItem sm={12} md={6}>
+                <GridContainer className={classes.submit_container}>
+                    <GridItem xs={12} sm={12} md={6}>
                         <CustomInput
                             labelText="Salong beskrivelse"
                             id="about-me"
@@ -186,6 +187,9 @@ class SalongInformasjon extends React.Component {
                                 rows: 10
                             }}
                         />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={6}>                    
+                        <Button color="info" className={classes.submit}>LAGRE</Button>
                     </GridItem>
                 </GridContainer>
             </form>
