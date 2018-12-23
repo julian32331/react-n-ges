@@ -174,7 +174,7 @@ class SalongInformasjon extends React.Component {
                         </div>
                     </GridItem>
                 </GridContainer>
-                <GridContainer className={classes.submit_container}>
+                <GridContainer justify="flex-end" alignItems="flex-end">
                     <GridItem xs={12} sm={12} md={6}>
                         <CustomInput
                             labelText="Salong beskrivelse"

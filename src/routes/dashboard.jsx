@@ -241,7 +241,7 @@ var dashRoutes = [
       },
       {
         path: "/minsalong/saloonService",
-        name: "SaloonService",
+        name: "Saloon Service",
         mini: "SS",
         component: SaloonService
       },

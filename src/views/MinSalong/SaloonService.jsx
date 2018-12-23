@@ -12,6 +12,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // @material-ui/icons
 import Add from "@material-ui/icons/Add";
+import Create from "@material-ui/icons/Create";
+import Close from "@material-ui/icons/Close";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -43,21 +45,129 @@ class SaloonService extends React.Component {
             </div>
         </CardHeader>
         <CardBody>
-          <GridContainer>
-            <GridItem md={9}>
-                <GridContainer justify="center">
-                    <GridItem md={3}>
-                        Name
-                    </GridItem>
-                    <GridItem md={7}>
-                        Description
-                    </GridItem>
-                    <GridItem md={2}>
-                        Button
-                    </GridItem>
-                </GridContainer>
-            </GridItem>
-          </GridContainer>
+            <GridContainer justify="center" className={classes.mb_20}>
+                <GridItem md={10} lg={9}>
+                    <GridContainer>
+                        <GridItem md={3} className={classes.bg_title}>
+                            <div className={classes.title_container}>                            
+                                <div className={classes.title}>Herreklipp</div>
+                                <div className={classes.time}><span className={classes.title_item}>Tid</span>: 45min</div>
+                                <div><span style={{fontSize: '16px', fontWeight: '400'}}>Pris kr</span>: 349</div>
+                            </div>
+                        </GridItem>
+                        <GridItem md={7} className={classes.bg_content}>
+                            <div className={classes.py_15}>
+                                This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
+                                This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
+                            </div>
+                        </GridItem>
+                        <GridItem md={2} className={classes.btn_container}>
+                            <div className={classes.py_15}>
+                                <Button
+                                    justIcon
+                                    round
+                                    color="info"
+                                    size="sm"
+                                    className={classes.mx_10}
+                                    >
+                                    <Create />
+                                </Button>                        
+                                <Button
+                                    justIcon
+                                    round
+                                    color="danger"
+                                    size="sm"
+                                    className={classes.mx_10}
+                                    >
+                                    <Close />
+                                </Button>
+                            </div>
+                        </GridItem>
+                    </GridContainer>
+                </GridItem>
+            </GridContainer>
+            <GridContainer justify="center" className={classes.mb_20}>
+                <GridItem md={10} lg={9}>
+                    <GridContainer>
+                        <GridItem md={3} className={classes.bg_title}>
+                            <div className={classes.title_container}>                            
+                                <div className={classes.title}>Herreklipp</div>
+                                <div className={classes.time}><span className={classes.title_item}>Tid</span>: 45min</div>
+                                <div><span style={{fontSize: '16px', fontWeight: '400'}}>Pris kr</span>: 349</div>
+                            </div>
+                        </GridItem>
+                        <GridItem md={7} className={classes.bg_content}>
+                            <div className={classes.py_15}>
+                                This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
+                                This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
+                            </div>
+                        </GridItem>
+                        <GridItem md={2} className={classes.btn_container}>
+                            <div className={classes.py_15}>
+                                <Button
+                                    justIcon
+                                    round
+                                    color="info"
+                                    size="sm"
+                                    className={classes.mx_10}
+                                    >
+                                    <Create />
+                                </Button>                        
+                                <Button
+                                    justIcon
+                                    round
+                                    color="danger"
+                                    size="sm"
+                                    className={classes.mx_10}
+                                    >
+                                    <Close />
+                                </Button>
+                            </div>
+                        </GridItem>
+                    </GridContainer>
+                </GridItem>
+            </GridContainer>
+            <GridContainer justify="center" className={classes.mb_20}>
+                <GridItem md={10} lg={9}>
+                    <GridContainer>
+                        <GridItem md={3} className={classes.bg_title}>
+                            <div className={classes.title_container}>                            
+                                <div className={classes.title}>Herreklipp</div>
+                                <div className={classes.time}><span className={classes.title_item}>Tid</span>: 45min</div>
+                                <div><span style={{fontSize: '16px', fontWeight: '400'}}>Pris kr</span>: 349</div>
+                            </div>
+                        </GridItem>
+                        <GridItem md={7} className={classes.bg_content}>
+                            <div className={classes.py_15}>
+                                This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
+                                This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
+                            </div>
+                        </GridItem>
+                        <GridItem md={2} className={classes.btn_container}>
+                            <div className={classes.py_15}>
+                                <Button
+                                    justIcon
+                                    round
+                                    color="info"
+                                    size="sm"
+                                    className={classes.mx_10}
+                                    >
+                                    <Create />
+                                </Button>                        
+                                <Button
+                                    justIcon
+                                    round
+                                    color="danger"
+                                    size="sm"
+                                    className={classes.mx_10}
+                                    >
+                                    <Close />
+                                </Button>
+                            </div>
+                        </GridItem>
+                    </GridContainer>
+                </GridItem>
+            </GridContainer>
         </CardBody>
       </Card>
     );
