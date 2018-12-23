@@ -1,5 +1,7 @@
 import PricingPage from "views/Pages/PricingPage.jsx";
-import LoginPage from "views/Pages/LoginPage.jsx";
+// import LoginPage from "views/Pages/LoginPage.jsx";
+import LoginPage from "views/Login/LoginPage.jsx";
+
 import RegisterPage from "views/Pages/RegisterPage.jsx";
 import LockScreenPage from "views/Pages/LockScreenPage.jsx";
 
@@ -49,12 +51,12 @@ const pagesRoutes = [
   //   name: "Register Page"
   // }
   {
-    path: "/login",
+    path: "/pages/login",
     name: "Login",
     short: "Login",
     mini: "L",
     icon: MonetizationOn,
-    component: PricingPage
+    component: LoginPage
   },
 ];
 
