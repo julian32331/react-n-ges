@@ -91,10 +91,10 @@ const sidebarStyle = theme => ({
   },
   whiteBackground: {
     color: "#3C4858",
-    "&:after": {
-      background: "#FFFFFF",
-      opacity: ".93"
-    }
+    // "&:after": {
+    //   background: "#FFFFFF",
+    //   opacity: ".93"
+    // }
   },
   whiteAfter: {
     "&:after": {
@@ -230,7 +230,8 @@ const sidebarStyle = theme => ({
     width: "auto",
     "&:hover": {
       outline: "none",
-      backgroundColor: "rgba(200, 200, 200, 0.2)",
+      // backgroundColor: "rgba(200, 200, 200, 0.2)",
+      backgroundColor: "rgba(60, 60, 60, 0.2)",
       boxShadow: "none"
     },
     "&,&:hover,&:focus": {
@@ -295,7 +296,8 @@ const sidebarStyle = theme => ({
   },
   collapseActive: {
     outline: "none",
-    backgroundColor: "rgba(200, 200, 200, 0.2)",
+    // backgroundColor: "rgba(200, 200, 200, 0.2)",
+    backgroundColor: "rgba(60, 60, 60, 0.2)",
     boxShadow: "none"
   },
   collapseItemLink: {

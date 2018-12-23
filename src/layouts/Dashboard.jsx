@@ -18,7 +18,8 @@ import dashboardRoutes from "routes/dashboard.jsx";
 
 import appStyle from "assets/jss/material-dashboard-pro-react/layouts/dashboardStyle.jsx";
 
-import image from "assets/img/sidebar-2.jpg";
+// import image from "assets/img/sidebar-2.jpg";
+import image from "assets/img/bg.png";
 import logo from "assets/img/logo-white.svg";
 
 const switchRoutes = (
@@ -108,7 +109,8 @@ class Dashboard extends React.Component {
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color="blue"
-          bgColor="black"
+          // bgColor="black"
+          bgColor="white"
           miniActive={this.state.miniActive}
           {...rest}
         />
