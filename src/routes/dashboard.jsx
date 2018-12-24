@@ -2,6 +2,7 @@
 import Dashboard from "views/Dashboard1/Dashboard.jsx";
 import SalongInformasjon from "views/MinSalong/SalongInformasjon.jsx";
 import SaloonService from "views/MinSalong/SalongService/SaloonService.jsx";
+import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 
 import Buttons from "views/Components/Buttons.jsx";
 import GridSystem from "views/Components/GridSystem.jsx";
@@ -32,6 +33,7 @@ import pagesRoutes from "./pages.jsx";
 // @material-ui/icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import Home from "@material-ui/icons/Home";
+import AlarmOn from "@material-ui/icons/AlarmOn";
 
 import Image from "@material-ui/icons/Image";
 import Apps from "@material-ui/icons/Apps";
@@ -253,27 +255,27 @@ var dashRoutes = [
       // }
     ]
   },
-  // {
-  //   collapse: true,
-  //   path: "/timelist",
-  //   name: "TimeList",
-  //   state: "openTimeList",
-  //   icon: Timeline,
-  //   views: [
-  //     {
-  //       path: "/timelist/checkinout",
-  //       name: "Check In/Out",
-  //       mini: "CIO",
-  //       component: CheckInOut
-  //     },
-  //     {
-  //       path: "/timelist/myemployees",
-  //       name: "My Employees",
-  //       mini: "ME",
-  //       component: MyEmployees
-  //     }
-  //   ]
-  // },
+  {
+    collapse: true,
+    path: "/personallister",
+    name: "Personallister",
+    state: "personallister",
+    icon: AlarmOn,
+    views: [
+      {
+        path: "/personallister/checkInOut",
+        name: "Check In/Out",
+        mini: "CIO",
+        component: CheckInOut
+      },
+      // {
+      //   path: "/timelist/myemployees",
+      //   name: "My Employees",
+      //   mini: "ME",
+      //   component: MyEmployees
+      // }
+    ]
+  },
   { redirect: true, path: "/", pathTo: "/dashboard", name: "Dashboard" }
 ];
 export default dashRoutes;
