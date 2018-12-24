@@ -5,11 +5,11 @@
  */
 
 import commonStyle from "assets/jss/material-dashboard-pro-react/views1/commonStyle.jsx";
-import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
+// import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 
 const saloonServiceStyle = theme => ({
   ...commonStyle,
-  ...modalStyle(theme),
+  // ...modalStyle(theme),
   text_right: {
       textAlign: 'right'
   },
@@ -56,9 +56,9 @@ const saloonServiceStyle = theme => ({
     marginLeft: '10px',
     marginRight: '10px',
   },
-  center: {
-    textAlign: "center"
-  },
+  // center: {
+  //   textAlign: "center"
+  // },
 });
 
 export default saloonServiceStyle;

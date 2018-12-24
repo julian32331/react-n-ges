@@ -26,12 +26,15 @@ import Button from "components/CustomButtons/Button.jsx";
 import saloonServiceStyle from "assets/jss/material-dashboard-pro-react/views1/saloonService/saloonServiceStyle.jsx";
 
 import DeleteModal from "./deleteModal";
+import NewOrUpdateModal from "./newOrUpdateModal";
 
 class SaloonService extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            deleteModal: false
+            deleteModal: false,
+            newOrUpdateModal: false,
+            btn_name: ''
         };
     }
 
@@ -47,6 +50,19 @@ class SaloonService extends React.Component {
         })
     }
 
+    onCloseNewOrUpdateModal() {
+        this.setState({
+            newOrUpdateModal: false
+        })
+    }
+
+    onOpenNewOrUpdateModal(btn_name) {
+        this.setState({
+            newOrUpdateModal: true,
+            btn_name: btn_name
+        })
+    }
+
     render() {
     const { classes } = this.props;
     return (
@@ -58,7 +74,10 @@ class SaloonService extends React.Component {
                         <h3 className={classes.cardTitle}>Saloon Service</h3>
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6} className={classes.text_right}>
-                        <Button color="info">                            
+                        <Button 
+                            color="info" 
+                            onClick={() => this.onOpenNewOrUpdateModal("New")}
+                        >                            
                             <Add /> ADD USER
                         </Button>
                     </GridItem>
@@ -90,6 +109,7 @@ class SaloonService extends React.Component {
                                     color="info"
                                     size="sm"
                                     className={classes.mx_10}
+                                    onClick={() => this.onOpenNewOrUpdateModal("Update")}
                                     >
                                     <Create />
                                 </Button>                        
@@ -132,6 +152,7 @@ class SaloonService extends React.Component {
                                     color="info"
                                     size="sm"
                                     className={classes.mx_10}
+                                    onClick={() => this.onOpenNewOrUpdateModal("Update")}
                                     >
                                     <Create />
                                 </Button>                        
@@ -174,6 +195,7 @@ class SaloonService extends React.Component {
                                     color="info"
                                     size="sm"
                                     className={classes.mx_10}
+                                    onClick={() => this.onOpenNewOrUpdateModal("Update")}
                                     >
                                     <Create />
                                 </Button>                        
@@ -195,7 +217,15 @@ class SaloonService extends React.Component {
 
             <DeleteModal 
                 onOpen={this.state.deleteModal}
-                onClose={this.onCloseDeleteModal.bind(this)} />
+                onClose={this.onCloseDeleteModal.bind(this)} 
+            />
+                
+            <NewOrUpdateModal 
+                onOpen={this.state.newOrUpdateModal}
+                onClose={this.onCloseNewOrUpdateModal.bind(this)} 
+                btn_name={this.state.btn_name}
+            />
+
         </CardBody>
       </Card>
     );
