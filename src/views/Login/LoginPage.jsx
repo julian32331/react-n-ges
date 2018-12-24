@@ -34,25 +34,6 @@ import logo from "assets/img/logo.png";
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      checked: []
-    };
-    this.handleToggle = this.handleToggle.bind(this);
-  }
-  handleToggle(value) {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked
-    });
   }
   render() {
     const { classes } = this.props;

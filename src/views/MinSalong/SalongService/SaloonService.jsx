@@ -1,6 +1,6 @@
 /**
- * Descirption: Saloon Service
- * Date: 12/22/2018
+ * Descirption: Delete modal for saloon service
+ * Date: 12/23/2018
  * Author: Danijel
  */
 
@@ -23,10 +23,31 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import saloonServiceStyle from "assets/jss/material-dashboard-pro-react/views1/saloonServiceStyle.jsx";
+import saloonServiceStyle from "assets/jss/material-dashboard-pro-react/views1/saloonService/saloonServiceStyle.jsx";
+
+import DeleteModal from "./deleteModal";
 
 class SaloonService extends React.Component {
-  render() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            deleteModal: false
+        };
+    }
+
+    onCloseDeleteModal() {
+        this.setState({
+            deleteModal: false
+        })
+    }
+
+    onOpenDeleteModal() {
+        this.setState({
+            deleteModal: true
+        })
+    }
+
+    render() {
     const { classes } = this.props;
     return (
       <Card>
@@ -78,6 +99,7 @@ class SaloonService extends React.Component {
                                     color="danger"
                                     size="sm"
                                     className={classes.mx_10}
+                                    onClick={() => this.onOpenDeleteModal()}
                                     >
                                     <Close />
                                 </Button>
@@ -119,6 +141,7 @@ class SaloonService extends React.Component {
                                     color="danger"
                                     size="sm"
                                     className={classes.mx_10}
+                                    onClick={() => this.onOpenDeleteModal()}
                                     >
                                     <Close />
                                 </Button>
@@ -160,6 +183,7 @@ class SaloonService extends React.Component {
                                     color="danger"
                                     size="sm"
                                     className={classes.mx_10}
+                                    onClick={() => this.onOpenDeleteModal()}
                                     >
                                     <Close />
                                 </Button>
@@ -168,6 +192,10 @@ class SaloonService extends React.Component {
                     </GridContainer>
                 </GridItem>
             </GridContainer>
+
+            <DeleteModal 
+                onOpen={this.state.deleteModal}
+                onClose={this.onCloseDeleteModal.bind(this)} />
         </CardBody>
       </Card>
     );
