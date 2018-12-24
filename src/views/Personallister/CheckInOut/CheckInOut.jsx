@@ -30,8 +30,29 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Table from "components/Table/Table.jsx";
 
 import checkInOutStyle from "assets/jss/material-dashboard-pro-react/views1/checkInOut/checkInOutStyle.jsx";
+import CheckInModal from "./CheckInModal";
 
 class CheckInOut extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      checkInModal: false
+    }
+  }
+
+  onCloseCheckInModal() {
+    this.setState({
+      checkInModal: false
+    })
+  }
+
+  onOpenCheckInModal() {
+    this.setState({
+      checkInModal: true,
+    })
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -51,7 +72,7 @@ class CheckInOut extends React.Component {
                 <GridItem xs={12} sm={12} md={6} className={classes.text_right}>
                     <Button 
                         color="info" 
-                        onClick={() => this.onOpenNewOrUpdateModal("New")}
+                        onClick={() => this.onOpenCheckInModal()}
                     >                            
                         <Add /> Check In USER
                     </Button>
@@ -173,6 +194,12 @@ class CheckInOut extends React.Component {
             ]}
             customHeadClassesForCells={[0, 1, 2, 3, 4, 5]}
           />
+
+          <CheckInModal 
+            onOpen={this.state.checkInModal}
+            onClose={this.onCloseCheckInModal.bind(this)} 
+          />
+
         </CardBody>
       </Card>
     );

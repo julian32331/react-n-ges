@@ -51,7 +51,7 @@ const pagesRoutes = [
   //   name: "Register Page"
   // }
   {
-    path: "/pages/login",
+    path: "/login",
     name: "Login",
     short: "Login",
     mini: "L",
