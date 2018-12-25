@@ -2,6 +2,7 @@
 import Dashboard from "views/Dashboard1/Dashboard.jsx";
 import SalongInformasjon from "views/MinSalong/SalongInformasjon.jsx";
 import SaloonService from "views/MinSalong/SalongService/SaloonService.jsx";
+import OpeningHours from "views/MinSalong/OpeningHours/OpeningHours.jsx";
 import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 
 import Buttons from "views/Components/Buttons.jsx";
@@ -247,12 +248,12 @@ var dashRoutes = [
         mini: "SS",
         component: SaloonService
       },
-      // {
-      //   path: "/salonginfomation/openinghours",
-      //   name: "Opening Hours",
-      //   mini: "OH",
-      //   component: OpeningHours
-      // }
+      {
+        path: "/minsalong/openingHours",
+        name: "Opening Hours",
+        mini: "OH",
+        component: OpeningHours
+      }
     ]
   },
   {

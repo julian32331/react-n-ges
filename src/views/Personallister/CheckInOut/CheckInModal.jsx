@@ -20,7 +20,6 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 
 // @material-ui/icons
-import Close from "@material-ui/icons/Close";
 
 // core components
 import Button from "components/CustomButtons/Button.jsx";

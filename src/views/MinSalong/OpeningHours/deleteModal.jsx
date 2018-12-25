@@ -56,7 +56,7 @@ class DeleteModal extends React.Component {
                 disableTypography
                 className={classes.modalHeader}
             >
-                {/* <Button
+                <Button
                     justIcon
                     className={classes.modalCloseButton}
                     key="close"
@@ -65,7 +65,7 @@ class DeleteModal extends React.Component {
                     onClick={() => this.handleClose()}
                 >
                     <Close className={classes.modalClose} />
-                </Button> */}
+                </Button>
             </DialogTitle>
             <DialogContent
                 id="saloon-service-remove-modal-description"
@@ -77,9 +77,9 @@ class DeleteModal extends React.Component {
             </DialogContent>
             <DialogActions
                 className={
-                    classes.modalFooter +
-                    " " +
-                    classes.modalFooterCenter
+                classes.modalFooter +
+                " " +
+                classes.modalFooterCenter
                 }
             >
                 <Button

@@ -15,9 +15,6 @@ import FormLabel from "@material-ui/core/FormLabel";
 
 // @material-ui/icons
 import Add from "@material-ui/icons/Add";
-import Person from "@material-ui/icons/Person";
-import Edit from "@material-ui/icons/Edit";
-import Close from "@material-ui/icons/Close";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
