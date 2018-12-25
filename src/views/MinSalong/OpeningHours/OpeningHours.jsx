@@ -94,7 +94,7 @@ class OpeningHours extends React.Component {
         <CardHeader>            
             <div className={classes.cardHeader}>
                 <GridContainer>
-                    <GridItem xs={12} sm={12} md={6}>
+                    <GridItem  xs={12} sm={6}>
                         <h3 className={classes.cardTitle}>Opening Hours</h3>
                     </GridItem>
                 </GridContainer>
@@ -404,10 +404,10 @@ class OpeningHours extends React.Component {
       <CardHeader>            
           <div className={classes.cardHeader}>
               <GridContainer>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={6}>
                       <h3 className={classes.cardTitle}>Special Days</h3>
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={6} className={classes.text_right}>
+                  <GridItem xs={12} sm={6} className={classes.text_right}>
                       <Button 
                           color="info" 
                           onClick={() => this.onOpenNewOrUpdateModal("New")}

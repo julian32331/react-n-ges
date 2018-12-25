@@ -64,10 +64,10 @@ class CheckInOut extends React.Component {
         <CardHeader className={classes.pb_0}>
           <div className={classes.cardHeader}>
             <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
+                <GridItem xs={12} sm={6}>
                     <h3 className={classes.cardTitle}>Check In/Out</h3>
                 </GridItem>
-                <GridItem xs={12} sm={12} md={6} className={classes.text_right}>
+                <GridItem xs={12} sm={6} className={classes.text_right}>
                     <Button 
                         color="info" 
                         onClick={() => this.onOpenCheckInModal()}
@@ -80,12 +80,12 @@ class CheckInOut extends React.Component {
         </CardHeader>
         <CardBody className={classes.pt_0}>
           <GridContainer>
-            <GridItem md={1}>
+            <GridItem xs={3} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
                 Search
               </FormLabel>
             </GridItem>
-            <GridItem md={2}>
+            <GridItem xs={9} sm={3} md={3} lg={2}>
               <CustomInput
                 id="search"
                 formControlProps={{
@@ -96,24 +96,24 @@ class CheckInOut extends React.Component {
                 }}
               />
             </GridItem>
-            <GridItem>
+            <GridItem xs={3} sm={1}>
               <FormLabel className={classes.labelHorizontal}>
                 From
               </FormLabel>
             </GridItem>
-            <GridItem md={1}>
+            <GridItem xs={9} sm={2} md={2} lg={1}>
               <FormControl fullWidth className={classes.pt_20}>
                 <Datetime
                   timeFormat={false}
                 />
               </FormControl>
             </GridItem>
-            <GridItem>
+            <GridItem xs={3} sm={1}>
               <FormLabel className={classes.labelHorizontal}>
                 To
               </FormLabel>
             </GridItem>
-            <GridItem md={1}>
+            <GridItem xs={9} sm={2} md={2} lg={1}>
               <FormControl fullWidth className={classes.pt_20}>
                 <Datetime
                   timeFormat={false}
