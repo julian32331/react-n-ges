@@ -27,7 +27,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Table from "components/Table/Table.jsx";
 
-import checkInOutStyle from "assets/jss/material-dashboard-pro-react/views1/checkInOut/checkInOutStyle.jsx";
+import checkInOutStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInOutStyle.jsx";
 import CheckInModal from "./CheckInModal";
 
 class CheckInOut extends React.Component {

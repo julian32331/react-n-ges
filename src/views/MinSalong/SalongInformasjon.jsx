@@ -24,7 +24,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import salongInformasjonStyle from "assets/jss/material-dashboard-pro-react/views1/salongInformasjonStyle.jsx";
+import salongInformasjonStyle from "assets/jss/material-dashboard-pro-react/views/salongInformasjonStyle.jsx";
 
 class SalongInformasjon extends React.Component {
   render() {

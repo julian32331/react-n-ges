@@ -1,3 +1,9 @@
+/**
+ * Description: Dashboard style
+ * Date: 12/25/2018
+ * Author: Danijel
+ */
+
 import React from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
@@ -18,9 +24,7 @@ import dashboardRoutes from "routes/dashboard.jsx";
 
 import appStyle from "assets/jss/material-dashboard-pro-react/layouts/dashboardStyle.jsx";
 
-// import image from "assets/img/sidebar-2.jpg";
 import image from "assets/img/bg.png";
-import logo from "assets/img/logo-white.svg";
 
 const switchRoutes = (
   <Switch>
@@ -101,15 +105,12 @@ class Dashboard extends React.Component {
       <div className={classes.wrapper}>
         <Sidebar
           routes={dashboardRoutes}
-          // logoText={"Creative Tim"}
           logoText={"GESELLE"}
           logoText2={"ONE"}
-          // logo={logo}
           image={image}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color="blue"
-          // bgColor="black"
           bgColor="white"
           miniActive={this.state.miniActive}
           {...rest}
@@ -126,7 +127,6 @@ class Dashboard extends React.Component {
             handleDrawerToggle={this.handleDrawerToggle}
             {...rest}
           />
-          {/* On the /maps/full-screen-maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
           {this.getRoute() ? (
             <div className={classes.content}>
               <div className={classes.container}>{switchRoutes}</div>

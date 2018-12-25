@@ -21,7 +21,7 @@ import Close from "@material-ui/icons/Close";
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 
-import saloonModalStyle from "assets/jss/material-dashboard-pro-react/views1/saloonService/saloonModalStyle.jsx";
+import saloonModalStyle from "assets/jss/material-dashboard-pro-react/views/saloonService/saloonModalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;

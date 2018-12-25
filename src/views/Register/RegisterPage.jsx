@@ -34,7 +34,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
-import registerPageStyle from "assets/jss/material-dashboard-pro-react/views1/registerPageStyle.jsx";
+import registerPageStyle from "assets/jss/material-dashboard-pro-react/views/registerPageStyle.jsx";
 
 import logo from "assets/img/logo.png";
 

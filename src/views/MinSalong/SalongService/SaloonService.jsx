@@ -23,7 +23,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import saloonServiceStyle from "assets/jss/material-dashboard-pro-react/views1/saloonService/saloonServiceStyle.jsx";
+import saloonServiceStyle from "assets/jss/material-dashboard-pro-react/views/saloonService/saloonServiceStyle.jsx";
 
 import DeleteModal from "./deleteModal";
 import NewOrUpdateModal from "./newOrUpdateModal";

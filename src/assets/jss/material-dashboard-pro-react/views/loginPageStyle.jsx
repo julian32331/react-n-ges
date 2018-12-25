@@ -1,53 +1,67 @@
-// ##############################
-// // // LoginPage view styles
-// #############################
+/**
+ * Description: Login page style
+ * Date: 23/12/2018
+ * Author: Danijel
+ */
 
 import {
   container,
   cardTitle
 } from "assets/jss/material-dashboard-pro-react.jsx";
 
-const loginPageStyle = theme => ({
+const loginPageStyle = {
   container: {
     ...container,
-    zIndex: "4",
-    [theme.breakpoints.down("sm")]: {
-      paddingBottom: "100px"
-    }
+    position: "relative",
+    zIndex: "3"
   },
-  cardTitle: {
-    ...cardTitle,
-    color: "#FFFFFF"
+  cardSignin: {
+    borderRadius: "6px",
+    boxShadow:
+      "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)",
+    marginBottom: "100px",
+    padding: "40px 0px",
+    marginTop: "10vh"
   },
-  textCenter: {
+  center: {
     textAlign: "center"
   },
-  justifyContentCenter: {
-    justifyContent: "center !important"
-  },
-  customButtonClass: {
-    "&,&:focus,&:hover": {
-      color: "#FFFFFF"
-    },
-    marginLeft: "5px",
-    marginRight: "5px"
+  form: {
+    padding: "0 20px",
+    position: "relative"
   },
   inputAdornment: {
-    marginRight: "18px"
+    marginRight: "18px",
+    position: "relative"
   },
   inputAdornmentIcon: {
     color: "#555"
   },
-  cardHidden: {
-    opacity: "0",
-    transform: "translate3d(0, -60px, 0)"
+  right: {
+    textAlign: "right"
   },
-  cardHeader: {
-    marginBottom: "20px"
+  link: {
+    color: "#00acc1",
+    fontWeight: "400",
+    "&:hover": {      
+      color: "#00acc1",
+    },    
+    "&:focus": {      
+      color: "#00acc1",
+    }
   },
-  socialLine: {
-    padding: "0.9375rem 0"
+  w_100_p: {
+    width: '100%'
+  },
+  pb_0: {
+    paddingBottom: '0',
+  },
+  pb_15: {
+    paddingBottom: '15px',
+  },
+  pt_15: {
+    paddingTop: '15px',
   }
-});
+};
 
 export default loginPageStyle;

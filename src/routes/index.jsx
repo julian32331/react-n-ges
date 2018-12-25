@@ -1,9 +1,13 @@
+/**
+ * Description: App routes
+ * Date: 12/25/2018
+ * Author: Danijel
+ */
+
 import Pages from "layouts/Pages.jsx";
-import RTL from "layouts/RTL.jsx";
 import Dashboard from "layouts/Dashboard.jsx";
 
 var indexRoutes = [
-  { path: "/rtl", name: "RTL", component: RTL },
   { path: "/pages", name: "Pages", component: Pages },
   { path: "/login", name: "Pages", component: Pages },
   { path: "/register", name: "Pages", component: Pages },

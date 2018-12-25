@@ -31,7 +31,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Table from "components/Table/Table.jsx";
 
-import openingHoursStyle from "assets/jss/material-dashboard-pro-react/views1/openingHours/openingHoursStyle.jsx";
+import openingHoursStyle from "assets/jss/material-dashboard-pro-react/views/openingHours/openingHoursStyle.jsx";
 
 import DeleteModal from "./deleteModal";
 import NewOrUpdateModal from "./newOrUpdateModal";

@@ -24,7 +24,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 
-import checkInModalStyle from "assets/jss/material-dashboard-pro-react/views1/checkInOut/checkInModalStyle.jsx";
+import checkInModalStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInModalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;

@@ -4,7 +4,7 @@
  * Author: Danijel
  */
 
-import commonStyle from "assets/jss/material-dashboard-pro-react/views1/commonStyle.jsx";
+import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
 // import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 
 const saloonServiceStyle = theme => ({

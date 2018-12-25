@@ -30,7 +30,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
-import loginPageStyle from "assets/jss/material-dashboard-pro-react/views1/loginPageStyle";
+import loginPageStyle from "assets/jss/material-dashboard-pro-react/views/loginPageStyle";
 
 import logo from "assets/img/logo.png";
 

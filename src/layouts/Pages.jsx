@@ -1,13 +1,15 @@
+/**
+ * Description: Pages style
+ * Date: 12/25/2018
+ * Author: Danijel
+ */
+
 import React from "react";
 import PropTypes from "prop-types";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-
-// core components
-import PagesHeader from "components/Header/PagesHeader.jsx";
-import Footer from "components/Footer/Footer.jsx";
 
 import pagesRoutes from "routes/pages.jsx";
 
@@ -23,7 +25,6 @@ class Pages extends React.Component {
     const { classes, ...rest } = this.props;
     return (
       <div>
-        {/* <PagesHeader {...rest} /> */}
         <div className={classes.wrapper} ref="wrapper">
           <div
             className={classes.fullPage}
@@ -48,7 +49,6 @@ class Pages extends React.Component {
                 );
               })}
             </Switch>
-            {/* <Footer white /> */}
           </div>
         </div>
       </div>
