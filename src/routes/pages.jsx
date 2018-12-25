@@ -55,8 +55,16 @@ const pagesRoutes = [
     name: "Login",
     short: "Login",
     mini: "L",
-    icon: MonetizationOn,
+    icon: Fingerprint,
     component: LoginPage
+  },
+  {
+    path: "/register",
+    name: "Register",
+    short: "Register",
+    mini: "R",
+    icon: MonetizationOn,
+    component: PersonAdd
   },
 ];
 
