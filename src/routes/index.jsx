@@ -6,6 +6,7 @@ var indexRoutes = [
   { path: "/rtl", name: "RTL", component: RTL },
   { path: "/pages", name: "Pages", component: Pages },
   { path: "/login", name: "Pages", component: Pages },
+  { path: "/register", name: "Pages", component: Pages },
   { path: "/", name: "Home", component: Dashboard }
 ];
 

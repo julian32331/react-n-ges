@@ -1,6 +1,6 @@
 /**
- * Description: Login page style
- * Date: 23/12/2018
+ * Description: REgister page style
+ * Date: 25/12/2018
  * Author: Danijel
  */
 
@@ -15,13 +15,13 @@ const loginPageStyle = {
     position: "relative",
     zIndex: "3"
   },
-  cardSignin: {
+  cardSignup: {
     borderRadius: "6px",
     boxShadow:
       "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)",
-    marginBottom: "100px",
+    marginBottom: "50px",
     padding: "40px 0px",
-    marginTop: "10vh"
+    marginTop: "5vh"
   },
   center: {
     textAlign: "center"

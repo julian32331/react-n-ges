@@ -1,8 +1,9 @@
 import PricingPage from "views/Pages/PricingPage.jsx";
 // import LoginPage from "views/Pages/LoginPage.jsx";
 import LoginPage from "views/Login/LoginPage.jsx";
+import RegisterPage from "views/Register/RegisterPage.jsx";
 
-import RegisterPage from "views/Pages/RegisterPage.jsx";
+// import RegisterPage from "views/Pages/RegisterPage.jsx";
 import LockScreenPage from "views/Pages/LockScreenPage.jsx";
 
 // @material-ui/icons
@@ -63,8 +64,8 @@ const pagesRoutes = [
     name: "Register",
     short: "Register",
     mini: "R",
-    icon: MonetizationOn,
-    component: PersonAdd
+    icon: PersonAdd,
+    component: RegisterPage
   },
 ];
 

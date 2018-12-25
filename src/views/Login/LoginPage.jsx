@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import {Link} from 'react-router-dom';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -16,6 +18,7 @@ import Face from "@material-ui/icons/Face";
 import Email from "@material-ui/icons/Email";
 // import LockOutline from "@material-ui/icons/LockOutline";
 import Check from "@material-ui/icons/Check";
+import VpnKey from "@material-ui/icons/VpnKey";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -37,10 +40,11 @@ class LoginPage extends React.Component {
   }
   render() {
     const { classes } = this.props;
+
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
-          <GridItem xs={12} sm={8} md={6} lg={4}>
+          <GridItem xs={12} sm={8} md={6} lg={5}>
             <Card className={classes.cardSignin}>
               <CardHeader className={classes.center}>
                 <img src={logo} height={54} alt="logo" />
@@ -60,7 +64,7 @@ class LoginPage extends React.Component {
                           <Email className={classes.inputAdornmentIcon} />
                         </InputAdornment>
                       ),
-                      placeholder: "Email..."
+                      placeholder: "Email"
                     }}
                   />
                   <CustomInput
@@ -73,21 +77,21 @@ class LoginPage extends React.Component {
                           position="start"
                           className={classes.inputAdornment}
                         >
-                          <Icon className={classes.inputAdornmentIcon}>
-                            lock_outline
-                          </Icon>
+                          <VpnKey className={classes.inputAdornmentIcon} />
                         </InputAdornment>
                       ),
-                      placeholder: "Password..."
+                      placeholder: "Password"
                     }}
                   />
-                  <div className={classes.forgot_password}>
-                    <a href="#pablo">Forgot Password?</a>
+                  <div className={classes.right + " " + classes.pb_15}>
+                    <a href="" className={classes.link}>Forgot Password?</a>
                   </div>
                   <div className={classes.center}>
                     <Button color="info" className={classes.w_100_p}>
                       Log In
-                    </Button>
+                    </Button>   
+                    <div className={classes.pt_15}>Don't you have account?</div>
+                    <Link className={classes.link} to="/register">Sign Up</Link>
                   </div>
                 </form>
               </CardBody>
