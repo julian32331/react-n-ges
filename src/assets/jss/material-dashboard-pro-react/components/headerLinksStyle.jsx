@@ -154,6 +154,14 @@ const headerLinksStyle = theme => ({
   headerLinksSvg: {
     width: "20px !important",
     height: "20px !important"
+  },
+  saloon_select_container: {
+    [theme.breakpoints.down("sm")]: {
+      padding: '15px 30px',
+    }
+  },
+  saloon_select: {
+    width: '150px',
   }
 });
 

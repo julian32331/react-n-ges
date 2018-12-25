@@ -59,7 +59,7 @@ class NewOrUpdateModal extends React.Component {
                 disableTypography
                 className={classes.modalHeader}
             >
-                <Button
+                {/* <Button
                     justIcon
                     className={classes.modalCloseButton}
                     key="close"
@@ -68,7 +68,7 @@ class NewOrUpdateModal extends React.Component {
                     onClick={() => this.handleClose()}
                 >
                 <Close className={classes.modalClose} />
-                </Button>
+                </Button> */}
                 <h4 className={classes.modalTitle}>{this.props.btn_name} Service</h4>
             </DialogTitle>
             <DialogContent

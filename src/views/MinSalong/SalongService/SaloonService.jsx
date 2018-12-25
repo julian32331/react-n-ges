@@ -86,22 +86,22 @@ class SaloonService extends React.Component {
         </CardHeader>
         <CardBody>
             <GridContainer justify="center" className={classes.mb_20}>
-                <GridItem md={10} lg={9}>
+                <GridItem xs={11} sm={10} md={10} lg={9}>
                     <GridContainer>
-                        <GridItem md={3} className={classes.bg_title}>
+                        <GridItem xs={12} md={3} className={classes.bg_title}>
                             <div className={classes.title_container}>                            
                                 <div className={classes.title}>Herreklipp</div>
                                 <div className={classes.time}><span className={classes.title_item}>Tid</span>: 45min</div>
                                 <div><span style={{fontSize: '16px', fontWeight: '400'}}>Pris kr</span>: 349</div>
                             </div>
                         </GridItem>
-                        <GridItem md={7} className={classes.bg_content}>
+                        <GridItem xs={12} md={7} className={classes.bg_content}>
                             <div className={classes.py_15}>
                                 This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
                                 This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
                             </div>
                         </GridItem>
-                        <GridItem md={2} className={classes.btn_container}>
+                        <GridItem xs={12} md={2} className={classes.btn_container}>
                             <div className={classes.py_15}>
                                 <Button
                                     justIcon
@@ -128,93 +128,6 @@ class SaloonService extends React.Component {
                     </GridContainer>
                 </GridItem>
             </GridContainer>
-            <GridContainer justify="center" className={classes.mb_20}>
-                <GridItem md={10} lg={9}>
-                    <GridContainer>
-                        <GridItem md={3} className={classes.bg_title}>
-                            <div className={classes.title_container}>                            
-                                <div className={classes.title}>Herreklipp</div>
-                                <div className={classes.time}><span className={classes.title_item}>Tid</span>: 45min</div>
-                                <div><span style={{fontSize: '16px', fontWeight: '400'}}>Pris kr</span>: 349</div>
-                            </div>
-                        </GridItem>
-                        <GridItem md={7} className={classes.bg_content}>
-                            <div className={classes.py_15}>
-                                This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
-                                This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
-                            </div>
-                        </GridItem>
-                        <GridItem md={2} className={classes.btn_container}>
-                            <div className={classes.py_15}>
-                                <Button
-                                    justIcon
-                                    round
-                                    color="info"
-                                    size="sm"
-                                    className={classes.mx_10}
-                                    onClick={() => this.onOpenNewOrUpdateModal("Update")}
-                                    >
-                                    <Create />
-                                </Button>                        
-                                <Button
-                                    justIcon
-                                    round
-                                    color="danger"
-                                    size="sm"
-                                    className={classes.mx_10}
-                                    onClick={() => this.onOpenDeleteModal()}
-                                    >
-                                    <Close />
-                                </Button>
-                            </div>
-                        </GridItem>
-                    </GridContainer>
-                </GridItem>
-            </GridContainer>
-            <GridContainer justify="center" className={classes.mb_20}>
-                <GridItem md={10} lg={9}>
-                    <GridContainer>
-                        <GridItem md={3} className={classes.bg_title}>
-                            <div className={classes.title_container}>                            
-                                <div className={classes.title}>Herreklipp</div>
-                                <div className={classes.time}><span className={classes.title_item}>Tid</span>: 45min</div>
-                                <div><span style={{fontSize: '16px', fontWeight: '400'}}>Pris kr</span>: 349</div>
-                            </div>
-                        </GridItem>
-                        <GridItem md={7} className={classes.bg_content}>
-                            <div className={classes.py_15}>
-                                This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
-                                This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
-                            </div>
-                        </GridItem>
-                        <GridItem md={2} className={classes.btn_container}>
-                            <div className={classes.py_15}>
-                                <Button
-                                    justIcon
-                                    round
-                                    color="info"
-                                    size="sm"
-                                    className={classes.mx_10}
-                                    onClick={() => this.onOpenNewOrUpdateModal("Update")}
-                                    >
-                                    <Create />
-                                </Button>                        
-                                <Button
-                                    justIcon
-                                    round
-                                    color="danger"
-                                    size="sm"
-                                    className={classes.mx_10}
-                                    onClick={() => this.onOpenDeleteModal()}
-                                    >
-                                    <Close />
-                                </Button>
-                            </div>
-                        </GridItem>
-                    </GridContainer>
-                </GridItem>
-            </GridContainer>
-
             <DeleteModal 
                 onOpen={this.state.deleteModal}
                 onClose={this.onCloseDeleteModal.bind(this)} 

@@ -64,97 +64,49 @@ class HeaderLinks extends React.Component {
     });
     return (
       <div className={wrapper}>
-        {/* <CustomInput
-          rtlActive={rtlActive}
-          formControlProps={{
-            className: classes.top + " " + classes.search
-          }}
-          inputProps={{
-            placeholder: rtlActive ? "بحث" : "Search",
-            inputProps: {
-              "aria-label": rtlActive ? "بحث" : "Search",
-              className: classes.searchInput
-            }
-          }}
-        />
-        <Button
-          color="white"
-          aria-label="edit"
-          justIcon
-          round
-          className={searchButton}
-        >
-          <Search
-            className={classes.headerLinksSvg + " " + classes.searchIcon}
-          />
-        </Button>
-        <Button
-          color="transparent"
-          simple
-          aria-label="Dashboard"
-          justIcon
-          className={rtlActive ? classes.buttonLinkRTL : classes.buttonLink}
-          muiClasses={{
-            label: rtlActive ? classes.labelRTL : ""
-          }}
-        >
-          <Dashboard
-            className={
-              classes.headerLinksSvg +
-              " " +
-              (rtlActive
-                ? classes.links + " " + classes.linksRTL
-                : classes.links)
-            }
-          />
-          <Hidden mdUp implementation="css">
-            <span className={classes.linkText}>
-              {rtlActive ? "لوحة القيادة" : "Dashboard"}
-            </span>
-          </Hidden>
-        </Button> */}
-        <Select
-          MenuProps={{
-            className: classes.selectMenu
-          }}
-          classes={{
-            select: classes.select
-          }}
-          value={this.state.saloonSelect}
-          onChange={this.handleSaloon}
-          inputProps={{
-            name: "saloonSelect",
-            id: "saloon-select"
-          }}
-          style={{width: '150px'}}
-        >
-          <MenuItem
-            disabled
+        <div className={managerClasses + " " + classes.saloon_select_container}>          
+          <Select
+            MenuProps={{
+              className: classes.selectMenu
+            }}
             classes={{
-              root: classes.selectMenuItem
+              select: classes.select + " " + classes.saloon_select
+            }}
+            value={this.state.saloonSelect}
+            onChange={this.handleSaloon}
+            inputProps={{
+              name: "saloonSelect",
+              id: "saloon-select"
             }}
           >
-            Choose Saloon
-          </MenuItem>
-          <MenuItem
-            classes={{
-              root: classes.selectMenuItem,
-              selected: classes.selectMenuItemSelected
-            }}
-            value="2"
-          >
-            Saloon1
-          </MenuItem>
-          <MenuItem
-            classes={{
-              root: classes.selectMenuItem,
-              selected: classes.selectMenuItemSelected
-            }}
-            value="3"
-          >
-            Saloon2
-          </MenuItem>
-        </Select>
+            <MenuItem
+              disabled
+              classes={{
+                root: classes.selectMenuItem
+              }}
+            >
+              Choose Saloon
+            </MenuItem>
+            <MenuItem
+              classes={{
+                root: classes.selectMenuItem,
+                selected: classes.selectMenuItemSelected
+              }}
+              value="2"
+            >
+              Saloon1
+            </MenuItem>
+            <MenuItem
+              classes={{
+                root: classes.selectMenuItem,
+                selected: classes.selectMenuItemSelected
+              }}
+              value="3"
+            >
+              Saloon2
+            </MenuItem>
+          </Select>
+        </div>
         <div className={managerClasses}>
           <Button
             color="transparent"
