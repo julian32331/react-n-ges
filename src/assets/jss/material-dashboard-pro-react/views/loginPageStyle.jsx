@@ -6,7 +6,7 @@
 
 import {
   container,
-  cardTitle
+  dangerColor
 } from "assets/jss/material-dashboard-pro-react.jsx";
 
 const loginPageStyle = {
@@ -61,6 +61,9 @@ const loginPageStyle = {
   },
   pt_15: {
     paddingTop: '15px',
+  },
+  danger: {
+    color: dangerColor + "!important"
   }
 };
 
