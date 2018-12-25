@@ -15,6 +15,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 
 // @material-ui/icons
 import Add from "@material-ui/icons/Add";
+import Remove from "@material-ui/icons/Remove";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -55,7 +56,7 @@ class CheckInOut extends React.Component {
 
     const checkOutButton =
         <Button color="danger" className={classes.actionButton}>
-          <Add className={classes.icon} /> Check Out User
+          <Remove className={classes.icon} /> Check Out User
         </Button>
 
     return (

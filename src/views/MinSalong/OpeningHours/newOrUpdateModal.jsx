@@ -6,6 +6,8 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+// react component plugin for creating a beautiful datetime dropdown picker
+import Datetime from "react-datetime";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -14,6 +16,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
+import FormControl from "@material-ui/core/FormControl";
 
 // @material-ui/icons
 import Close from "@material-ui/icons/Close";
@@ -59,17 +62,7 @@ class NewOrUpdateModal extends React.Component {
                 disableTypography
                 className={classes.modalHeader}
             >
-                <Button
-                    justIcon
-                    className={classes.modalCloseButton}
-                    key="close"
-                    aria-label="Close"
-                    color="transparent"
-                    onClick={() => this.handleClose()}
-                >
-                <Close className={classes.modalClose} />
-                </Button>
-                <h4 className={classes.modalTitle}>{this.props.btn_name} Service</h4>
+                <h4 className={classes.modalTitle}>{this.props.btn_name} Event</h4>
             </DialogTitle>
             <DialogContent
                 id="saloon-service-newOrUpdate-modal-description"
@@ -77,52 +70,41 @@ class NewOrUpdateModal extends React.Component {
             >
                 <form>
                     <CustomInput
-                        labelText="Title"
-                        id="title"
+                        labelText="Name"
+                        id="name"
                         formControlProps={{
                             fullWidth: true
                         }}
                         inputProps={{
-                            type: "text"
+                            type: "text",
                         }}
-                    />
-                    <GridContainer>
-                        <GridItem xs={6}>
-                            <CustomInput
-                                labelText="Time(Mins)"
-                                id="time"
-                                formControlProps={{
-                                    fullWidth: true
-                                }}
-                                inputProps={{
-                                    type: "text"
-                                }}
-                            />
+                    />                       
+                    <GridContainer style={{paddingTop: '27px', marginBottom: '17px',}}>
+                        <GridItem xs={12} sm={12} md={4}>                            
+                            <FormControl fullWidth>
+                                <Datetime
+                                    timeFormat={false}
+                                    inputProps={{ placeholder: "Date" }}
+                                />
+                            </FormControl> 
                         </GridItem>
-                        <GridItem xs={6}>
-                            <CustomInput
-                                labelText="Price($)"
-                                id="price"
-                                formControlProps={{
-                                    fullWidth: true
-                                }}
-                                inputProps={{
-                                    type: "text"
-                                }}
-                            />
+                        <GridItem xs={12} sm={12} md={4}>
+                            <FormControl fullWidth>
+                                <Datetime
+                                    dateFormat={false}
+                                    inputProps={{ placeholder: "From" }}
+                                />
+                            </FormControl>
+                        </GridItem>
+                        <GridItem xs={12} sm={12} md={4}>
+                            <FormControl fullWidth>
+                                <Datetime
+                                    dateFormat={false}
+                                    inputProps={{ placeholder: "To" }}
+                                />
+                            </FormControl>
                         </GridItem>
                     </GridContainer>
-                    <CustomInput
-                        labelText="Description"
-                        id="description"
-                        formControlProps={{
-                            fullWidth: true
-                        }}
-                        inputProps={{
-                            multiline: true,
-                            rows: 5
-                        }}
-                    />
               </form>
             </DialogContent>
             <DialogActions className={classes.modalFooter}>

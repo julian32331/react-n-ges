@@ -79,7 +79,7 @@ class OpeningHours extends React.Component {
     render() {
     const { classes } = this.props;
     const fillButtons = [
-      { color: "success", icon: Edit },
+      { color: "info", icon: Edit },
       { color: "danger", icon: Close }
     ].map((prop, key) => {
       return (
@@ -102,9 +102,9 @@ class OpeningHours extends React.Component {
         </CardHeader>
         <CardBody>
             <GridContainer justify="center" className={classes.mb_20}>
-                <GridItem md={10} lg={8}>
+                <GridItem sm={12} md={10} lg={8}>
                     <GridContainer justify="center">
-                        <GridItem md={3}>
+                        <GridItem sm={12} md={3}>
                             <FormControlLabel
                                 control={
                                 <Switch
@@ -126,7 +126,7 @@ class OpeningHours extends React.Component {
                                 label="Sunday"
                             />
                         </GridItem>
-                        <GridItem md={2}>
+                        <GridItem sm={12} md={2}>
                             <FormControl fullWidth>
                                 <Datetime
                                     dateFormat={false}
@@ -134,7 +134,7 @@ class OpeningHours extends React.Component {
                                 />
                             </FormControl>
                         </GridItem>
-                        <GridItem md={2}>
+                        <GridItem sm={12} md={2}>
                             <FormControl fullWidth>
                                 <Datetime
                                     dateFormat={false}
