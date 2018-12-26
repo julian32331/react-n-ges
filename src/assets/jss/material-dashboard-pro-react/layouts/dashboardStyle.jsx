@@ -41,7 +41,7 @@ const appStyle = theme => ({
   content: {
     marginTop: "70px",
     padding: "30px 15px",
-    minHeight: "calc(100vh - 123px)"
+    minHeight: "calc(100vh - 70px)"
   },
   container: { ...containerFluid },
   map: {

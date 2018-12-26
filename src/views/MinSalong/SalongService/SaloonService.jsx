@@ -78,7 +78,7 @@ class SaloonService extends React.Component {
                             color="info" 
                             onClick={() => this.onOpenNewOrUpdateModal("New")}
                         >                            
-                            <Add /> ADD USER
+                            <Add /> ADD Service
                         </Button>
                     </GridItem>
                 </GridContainer>
@@ -89,17 +89,28 @@ class SaloonService extends React.Component {
                 <GridItem xs={11} sm={10} md={10} lg={9}>
                     <GridContainer>
                         <GridItem xs={12} md={3} className={classes.bg_title}>
-                            <div className={classes.title_container}>                            
-                                <div className={classes.title}>Herreklipp</div>
+                            <div className={classes.title_container}> 
+                                <GridContainer>
+                                    <GridItem xs={12}>
+                                        <div className={classes.title}>Herreklipp</div>
+                                    </GridItem>
+                                    <GridItem xs={6} md={12}>
+                                        <div className={classes.time}><span className={classes.title_item}>Tid :&nbsp;&nbsp;</span> 45min</div>
+                                    </GridItem>
+                                    <GridItem xs={6} md={12}>
+                                        <div className={classes.price}><span className={classes.title_item}>Pris kr :&nbsp;&nbsp;</span> 349</div>
+                                    </GridItem>
+                                </GridContainer>                           
+                                {/* <div className={classes.title}>Herreklipp</div>
                                 <div className={classes.time}><span className={classes.title_item}>Tid</span>: 45min</div>
-                                <div><span style={{fontSize: '16px', fontWeight: '400'}}>Pris kr</span>: 349</div>
+                                <div><span style={{fontSize: '16px', fontWeight: '400'}}>Pris kr</span>: 349</div> */}
                             </div>
                         </GridItem>
                         <GridItem xs={12} md={7} className={classes.bg_content}>
-                            <div className={classes.py_15}>
+                            {/* <div className={classes.py_15}> */}
                                 This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
-                                This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
-                            </div>
+                                This is service description. This is service description. This is service description. This is service description.
+                            {/* </div> */}
                         </GridItem>
                         <GridItem xs={12} md={2} className={classes.btn_container}>
                             <div className={classes.py_15}>

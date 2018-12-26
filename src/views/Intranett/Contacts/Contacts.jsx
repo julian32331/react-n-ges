@@ -1,6 +1,6 @@
 /**
- * Description: My Employess
- * Date: 25/12/2018
+ * Description: Contacts
+ * Date: 26/12/2018
  * Author: Dnaijel
  */
 
@@ -33,7 +33,7 @@ import Table from "components/Table/Table.jsx";
 import checkInOutStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInOutStyle.jsx";
 import NewOrUpdateModal from "./NewOrUpdateModal";
 
-class MyEmployees extends React.Component {
+class Contacts extends React.Component {
 
   constructor(props) {
     super(props);
@@ -74,14 +74,14 @@ class MyEmployees extends React.Component {
           <div className={classes.cardHeader}>
             <GridContainer>
                 <GridItem xs={12} sm={6}>
-                    <h3 className={classes.cardTitle}>My Employees</h3>
+                    <h3 className={classes.cardTitle}>Contacts</h3>
                 </GridItem>
                 <GridItem xs={12} sm={6} className={classes.text_right}>
                     <Button 
                         color="info" 
                         onClick={() => this.onOpenCheckInModal()}
                     >                            
-                        <Add /> Add Employee
+                        <Add /> Add Contact
                     </Button>
                 </GridItem>
             </GridContainer>
@@ -111,10 +111,8 @@ class MyEmployees extends React.Component {
             tableHead={[
               "Name",
               "Position",
+              "Email",
               "Phone Number",
-              "Personalnr",
-              "Avatar",
-              "Verified",
               "Actions"
             ]}
             tableData={[
@@ -123,8 +121,6 @@ class MyEmployees extends React.Component {
                 "Deelop",
                 "123456",
                 "17.12.18",
-                "14:34",
-                "14:34",
                 fillButtons
               ],
               [
@@ -132,8 +128,6 @@ class MyEmployees extends React.Component {
                 "Deelop",
                 "123456", 
                 "17.12.18", 
-                "14:34", 
-                "14:34", 
                 fillButtons
               ],
               [
@@ -141,8 +135,6 @@ class MyEmployees extends React.Component {
                 "Deelop",
                 "123456",
                 "17.12.18",
-                "14:34",
-                "14:34",
                 fillButtons
               ],
               [
@@ -150,8 +142,6 @@ class MyEmployees extends React.Component {
                 "Deelop",
                 "123456",
                 "17.12.18",
-                "14:34",
-                "14:34",
                 fillButtons
               ],
               [
@@ -159,8 +149,6 @@ class MyEmployees extends React.Component {
                 "Deelop",
                 "123456",
                 "17.12.18",
-                "14:34",
-                "14:34",
                 fillButtons
               ]
             ]}
@@ -195,8 +183,8 @@ class MyEmployees extends React.Component {
   }
 }
 
-MyEmployees.propTypes = {
+Contacts.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(checkInOutStyle)(MyEmployees);
+export default withStyles(checkInOutStyle)(Contacts);

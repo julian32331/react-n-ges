@@ -5,11 +5,9 @@
  */
 
 import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
-// import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 
 const saloonServiceStyle = theme => ({
   ...commonStyle,
-  // ...modalStyle(theme),
   text_right: {
       textAlign: 'right'
   },
@@ -17,7 +15,15 @@ const saloonServiceStyle = theme => ({
     marginBottom: '20px',
   },
   bg_title: {
-    background: '#dddddd'
+    background: '#dddddd',
+    color: '#3C4858',
+    borderTopLeftRadius: '5px',
+    borderBottomLeftRadius: '5px',
+    [theme.breakpoints.down('sm')]: {
+      borderTopLeftRadius: '5px',
+      borderTopRightRadius: '5px',
+      borderBottomLeftRadius: '0',
+    }
   },
   title_container: {
     padding: '15px 0',
@@ -36,16 +42,34 @@ const saloonServiceStyle = theme => ({
     fontSize: '16px', 
     fontWeight: '400'
   },
+  price: {
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '10px'
+    }
+  },
   bg_content: {
-    background: '#eeeeee'
+    background: '#eeeeee',
+    fontSize: '16px',
+    paddingTop: '15px !important',
+    paddingBottom: '15px !important'
   },
   py_15: {
-    paddingTop: '15px',
-    paddingBottom: '15px',
+    paddingTop: '10px',
+    paddingBottom: '10px',
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: '0',
+    }
   },
   btn_container: {
     background: '#eee', 
-    textAlign: 'right'
+    textAlign: 'right',
+    borderTopRightRadius: '5px',
+    borderBottomRightRadius: '5px',
+    [theme.breakpoints.down('sm')]: {
+      borderTopRightRadius: '0',
+      borderBottomLeftRadius: '5px',
+      borderBottomRightRadius: '5px'
+    }
   },
   btn_size: {
     [theme.breakpoints.up('md')]: {
@@ -56,9 +80,6 @@ const saloonServiceStyle = theme => ({
     marginLeft: '10px',
     marginRight: '10px',
   },
-  // center: {
-  //   textAlign: "center"
-  // },
 });
 
 export default saloonServiceStyle;

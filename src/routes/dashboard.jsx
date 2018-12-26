@@ -10,11 +10,14 @@ import SaloonService from "views/MinSalong/SalongService/SaloonService.jsx";
 import OpeningHours from "views/MinSalong/OpeningHours/OpeningHours.jsx";
 import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
+import News from "views/Intranett/News.jsx";
+import Contacts from "views/Intranett/Contacts/Contacts.jsx";
 
 // @material-ui/icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import Home from "@material-ui/icons/Home";
 import AlarmOn from "@material-ui/icons/AlarmOn";
+import NewReleases from "@material-ui/icons/NewReleases";
 
 var dashRoutes = [
   {
@@ -68,6 +71,37 @@ var dashRoutes = [
         name: "My Employees",
         mini: "ME",
         component: MyEmployees
+      }
+    ]
+  },
+  {
+    collapse: true,
+    path: "/intranett",
+    name: "Intranett",
+    state: "intranett",
+    icon: NewReleases,
+    views: [
+      {
+        path: "/intranett/news",
+        name: "News",
+        mini: "N",
+        component: News
+      },
+      {
+        path: "/intranett/faq",
+        name: "FAQ",
+        mini: "F",
+      },
+      {
+        path: "/intranett/marketing",
+        name: "Marketing",
+        mini: "M",
+      },
+      {
+        path: "/intranett/contacts",
+        name: "Contacts",
+        mini: "C",
+        component: Contacts
       }
     ]
   },

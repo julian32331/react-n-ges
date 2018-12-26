@@ -21,6 +21,8 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
+import * as Validator from "validator";
+
 import loginPageStyle from "assets/jss/material-dashboard-pro-react/views/loginPageStyle";
 
 import logo from "assets/img/logo.png";
@@ -36,32 +38,23 @@ class LoginPage extends React.Component {
     }
     this.login = this.login.bind(this);
   }
-  
-  verifyEmail(value) {
-    var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (emailRex.test(value)) {
-      return true;
-    }
-    return false;
-  }
-  verifyLength(value, length) {
-    if (value.length >= length) {
-      return true;
-    }
-    return false;
-  }
+
   change(event, stateName, type) {
     switch (type) {
       case "email":
-        if (this.verifyEmail(event.target.value)) {
+        if (Validator.verifyEmail(event.target.value)) {
           this.setState({ [stateName + "State"]: "success" });
+        } else if(Validator.verifyEmail(event.target.value) === "") {
+          this.setState({ [stateName + "State"]: "" });
         } else {
           this.setState({ [stateName + "State"]: "error" });
         }
         break;
       case "password":
-        if (this.verifyLength(event.target.value, 4)) {
+        if (Validator.verifyLength(event.target.value, 4)) {
           this.setState({ [stateName + "State"]: "success" });
+        } else if (Validator.verifyLength(event.target.value) === "") {
+          this.setState({ [stateName + "State"]: "" });
         } else {
           this.setState({ [stateName + "State"]: "error" });
         }

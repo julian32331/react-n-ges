@@ -3,6 +3,9 @@
  * Date: 12/21/2018
  * Author: Danijel
  */
+import {
+  dangerColor
+} from "assets/jss/material-dashboard-pro-react.jsx";
 
 const commonStyle = {
     cardTitle: {
@@ -18,6 +21,9 @@ const commonStyle = {
       position: "relative",
       minHeight: "50vh",
     },
+    danger: {
+      color: dangerColor + "!important"
+    }
   };
   
 export default commonStyle;
