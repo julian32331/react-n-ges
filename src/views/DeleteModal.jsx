@@ -11,17 +11,13 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Slide from "@material-ui/core/Slide";
 import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
-
-// @material-ui/icons
-import Close from "@material-ui/icons/Close";
 
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 
-import salongModalStyle from "assets/jss/material-dashboard-pro-react/views/salongService/salongModalStyle.jsx";
+import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
@@ -51,22 +47,6 @@ class DeleteModal extends React.Component {
             aria-labelledby="saloon-service-remove-modal-title"
             aria-describedby="saloon-service-remove-modal-description"
         >
-            <DialogTitle
-                id="saloon-service-remove-modal-title"
-                disableTypography
-                className={classes.modalHeader}
-            >
-                {/* <Button
-                    justIcon
-                    className={classes.modalCloseButton}
-                    key="close"
-                    aria-label="Close"
-                    color="transparent"
-                    onClick={() => this.handleClose()}
-                >
-                    <Close className={classes.modalClose} />
-                </Button> */}
-            </DialogTitle>
             <DialogContent
                 id="saloon-service-remove-modal-description"
                 className={
@@ -84,7 +64,8 @@ class DeleteModal extends React.Component {
             >
                 <Button
                     onClick={() => this.handleClose()}
-                    color="transparent"
+                    color="info"
+                    size="sm"
                     className={classes.modalSmallFooterFirstButton}
                 >
                 No
@@ -92,7 +73,7 @@ class DeleteModal extends React.Component {
                 <Button
                     onClick={() => this.handleClose()}
                     color="danger"
-                    simple
+                    size="sm"
                     className={
                         classes.modalSmallFooterFirstButton +
                         " " +
@@ -111,4 +92,4 @@ DeleteModal.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(salongModalStyle)(DeleteModal);
+export default withStyles(commonModalStyle)(DeleteModal);

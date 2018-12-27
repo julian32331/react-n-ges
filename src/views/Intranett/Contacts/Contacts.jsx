@@ -76,14 +76,14 @@ class Contacts extends React.Component {
                 <GridItem xs={12} sm={6}>
                     <h3 className={classes.cardTitle}>Contacts</h3>
                 </GridItem>
-                <GridItem xs={12} sm={6} className={classes.text_right}>
+                {/* <GridItem xs={12} sm={6} className={classes.text_right}>
                     <Button 
                         color="info" 
                         onClick={() => this.onOpenCheckInModal()}
                     >                            
                         <Add /> Add Contact
                     </Button>
-                </GridItem>
+                </GridItem> */}
             </GridContainer>
           </div>
         </CardHeader>
@@ -113,7 +113,6 @@ class Contacts extends React.Component {
               "Position",
               "Email",
               "Phone Number",
-              "Actions"
             ]}
             tableData={[
               [
@@ -121,35 +120,30 @@ class Contacts extends React.Component {
                 "Deelop",
                 "123456",
                 "17.12.18",
-                fillButtons
               ],
               [
                 "John Doe", 
                 "Deelop",
                 "123456", 
-                "17.12.18", 
-                fillButtons
+                "17.12.18"
               ],
               [
                 "Alex Mike",
                 "Deelop",
                 "123456",
-                "17.12.18",
-                fillButtons
+                "17.12.18"
               ],
               [
                 "Mike Monday",
                 "Deelop",
                 "123456",
-                "17.12.18",
-                fillButtons
+                "17.12.18"
               ],
               [
                 "Paul Dickens",
                 "Deelop",
                 "123456",
-                "17.12.18",
-                fillButtons
+                "17.12.18"
               ]
             ]}
             customCellClasses={[

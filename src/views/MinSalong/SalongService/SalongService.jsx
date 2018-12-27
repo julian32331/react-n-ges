@@ -25,8 +25,8 @@ import Button from "components/CustomButtons/Button.jsx";
 
 import salongServiceStyle from "assets/jss/material-dashboard-pro-react/views/salongService/salongServiceStyle.jsx";
 
-import DeleteModal from "./deleteModal";
-import NewOrEditModal from "./NewOrEditModal";
+import NewOrEditModal from "./NewOrEditModal.jsx";
+import DeleteModal from "views/DeleteModal.jsx";
 
 class SalongService extends React.Component {
     constructor(props) {
