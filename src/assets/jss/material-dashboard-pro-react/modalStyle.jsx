@@ -52,7 +52,7 @@ const modalStyle = theme => ({
     height: "16px"
   },
   modalBody: {
-    paddingTop: "24px",
+    paddingTop: "16px",
     paddingRight: "24px",
     paddingBottom: "16px",
     paddingLeft: "24px",

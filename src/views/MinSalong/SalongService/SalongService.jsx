@@ -23,43 +23,43 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import saloonServiceStyle from "assets/jss/material-dashboard-pro-react/views/saloonService/saloonServiceStyle.jsx";
+import salongServiceStyle from "assets/jss/material-dashboard-pro-react/views/salongService/salongServiceStyle.jsx";
 
 import DeleteModal from "./deleteModal";
-import NewOrUpdateModal from "./newOrUpdateModal";
+import NewOrEditModal from "./NewOrEditModal";
 
-class SaloonService extends React.Component {
+class SalongService extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             deleteModal: false,
-            newOrUpdateModal: false,
-            btn_name: ''
+            newOrEditModal: false,
+            modalTitle: ''
         };
     }
 
+    // Open and close Delete modal
     onCloseDeleteModal() {
         this.setState({
             deleteModal: false
         })
     }
-
     onOpenDeleteModal() {
         this.setState({
             deleteModal: true
         })
     }
 
-    onCloseNewOrUpdateModal() {
+    // Open and close NewOrUpdate modal
+    onCloseNewOrEditModal() {
         this.setState({
-            newOrUpdateModal: false
+            newOrEditModal: false
         })
     }
-
-    onOpenNewOrUpdateModal(btn_name) {
+    onOpenNewOrEditModal(title) {
         this.setState({
-            newOrUpdateModal: true,
-            btn_name: btn_name
+            newOrEditModal: true,
+            modalTitle: title
         })
     }
 
@@ -76,7 +76,7 @@ class SaloonService extends React.Component {
                     <GridItem xs={12} sm={6} className={classes.text_right}>
                         <Button 
                             color="info" 
-                            onClick={() => this.onOpenNewOrUpdateModal("New")}
+                            onClick={() => this.onOpenNewOrEditModal("New Service")}
                         >                            
                             <Add /> ADD Service
                         </Button>
@@ -100,17 +100,12 @@ class SaloonService extends React.Component {
                                     <GridItem xs={6} md={12}>
                                         <div className={classes.price}><span className={classes.title_item}>Pris kr :&nbsp;&nbsp;</span> 349</div>
                                     </GridItem>
-                                </GridContainer>                           
-                                {/* <div className={classes.title}>Herreklipp</div>
-                                <div className={classes.time}><span className={classes.title_item}>Tid</span>: 45min</div>
-                                <div><span style={{fontSize: '16px', fontWeight: '400'}}>Pris kr</span>: 349</div> */}
+                                </GridContainer>
                             </div>
                         </GridItem>
                         <GridItem xs={12} md={7} className={classes.bg_content}>
-                            {/* <div className={classes.py_15}> */}
-                                This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
-                                This is service description. This is service description. This is service description. This is service description.
-                            {/* </div> */}
+                            This is service description. This is service description. This is service description. This is service description. This is service description.This is service description.
+                            This is service description. This is service description. This is service description. This is service description.
                         </GridItem>
                         <GridItem xs={12} md={2} className={classes.btn_container}>
                             <div className={classes.py_15}>
@@ -120,7 +115,7 @@ class SaloonService extends React.Component {
                                     color="info"
                                     size="sm"
                                     className={classes.mx_10}
-                                    onClick={() => this.onOpenNewOrUpdateModal("Update")}
+                                    onClick={() => this.onOpenNewOrEditModal("Edit Service")}
                                     >
                                     <Create />
                                 </Button>                        
@@ -144,10 +139,10 @@ class SaloonService extends React.Component {
                 onClose={this.onCloseDeleteModal.bind(this)} 
             />
                 
-            <NewOrUpdateModal 
-                onOpen={this.state.newOrUpdateModal}
-                onClose={this.onCloseNewOrUpdateModal.bind(this)} 
-                btn_name={this.state.btn_name}
+            <NewOrEditModal 
+                onOpen={this.state.newOrEditModal}
+                onClose={this.onCloseNewOrEditModal.bind(this)}
+                title={this.state.modalTitle}
             />
 
         </CardBody>
@@ -156,8 +151,8 @@ class SaloonService extends React.Component {
   }
 }
 
-SaloonService.propTypes = {
+SalongService.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(saloonServiceStyle)(SaloonService);
+export default withStyles(salongServiceStyle)(SalongService);

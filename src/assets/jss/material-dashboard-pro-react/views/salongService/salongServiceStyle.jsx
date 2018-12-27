@@ -6,7 +6,7 @@
 
 import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
 
-const saloonServiceStyle = theme => ({
+const salongServiceStyle = theme => ({
   ...commonStyle,
   text_right: {
       textAlign: 'right'
@@ -82,4 +82,4 @@ const saloonServiceStyle = theme => ({
   },
 });
 
-export default saloonServiceStyle;
+export default salongServiceStyle;

@@ -6,7 +6,7 @@
 
 import Dashboard from "views/Dashboard/Dashboard.jsx";
 import SalongInformasjon from "views/MinSalong/SalongInformasjon.jsx";
-import SaloonService from "views/MinSalong/SalongService/SaloonService.jsx";
+import SalongService from "views/MinSalong/SalongService/SalongService.jsx";
 import OpeningHours from "views/MinSalong/OpeningHours/OpeningHours.jsx";
 import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
@@ -40,10 +40,10 @@ var dashRoutes = [
         component: SalongInformasjon
       },
       {
-        path: "/minsalong/saloonService",
-        name: "Saloon Service",
+        path: "/minsalong/salongService",
+        name: "Salong Service",
         mini: "SS",
-        component: SaloonService
+        component: SalongService
       },
       {
         path: "/minsalong/openingHours",

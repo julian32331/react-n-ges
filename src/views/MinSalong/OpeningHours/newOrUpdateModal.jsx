@@ -27,7 +27,7 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
-import saloonModalStyle from "assets/jss/material-dashboard-pro-react/views/saloonService/saloonModalStyle.jsx";
+import salongModalStyle from "assets/jss/material-dashboard-pro-react/views/salongService/salongModalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
@@ -131,4 +131,4 @@ NewOrUpdateModal.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(saloonModalStyle)(NewOrUpdateModal);
+export default withStyles(salongModalStyle)(NewOrUpdateModal);

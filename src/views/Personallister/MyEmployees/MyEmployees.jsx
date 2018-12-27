@@ -30,8 +30,9 @@ import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Table from "components/Table/Table.jsx";
 
-import checkInOutStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInOutStyle.jsx";
+import myEmployeesStyle from "assets/jss/material-dashboard-pro-react/views/myEmployees/myEmployeesStyle.jsx";
 import NewOrUpdateModal from "./NewOrUpdateModal";
+import DefaultAvatar from "assets/img/default-avatar.png";
 
 class MyEmployees extends React.Component {
 
@@ -67,6 +68,16 @@ class MyEmployees extends React.Component {
         </Button>
       );
     });
+
+    // const avatar = <img src={DefaultAvatar} alt="..." />
+    const avatar = 
+      <div className={classes.picture}>
+        <img
+          src={DefaultAvatar}
+          className={classes.picture_src}
+          alt="..."
+        />
+      </div>
 
     return (
       <Card>
@@ -123,7 +134,7 @@ class MyEmployees extends React.Component {
                 "Deelop",
                 "123456",
                 "17.12.18",
-                "14:34",
+                avatar,
                 "14:34",
                 fillButtons
               ],
@@ -132,7 +143,7 @@ class MyEmployees extends React.Component {
                 "Deelop",
                 "123456", 
                 "17.12.18", 
-                "14:34", 
+                avatar, 
                 "14:34", 
                 fillButtons
               ],
@@ -141,7 +152,7 @@ class MyEmployees extends React.Component {
                 "Deelop",
                 "123456",
                 "17.12.18",
-                "14:34",
+                avatar,
                 "14:34",
                 fillButtons
               ],
@@ -150,7 +161,7 @@ class MyEmployees extends React.Component {
                 "Deelop",
                 "123456",
                 "17.12.18",
-                "14:34",
+                avatar,
                 "14:34",
                 fillButtons
               ],
@@ -159,7 +170,7 @@ class MyEmployees extends React.Component {
                 "Deelop",
                 "123456",
                 "17.12.18",
-                "14:34",
+                avatar,
                 "14:34",
                 fillButtons
               ]
@@ -199,4 +210,4 @@ MyEmployees.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(checkInOutStyle)(MyEmployees);
+export default withStyles(myEmployeesStyle)(MyEmployees);

@@ -21,7 +21,7 @@ import Close from "@material-ui/icons/Close";
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 
-import saloonModalStyle from "assets/jss/material-dashboard-pro-react/views/saloonService/saloonModalStyle.jsx";
+import salongModalStyle from "assets/jss/material-dashboard-pro-react/views/salongService/salongModalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
@@ -111,4 +111,4 @@ DeleteModal.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(saloonModalStyle)(DeleteModal);
+export default withStyles(salongModalStyle)(DeleteModal);
