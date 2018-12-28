@@ -7,8 +7,10 @@
 import {
   container
 } from "assets/jss/material-dashboard-pro-react.jsx";
+import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
 const loginPageStyle = {
+  ...customSelectStyle,
   container: {
     ...container,
     position: "relative",

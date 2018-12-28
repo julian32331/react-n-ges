@@ -3,6 +3,11 @@ import PropTypes from "prop-types";
 
 import {Link} from 'react-router-dom';
 
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -30,18 +35,23 @@ import logo from "assets/img/logo.png";
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {      
-      loginEmail: "",
+    this.state = {    
+      loginEmail: "test3@geselle.se",
       loginEmailState: "",
-      loginPassword: "",
+      loginPassword: "1234",
       loginPasswordState: "",
     }
     this.login = this.login.bind(this);
+    // test3@geselle.se
+    // 1234
   }
 
   change(event, stateName, type) {
     switch (type) {
       case "email":
+        this.setState({
+          loginEmail: event.target.value
+        })
         if (Validator.verifyEmail(event.target.value)) {
           this.setState({ [stateName + "State"]: "success" });
         } else if(Validator.verifyEmail(event.target.value) === "") {
@@ -51,6 +61,9 @@ class LoginPage extends React.Component {
         }
         break;
       case "password":
+        this.setState({
+          loginPassword: event.target.value
+        })
         if (Validator.verifyLength(event.target.value, 4)) {
           this.setState({ [stateName + "State"]: "success" });
         } else if (Validator.verifyLength(event.target.value) === "") {
@@ -64,16 +77,25 @@ class LoginPage extends React.Component {
     }
   }
   canLogin() {
-    if(this.state.loginEmailState === "" || this.state.loginEmailState === "error" || this.state.loginPasswordState === "" || this.state.loginPasswordState === "error") {
-      return true
-    } else {
+    // if(this.state.loginEmailState === "" || this.state.loginEmailState === "error" || this.state.loginPasswordState === "" || this.state.loginPasswordState === "error") {
+      // return true
+    // } else {
       return false
-    }
+    // }
   }
 
   login() {
-    console.log('focus')
-    this.props.history.push("/dashboard");
+    // this.setState({
+    //   has_company_saloon: true
+    // })
+    this.props.login({
+      email: this.state.loginEmail,
+      password: this.state.loginPassword
+    });
+    setTimeout(() => {
+      this.props.history.push("/dashboard");      
+    }, 1000);
+    
   }
 
   render() {
@@ -116,6 +138,7 @@ class LoginPage extends React.Component {
                       placeholder: "Email*",
                       onChange: event =>
                         this.change(event, "loginEmail", "email"),
+                      value: this.state.loginEmail
                     }}
                   />
                   <CustomInput
@@ -145,6 +168,7 @@ class LoginPage extends React.Component {
                       placeholder: "Password*",
                       onChange: event =>
                         this.change(event, "loginPassword", "password"),
+                      value: this.state.loginPassword
                     }}
                   />
                   <div className={classes.right + " " + classes.pb_15}>
@@ -171,4 +195,12 @@ LoginPage.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(loginPageStyle)(LoginPage);
+// export default withStyles(loginPageStyle)(LoginPage);
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+      login: Actions.login
+    }, dispatch);
+}
+
+export default withStyles(loginPageStyle)(withRouter(connect(null, mapDispatchToProps)(LoginPage)));
