@@ -1,7 +1,6 @@
 /**
  * Description: Page style view routes
  * Date: 12/25/2018
- * Author: Danijel
  */
 
 import LoginPage from "views/Login/LoginPage.jsx";

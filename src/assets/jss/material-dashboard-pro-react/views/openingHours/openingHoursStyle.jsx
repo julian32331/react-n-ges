@@ -1,7 +1,6 @@
 /**
  * Description: Opening hours Style
  * Date: 12/24/2018
- * Author: Danijel
  */
 
 import {

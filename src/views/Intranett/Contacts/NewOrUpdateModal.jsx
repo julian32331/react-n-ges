@@ -1,7 +1,6 @@
 /**
  * Description: NewOrUpdate Modal for the My Employees
  * Date: 25/12/2018
- * Author: Danijel
  */
 
 import React from "react";

@@ -1,7 +1,6 @@
 /**
  * Description: Delete modal for my employees Style
  * Date: 12/27/2018
- * Author: Danijel
  */
 
 import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";

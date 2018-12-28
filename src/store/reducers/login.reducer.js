@@ -1,7 +1,6 @@
 /**
  * Description: Reducer of the login
  * Date: 12/28/2018
- * Author: Danijel
  */
 
 import * as Actions from '../actions';

@@ -1,7 +1,6 @@
 /**
  * Description: Dashboard style view routes
  * Date: 12/25/2018
- * Author: Danijel
  */
 
 import Dashboard from "views/Dashboard/Dashboard.jsx";

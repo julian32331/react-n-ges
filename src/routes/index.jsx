@@ -1,7 +1,6 @@
 /**
  * Description: App routes
  * Date: 12/25/2018
- * Author: Danijel
  */
 
 import Pages from "layouts/Pages.jsx";

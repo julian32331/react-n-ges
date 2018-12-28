@@ -1,7 +1,6 @@
 /**
  * Descirption: Saloon Service
  * Date: 12/23/2018
- * Author: Danijel
  */
 
 import React from "react";

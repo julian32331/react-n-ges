@@ -1,7 +1,6 @@
 /**
  * Description: Check in modal
  * Date: 24/12/2018
- * Author: Danijel
  */
 
 import React from "react";

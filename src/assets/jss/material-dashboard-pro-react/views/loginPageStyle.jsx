@@ -1,7 +1,6 @@
 /**
  * Description: Login page style
  * Date: 23/12/2018
- * Author: Danijel
  */
 
 import {

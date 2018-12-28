@@ -1,7 +1,6 @@
 /**
  * Description: Saloon service Style
  * Date: 12/24/2018
- * Author: Danijel
  */
 
 import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";

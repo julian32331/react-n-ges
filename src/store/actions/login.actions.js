@@ -1,7 +1,6 @@
 /**
  * Description: Actions of the login
  * Date: 12/28/2018
- * Author: Danijel
  */
 
 import axios from 'axios/index';

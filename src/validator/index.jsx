@@ -1,7 +1,6 @@
 /**
  * Description: Validator
  * Date: 12/27/2018
- * Author: Danijel
  */
 
 export const verifyEmail = (value) => {

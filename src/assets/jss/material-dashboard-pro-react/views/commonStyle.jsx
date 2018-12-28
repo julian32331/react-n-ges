@@ -1,7 +1,6 @@
 /**
  * Description: Common Style
  * Date: 12/21/2018
- * Author: Danijel
  */
 import {
   dangerColor

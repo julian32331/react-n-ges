@@ -1,7 +1,6 @@
 /**
  * Description: REgister page style
  * Date: 25/12/2018
- * Author: Danijel
  */
 
 import {

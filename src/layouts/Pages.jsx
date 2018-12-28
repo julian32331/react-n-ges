@@ -1,7 +1,6 @@
 /**
  * Description: Pages style
  * Date: 12/25/2018
- * Author: Danijel
  */
 
 import React from "react";
