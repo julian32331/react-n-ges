@@ -53,7 +53,6 @@ class SelectModal extends React.Component {
 
         this.props.getUserData();
         setTimeout(() => {
-            console.log('focus: ', this.props)
             if(this.props.selected_workingForId) {
                 this.setState({
                     company: Number(this.props.selected_workingForId)

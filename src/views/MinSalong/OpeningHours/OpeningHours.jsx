@@ -130,6 +130,7 @@ class OpeningHours extends React.Component {
                                 <Datetime
                                     dateFormat={false}
                                     inputProps={{ placeholder: "From" }}
+                                    value={"2:00 AM"}
                                 />
                             </FormControl>
                         </GridItem>

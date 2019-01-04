@@ -7,6 +7,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Datetime from "react-datetime";
+import moment from 'moment'
 
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
@@ -42,6 +43,11 @@ class CheckInOut extends React.Component {
     this.state = {
       checkInModal: false
     }
+    this.getCheckList = this.getCheckList.bind(this);
+    this.getCheckList();
+  }
+  componentDidUpdate() {
+    console.log('this.props.check_list: ', this.props.check_list)
   }
 
   onCloseCheckInModal() {
@@ -56,6 +62,13 @@ class CheckInOut extends React.Component {
     })
   }
 
+  getCheckList() {
+    this.props.getCheckList({
+        token: this.props.token,
+        id: this.props.id
+    })
+}
+
   render() {
     const { classes } = this.props;
 
@@ -63,6 +76,20 @@ class CheckInOut extends React.Component {
         <Button color="danger" className={classes.actionButton}>
           <Remove className={classes.icon} /> Check Out User
         </Button>
+
+    let check_list = [];
+    this.props.check_list.map(list => {
+      let temp = [];
+      temp.push(list.Employee.name);
+      temp.push(list.Employee.employeeId);
+      temp.push(moment(list.checkIn).format("MM/DD/YYYY, hh:mm"));
+      temp.push(list.checkOut? moment(list.checkOut).format("MM/DD/YYYY, hh:mm") : null);
+      list.checkOut? temp.push("") : temp.push(checkOutButton)
+
+      check_list.push(temp);
+    })
+    
+    console.log('checklist: ', check_list)
 
     return (
       <Card>
@@ -131,53 +158,13 @@ class CheckInOut extends React.Component {
             tableHead={[
               "Name",
               "Employe number",
-              "Date",
               "Checked In",
               "Checked Out",
               "Action"
             ]}
-            tableData={[
-              [
-                "Andrew Mike",
-                "123456",
-                "17.12.18",
-                "14:34",
-                "14:34",
-                checkOutButton
-              ],
-              [
-                "John Doe", 
-                "123456", 
-                "17.12.18", 
-                "14:34", 
-                "14:34", 
-                ""
-              ],
-              [
-                "Alex Mike",
-                "123456",
-                "17.12.18",
-                "14:34",
-                "14:34",
-                checkOutButton
-              ],
-              [
-                "Mike Monday",
-                "123456",
-                "17.12.18",
-                "14:34",
-                "14:34",
-                ""
-              ],
-              [
-                "Paul Dickens",
-                "123456",
-                "17.12.18",
-                "14:34",
-                "14:34",
-                ""
-              ]
-            ]}
+            tableData={
+              check_list
+            }
             customCellClasses={[
               classes.center,
               classes.center,
@@ -217,17 +204,18 @@ CheckInOut.propTypes = {
 
 function mapStateToProps(state) {
   return {
-      token: state.user.token,
-      id: state.user.selected_workingForId,
-      data: state.service.data
+      // token: state.user.token,
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0MUBnZXNlbGxlLnNlIiwiaWF0IjoxNTQ2NTIyOTU2LCJleHAiOjE1NDcxMjc3NTZ9.S3-9MG0oIv0svs-QzTdw8pORFxCVsW46uVsgDUevr4I",
+      // id: state.user.selected_workingForId,
+      id: 6,
+      check_list: state.checkInOut.check_list
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-      getServices: Actions.getServiceData,
-      addService: Actions.setServiceData
+      getCheckList: Actions.getCheckList,
   }, dispatch);
 }
 
-export default withStyles(salongServiceStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SalongService)));
+export default withStyles(checkInOutStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(CheckInOut)));

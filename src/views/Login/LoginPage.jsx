@@ -1,3 +1,8 @@
+/**
+ * Description: Login Page
+ * Date: 12/24/2018
+ */
+
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -36,21 +41,25 @@ class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {    
-      loginEmail: "test1@geselle.se",
-      loginEmailState: "",
-      loginPassword: "1234",
-      loginPasswordState: "",
+      email: "",
+      emailState: "",
+      password: "",
+      passwordState: "",
     }
     this.login = this.login.bind(this);
-    // test3@geselle.se
-    // 1234
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.status) {
+      this.props.history.push("/dashboard");
+    }
   }
 
   change(event, stateName, type) {
     switch (type) {
       case "email":
         this.setState({
-          loginEmail: event.target.value
+          email: event.target.value
         })
         if (Validator.verifyEmail(event.target.value)) {
           this.setState({ [stateName + "State"]: "success" });
@@ -62,7 +71,7 @@ class LoginPage extends React.Component {
         break;
       case "password":
         this.setState({
-          loginPassword: event.target.value
+          password: event.target.value
         })
         if (Validator.verifyLength(event.target.value, 4)) {
           this.setState({ [stateName + "State"]: "success" });
@@ -76,26 +85,22 @@ class LoginPage extends React.Component {
         break;
     }
   }
+
   canLogin() {
-    // if(this.state.loginEmailState === "" || this.state.loginEmailState === "error" || this.state.loginPasswordState === "" || this.state.loginPasswordState === "error") {
-      // return true
-    // } else {
+    if(this.state.emailState === "success" && this.state.passwordState === "success") {
       return false
-    // }
+    // } else if(this.state.email && this.state.emailState === "" && this.state.password && this.state.passwordState === "") {
+    //   return false
+    } else {
+      return true
+    }
   }
 
   login() {
-    // this.setState({
-    //   has_company_saloon: true
-    // })
     this.props.login({
-      email: this.state.loginEmail,
-      password: this.state.loginPassword
-    });
-    setTimeout(() => {
-      this.props.history.push("/dashboard");      
-    }, 1000);
-    
+      email: this.state.email,
+      password: this.state.password
+    });  
   }
 
   render() {
@@ -112,8 +117,8 @@ class LoginPage extends React.Component {
               <CardBody className={classes.pb_0}>
                 <form className={classes.form}>
                   <CustomInput
-                    success={this.state.loginEmailState === "success"}
-                    error={this.state.loginEmailState === "error"}
+                    success={this.state.emailState === "success"}
+                    error={this.state.emailState === "error"}
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -127,7 +132,7 @@ class LoginPage extends React.Component {
                         </InputAdornment>
                       ),
                       endAdornment:
-                        this.state.loginEmailState === "error" ? (
+                        this.state.emailState === "error" ? (
                           <InputAdornment position="end">
                             <Warning className={classes.danger} />
                           </InputAdornment>
@@ -137,13 +142,13 @@ class LoginPage extends React.Component {
                       type: "email",
                       placeholder: "Email*",
                       onChange: event =>
-                        this.change(event, "loginEmail", "email"),
-                      value: this.state.loginEmail
+                        this.change(event, "email", "email"),
+                      value: this.state.email
                     }}
                   />
                   <CustomInput
-                    success={this.state.loginPasswordState === "success"}
-                    error={this.state.loginPasswordState === "error"}
+                    success={this.state.passwordState === "success"}
+                    error={this.state.passwordState === "error"}
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -157,7 +162,7 @@ class LoginPage extends React.Component {
                         </InputAdornment>
                       ),
                       endAdornment:
-                        this.state.loginPasswordState === "error" ? (
+                        this.state.passwordState === "error" ? (
                           <InputAdornment position="end">
                             <Warning className={classes.danger} />
                           </InputAdornment>
@@ -167,8 +172,8 @@ class LoginPage extends React.Component {
                       type: "password",
                       placeholder: "Password*",
                       onChange: event =>
-                        this.change(event, "loginPassword", "password"),
-                      value: this.state.loginPassword
+                        this.change(event, "password", "password"),
+                      value: this.state.password
                     }}
                   />
                   <div className={classes.right + " " + classes.pb_15}>
@@ -195,10 +200,16 @@ LoginPage.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
+function mapStateToProps(state) {
+  return {
+    status: state.login.status
+  }
+}
+
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
       login: Actions.login
     }, dispatch);
 }
 
-export default withStyles(loginPageStyle)(withRouter(connect(null, mapDispatchToProps)(LoginPage)));
+export default withStyles(loginPageStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginPage)));

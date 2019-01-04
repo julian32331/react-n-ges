@@ -8,6 +8,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import Datetime from "react-datetime";
 
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import FormControl from "@material-ui/core/FormControl";
@@ -41,6 +46,11 @@ class MyEmployees extends React.Component {
     this.state = {
       checkInModal: false
     }
+    this.getEmployeeList = this.getEmployeeList.bind(this);
+    this.getEmployeeList();
+  }
+  componentDidUpdate() {
+    console.log('this.props.list: ', this.props.list)
   }
 
   onCloseCheckInModal() {
@@ -52,6 +62,13 @@ class MyEmployees extends React.Component {
   onOpenCheckInModal() {
     this.setState({
       checkInModal: true,
+    })
+  }
+
+  getEmployeeList() {
+    this.props.getEmployeeList({
+      token: this.props.token,
+      id: this.props.id
     })
   }
 
@@ -210,4 +227,23 @@ MyEmployees.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(myEmployeesStyle)(MyEmployees);
+// export default withStyles(myEmployeesStyle)(MyEmployees);
+
+function mapStateToProps(state) {
+  return {
+      // token: state.user.token,
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0MUBnZXNlbGxlLnNlIiwiaWF0IjoxNTQ2NTIyOTU2LCJleHAiOjE1NDcxMjc3NTZ9.S3-9MG0oIv0svs-QzTdw8pORFxCVsW46uVsgDUevr4I",
+      // id: state.user.selected_workingForId,
+      id: 6,
+      list: state.employees.list
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+      getEmployeeList: Actions.getEmployeeList,
+  }, dispatch);
+}
+
+export default withStyles(myEmployeesStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(MyEmployees)));
+

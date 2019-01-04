@@ -1,27 +1,27 @@
 /**
- * Description: Reducer of the service
- * Date: 1/3/2019
+ * Description: Reducer of the checklist
+ * Date: 1/4/2019
  */
 
 import * as Actions from '../actions';
 
 const initialState = {
-    data: []
+    check_list: []
 };
 
-const service = function (state = initialState, action) {
+const checkInOut = function (state = initialState, action) {
     switch ( action.type )
     {
-        case Actions.GET_SERVICE_DATA:
+        case Actions.GET_CHECKLIST_DATA:
         {
             return {
-                data: action.data
+                check_list: action.data
             };
         }
         case Actions.SET_SERVICE_DATA:
         {
             return {
-                data: [
+                check_list: [
                     ...state.data,
                     action.data
                 ]
@@ -34,4 +34,4 @@ const service = function (state = initialState, action) {
     }
 };
 
-export default service;
+export default checkInOut;

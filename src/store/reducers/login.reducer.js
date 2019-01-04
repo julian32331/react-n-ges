@@ -6,11 +6,8 @@
 import * as Actions from '../actions';
 
 const initialState = {
-    success: false,
-    error  : {
-        username: null,
-        password: null
-    }
+    status: false,
+    errorMsg: ""
 };
 
 const login = function (state = initialState, action) {
@@ -20,14 +17,14 @@ const login = function (state = initialState, action) {
         {
             return {
                 ...initialState,
-                success: true
+                status: true
             };
         }
         case Actions.LOGIN_ERROR:
         {
             return {
-                success: false,
-                error  : action.payload
+                status: false,
+                errorMsg  : action.payload
             };
         }
         default:
