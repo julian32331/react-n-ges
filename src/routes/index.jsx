@@ -10,6 +10,7 @@ var indexRoutes = [
   { path: "/pages", name: "Pages", component: Pages },
   { path: "/login", name: "Pages", component: Pages },
   { path: "/register", name: "Pages", component: Pages },
+  { path: "/forgotpassword", name: "Pages", component: Pages },
   { path: "/", name: "Home", component: Dashboard }
 ];
 

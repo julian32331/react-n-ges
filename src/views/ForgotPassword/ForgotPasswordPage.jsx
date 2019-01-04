@@ -37,22 +37,14 @@ import loginPageStyle from "assets/jss/material-dashboard-pro-react/views/loginP
 
 import logo from "assets/img/logo.png";
 
-class LoginPage extends React.Component {
+class ForgotPasswordPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {    
       email: "",
       emailState: "",
-      password: "",
-      passwordState: "",
     }
     this.login = this.login.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.status) {
-      this.props.history.push("/dashboard");
-    }
   }
 
   change(event, stateName, type) {
@@ -69,28 +61,14 @@ class LoginPage extends React.Component {
           this.setState({ [stateName + "State"]: "error" });
         }
         break;
-      case "password":
-        this.setState({
-          password: event.target.value
-        })
-        if (Validator.verifyLength(event.target.value, 4)) {
-          this.setState({ [stateName + "State"]: "success" });
-        } else if (Validator.verifyLength(event.target.value) === "") {
-          this.setState({ [stateName + "State"]: "" });
-        } else {
-          this.setState({ [stateName + "State"]: "error" });
-        }
-        break;
       default:
         break;
     }
   }
 
   canLogin() {
-    if(this.state.emailState === "success" && this.state.passwordState === "success") {
+    if(this.state.emailState === "success") {
       return false
-    // } else if(this.state.email && this.state.emailState === "" && this.state.password && this.state.passwordState === "") {
-    //   return false
     } else {
       return true
     }
@@ -146,45 +124,13 @@ class LoginPage extends React.Component {
                       value: this.state.email
                     }}
                   />
-                  <CustomInput
-                    success={this.state.passwordState === "success"}
-                    error={this.state.passwordState === "error"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      startAdornment: (
-                        <InputAdornment
-                          position="start"
-                          className={classes.inputAdornment}
-                        >
-                          <VpnKey className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                      endAdornment:
-                        this.state.passwordState === "error" ? (
-                          <InputAdornment position="end">
-                            <Warning className={classes.danger} />
-                          </InputAdornment>
-                        ) : (
-                          undefined
-                      ),
-                      type: "password",
-                      placeholder: "Password*",
-                      onChange: event =>
-                        this.change(event, "password", "password"),
-                      value: this.state.password
-                    }}
-                  />
-                  <div className={classes.right + " " + classes.pb_15}>
-                    <Link className={classes.link} to="/forgotpassword">Forgot Password?</Link>
-                  </div>
                   <div className={classes.center}>
                     <Button color="info" className={classes.w_100_p} onClick={this.login} disabled={this.canLogin()}>
-                      Log In
-                    </Button>   
-                    <div className={classes.pt_15}>Don't you have account?</div>
-                    <Link className={classes.link} to="/register">Sign Up</Link>
+                      Reset
+                    </Button>
+                    <div className={classes.pt_15}>
+                      <Link className={classes.link} to="/login">Sign In</Link>
+                    </div>
                   </div>
                 </form>
               </CardBody>
@@ -196,7 +142,7 @@ class LoginPage extends React.Component {
   }
 }
 
-LoginPage.propTypes = {
+ForgotPasswordPage.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -212,4 +158,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default withStyles(loginPageStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginPage)));
+export default withStyles(loginPageStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordPage)));
