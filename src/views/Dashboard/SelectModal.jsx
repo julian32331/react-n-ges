@@ -80,7 +80,7 @@ class SelectModal extends React.Component {
         if(this.props.workingFor) {
             JSON.parse(this.props.workingFor).map(item => {
                 let temp = {}
-                temp['name'] = item.Company.legalName;
+                temp['name'] = item.Salon? item.Company.legalName + "/" + item.Salon.name : item.Company.legalName;
                 temp['value'] = item.workingForId;
     
                 companies.push(temp);
@@ -119,7 +119,7 @@ class SelectModal extends React.Component {
                                 htmlFor="company"
                                 className={classes.selectLabel}
                                 >
-                                Choose Company
+                                Choose Company/Salon
                             </InputLabel>
                             <Select
                                 MenuProps={{
@@ -161,58 +161,6 @@ class SelectModal extends React.Component {
                                 }
                             </Select>
                         </FormControl>
-                        {/* <FormControl
-                            fullWidth
-                            className={classes.selectFormControl}
-                        >
-                            <InputLabel
-                                htmlFor="saloon"
-                                className={classes.selectLabel}
-                            >
-                                Choose Saloon
-                            </InputLabel>
-                            <Select
-                                MenuProps={{
-                                    className: classes.selectMenu
-                                }}
-                                classes={{
-                                    select: classes.select
-                                }}
-                                value={this.state.saloon}
-                                onChange={this.handleSaloon}
-                                inputProps={{
-                                    name: "saloon",
-                                    id: "saloon"
-                                }}
-                            >
-                                <MenuItem
-                                    disabled
-                                    classes={{
-                                        root: classes.selectMenuItem
-                                    }}
-                                >
-                                    Choose Saloon
-                                </MenuItem>
-                                <MenuItem
-                                    classes={{
-                                        root: classes.selectMenuItem,
-                                        selected: classes.selectMenuItemSelected
-                                    }}
-                                    value="2"
-                                >
-                                    Paris
-                                </MenuItem>
-                                <MenuItem
-                                    classes={{
-                                        root: classes.selectMenuItem,
-                                        selected: classes.selectMenuItemSelected
-                                    }}
-                                    value="3"
-                                >
-                                    Bucharest
-                                </MenuItem>
-                            </Select>
-                        </FormControl> */}
                     </form>
                 </DialogContent>
                 <DialogActions className={classes.modalFooter}>

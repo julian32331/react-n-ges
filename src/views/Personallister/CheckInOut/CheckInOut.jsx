@@ -8,6 +8,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import Datetime from "react-datetime";
 
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import FormControl from "@material-ui/core/FormControl";
@@ -208,4 +213,21 @@ CheckInOut.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(checkInOutStyle)(CheckInOut);
+// export default withStyles(checkInOutStyle)(CheckInOut);
+
+function mapStateToProps(state) {
+  return {
+      token: state.user.token,
+      id: state.user.selected_workingForId,
+      data: state.service.data
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+      getServices: Actions.getServiceData,
+      addService: Actions.setServiceData
+  }, dispatch);
+}
+
+export default withStyles(salongServiceStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SalongService)));

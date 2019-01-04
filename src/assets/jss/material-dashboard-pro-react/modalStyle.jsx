@@ -11,8 +11,10 @@ const modalStyle = theme => ({
   modal: {
     [theme.breakpoints.up("sm")]: {
       maxWidth: "500px",
-      margin: "1.75rem auto"
+      margin: "1.75rem auto",
+      minWidth: '320px',
     },
+    marginHorizontal: 'auto',
     borderRadius: "6px",
     marginTop: "100px !important",
     overflow: "visible",

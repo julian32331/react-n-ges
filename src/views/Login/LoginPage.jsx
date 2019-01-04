@@ -36,7 +36,7 @@ class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {    
-      loginEmail: "test3@geselle.se",
+      loginEmail: "test1@geselle.se",
       loginEmailState: "",
       loginPassword: "1234",
       loginPasswordState: "",
@@ -194,8 +194,6 @@ class LoginPage extends React.Component {
 LoginPage.propTypes = {
   classes: PropTypes.object.isRequired
 };
-
-// export default withStyles(loginPageStyle)(LoginPage);
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
