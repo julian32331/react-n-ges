@@ -21,21 +21,19 @@ const service = function (state = initialState, action) {
         case Actions.ADD_SERVICE:
         {
             return {
-                services: [
-                    ...state.services,
-                    action.service
-                ]
+                services: state.services
+            };
+        }
+        case Actions.UPDATE_SERVICE:
+        {
+            return {
+                services: state.services
             };
         }
         case Actions.DELETE_SERVICE:
         {
-            let index = state.services.findIndex(service => service.id == action.id);
-            state.services.splice(index, 1);
-            
             return {
-                services: [
-                    ...state.services
-                ]
+                services: state.services
             };
         }
         default:

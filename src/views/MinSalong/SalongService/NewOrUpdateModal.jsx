@@ -37,20 +37,46 @@ function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
 
-class NewOrEditModal extends React.Component {
+class NewOrUpdateModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: this.props.data? this.props.data.name : "",
-            titleState: this.props.data? "success" : "",
-            time: this.props.data? this.props.data.durationInMinutes : "",
-            timeState: this.props.data? "success" : "",
-            price: this.props.data? this.props.data.price : "",
-            priceState: this.props.data? "success" : "",
-            description: this.props.data? this.props.data.description : "",
-            descriptionState: this.props.data? "success" : ""
+            title: "",
+            titleState: "",
+            time: "",
+            timeState: "",
+            price: "",
+            priceState: "",
+            description: "",
+            descriptionState: ""
         }
         this.save = this.save.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.data) {
+            this.setState({
+                title: nextProps.data.name,
+                titleState: "success",
+                time: nextProps.data.durationInMinutes,
+                timeState: "success",
+                price: nextProps.data.price,
+                priceState: "success",
+                description: nextProps.data.description,
+                descriptionState: "success"
+            })
+        } else {
+            this.setState({
+                title: "",
+                titleState: "",
+                time: "",
+                timeState: "",
+                price: "",
+                priceState: "",
+                description: "",
+                descriptionState: ""
+            })
+        }
     }
 
     initState() {
@@ -71,15 +97,27 @@ class NewOrEditModal extends React.Component {
         this.props.onClose();
     }
 
-    save() {
-        this.props.addService({
-            token: this.props.token,
-            workingForId: this.props.workingForId,
-            name: this.state.title,
-            description: this.state.description,
-            price: this.state.price,
-            durationInMinutes: this.state.time
-        })
+    save(isNew) {
+        if(isNew) {
+            this.props.addService({
+                token: this.props.token,
+                workingForId: this.props.workingForId,
+                name: this.state.title,
+                description: this.state.description,
+                price: this.state.price,
+                durationInMinutes: this.state.time
+            })
+        } else {            
+            this.props.updateService({
+                token: this.props.token,
+                workingForId: this.props.workingForId,
+                id: this.props.data.id,
+                name: this.state.title,
+                description: this.state.description,
+                price: this.state.price,
+                durationInMinutes: this.state.time
+            })
+        }
         this.initState();
         this.props.onClose();
     }
@@ -289,7 +327,7 @@ class NewOrEditModal extends React.Component {
                         Cancel
                     </Button>
                     <Button
-                        onClick={() => this.save()}
+                        onClick={() => this.save(this.props.data? false : true)}
                         color="info"
                         size="sm"
                         disabled={this.canSave()}
@@ -302,7 +340,7 @@ class NewOrEditModal extends React.Component {
     }
 }
 
-NewOrEditModal.propTypes = {
+NewOrUpdateModal.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -315,8 +353,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        addService: Actions.addService
+        addService      : Actions.addService,
+        updateService   : Actions.updateService
     }, dispatch);
 }
 
-export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(NewOrEditModal)));
+export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(NewOrUpdateModal)));

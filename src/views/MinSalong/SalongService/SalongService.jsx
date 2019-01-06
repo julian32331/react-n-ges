@@ -29,7 +29,7 @@ import Button from "components/CustomButtons/Button.jsx";
 
 import salongServiceStyle from "assets/jss/material-dashboard-pro-react/views/salongService/salongServiceStyle.jsx";
 
-import NewOrEditModal from "./NewOrEditModal.jsx";
+import NewOrUpdateModal from "./NewOrUpdateModal.jsx";
 import DeleteModal from "./DeleteModal.jsx";
 
 class SalongService extends React.Component {
@@ -138,7 +138,7 @@ class SalongService extends React.Component {
                                                     color="info"
                                                     size="sm"
                                                     className={classes.mx_10}
-                                                    onClick={() => this.onOpenNewOrEditModal("Edit Service", service)}
+                                                    onClick={() => this.onOpenNewOrEditModal("Update Service", service)}
                                                     >
                                                     <Create />
                                                 </Button>                        
@@ -166,7 +166,7 @@ class SalongService extends React.Component {
                         id={this.state.modalData? this.state.modalData.id : null}
                     />
                         
-                    <NewOrEditModal 
+                    <NewOrUpdateModal 
                         onOpen={this.state.newOrEditModal}
                         onClose={this.onCloseNewOrEditModal.bind(this)}
                         modalTitle={this.state.modalTitle}

@@ -7,6 +7,7 @@ import * as Utils from 'utils';
 export const GET_SERVICES       = '[SERVICES] GET';
 export const ADD_SERVICE        = '[SERVICE] ADD';
 export const DELETE_SERVICE     = '[SERVICE] DELETE';
+export const UPDATE_SERVICE     = '[SERVICE] UPDATE';
 
 export function getServices({workingForId}) {
     const request = Utils.xapi().post('manager/services', {
@@ -35,10 +36,37 @@ export function addService(data) {
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )
-            {            
+            {     
+                dispatch(getServices({
+                    workingForId: data.workingForId
+                }));        
                 return dispatch({
-                    type: ADD_SERVICE,
-                    service: data
+                    type: ADD_SERVICE
+                });
+            }
+        });
+}
+
+export function updateService(data) {
+    const request = Utils.xapi().post('manager/service/update', {
+        workingForId: data.workingForId,
+        id: data.id,
+        serviceData: {
+            name: data.name,
+            description: data.description,
+            price: data.price,
+            durationInMinutes: data.durationInMinutes
+        }
+    });
+    return (dispatch) =>
+        request.then((response) => {
+            if ( !response.data.error )
+            {          
+                dispatch(getServices({
+                    workingForId: data.workingForId
+                }));  
+                return dispatch({
+                    type: UPDATE_SERVICE,
                 });
             }
         });
@@ -52,12 +80,13 @@ export function deleteService(data) {
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )
-            {            
+            {        
+                dispatch(getServices({
+                    workingForId: data.workingForId
+                }));     
                 return dispatch({
-                    type: DELETE_SERVICE,
-                    id: data.id
+                    type: DELETE_SERVICE
                 });
             }
         });
 }
-
