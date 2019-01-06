@@ -18,15 +18,15 @@ const employees = function (state = initialState, action) {
                 list: action.data
             };
         }
-        case Actions.SET_SERVICE_DATA:
-        {
-            return {
-                list: [
-                    ...state.data,
-                    action.data
-                ]
-            };
-        }
+        // case Actions.SET_SERVICE_DATA:
+        // {
+        //     return {
+        //         list: [
+        //             ...state.data,
+        //             action.data
+        //         ]
+        //     };
+        // }
         default:
         {
             return state

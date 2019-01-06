@@ -53,20 +53,6 @@ class NewOrEditModal extends React.Component {
         this.save = this.save.bind(this);
     }
 
-    componentDidUpdate() {
-        // this.state = {
-        //     title: this.props.data.name,
-        //     titleState: "success",
-        //     time: this.props.data.durationInMinutes,
-        //     timeState: "success",
-        //     price: this.props.data.price,
-        //     priceState: "success",
-        //     description: this.props.data.description,
-        //     descriptionState: "success"
-        // }
-        // console.log('titleState: ', this.state.titleState);
-    }
-
     initState() {
         this.setState({
             title: "",
@@ -81,13 +67,14 @@ class NewOrEditModal extends React.Component {
     }
 
     handleClose() {
+        this.initState();
         this.props.onClose();
     }
 
     save() {
         this.props.addService({
             token: this.props.token,
-            id: this.props.id,
+            workingForId: this.props.workingForId,
             name: this.state.title,
             description: this.state.description,
             price: this.state.price,
@@ -319,18 +306,16 @@ NewOrEditModal.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-// export default withStyles(commonModalStyle)(NewOrEditModal);
-
 function mapStateToProps(state) {
     return {
-        token: state.user.token,
-        id: state.user.selected_workingForId
+        token           : state.user.token,
+        workingForId    : state.user.workingForId
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        addService: Actions.setServiceData
+        addService: Actions.addService
     }, dispatch);
 }
 

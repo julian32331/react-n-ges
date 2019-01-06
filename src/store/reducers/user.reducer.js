@@ -8,7 +8,7 @@ import * as Actions from '../actions';
 const initialState = {
     token: "",
     workingFor: "",
-    selected_workingForId: null,
+    workingForId: null,
 };
 
 const user = function (state = initialState, action) {
@@ -19,7 +19,7 @@ const user = function (state = initialState, action) {
             return {
                 token: action.token,
                 workingFor: action.workingFor,
-                selected_workingForId: null
+                workingForId: null
             };
         }
         case Actions.GET_USER_DATA:
@@ -27,7 +27,7 @@ const user = function (state = initialState, action) {
             return {
                 token: action.token,
                 workingFor: action.workingFor,
-                selected_workingForId: action.selected_workingForId
+                workingForId: action.workingForId
             };
         }
         case Actions.UPDATE_USER_WORKINGFORID:
@@ -35,7 +35,7 @@ const user = function (state = initialState, action) {
             return {
                 token: state.token,
                 workingFor: state.workingFor,
-                selected_workingForId: action.id
+                workingForId: action.workingForId
             };
         }
         default:

@@ -206,7 +206,7 @@ function mapStateToProps(state) {
   return {
       // token: state.user.token,
       token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0MUBnZXNlbGxlLnNlIiwiaWF0IjoxNTQ2NTIyOTU2LCJleHAiOjE1NDcxMjc3NTZ9.S3-9MG0oIv0svs-QzTdw8pORFxCVsW46uVsgDUevr4I",
-      // id: state.user.selected_workingForId,
+      // id: state.user.workingForId,
       id: 6,
       check_list: state.checkInOut.check_list
   };

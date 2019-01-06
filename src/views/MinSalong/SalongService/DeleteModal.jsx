@@ -6,6 +6,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Slide from "@material-ui/core/Slide";
@@ -25,9 +30,19 @@ function Transition(props) {
 class DeleteModal extends React.Component {
     constructor(props) {
         super(props);
+        this.delete = this.delete.bind(this);
     }
 
     handleClose() {
+        this.props.onClose();
+    }
+
+    delete() {
+        this.props.deleteService({
+            token: this.props.token,
+            workingForId: this.props.workingForId,
+            id: this.props.id
+        })
         this.props.onClose();
     }
 
@@ -43,11 +58,11 @@ class DeleteModal extends React.Component {
                 TransitionComponent={Transition}
                 keepMounted
                 onClose={() => {this.handleClose()}}
-                aria-labelledby="saloon-service-remove-modal-title"
-                aria-describedby="saloon-service-remove-modal-description"
+                aria-labelledby="saloon-service-delete-modal-title"
+                aria-describedby="saloon-service-delete-modal-description"
             >
                 <DialogContent
-                    id="saloon-service-remove-modal-description"
+                    id="saloon-service-delete-modal-description"
                     className={
                     classes.modalBody + " " + classes.modalSmallBody
                     }
@@ -70,7 +85,7 @@ class DeleteModal extends React.Component {
                     No
                     </Button>
                     <Button
-                        onClick={() => this.handleClose()}
+                        onClick={() => this.delete()}
                         color="danger"
                         size="sm"
                         className={
@@ -91,4 +106,17 @@ DeleteModal.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(commonModalStyle)(DeleteModal);
+function mapStateToProps(state) {
+    return {
+        token           : state.user.token,
+        workingForId    : state.user.workingForId
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        deleteService: Actions.deleteService
+    }, dispatch);
+}
+
+export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(DeleteModal)));

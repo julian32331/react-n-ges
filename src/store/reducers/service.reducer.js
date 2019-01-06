@@ -6,24 +6,35 @@
 import * as Actions from '../actions';
 
 const initialState = {
-    data: []
+    services: [],
 };
 
 const service = function (state = initialState, action) {
     switch ( action.type )
     {
-        case Actions.GET_SERVICE_DATA:
+        case Actions.GET_SERVICES:
         {
             return {
-                data: action.data
+                services: action.services
             };
         }
-        case Actions.SET_SERVICE_DATA:
+        case Actions.ADD_SERVICE:
         {
             return {
-                data: [
-                    ...state.data,
-                    action.data
+                services: [
+                    ...state.services,
+                    action.service
+                ]
+            };
+        }
+        case Actions.DELETE_SERVICE:
+        {
+            let index = state.services.findIndex(service => service.id == action.id);
+            state.services.splice(index, 1);
+            
+            return {
+                services: [
+                    ...state.services
                 ]
             };
         }

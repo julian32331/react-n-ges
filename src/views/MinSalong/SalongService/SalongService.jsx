@@ -30,7 +30,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import salongServiceStyle from "assets/jss/material-dashboard-pro-react/views/salongService/salongServiceStyle.jsx";
 
 import NewOrEditModal from "./NewOrEditModal.jsx";
-import DeleteModal from "views/DeleteModal.jsx";
+import DeleteModal from "./DeleteModal.jsx";
 
 class SalongService extends React.Component {
     constructor(props) {
@@ -50,6 +50,12 @@ class SalongService extends React.Component {
             this.getServices();
         }, 100);
     }
+    
+    getServices() {
+        this.props.getServices({
+            workingForId: this.props.workingForId
+        })
+    }
 
     // Open and close Delete modal
     onCloseDeleteModal() {
@@ -57,9 +63,10 @@ class SalongService extends React.Component {
             deleteModal: false
         })
     }
-    onOpenDeleteModal() {
+    onOpenDeleteModal(service) {
         this.setState({
-            deleteModal: true
+            deleteModal: true,            
+            modalData: service
         })
     }
 
@@ -69,113 +76,106 @@ class SalongService extends React.Component {
             newOrEditModal: false
         })
     }
-    onOpenNewOrEditModal(title, data=null) {
+    onOpenNewOrEditModal(title, service=null) {
         this.setState({
             newOrEditModal: true,
             modalTitle: title,
-            modalData: data
-        })
-    }
-
-    getServices() {
-        console.log('service: ', this.props.id)
-        this.props.getServices({
-            id: this.props.id
+            modalData: service
         })
     }
 
     render() {
-    const { classes } = this.props;
-    return (
-      <Card>
-        <CardHeader>            
-            <div className={classes.cardHeader}>
-                <GridContainer>
-                    <GridItem xs={12} sm={6}>
-                        <h3 className={classes.cardTitle}>Saloon Service</h3>
-                    </GridItem>
-                    <GridItem xs={12} sm={6} className={classes.text_right}>
-                        <Button 
-                            color="info" 
-                            onClick={() => this.onOpenNewOrEditModal("New Service")}
-                        >                            
-                            <Add /> ADD Service
-                        </Button>
-                    </GridItem>
-                </GridContainer>
-            </div>
-        </CardHeader>
-        <CardBody>
-            <GridContainer justify="center" className={classes.mb_20}>
-                <GridItem xs={11} sm={10} md={10} lg={9}>
-                {
-                    this.props.data.map((service, key) => {
-                        return (
-                            <GridContainer key={key} className={classes.mb_20}>
-                                <GridItem xs={12} md={3} className={classes.bg_title}>
-                                    <div className={classes.title_container}> 
-                                        <GridContainer>
-                                            <GridItem xs={12}>
-                                                <div className={classes.title}>{service.name}</div>
-                                            </GridItem>
-                                            <GridItem xs={6} md={12}>
-                                                <div className={classes.time}><span className={classes.title_item}>Tid :&nbsp;&nbsp;</span> {service.durationInMinutes}min</div>
-                                            </GridItem>
-                                            <GridItem xs={6} md={12}>
-                                                <div className={classes.price}><span className={classes.title_item}>Pris kr :&nbsp;&nbsp;</span> {service.price}</div>
-                                            </GridItem>
-                                        </GridContainer>
-                                    </div>
-                                </GridItem>
-                                <GridItem xs={12} md={7} className={classes.bg_content}>
-                                    {service.description}
-                                </GridItem>
-                                <GridItem xs={12} md={2} className={classes.btn_container}>
-                                    <div className={classes.py_15}>
-                                        <Button
-                                            justIcon
-                                            round
-                                            color="info"
-                                            size="sm"
-                                            className={classes.mx_10}
-                                            onClick={() => this.onOpenNewOrEditModal("Edit Service", service)}
-                                            >
-                                            <Create />
-                                        </Button>                        
-                                        <Button
-                                            justIcon
-                                            round
-                                            color="danger"
-                                            size="sm"
-                                            className={classes.mx_10}
-                                            onClick={() => this.onOpenDeleteModal()}
-                                            >
-                                            <Close />
-                                        </Button>
-                                    </div>
-                                </GridItem>
-                            </GridContainer>
-                        )                        
-                    })
-                }                    
-                </GridItem>
-            </GridContainer>
-            <DeleteModal 
-                onOpen={this.state.deleteModal}
-                onClose={this.onCloseDeleteModal.bind(this)} 
-            />
-                
-            <NewOrEditModal 
-                onOpen={this.state.newOrEditModal}
-                onClose={this.onCloseNewOrEditModal.bind(this)}
-                modalTitle={this.state.modalTitle}
-                data={this.state.modalData}
-            />
-
-        </CardBody>
-      </Card>
-    );
-  }
+        const { classes } = this.props;
+        return (
+            <Card>
+                <CardHeader>            
+                    <div className={classes.cardHeader}>
+                        <GridContainer>
+                            <GridItem xs={12} sm={6}>
+                                <h3 className={classes.cardTitle}>Saloon Service</h3>
+                            </GridItem>
+                            <GridItem xs={12} sm={6} className={classes.text_right}>
+                                <Button 
+                                    color="info" 
+                                    onClick={() => this.onOpenNewOrEditModal("New Service")}
+                                >                            
+                                    <Add /> ADD Service
+                                </Button>
+                            </GridItem>
+                        </GridContainer>
+                    </div>
+                </CardHeader>
+                <CardBody>
+                    <GridContainer justify="center" className={classes.mb_20}>
+                        <GridItem xs={11} sm={10} md={10} lg={9}>
+                        {
+                            this.props.services.map((service, key) => {
+                                return (
+                                    <GridContainer key={key} className={classes.mb_20}>
+                                        <GridItem xs={12} md={3} className={classes.bg_title}>
+                                            <div className={classes.title_container}> 
+                                                <GridContainer>
+                                                    <GridItem xs={12}>
+                                                        <div className={classes.title}>{service.name}</div>
+                                                    </GridItem>
+                                                    <GridItem xs={6} md={12}>
+                                                        <div className={classes.time}><span className={classes.title_item}>Tid :&nbsp;&nbsp;</span> {service.durationInMinutes}min</div>
+                                                    </GridItem>
+                                                    <GridItem xs={6} md={12}>
+                                                        <div className={classes.price}><span className={classes.title_item}>Pris kr :&nbsp;&nbsp;</span> {service.price}</div>
+                                                    </GridItem>
+                                                </GridContainer>
+                                            </div>
+                                        </GridItem>
+                                        <GridItem xs={12} md={7} className={classes.bg_content}>
+                                            {service.description}
+                                        </GridItem>
+                                        <GridItem xs={12} md={2} className={classes.btn_container}>
+                                            <div className={classes.py_15}>
+                                                <Button
+                                                    justIcon
+                                                    round
+                                                    color="info"
+                                                    size="sm"
+                                                    className={classes.mx_10}
+                                                    onClick={() => this.onOpenNewOrEditModal("Edit Service", service)}
+                                                    >
+                                                    <Create />
+                                                </Button>                        
+                                                <Button
+                                                    justIcon
+                                                    round
+                                                    color="danger"
+                                                    size="sm"
+                                                    className={classes.mx_10}
+                                                    onClick={() => this.onOpenDeleteModal(service)}
+                                                    >
+                                                    <Close />
+                                                </Button>
+                                            </div>
+                                        </GridItem>
+                                    </GridContainer>
+                                )                        
+                            })
+                        }                    
+                        </GridItem>
+                    </GridContainer>
+                    <DeleteModal 
+                        onOpen={this.state.deleteModal}
+                        onClose={this.onCloseDeleteModal.bind(this)}
+                        id={this.state.modalData? this.state.modalData.id : null}
+                    />
+                        
+                    <NewOrEditModal 
+                        onOpen={this.state.newOrEditModal}
+                        onClose={this.onCloseNewOrEditModal.bind(this)}
+                        modalTitle={this.state.modalTitle}
+                        data={this.state.modalData}
+                    />
+                </CardBody>
+            </Card>
+        );
+    }
 }
 
 SalongService.propTypes = {
@@ -184,16 +184,16 @@ SalongService.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        id: state.user.selected_workingForId,
-        data: state.service.data
+        workingForId    : state.user.workingForId,
+        services        : state.service.services
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        getUserData: Actions.getUserData,
-        getServices: Actions.getServiceData,
-        addService: Actions.setServiceData
+        getUserData : Actions.getUserData,
+        getServices : Actions.getServices,
+        addService  : Actions.addService
     }, dispatch);
 }
 

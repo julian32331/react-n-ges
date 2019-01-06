@@ -53,9 +53,9 @@ class SelectModal extends React.Component {
 
         this.props.getUserData();
         setTimeout(() => {
-            if(this.props.selected_workingForId) {
+            if(this.props.workingForId) {
                 this.setState({
-                    company: Number(this.props.selected_workingForId)
+                    company: Number(this.props.workingForId)
                 })
             }            
         }, 300);
@@ -184,7 +184,7 @@ function mapStateToProps(state) {
     return {
         token: state.user.token,
         workingFor: state.user.workingFor,
-        selected_workingForId: state.user.selected_workingForId
+        workingForId: state.user.workingForId
     };
 }
 

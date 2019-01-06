@@ -2,38 +2,31 @@
  * Description: Reducer of the service data
  * Date: 1/3/2019
  */
-import axios from 'axios/index';
 import * as Utils from 'utils';
 
-export const GET_SERVICE_DATA = '[SERVICE] GET DATA';
-export const SET_SERVICE_DATA = '[SERVICE] SET DATA';
+export const GET_SERVICES       = '[SERVICES] GET';
+export const ADD_SERVICE        = '[SERVICE] ADD';
+export const DELETE_SERVICE     = '[SERVICE] DELETE';
 
-export function getServiceData({id}) {
+export function getServices({workingForId}) {
     const request = Utils.xapi().post('manager/services', {
-        workingForId: id
+        workingForId: workingForId
     });
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )
             {                
                 return dispatch({
-                    type: GET_SERVICE_DATA,
-                    data: response.data.services
+                    type: GET_SERVICES,
+                    services: response.data.services
                 });
             }
-            // else
-            // {
-            //     return dispatch({
-            //         type   : LOGIN_ERROR,
-            //         payload: response.data.error
-            //     });
-            // }
         });
 }
 
-export function setServiceData(data) {
-    const request = Utils.xapi().post('manager/add/service', {
-        workingForId: data.id,
+export function addService(data) {
+    const request = Utils.xapi().post('manager/service/add', {
+        workingForId: data.workingForId,
         name: data.name,
         description: data.description,
         price: data.price,
@@ -44,9 +37,27 @@ export function setServiceData(data) {
             if ( !response.data.error )
             {            
                 return dispatch({
-                    type: SET_SERVICE_DATA,
-                    data: data
+                    type: ADD_SERVICE,
+                    service: data
                 });
             }
         });
 }
+
+export function deleteService(data) {
+    const request = Utils.xapi().post('manager/service/delete', {
+        workingForId: data.workingForId,
+        id: data.id
+    });
+    return (dispatch) =>
+        request.then((response) => {
+            if ( !response.data.error )
+            {            
+                return dispatch({
+                    type: DELETE_SERVICE,
+                    id: data.id
+                });
+            }
+        });
+}
+

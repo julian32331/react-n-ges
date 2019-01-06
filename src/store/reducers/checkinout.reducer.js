@@ -18,15 +18,15 @@ const checkInOut = function (state = initialState, action) {
                 check_list: action.data
             };
         }
-        case Actions.SET_SERVICE_DATA:
-        {
-            return {
-                check_list: [
-                    ...state.data,
-                    action.data
-                ]
-            };
-        }
+        // case Actions.SET_SERVICE_DATA:
+        // {
+        //     return {
+        //         check_list: [
+        //             ...state.data,
+        //             action.data
+        //         ]
+        //     };
+        // }
         default:
         {
             return state

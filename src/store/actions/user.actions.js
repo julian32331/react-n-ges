@@ -25,25 +25,25 @@ export function setUserData(user) {
 export function getUserData() {
     let token = localStorage.token;
     let workingFor = localStorage.workingFor;
-    let selected_workingForId = localStorage.selected_workingForId;
+    let workingForId = localStorage.workingForId;
     
     return (dispatch) => {
         dispatch({
             type: GET_USER_DATA,
             token,
             workingFor,
-            selected_workingForId
+            workingForId
         })
     }
 }
 
-export function updateWorkingForId(id) {
-    localStorage.setItem('selected_workingForId', id);
+export function updateWorkingForId(workingForId) {
+    localStorage.setItem('workingForId', workingForId);
 
     return (dispatch) => {
         dispatch({
             type: UPDATE_USER_WORKINGFORID,
-            id
+            workingForId
         })
     }
 }
