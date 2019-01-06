@@ -505,7 +505,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .rdtPicker {
   display: none;
   position: absolute;
-  width: 260px;
+  /* width: 260px; */
+  width: 180px;
   padding: 4px;
   margin-top: 1px;
   z-index: 99999 !important;

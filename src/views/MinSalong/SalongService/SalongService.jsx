@@ -6,13 +6,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
 import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
+
+// @material-ui/core components
+import withStyles from "@material-ui/core/styles/withStyles";
 
 // @material-ui/icons
 import Add from "@material-ui/icons/Add";
@@ -37,7 +37,7 @@ class SalongService extends React.Component {
         super(props);
         this.state = {
             deleteModal: false,
-            newOrEditModal: false,
+            newOrUpdateModal: false,
             modalTitle: '',
             modalData: null
         };
@@ -71,14 +71,14 @@ class SalongService extends React.Component {
     }
 
     // Open and close NewOrUpdate modal
-    onCloseNewOrEditModal() {
+    onCloseNewOrUpdateModal() {
         this.setState({
-            newOrEditModal: false
+            newOrUpdateModal: false
         })
     }
-    onOpenNewOrEditModal(title, service=null) {
+    onOpenNewOrUpdateModal(title, service=null) {
         this.setState({
-            newOrEditModal: true,
+            newOrUpdateModal: true,
             modalTitle: title,
             modalData: service
         })
@@ -97,7 +97,7 @@ class SalongService extends React.Component {
                             <GridItem xs={12} sm={6} className={classes.text_right}>
                                 <Button 
                                     color="info" 
-                                    onClick={() => this.onOpenNewOrEditModal("New Service")}
+                                    onClick={() => this.onOpenNewOrUpdateModal("New Service")}
                                 >                            
                                     <Add /> ADD Service
                                 </Button>
@@ -138,7 +138,7 @@ class SalongService extends React.Component {
                                                     color="info"
                                                     size="sm"
                                                     className={classes.mx_10}
-                                                    onClick={() => this.onOpenNewOrEditModal("Update Service", service)}
+                                                    onClick={() => this.onOpenNewOrUpdateModal("Update Service", service)}
                                                     >
                                                     <Create />
                                                 </Button>                        
@@ -167,8 +167,8 @@ class SalongService extends React.Component {
                     />
                         
                     <NewOrUpdateModal 
-                        onOpen={this.state.newOrEditModal}
-                        onClose={this.onCloseNewOrEditModal.bind(this)}
+                        onOpen={this.state.newOrUpdateModal}
+                        onClose={this.onCloseNewOrUpdateModal.bind(this)}
                         modalTitle={this.state.modalTitle}
                         data={this.state.modalData}
                     />
