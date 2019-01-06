@@ -8,17 +8,10 @@ import * as Utils from 'utils';
 export const GET_SERVICE_DATA = '[SERVICE] GET DATA';
 export const SET_SERVICE_DATA = '[SERVICE] SET DATA';
 
-export function getServiceData({token, id}) {
-    const request = axios.post(Utils.root + 'manager/services',
-        {
-            workingForId: id
-        },
-        {
-            headers: {
-                Authorization: 'Bearer ' + token
-            }
-        }
-    );
+export function getServiceData({id}) {
+    const request = Utils.xapi().post('manager/services', {
+        workingForId: id
+    });
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )
@@ -38,22 +31,14 @@ export function getServiceData({token, id}) {
         });
 }
 
-export function setServiceData(data) {    
-    console.log('service data: ', data);
-    const request = axios.post(Utils.root + 'manager/add/service',
-        {
-            workingForId: data.id,
-            name: data.name,
-            description: data.description,
-            price: data.price,
-            durationInMinutes: data.durationInMinutes
-        },
-        {
-            headers: {
-                Authorization: 'Bearer ' + data.token
-            }
-        }
-    );
+export function setServiceData(data) {
+    const request = Utils.xapi().post('manager/add/service', {
+        workingForId: data.id,
+        name: data.name,
+        description: data.description,
+        price: data.price,
+        durationInMinutes: data.durationInMinutes
+    });
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )

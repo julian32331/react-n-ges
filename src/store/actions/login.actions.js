@@ -13,7 +13,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 
 export function login({email, password})
 {
-    const request = axios.post(Utils.root + 'employee/login', {
+    const request = Utils.xapi().post('employee/login', {
         email,
         password
     });

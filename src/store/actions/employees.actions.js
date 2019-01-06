@@ -9,16 +9,9 @@ export const GET_EMPLOYEES_DATA = '[EMPLOYEES] GET DATA';
 export const SET_EMPLOYEES_DATA = '[EMPLOYEES] SET DATA';
 
 export function getEmployeeList({token, id}) {
-    const request = axios.post(Utils.root + 'manager/employees',
-        {
-            workingForId: id
-        },
-        {
-            headers: {
-                Authorization: 'Bearer ' + token
-            }
-        }
-    );
+    const request = Utils.xapi().post('manager/employees', {
+        workingForId: id
+    });
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )

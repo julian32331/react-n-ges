@@ -42,11 +42,13 @@ class SalongService extends React.Component {
             modalData: null
         };
         this.getServices = this.getServices.bind(this);
-        this.getServices();
     }
 
-    componentDidUpdate() {
-        console.log('service: ', this.props.data)
+    componentWillMount() {
+        this.props.getUserData();
+        setTimeout(() => {
+            this.getServices();
+        }, 100);
     }
 
     // Open and close Delete modal
@@ -76,8 +78,8 @@ class SalongService extends React.Component {
     }
 
     getServices() {
+        console.log('service: ', this.props.id)
         this.props.getServices({
-            token: this.props.token,
             id: this.props.id
         })
     }
@@ -182,7 +184,6 @@ SalongService.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        token: state.user.token,
         id: state.user.selected_workingForId,
         data: state.service.data
     };
@@ -190,6 +191,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
+        getUserData: Actions.getUserData,
         getServices: Actions.getServiceData,
         addService: Actions.setServiceData
     }, dispatch);

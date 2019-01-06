@@ -9,16 +9,9 @@ export const GET_CHECKLIST_DATA = '[CHECKLIST] GET DATA';
 export const SET_CHECKLIST_DATA = '[CHECKLIST] SET DATA';
 
 export function getCheckList({token, id}) {
-    const request = axios.post(Utils.root + 'manager/checklist',
-        {
-            workingForId: id
-        },
-        {
-            headers: {
-                Authorization: 'Bearer ' + token
-            }
-        }
-    );
+    const request = Utils.xapi().post('manager/checklist', {
+        workingForId: id
+    });
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )
@@ -37,31 +30,3 @@ export function getCheckList({token, id}) {
             // }
         });
 }
-
-// export function setServiceData(data) {    
-//     console.log('service data: ', data);
-//     const request = axios.post(Utils.root + 'manager/add/service',
-//         {
-//             workingForId: data.id,
-//             name: data.name,
-//             description: data.description,
-//             price: data.price,
-//             durationInMinutes: data.durationInMinutes
-//         },
-//         {
-//             headers: {
-//                 Authorization: 'Bearer ' + data.token
-//             }
-//         }
-//     );
-//     return (dispatch) =>
-//         request.then((response) => {
-//             if ( !response.data.error )
-//             {            
-//                 return dispatch({
-//                     type: SET_SERVICE_DATA,
-//                     data: data
-//                 });
-//             }
-//         });
-// }
