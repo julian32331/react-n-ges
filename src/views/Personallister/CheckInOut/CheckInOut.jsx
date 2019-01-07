@@ -135,6 +135,7 @@ class CheckInOut extends React.Component {
                 <GridItem xs={12} sm={6} className={classes.text_right}>
                     <Button 
                         color="info" 
+                        size="sm"
                         onClick={() => this.onOpenCheckInModal()}
                     >                            
                         <Add /> Check In USER

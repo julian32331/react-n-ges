@@ -40,7 +40,7 @@ import Table from "components/Table/Table.jsx";
 import openingHoursStyle from "assets/jss/material-dashboard-pro-react/views/openingHours/openingHoursStyle.jsx";
 
 import DeleteModal from "./deleteModal";
-import NewOrUpdateModal from "./newOrUpdateModal";
+import NewOrUpdateModal from "./NewOrUpdateModal";
 
 class OpeningHours extends React.Component {
     constructor(props) {
@@ -48,8 +48,7 @@ class OpeningHours extends React.Component {
         this.state = {
             deleteModal: false,
             newOrUpdateModal: false,
-            btn_name: '',            
-            checkedA: true,
+            modalTitle: '',
         };
         this.getHours = this.getHours.bind(this);
     }
@@ -156,10 +155,10 @@ class OpeningHours extends React.Component {
         })
     }
 
-    onOpenNewOrUpdateModal(btn_name) {
+    onOpenNewOrUpdateModal(title) {
         this.setState({
             newOrUpdateModal: true,
-            btn_name: btn_name
+            modalTitle: title
         })
     }
 
@@ -270,9 +269,10 @@ class OpeningHours extends React.Component {
                                 <GridItem xs={12} sm={6} className={classes.text_right}>
                                     <Button 
                                         color="info" 
-                                        onClick={() => this.onOpenNewOrUpdateModal("New")}
+                                        size="sm"
+                                        onClick={() => this.onOpenNewOrUpdateModal("New Special Day")}
                                     >                            
-                                        <Add /> Add Special Event
+                                        <Add /> Add Special Day
                                     </Button>
                                 </GridItem>
                             </GridContainer>
@@ -315,7 +315,7 @@ class OpeningHours extends React.Component {
                         <NewOrUpdateModal 
                             onOpen={this.state.newOrUpdateModal}
                             onClose={this.onCloseNewOrUpdateModal.bind(this)} 
-                            btn_name={this.state.btn_name}
+                            modalTitle={this.state.modalTitle}
                         />
                     </CardBody>
                 </Card>

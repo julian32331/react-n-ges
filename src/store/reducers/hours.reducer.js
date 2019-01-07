@@ -20,6 +20,13 @@ const hours = function (state = initialState, action) {
                 specialDays: action.payload.specialDays
             };
         }
+        case Actions.ADD_SPECIALDAY:
+        {
+            return {
+                openingHours: state.openingHours,
+                specialDays: state.specialDays
+            };
+        }
         default:
         {
             return state

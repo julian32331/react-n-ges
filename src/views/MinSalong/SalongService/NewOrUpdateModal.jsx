@@ -100,7 +100,6 @@ class NewOrUpdateModal extends React.Component {
     save(isNew) {
         if(isNew) {
             this.props.addService({
-                token: this.props.token,
                 workingForId: this.props.workingForId,
                 name: this.state.title,
                 description: this.state.description,
@@ -109,7 +108,6 @@ class NewOrUpdateModal extends React.Component {
             })
         } else {            
             this.props.updateService({
-                token: this.props.token,
                 workingForId: this.props.workingForId,
                 id: this.props.data.id,
                 name: this.state.title,
@@ -346,7 +344,6 @@ NewOrUpdateModal.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        token           : state.user.token,
         workingForId    : state.user.workingForId
     };
 }
