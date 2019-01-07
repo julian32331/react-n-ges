@@ -10,7 +10,7 @@ const initialState = {
     specialDays: []
 };
 
-const hour = function (state = initialState, action) {
+const hours = function (state = initialState, action) {
     switch ( action.type )
     {
         case Actions.GET_HOURS:
@@ -27,4 +27,4 @@ const hour = function (state = initialState, action) {
     }
 };
 
-export default hour;
+export default hours;

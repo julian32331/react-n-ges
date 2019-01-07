@@ -130,11 +130,11 @@ class OpeningHours extends React.Component {
         }
     }
 
-    openChange = name => event => {
+    openHandler = name => event => {
       this.setState({ [name]: event.target.checked });
     };
 
-    timeChange = name => event => {
+    timeHandler = name => event => {
         this.setState({ [name]: moment(event._d).format("HH:mm") });
     }
 
@@ -214,7 +214,7 @@ class OpeningHours extends React.Component {
                                                     control={
                                                         <Switch
                                                             checked={this.state[`${hour.name}_open`]? this.state[`${hour.name}_open`] : false}
-                                                            onChange={this.openChange(`${hour.name}_open`)}
+                                                            onChange={this.openHandler(`${hour.name}_open`)}
                                                             classes={{
                                                                 switchBase: classes.switchBase,
                                                                 checked: classes.switchChecked,
@@ -237,7 +237,7 @@ class OpeningHours extends React.Component {
                                                         timeFormat="HH:mm"
                                                         inputProps={{ placeholder: "From" }}
                                                         value={this.state[`${hour.name}_from`]}
-                                                        onChange={this.timeChange(`${hour.name}_from`)}
+                                                        onChange={this.timeHandler(`${hour.name}_from`)}
                                                     />
                                                 </FormControl>
                                             </GridItem>
@@ -248,7 +248,7 @@ class OpeningHours extends React.Component {
                                                         timeFormat="HH:mm"
                                                         inputProps={{ placeholder: "To" }}
                                                         value={this.state[`${hour.name}_to`]}
-                                                        onChange={this.timeChange(`${hour.name}_to`)}
+                                                        onChange={this.timeHandler(`${hour.name}_to`)}
                                                     />
                                                 </FormControl>
                                             </GridItem>
@@ -331,8 +331,8 @@ OpeningHours.propTypes = {
 function mapStateToProps(state) {
     return {
         workingForId    : state.user.workingForId,
-        openingHours    : state.hour.openingHours,
-        specialDays     : state.hour.specialDays
+        openingHours    : state.hours.openingHours,
+        specialDays     : state.hours.specialDays
     };
 }
 

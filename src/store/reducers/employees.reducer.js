@@ -6,27 +6,18 @@
 import * as Actions from '../actions';
 
 const initialState = {
-    list: []
+    employees: []
 };
 
 const employees = function (state = initialState, action) {
     switch ( action.type )
     {
-        case Actions.GET_EMPLOYEES_DATA:
+        case Actions.GET_EMPLOYEES:
         {
             return {
-                list: action.data
+                employees: action.employees
             };
         }
-        // case Actions.SET_SERVICE_DATA:
-        // {
-        //     return {
-        //         list: [
-        //             ...state.data,
-        //             action.data
-        //         ]
-        //     };
-        // }
         default:
         {
             return state

@@ -5,28 +5,20 @@
 import axios from 'axios/index';
 import * as Utils from 'utils';
 
-export const GET_EMPLOYEES_DATA = '[EMPLOYEES] GET DATA';
-export const SET_EMPLOYEES_DATA = '[EMPLOYEES] SET DATA';
+export const GET_EMPLOYEES = '[EMPLOYEES] GET';
 
-export function getEmployeeList({token, id}) {
+export function getEmployees({workingForId}) {
     const request = Utils.xapi().post('manager/employees', {
-        workingForId: id
+        workingForId: workingForId
     });
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )
             {
                 return dispatch({
-                    type: GET_EMPLOYEES_DATA,
-                    data: response.data.data
+                    type: GET_EMPLOYEES,
+                    employees: response.data.data
                 });
             }
-            // else
-            // {
-            //     return dispatch({
-            //         type   : LOGIN_ERROR,
-            //         payload: response.data.error
-            //     });
-            // }
         });
 }

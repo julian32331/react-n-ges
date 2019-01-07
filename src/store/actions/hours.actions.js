@@ -4,7 +4,7 @@
  */
 import * as Utils from 'utils';
 
-export const GET_HOURS       = '[HOURS] GET';
+export const GET_HOURS = '[HOURS] GET';
 
 export function getHours({workingForId}) {
     const request = Utils.xapi().post('manager/openinghours', {

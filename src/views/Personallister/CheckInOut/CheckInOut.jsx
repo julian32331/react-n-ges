@@ -41,13 +41,55 @@ class CheckInOut extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      search: "",
+      searchFrom: "",
+      searchTo: "",
       checkInModal: false
     }
+    this.list = [];
     this.getCheckList = this.getCheckList.bind(this);
-    this.getCheckList();
   }
-  componentDidUpdate() {
-    console.log('this.props.check_list: ', this.props.check_list)
+
+  componentWillMount() {
+      this.props.getUserData();
+      setTimeout(() => {
+          this.getCheckList();
+      }, 100);
+  }
+
+  getCheckList() {
+    this.props.getCheckList({
+        workingForId: this.props.workingForId
+    })
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.list)
+      this.list = nextProps.list;
+  }
+
+  searchHandler(name, event) {
+    this.setState({ [name]: event.target.value });
+    this.search(event.target.value.toLowerCase(), null, null);
+  };
+
+  timeHandler = name => event => {
+    this.setState({ [name]: moment(event._d) });
+    this.search(this.state.search.toLowerCase(), moment(event._d), null);
+  }
+  
+  search(search, from, to) {
+    let temp = [];
+
+    temp = search? this.props.list.filter( item => {
+      return item.Employee.name.toLowerCase().indexOf(search) !== -1
+    }) : this.props.list;
+
+    // temp = from? temp.filter( item => {
+    //   return item.Employee.name.toLowerCase().indexOf(search) !== -1
+    // }) : temp;
+
+    this.list = temp;
   }
 
   onCloseCheckInModal() {
@@ -62,13 +104,6 @@ class CheckInOut extends React.Component {
     })
   }
 
-  getCheckList() {
-    this.props.getCheckList({
-        token: this.props.token,
-        id: this.props.id
-    })
-}
-
   render() {
     const { classes } = this.props;
 
@@ -77,19 +112,17 @@ class CheckInOut extends React.Component {
           <Remove className={classes.icon} /> Check Out User
         </Button>
 
-    let check_list = [];
-    this.props.check_list.map(list => {
+    let list = [];
+    this.list.map(item => {
       let temp = [];
-      temp.push(list.Employee.name);
-      temp.push(list.Employee.employeeId);
-      temp.push(moment(list.checkIn).format("MM/DD/YYYY, hh:mm"));
-      temp.push(list.checkOut? moment(list.checkOut).format("MM/DD/YYYY, hh:mm") : null);
-      list.checkOut? temp.push("") : temp.push(checkOutButton)
+      temp.push(item.Employee.name);
+      temp.push(item.Employee.employeeId);
+      temp.push(moment(item.checkIn).format("MM/DD/YYYY, hh:mm"));
+      temp.push(item.checkOut? moment(item.checkOut).format("MM/DD/YYYY, hh:mm") : null);
+      item.checkOut? temp.push("") : temp.push(checkOutButton)
 
-      check_list.push(temp);
+      list.push(temp);
     })
-    
-    console.log('checklist: ', check_list)
 
     return (
       <Card>
@@ -97,7 +130,7 @@ class CheckInOut extends React.Component {
           <div className={classes.cardHeader}>
             <GridContainer>
                 <GridItem xs={12} sm={6}>
-                    <h3 className={classes.cardTitle}>Check In/Out</h3>
+                  <h3 className={classes.cardTitle}>Check In/Out</h3>
                 </GridItem>
                 <GridItem xs={12} sm={6} className={classes.text_right}>
                     <Button 
@@ -124,11 +157,14 @@ class CheckInOut extends React.Component {
                   fullWidth: true
                 }}
                 inputProps={{
-                  type: "search"
+                  type: "search",
+                  onChange: event =>
+                    this.searchHandler("search", event),
+                  value: this.state.search  
                 }}
               />
             </GridItem>
-            <GridItem xs={3} sm={1}>
+            {/* <GridItem xs={3} sm={1}>
               <FormLabel className={classes.labelHorizontal}>
                 From
               </FormLabel>
@@ -137,6 +173,8 @@ class CheckInOut extends React.Component {
               <FormControl fullWidth className={classes.pt_20}>
                 <Datetime
                   timeFormat={false}
+                  value={this.state.searchFrom}
+                  onChange={this.timeHandler("searchFrom")}
                 />
               </FormControl>
             </GridItem>
@@ -151,7 +189,7 @@ class CheckInOut extends React.Component {
                   timeFormat={false}
                 />
               </FormControl>
-            </GridItem>
+            </GridItem> */}
           </GridContainer>
 
           <Table
@@ -163,7 +201,7 @@ class CheckInOut extends React.Component {
               "Action"
             ]}
             tableData={
-              check_list
+              list
             }
             customCellClasses={[
               classes.center,
@@ -200,21 +238,18 @@ CheckInOut.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-// export default withStyles(checkInOutStyle)(CheckInOut);
-
 function mapStateToProps(state) {
   return {
-      // token: state.user.token,
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0MUBnZXNlbGxlLnNlIiwiaWF0IjoxNTQ2NTIyOTU2LCJleHAiOjE1NDcxMjc3NTZ9.S3-9MG0oIv0svs-QzTdw8pORFxCVsW46uVsgDUevr4I",
-      // id: state.user.workingForId,
-      id: 6,
-      check_list: state.checkInOut.check_list
+      token       : state.user.token,
+      workingForId: state.user.workingForId,
+      list        : state.checkInOut.list
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-      getCheckList: Actions.getCheckList,
+    getUserData : Actions.getUserData,
+    getCheckList: Actions.getCheckList
   }, dispatch);
 }
 

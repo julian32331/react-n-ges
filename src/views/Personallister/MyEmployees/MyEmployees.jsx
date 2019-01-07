@@ -6,7 +6,6 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import Datetime from "react-datetime";
 
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
@@ -15,14 +14,11 @@ import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 
 // @material-ui/icons
 import Add from "@material-ui/icons/Add";
-import Remove from "@material-ui/icons/Remove";
 import Close from "@material-ui/icons/Close";
-import Person from "@material-ui/icons/Person";
 import Edit from "@material-ui/icons/Edit";
 
 // core components
@@ -44,13 +40,42 @@ class MyEmployees extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      search: "",
       checkInModal: false
     }
-    this.getEmployeeList = this.getEmployeeList.bind(this);
-    this.getEmployeeList();
+    this.employees = [];
+    this.getEmployees = this.getEmployees.bind(this);
   }
-  componentDidUpdate() {
-    console.log('this.props.list: ', this.props.list)
+
+  componentWillMount() {
+      this.props.getUserData();
+      setTimeout(() => {
+          this.getEmployees();
+      }, 100);
+  }
+
+  getEmployees() {
+    this.props.getEmployees({
+      workingForId: this.props.workingForId
+    })
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.employees)
+      this.employees = nextProps.employees;
+  }
+
+  searchHandler(name, event) {
+    this.setState({ [name]: event.target.value });
+    this.search(event.target.value.toLowerCase());
+  };
+  
+  search(value) {
+    let temp = this.props.employees.filter( employee => {
+      return employee.Employee.name.toLowerCase().indexOf(value) !== -1
+    });
+
+    this.employees = temp;
   }
 
   onCloseCheckInModal() {
@@ -65,17 +90,10 @@ class MyEmployees extends React.Component {
     })
   }
 
-  getEmployeeList() {
-    this.props.getEmployeeList({
-      token: this.props.token,
-      id: this.props.id
-    })
-  }
-
   render() {
     const { classes } = this.props;
 
-    const fillButtons = [
+    const buttons = [
       { color: "info", icon: Edit },
       { color: "danger", icon: Close }
     ].map((prop, key) => {
@@ -86,7 +104,6 @@ class MyEmployees extends React.Component {
       );
     });
 
-    // const avatar = <img src={DefaultAvatar} alt="..." />
     const avatar = 
       <div className={classes.picture}>
         <img
@@ -95,6 +112,23 @@ class MyEmployees extends React.Component {
           alt="..."
         />
       </div>
+
+    let employees = [];
+    this.employees.map(employee => {
+      let temp = [];
+      
+      temp.push(employee.Employee.name);
+      temp.push(employee.Employee.EmployeeInformation.position);
+      temp.push(employee.Employee.EmployeeInformation.mobile);
+      temp.push(employee.Employee.SSN);
+      temp.push(avatar);
+      temp.push(employee.Employee.EmployeeInformation.licenseValidated? "Yes" : "No");
+      temp.push(buttons);
+
+      employees.push(temp);
+    })
+
+    console.log('employees: ', employees)
 
     return (
       <Card>
@@ -129,7 +163,10 @@ class MyEmployees extends React.Component {
                   fullWidth: true
                 }}
                 inputProps={{
-                  type: "search"
+                  type: "search",
+                  onChange: event =>
+                    this.searchHandler("search", event),
+                  value: this.state.search               
                 }}
               />
             </GridItem>
@@ -145,53 +182,7 @@ class MyEmployees extends React.Component {
               "Verified",
               "Actions"
             ]}
-            tableData={[
-              [
-                "Andrew Mike",
-                "Deelop",
-                "123456",
-                "17.12.18",
-                avatar,
-                "14:34",
-                fillButtons
-              ],
-              [
-                "John Doe", 
-                "Deelop",
-                "123456", 
-                "17.12.18", 
-                avatar, 
-                "14:34", 
-                fillButtons
-              ],
-              [
-                "Alex Mike",
-                "Deelop",
-                "123456",
-                "17.12.18",
-                avatar,
-                "14:34",
-                fillButtons
-              ],
-              [
-                "Mike Monday",
-                "Deelop",
-                "123456",
-                "17.12.18",
-                avatar,
-                "14:34",
-                fillButtons
-              ],
-              [
-                "Paul Dickens",
-                "Deelop",
-                "123456",
-                "17.12.18",
-                avatar,
-                "14:34",
-                fillButtons
-              ]
-            ]}
+            tableData={employees}
             customCellClasses={[
               classes.center,
               classes.center,
@@ -227,21 +218,18 @@ MyEmployees.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-// export default withStyles(myEmployeesStyle)(MyEmployees);
-
 function mapStateToProps(state) {
   return {
-      // token: state.user.token,
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0MUBnZXNlbGxlLnNlIiwiaWF0IjoxNTQ2NTIyOTU2LCJleHAiOjE1NDcxMjc3NTZ9.S3-9MG0oIv0svs-QzTdw8pORFxCVsW46uVsgDUevr4I",
-      // id: state.user.workingForId,
-      id: 6,
-      list: state.employees.list
+    token         : state.user.token,
+    workingForId  : state.user.workingForId,
+    employees     : state.employees.employees
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-      getEmployeeList: Actions.getEmployeeList,
+    getUserData : Actions.getUserData,
+    getEmployees: Actions.getEmployees
   }, dispatch);
 }
 

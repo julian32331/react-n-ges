@@ -5,28 +5,20 @@
 import axios from 'axios/index';
 import * as Utils from 'utils';
 
-export const GET_CHECKLIST_DATA = '[CHECKLIST] GET DATA';
-export const SET_CHECKLIST_DATA = '[CHECKLIST] SET DATA';
+export const GET_CHECKLIST = '[CHECKLIST] GETd';
 
-export function getCheckList({token, id}) {
+export function getCheckList({workingForId}) {
     const request = Utils.xapi().post('manager/checklist', {
-        workingForId: id
+        workingForId: workingForId
     });
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )
             {
                 return dispatch({
-                    type: GET_CHECKLIST_DATA,
-                    data: response.data.data
+                    type: GET_CHECKLIST,
+                    list: response.data.data
                 });
             }
-            // else
-            // {
-            //     return dispatch({
-            //         type   : LOGIN_ERROR,
-            //         payload: response.data.error
-            //     });
-            // }
         });
 }
