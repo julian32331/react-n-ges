@@ -177,11 +177,11 @@ class LoginPage extends React.Component {
                     }}
                   />
                   <div className={classes.right + " " + classes.pb_15}>
-                    <Link className={classes.link} to="/forgotpassword">Forgot Password?</Link>
+                    <Link className={classes.link} to="/resetpassword/12345">Forgot Password?</Link>
                   </div>
                   <div className={classes.center}>
                     <Button color="info" className={classes.w_100_p} onClick={this.login} disabled={this.canLogin()}>
-                      Log In
+                      Sign In
                     </Button>   
                     <div className={classes.pt_15}>Don't you have account?</div>
                     <Link className={classes.link} to="/register">Sign Up</Link>
@@ -202,7 +202,7 @@ LoginPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    status: state.auth.loginStatus
+    status: state.auth.status
   }
 }
 

@@ -5,7 +5,7 @@
 
 import LoginPage from "views/Login/LoginPage.jsx";
 import RegisterPage from "views/Register/RegisterPage.jsx";
-import ForgotPasswordPage from "views/ForgotPassword/ForgotPasswordPage.jsx";
+import ResetPasswordPage from "views/ResetPassword/ResetPasswordPage.jsx";
 
 // @material-ui/icons
 import PersonAdd from "@material-ui/icons/PersonAdd";
@@ -29,12 +29,12 @@ const pagesRoutes = [
     component: RegisterPage
   },
   {
-    path: "/forgotpassword",
-    name: "ForgotPassword",
-    short: "ForgotPassword",
-    mini: "FP",
+    path: "/resetpassword/:token",
+    name: "ResetPassword",
+    short: "ResetPassword",
+    mini: "RP",
     icon: PersonAdd,
-    component: ForgotPasswordPage
+    component: ResetPasswordPage
   },
 ];
 
