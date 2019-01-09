@@ -60,20 +60,21 @@ class RegisterPage extends React.Component {
       loading: false,
       isBack: false,
       alert: false,
-      isSecond: false
+      isSecond: false,
+      message: ""
     }
     this.onKeyDown = this.onKeyDown.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('next Props: ', nextProps);
     this.setState({
       loading: false
     })
     if(nextProps.errorMsg) {
       if (!this.state.alert) {
         this.setState({
-          alert: true
+          alert: true,
+          message: nextProps.errorMsg
         });
         setTimeout(() => {
           this.setState({
@@ -83,10 +84,23 @@ class RegisterPage extends React.Component {
       }
     }
     if(nextProps.companyData) {
-      console.log('success');
       this.setState({
         isSecond: true
       })
+    }
+    if(nextProps.status) {
+      console.log('focus')
+      if (!this.state.alert) {
+        this.setState({
+          alert: true,
+          message: "Please check your email. Then you can set your password."
+        });
+        setTimeout(() => {
+          this.setState({
+            alert: false
+          })
+        }, 3000);
+      }
     }
   }
 
@@ -435,7 +449,7 @@ class RegisterPage extends React.Component {
                           }}
                         />                                
                         <div className={classes.center + " " + classes.pt_15}>  
-                          <Button color="info" className={classes.w_100_p} onClick={() => this.register()}>
+                          <Button color="info" className={classes.w_100_p} onClick={() => this.register()} disabled={this.props.status}>
                             Sign up
                           </Button>
                           <Button color="danger" className={classes.w_100_p} onClick={() => this.cancel()}>
@@ -466,19 +480,15 @@ class RegisterPage extends React.Component {
                     </div> 
                   ) : undefined
                 }
-                {
-                  this.props.errorMsg? (                    
-                    <Snackbar
-                      place="tc"
-                      color="info"
-                      icon={AddAlert}
-                      message={this.props.errorMsg}
-                      open={this.state.alert}
-                      closeNotification={() => this.setState({ alert: false })}
-                      close
-                    />
-                  ) : undefined
-                }
+                <Snackbar
+                  place="tc"
+                  color="info"
+                  icon={AddAlert}
+                  message={this.state.message}
+                  open={this.state.alert}
+                  closeNotification={() => this.setState({ alert: false })}
+                  close
+                />
               </CardBody>
             </Card>
           </GridItem>
@@ -495,7 +505,8 @@ RegisterPage.propTypes = {
 function mapStateToProps(state) {
   return {
     companyData: state.auth.companyData,
-    errorMsg: state.auth.errorMsg
+    errorMsg: state.auth.errorMsg,
+    status: state.auth.status
   }
 }
 

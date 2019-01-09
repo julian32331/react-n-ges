@@ -40,7 +40,6 @@ const auth = function (state = initialState, action) {
             return {
                 ...initialState,
                 errorMsg: "",
-                status: false,
                 companyData: null
             };
         }
@@ -48,14 +47,13 @@ const auth = function (state = initialState, action) {
         {
             return {
                 ...initialState,
-                status: true,
                 companyData: action.data
             };
         }
         case Actions.GET_COMPANY_DATA_ERROR:
         {
             return {
-                status: false,
+                ...initialState,
                 errorMsg: action.errorMsg
             };
         }
@@ -63,9 +61,8 @@ const auth = function (state = initialState, action) {
         {
             return {
                 ...initialState,
-                status: true,
                 errorMsg: "",
-                companyData: null
+                companyData: action.data
             };
         }
         case Actions.REGISTER_SUCCESS:

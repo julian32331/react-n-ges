@@ -42,9 +42,6 @@ export function getCompanyData(data) {
     const request = Utils.xapi().post('register/company/firststep', data);
     return (dispatch) =>
         request.then((response) => {
-            dispatch({
-                type: GET_COMPANY_DATA
-            });
             return dispatch({
                 type: GET_COMPANY_DATA_SUCCESS,
                 data: response.data
@@ -65,7 +62,8 @@ export function register(data) {
     return (dispatch) => 
         request.then((response) => {  
             dispatch({
-                type: REGISTER
+                type: REGISTER,
+                data: data.companyData
             });            
             return dispatch({
                 type: REGISTER_SUCCESS,
