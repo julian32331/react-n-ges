@@ -9,10 +9,8 @@ export const ADD_SERVICE        = '[SERVICE] ADD';
 export const DELETE_SERVICE     = '[SERVICE] DELETE';
 export const UPDATE_SERVICE     = '[SERVICE] UPDATE';
 
-export function getServices({workingForId}) {
-    const request = Utils.xapi().post('manager/services', {
-        workingForId: workingForId
-    });
+export function getServices(data) {
+    const request = Utils.xapi().post('manager/services', data);
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )
@@ -26,13 +24,7 @@ export function getServices({workingForId}) {
 }
 
 export function addService(data) {
-    const request = Utils.xapi().post('manager/service/add', {
-        workingForId: data.workingForId,
-        name: data.name,
-        description: data.description,
-        price: data.price,
-        durationInMinutes: data.durationInMinutes
-    });
+    const request = Utils.xapi().post('manager/service/add', data);
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )
@@ -48,16 +40,7 @@ export function addService(data) {
 }
 
 export function updateService(data) {
-    const request = Utils.xapi().post('manager/service/update', {
-        workingForId: data.workingForId,
-        id: data.id,
-        serviceData: {
-            name: data.name,
-            description: data.description,
-            price: data.price,
-            durationInMinutes: data.durationInMinutes
-        }
-    });
+    const request = Utils.xapi().post('manager/service/update', data);
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )
@@ -73,10 +56,7 @@ export function updateService(data) {
 }
 
 export function deleteService(data) {
-    const request = Utils.xapi().post('manager/service/delete', {
-        workingForId: data.workingForId,
-        id: data.id
-    });
+    const request = Utils.xapi().post('manager/service/delete', data);
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )

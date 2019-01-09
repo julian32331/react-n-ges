@@ -3,15 +3,14 @@
  * Date: 1/6/2019
  */
 import * as Utils from 'utils';
-import { getUserData } from './user.actions';
 
-export const GET_HOURS      = '[HOURS] GET';
-export const ADD_SPECIALDAY = '[SPECIALDAY] ADD';
+export const GET_HOURS          = '[HOURS] GET';
+export const ADD_SPECIALDAY     = '[SPECIALDAY] ADD';
+export const UPDATE_SPECIALDAY  = '[SPECIALDAY] UPDATE';
+export const DELETE_SPECIALDAY  = '[SPECIALDAY] DELETE';
 
-export function getHours({workingForId}) {
-    const request = Utils.xapi().post('manager/openinghours', {
-        workingForId: workingForId
-    });
+export function getHours(data) {
+    const request = Utils.xapi().post('manager/openinghours', data);
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )
@@ -25,23 +24,48 @@ export function getHours({workingForId}) {
 }
 
 export function addSpecialDay(data) {
-    const request = Utils.xapi().post('manager/specialday/add', {
-        workingForId: data.workingForId,
-        specialDayData: {
-            name: data.name,
-            openAt: data.openAt,
-            closeAt: data.closeAt
-        }
-    });
+    const request = Utils.xapi().post('manager/specialday/add', data);
     return (dispatch) =>
         request.then((response) => {
             if ( !response.data.error )
             {        
-                dispatch(getUserData({
+                dispatch(getHours({
                     workingForId: data.workingForId
                 }));   
                 return dispatch({
                     type: ADD_SPECIALDAY
+                });
+            }
+        });
+}
+
+export function updateSpecialDay(data) {
+    const request = Utils.xapi().post('manager/specialday/update', data);
+    return (dispatch) =>
+        request.then((response) => {
+            if ( !response.data.error )
+            {          
+                dispatch(getHours({
+                    workingForId: data.workingForId
+                }));  
+                return dispatch({
+                    type: UPDATE_SPECIALDAY,
+                });
+            }
+        });
+}
+
+export function deleteSpecialDay(data) {
+    const request = Utils.xapi().post('manager/specialday/delete', data);
+    return (dispatch) =>
+        request.then((response) => {
+            if ( !response.data.error )
+            {        
+                dispatch(getHours({
+                    workingForId: data.workingForId
+                }));     
+                return dispatch({
+                    type: DELETE_SPECIALDAY
                 });
             }
         });

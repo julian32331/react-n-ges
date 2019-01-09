@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import login from "./login.reducer";
+import auth from "./auth.reducer";
 import user from "./user.reducer";
 import service from "./service.reducer";
 import hours from "./hours.reducer";
@@ -8,7 +8,7 @@ import employees from "./employees.reducer";
 
 const createReducer = (asyncReducers) =>
     combineReducers({
-        login,
+        auth,
         user,
         service,
         hours,

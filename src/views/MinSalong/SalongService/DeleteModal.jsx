@@ -39,7 +39,6 @@ class DeleteModal extends React.Component {
 
     delete() {
         this.props.deleteService({
-            token: this.props.token,
             workingForId: this.props.workingForId,
             id: this.props.id
         })
@@ -108,7 +107,6 @@ DeleteModal.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        token           : state.user.token,
         workingForId    : state.user.workingForId
     };
 }

@@ -60,6 +60,12 @@ const loginPageStyle = {
   },
   pt_15: {
     paddingTop: '15px',
+  },
+  spinner_container: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
   }
 };
 

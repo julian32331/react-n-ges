@@ -202,7 +202,7 @@ LoginPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    status: state.login.status
+    status: state.auth.loginStatus
   }
 }
 

@@ -1,4 +1,4 @@
-export * from './login.actions';
+export * from './auth.actions';
 export * from './user.actions';
 export * from './service.actions';
 export * from './hours.actions';

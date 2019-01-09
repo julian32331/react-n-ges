@@ -27,6 +27,13 @@ const hours = function (state = initialState, action) {
                 specialDays: state.specialDays
             };
         }
+        case Actions.DELETE_SPECIALDAY:
+        {
+            return {
+                openingHours: state.openingHours,
+                specialDays: state.specialDays
+            };
+        }
         default:
         {
             return state

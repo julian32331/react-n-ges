@@ -6,21 +6,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Slide from "@material-ui/core/Slide";
 import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
-
-// @material-ui/icons
-import Close from "@material-ui/icons/Close";
 
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 
-import salongModalStyle from "assets/jss/material-dashboard-pro-react/views/salongService/salongModalStyle.jsx";
+import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
@@ -29,85 +30,91 @@ function Transition(props) {
 class DeleteModal extends React.Component {
     constructor(props) {
         super(props);
+        this.delete = this.delete.bind(this);
     }
 
     handleClose() {
         this.props.onClose();
     }
 
+    delete() {
+        this.props.deleteSpecialDay({
+            workingForId: this.props.workingForId,
+            specialDayId: this.props.id
+        })
+        this.props.onClose();
+    }
+
     render() {
-    const { classes } = this.props;
-    return (
-        <Dialog
-            classes={{
-                root: classes.center + " " + classes.modalRoot,
-                paper: classes.modal + " " + classes.modalSmall
-            }}
-            open={this.props.onOpen}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={() => {this.handleClose()}}
-            aria-labelledby="saloon-service-remove-modal-title"
-            aria-describedby="saloon-service-remove-modal-description"
-        >
-            <DialogTitle
-                id="saloon-service-remove-modal-title"
-                disableTypography
-                className={classes.modalHeader}
+        const { classes } = this.props;
+        return (
+            <Dialog
+                classes={{
+                    root: classes.center + " " + classes.modalRoot,
+                    paper: classes.modal + " " + classes.modalSmall
+                }}
+                open={this.props.onOpen}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={() => {this.handleClose()}}
+                aria-labelledby="opening-hours-delete-modal-title"
+                aria-describedby="opening-hours-delete-modal-description"
             >
-                <Button
-                    justIcon
-                    className={classes.modalCloseButton}
-                    key="close"
-                    aria-label="Close"
-                    color="transparent"
-                    onClick={() => this.handleClose()}
-                >
-                    <Close className={classes.modalClose} />
-                </Button>
-            </DialogTitle>
-            <DialogContent
-                id="saloon-service-remove-modal-description"
-                className={
-                classes.modalBody + " " + classes.modalSmallBody
-                }
-            >
-                <h5>Are you sure you want to delete this?</h5>
-            </DialogContent>
-            <DialogActions
-                className={
-                classes.modalFooter +
-                " " +
-                classes.modalFooterCenter
-                }
-            >
-                <Button
-                    onClick={() => this.handleClose()}
-                    color="transparent"
-                    className={classes.modalSmallFooterFirstButton}
-                >
-                No
-                </Button>
-                <Button
-                    onClick={() => this.handleClose()}
-                    color="danger"
-                    simple
+                <DialogContent
+                    id="opening-hours-delete-modal-description"
                     className={
-                        classes.modalSmallFooterFirstButton +
-                        " " +
-                        classes.modalSmallFooterSecondButton
+                    classes.modalBody + " " + classes.modalSmallBody
                     }
                 >
-                Yes
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
-  }
+                    <h5>Are you sure you want to delete this?</h5>
+                </DialogContent>
+                <DialogActions
+                    className={
+                        classes.modalFooter +
+                        " " +
+                        classes.modalFooterCenter
+                    }
+                >
+                    <Button
+                        onClick={() => this.handleClose()}
+                        color="info"
+                        size="sm"
+                        className={classes.modalSmallFooterFirstButton}
+                    >
+                    No
+                    </Button>
+                    <Button
+                        onClick={() => this.delete()}
+                        color="danger"
+                        size="sm"
+                        className={
+                            classes.modalSmallFooterFirstButton +
+                            " " +
+                            classes.modalSmallFooterSecondButton
+                        }
+                    >
+                    Yes
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        );
+    }
 }
 
 DeleteModal.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(salongModalStyle)(DeleteModal);
+function mapStateToProps(state) {
+    return {
+        workingForId    : state.user.workingForId
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        deleteSpecialDay: Actions.deleteSpecialDay
+    }, dispatch);
+}
+
+export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(DeleteModal)));

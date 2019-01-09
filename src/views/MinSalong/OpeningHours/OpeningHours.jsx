@@ -39,7 +39,7 @@ import Table from "components/Table/Table.jsx";
 
 import openingHoursStyle from "assets/jss/material-dashboard-pro-react/views/openingHours/openingHoursStyle.jsx";
 
-import DeleteModal from "./deleteModal";
+import DeleteModal from "./DeleteModal";
 import NewOrUpdateModal from "./NewOrUpdateModal";
 
 class OpeningHours extends React.Component {
@@ -49,6 +49,7 @@ class OpeningHours extends React.Component {
             deleteModal: false,
             newOrUpdateModal: false,
             modalTitle: '',
+            modalData: null
         };
         this.getHours = this.getHours.bind(this);
     }
@@ -142,10 +143,10 @@ class OpeningHours extends React.Component {
             deleteModal: false
         })
     }
-
-    onOpenDeleteModal() {
+    onOpenDeleteModal(data) {
         this.setState({
-            deleteModal: true
+            deleteModal: true,
+            modalData: data
         })
     }
 
@@ -154,27 +155,29 @@ class OpeningHours extends React.Component {
             newOrUpdateModal: false
         })
     }
-
-    onOpenNewOrUpdateModal(title) {
+    onOpenNewOrUpdateModal(title, data=null) {
         this.setState({
             newOrUpdateModal: true,
-            modalTitle: title
+            modalTitle: title,
+            modalData: data
         })
     }
 
     render() {
         const { classes } = this.props;
 
-        const buttons = [
-            { color: "info", icon: Edit },
-            { color: "danger", icon: Close }
-        ].map((prop, key) => {
+        const buttons = data => {
             return (
-                <Button color={prop.color} className={classes.actionButton} key={key}>
-                    <prop.icon className={classes.icon} />
-                </Button>
-            );
-        });
+                <div>
+                    <Button color="info" className={classes.actionButton} onClick={() => this.onOpenNewOrUpdateModal("Update Special Day", data)}>
+                        <Edit className={classes.icon} />
+                    </Button>                
+                    <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenDeleteModal(data)}>
+                        <Close className={classes.icon} />
+                    </Button>
+                </div>                
+            )
+        }
 
         let specialDays = [];
         this.props.specialDays.map(day => {
@@ -183,11 +186,10 @@ class OpeningHours extends React.Component {
             temp.push(day.name);
             temp.push(day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2));
             temp.push(day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2));
-            temp.push(buttons);
+            temp.push(buttons(day));
 
             specialDays.push(temp);
         })
-        console.log('focus: ', this.state.Monday_open)
 
         return (
             <div>
@@ -309,14 +311,16 @@ class OpeningHours extends React.Component {
 
                         <DeleteModal 
                             onOpen={this.state.deleteModal}
-                            onClose={this.onCloseDeleteModal.bind(this)} 
-                        />
-                            
+                            onClose={this.onCloseDeleteModal.bind(this)}
+                            id={this.state.modalData? this.state.modalData.id : null}
+                        />                      
                         <NewOrUpdateModal 
                             onOpen={this.state.newOrUpdateModal}
-                            onClose={this.onCloseNewOrUpdateModal.bind(this)} 
+                            onClose={this.onCloseNewOrUpdateModal.bind(this)}
                             modalTitle={this.state.modalTitle}
+                            data={this.state.modalData}
                         />
+
                     </CardBody>
                 </Card>
             </div>

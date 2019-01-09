@@ -13,6 +13,7 @@ import connect from 'react-redux/es/connect/connect';
 
 // react component plugin for creating a beautiful datetime dropdown picker
 import Datetime from "react-datetime";
+import moment from 'moment';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -22,6 +23,10 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import FormControl from "@material-ui/core/FormControl";
+import InputAdornment from "@material-ui/core/InputAdornment";
+
+// @material-ui/icons
+import Warning from "@material-ui/icons/Warning";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -31,6 +36,8 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 
+import * as Validator from "validator";
+
 function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
@@ -38,10 +45,129 @@ function Transition(props) {
 class NewOrUpdateModal extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            name: "",
+            nameState: "",
+            from: "",
+            fromState: "",
+            to: "",
+            toState: ""
+        }
+        this.save = this.save.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.data) {
+            this.setState({
+                name: nextProps.data.name,
+                nameState: "success",
+                from: nextProps.data.openAt.substr(0,2) + ":" + nextProps.data.openAt.substr(2,2),
+                fromState: "success",
+                to: nextProps.data.closeAt.substr(0,2) + ":" + nextProps.data.closeAt.substr(2,2),
+                toState: "success"
+            })
+        } else {
+            this.setState({
+                name: "",
+                nameState: "",
+                from: "",
+                fromState: "",
+                to: "",
+                toState: ""
+            })
+        }
+    }
+
+    initState() {
+        this.setState({
+            name: "",
+            nameState: "",
+            from: "",
+            fromState: "",
+            to: "",
+            toState: ""
+        })
     }
 
     handleClose() {
+        this.initState();
         this.props.onClose();
+    }
+
+    save(isNew) {
+        if(isNew) {
+            this.props.addSpecialDay({
+                workingForId: this.props.workingForId,
+                specialDayData: {
+                    name: this.state.name,
+                    openAt: this.state.from.replace(":", ""),
+                    closeAt: this.state.to.replace(":", "")
+                }
+            })
+        } else {            
+            this.props.updateSpecialDay({
+                workingForId: this.props.workingForId,
+                specialDayData: {
+                    id: this.props.data.id,
+                    name: this.state.name,
+                    openAt: this.state.from.replace(":", ""),
+                    closeAt: this.state.to.replace(":", "")
+                }        
+            })
+        }
+        this.initState();
+        this.props.onClose();
+    }
+
+    change(event, stateName, type, stateNameEqualTo) {
+        switch (type) {
+            case "name":
+                this.setState({
+                    name: event.target.value
+                })
+                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else if (Validator.verifyLength(event.target.value) === "") {
+                    this.setState({ [stateName + "State"]: "" });
+                } else {
+                    this.setState({ [stateName + "State"]: "error" });
+                }
+                break;
+            case "from":
+                let from = this.state.from;
+                this.setState({
+                    from: moment(event._d).format("HH:mm")
+                })
+                if(this.state.from == from) {
+                    this.setState({ [stateName + "State"]: "error" });
+                } else {
+                    this.setState({ [stateName + "State"]: "success" });
+                }
+                break;
+            case "to":
+                let to = this.state.to;
+                this.setState({
+                    to: moment(event._d).format("HH:mm")
+                })
+                if(this.state.to == to) {
+                    this.setState({ [stateName + "State"]: "error" });
+                } else {
+                    this.setState({ [stateName + "State"]: "success" });
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    canSave() {
+        if(this.state.nameState === "success" && this.state.fromState === "success" && this.state.toState === "success") {
+            return false;
+        } else if(this.props.data) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     render() {
@@ -56,55 +182,64 @@ class NewOrUpdateModal extends React.Component {
                 TransitionComponent={Transition}
                 keepMounted
                 onClose={() => this.handleClose()}
-                aria-labelledby="saloon-service-newOrUpdate-modal-title"
-                aria-describedby="saloon-service-newOrUpdate-modal-description"
+                aria-labelledby="opening-hours-newOrUpdate-modal-title"
+                aria-describedby="opening-hours-newOrUpdate-modal-description"
                 >
                 <DialogTitle
-                    id="saloon-service-newOrUpdate-modal-title"
+                    id="opening-hours-newOrUpdate-modal-title"
                     disableTypography
                     className={classes.modalHeader}
                 >
                     <h3 className={classes.modalTitle}>{this.props.modalTitle}</h3>
                 </DialogTitle>
                 <DialogContent
-                    id="saloon-service-newOrUpdate-modal-description"
+                    id="opening-hours-newOrUpdate-modal-description"
                     className={classes.modalBody}
                 >
-                    <form>
+                    <form> 
                         <CustomInput
-                            labelText="Name"
+                            success={this.state.nameState === "success"}
+                            error={this.state.nameState === "error"}
+                            labelText="Name *"
                             id="name"
                             formControlProps={{
                                 fullWidth: true
                             }}
                             inputProps={{
+                                endAdornment:
+                                    this.state.nameState === "error" ? (
+                                    <InputAdornment position="end">
+                                        <Warning className={classes.danger} />
+                                    </InputAdornment>
+                                    ) : (
+                                    undefined
+                                ),
+                                onChange: event =>
+                                    this.change(event, "name", "name", 0),
                                 type: "text",
+                                value: this.state.name
                             }}
-                        />                       
+                        />                      
                         <GridContainer style={{paddingTop: '27px', marginBottom: '17px',}}>
-                            <GridItem xs={12} sm={12} md={4}>                            
-                                <FormControl fullWidth>
-                                    <Datetime
-                                        timeFormat={false}
-                                        inputProps={{ placeholder: "Date" }}
-                                    />
-                                </FormControl> 
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={4}>
+                            <GridItem xs={12} sm={12} md={6}>
                                 <FormControl fullWidth>
                                     <Datetime
                                         dateFormat={false}
                                         timeFormat={"HH:mm"}
-                                        inputProps={{ placeholder: "From" }}
+                                        inputProps={{ placeholder: "From *" }}
+                                        value={this.state.from}
+                                        onChange={event => this.change(event, "from", "from")}
                                     />
                                 </FormControl>
                             </GridItem>
-                            <GridItem xs={12} sm={12} md={4}>
+                            <GridItem xs={12} sm={12} md={6}>
                                 <FormControl fullWidth>
                                     <Datetime
                                         dateFormat={false}
                                         timeFormat={"HH:mm"}
-                                        inputProps={{ placeholder: "To" }}
+                                        inputProps={{ placeholder: "To *" }}
+                                        value={this.state.to}
+                                        onChange={event => this.change(event, "to", "to")}
                                     />
                                 </FormControl>
                             </GridItem>
@@ -120,9 +255,10 @@ class NewOrUpdateModal extends React.Component {
                         Cancel
                     </Button>
                     <Button
-                        onClick={() => this.handleClose()}
+                        onClick={() => this.save(this.props.data? false : true)}
                         color="info"
                         size="sm"
+                        disabled={this.canSave()}
                     >
                         Save
                     </Button>
@@ -145,6 +281,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         addSpecialDay      : Actions.addSpecialDay,
+        updateSpecialDay   : Actions.updateSpecialDay
     }, dispatch);
 }
 

@@ -27,6 +27,7 @@ export const compare = (string1, string2) => {
     return false;
 }
 export const verifyNumber = (value) => {
+    if(value.length === 0) return ""
     var numberRex = new RegExp("^[0-9]+$");
     if (numberRex.test(value)) {
         return true;
@@ -43,3 +44,22 @@ export const verifyUrl = (value) => {
     }
 }
 
+export const verifyOrgNo = (value) => {
+    if(value.length === 0) return ""
+    var regx = /[0-9]{6}-[0-9]{4}$/;
+    if(regx.test(value)) {
+        return true;
+    }
+
+    return false;
+}
+
+export const verifyPhone = (value) => {
+    if(value.length === 0) return ""
+    var regx = /\+[0-9]{9}$/;
+    if(regx.test(value)) {
+        return true;
+    }
+
+    return false;
+}

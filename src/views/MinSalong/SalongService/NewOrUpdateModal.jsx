@@ -110,10 +110,12 @@ class NewOrUpdateModal extends React.Component {
             this.props.updateService({
                 workingForId: this.props.workingForId,
                 id: this.props.data.id,
-                name: this.state.title,
-                description: this.state.description,
-                price: this.state.price,
-                durationInMinutes: this.state.time
+                serviceData: {
+                    name: this.state.title,
+                    description: this.state.description,
+                    price: this.state.price,
+                    durationInMinutes: this.state.time
+                }        
             })
         }
         this.initState();
