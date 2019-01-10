@@ -21,6 +21,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Email from "@material-ui/icons/Email";
 import VpnKey from "@material-ui/icons/VpnKey";
 import Warning from "@material-ui/icons/Warning";
+import AddAlert from "@material-ui/icons/AddAlert";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -30,10 +31,13 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Snackbar from "components/Snackbar/Snackbar.jsx";
+
+import Loader from 'react-loader-spinner';
 
 import * as Validator from "validator";
 
-import loginPageStyle from "assets/jss/material-dashboard-pro-react/views/loginPageStyle";
+import resetPasswordPageStyle from "assets/jss/material-dashboard-pro-react/views/resetPasswordPageStyle";
 
 import logo from "assets/img/logo.png";
 
@@ -45,13 +49,22 @@ class ResetPasswordPage extends React.Component {
       emailState: "",
       password: "",
       passwordState: "",
+      c_password: "",
+      c_passwordState: "",
+      alert: false,
+      message: "",
+      loading: false
     }
-    this.login = this.login.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('next props: ', nextProps)
+    this.setState({
+      loading: false
+    })
     if(nextProps.status) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/login");
     }
   }
 
@@ -81,26 +94,37 @@ class ResetPasswordPage extends React.Component {
           this.setState({ [stateName + "State"]: "error" });
         }
         break;
+      case "c_password":
+        this.setState({
+          c_password: event.target.value
+        });
+        if (Validator.compare(this.state.password, event.target.value)) {
+          this.setState({ [stateName + "State"]: "success" });
+        } else {
+          this.setState({ [stateName + "State"]: "error" });
+        }
       default:
         break;
     }
   }
 
-  canLogin() {
-    if(this.state.emailState === "success" && this.state.passwordState === "success") {
+  canSubmit() {
+    if(this.state.emailState === "success" && this.state.passwordState === "success" && this.state.c_passwordState === "success") {
       return false
-    // } else if(this.state.email && this.state.emailState === "" && this.state.password && this.state.passwordState === "") {
-    //   return false
     } else {
       return true
     }
   }
 
-  login() {
-    this.props.login({
+  submit() {
+    this.setState({
+      loading: true
+    });
+    this.props.resetPassword({
       email: this.state.email,
-      password: this.state.password
-    });  
+      password: this.state.password,
+      token: this.props.match.params.token
+    });
   }
 
   render() {
@@ -177,8 +201,8 @@ class ResetPasswordPage extends React.Component {
                     }}
                   />
                   <CustomInput
-                    success={this.state.passwordState === "success"}
-                    error={this.state.passwordState === "error"}
+                    success={this.state.c_passwordState === "success"}
+                    error={this.state.c_passwordState === "error"}
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -192,7 +216,7 @@ class ResetPasswordPage extends React.Component {
                         </InputAdornment>
                       ),
                       endAdornment:
-                        this.state.passwordState === "error" ? (
+                        this.state.c_passwordState === "error" ? (
                           <InputAdornment position="end">
                             <Warning className={classes.danger} />
                           </InputAdornment>
@@ -202,12 +226,12 @@ class ResetPasswordPage extends React.Component {
                       type: "password",
                       placeholder: "Confirm Password*",
                       onChange: event =>
-                        this.change(event, "password", "password"),
-                      value: this.state.password
+                        this.change(event, "c_password", "c_password"),
+                      value: this.state.c_password
                     }}
                   />
                   <div className={classes.center}>
-                    <Button color="info" className={classes.w_100_p} onClick={this.login} disabled={this.canLogin()}>
+                    <Button color="info" className={classes.w_100_p} onClick={this.submit} disabled={this.canSubmit()}>
                       Send
                     </Button>   
                     <div className={classes.pt_15}>
@@ -215,6 +239,27 @@ class ResetPasswordPage extends React.Component {
                     </div>
                   </div>
                 </form>
+                {
+                  this.state.loading? (
+                    <div className={classes.spinner_container}>                    
+                      <Loader 
+                        type="Oval"
+                        color="#00acc1"
+                        height="40"	
+                        width="40"
+                      />
+                    </div> 
+                  ) : undefined
+                }
+                <Snackbar
+                  place="tc"
+                  color="info"
+                  icon={AddAlert}
+                  message={this.state.message}
+                  open={this.state.alert}
+                  closeNotification={() => this.setState({ alert: false })}
+                  close
+                />
               </CardBody>
             </Card>
           </GridItem>
@@ -230,14 +275,14 @@ ResetPasswordPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    status: state.auth.loginStatus
+    status: state.auth.status
   }
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-      login: Actions.login
+      resetPassword: Actions.resetPassword
     }, dispatch);
 }
 
-export default withStyles(loginPageStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(ResetPasswordPage)));
+export default withStyles(resetPasswordPageStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(ResetPasswordPage)));

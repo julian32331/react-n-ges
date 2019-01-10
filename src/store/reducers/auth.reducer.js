@@ -73,6 +73,29 @@ const auth = function (state = initialState, action) {
                 companyData: action.data
             };
         }
+        case Actions.RESETPASSWORD:
+        {
+            return {
+                ...initialState,
+                errorMsg: "",
+                status: false
+            };
+        }
+        case Actions.RESETPASSWORD_SUCCESS:
+        {
+            return {
+                ...initialState,
+                status: true
+            };
+        }
+        case Actions.RESETPASSWORD_ERROR:
+        {
+            return {
+                ...initialState,
+                errorMsg: action.errorMsg,
+                status: false
+            };
+        }
         default:
         {
             return state

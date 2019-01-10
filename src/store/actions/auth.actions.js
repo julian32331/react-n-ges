@@ -14,6 +14,9 @@ export const GET_COMPANY_DATA_SUCCESS = '[COMPANY] GET DATA SUCCESS';
 export const GET_COMPANY_DATA_ERROR = '[COMPANY] GET DATA ERROR';
 export const REGISTER = 'REGISTER';
 export const REGISTER_SUCCESS = 'REGISTER SUCCESS';
+export const RESETPASSWORD = 'RESETPASSWORD';
+export const RESETPASSWORD_SUCCESS = 'RESETPASSWORD SUCCESS';
+export const RESETPASSWORD_ERROR = 'RESETPASSWORD ERROR';
 
 export function login(data)
 {
@@ -70,4 +73,25 @@ export function register(data) {
                 data: data.companyData
             });
         })
+}
+
+export function resetPassword(data) {
+    const request = Utils.xapi().post('register/setpassword', data);
+    return (dispatch) => 
+        request.then((response) => {  
+            dispatch({
+                type: RESETPASSWORD
+            });            
+            return dispatch({
+                type: RESETPASSWORD_SUCCESS
+            });
+        }).catch((error) => {     
+            dispatch({
+                type: RESETPASSWORD
+            });
+            return dispatch({
+                type: RESETPASSWORD_ERROR,
+                errorMsg: JSON.parse(error.request.response).errorMessage
+            });
+        });
 }

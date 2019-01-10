@@ -174,8 +174,6 @@ class RegisterPage extends React.Component {
   canRegister() {
     if(this.state.orgNoState === "success" && this.state.phoneState === "success" && this.state.emailState === "success") {
       return false
-    // } else if(this.state.email && this.state.emailState === "" && this.state.password && this.state.passwordState === "") {
-    //   return false
     } else {
       return true
     }
