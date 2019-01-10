@@ -52,13 +52,14 @@ class SelectModal extends React.Component {
         }
 
         this.props.getUserData();
-        setTimeout(() => {
-            if(this.props.workingForId) {
-                this.setState({
-                    company: Number(this.props.workingForId)
-                })
-            }            
-        }, 300);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.workingForId) {
+            this.setState({
+                company: Number(nextProps.workingForId)
+            })
+        }
     }
 
     handleSelect = event => {
@@ -182,7 +183,6 @@ SelectModal.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        token: state.user.token,
         workingFor: state.user.workingFor,
         workingForId: state.user.workingForId
     };

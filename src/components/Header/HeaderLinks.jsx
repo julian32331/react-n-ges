@@ -3,6 +3,11 @@ import classNames from "classnames";
 import PropTypes from "prop-types";
 // import { Manager, Target, Popper } from "react-popper";
 
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -28,21 +33,46 @@ import headerLinksStyle from "assets/jss/material-dashboard-pro-react/components
 
 class HeaderLinks extends React.Component {
   state = {
-    open: false,
+    openNotification: false,
+    openUser: false,
     saloonSelect: "",
   };
-  handleClick = () => {
-    this.setState({ open: !this.state.open });
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.workingForId) {
+        this.setState({
+          saloonSelect: Number(nextProps.workingForId)
+        })
+    }
+  }
+
+  handleClickNotification = () => {
+    this.setState({ openNotification: !this.state.openNotification });
   };
-  handleClose = () => {
-    this.setState({ open: false });
+  handleCloseNotification = () => {
+    this.setState({ openNotification: false });
   };  
+  
+  handleClickUser = () => {
+    this.setState({ openUser: !this.state.openUser });
+  };
+  handleCloseUser = () => {
+    this.setState({ openUser: false });
+  }; 
+  logout = () => {
+    this.setState({ openUser: false });
+    localStorage.clear();
+    this.props.history.push("/login");
+  }
+
   handleSaloon = event => {
     this.setState({ [event.target.name]: event.target.value });
+    this.props.updateWorkingForId(event.target.value);
   };
+
   render() {
     const { classes, rtlActive } = this.props;
-    const { open } = this.state;
+    const { openNotification, openUser } = this.state;
     const searchButton =
       classes.top +
       " " +
@@ -62,6 +92,19 @@ class HeaderLinks extends React.Component {
     const managerClasses = classNames({
       [classes.managerClasses]: true
     });
+
+    let companies = [];
+
+    if(this.props.workingFor) {
+        JSON.parse(this.props.workingFor).map(item => {
+            let temp = {}
+            temp['name'] = item.Salon? item.Company.legalName + "/" + item.Salon.name : item.Company.legalName;
+            temp['value'] = item.workingForId;
+
+            companies.push(temp);
+        });
+    }
+
     return (
       <div className={wrapper}>
         <div className={managerClasses + " " + classes.saloon_select_container}>          
@@ -85,26 +128,24 @@ class HeaderLinks extends React.Component {
                 root: classes.selectMenuItem
               }}
             >
-              Choose Saloon
+              Choose Company & Saloon
             </MenuItem>
-            <MenuItem
-              classes={{
-                root: classes.selectMenuItem,
-                selected: classes.selectMenuItemSelected
-              }}
-              value="2"
-            >
-              Saloon1
-            </MenuItem>
-            <MenuItem
-              classes={{
-                root: classes.selectMenuItem,
-                selected: classes.selectMenuItemSelected
-              }}
-              value="3"
-            >
-              Saloon2
-            </MenuItem>
+            {
+              companies.map((company, index) => {
+                  return (
+                      <MenuItem
+                          classes={{
+                              root: classes.selectMenuItem,
+                              selected: classes.selectMenuItemSelected
+                          }}
+                          value={company.value}
+                          key={index}
+                      >
+                          {company.name}
+                      </MenuItem>
+                  )
+              })
+            }
           </Select>
         </div>
         <div className={managerClasses}>
@@ -112,9 +153,9 @@ class HeaderLinks extends React.Component {
             color="transparent"
             justIcon
             aria-label="Notifications"
-            aria-owns={open ? "menu-list" : null}
+            aria-owns={openNotification ? "menu-list" : null}
             aria-haspopup="true"
-            onClick={this.handleClick}
+            onClick={this.handleClickNotification}
             className={rtlActive ? classes.buttonLinkRTL : classes.buttonLink}
             muiClasses={{
               label: rtlActive ? classes.labelRTL : ""
@@ -134,19 +175,19 @@ class HeaderLinks extends React.Component {
             />
             <span className={classes.notifications}>5</span>
             <Hidden mdUp implementation="css">
-              <span onClick={this.handleClick} className={classes.linkText}>
+              <span onClick={this.handleClickNotification} className={classes.linkText}>
                 {rtlActive ? "إعلام" : "Notification"}
               </span>
             </Hidden>
           </Button>
           <Popper
-            open={open}
+            open={openNotification}
             anchorEl={this.anchorEl}
             transition
             disablePortal
             placement="bottom"
             className={classNames({
-              [classes.popperClose]: !open,
+              [classes.popperClose]: !openNotification,
               [classes.pooperResponsive]: true,
               [classes.pooperNav]: true
             })}
@@ -158,43 +199,43 @@ class HeaderLinks extends React.Component {
                 style={{ transformOrigin: "0 0 0" }}
               >
                 <Paper className={classes.dropdown}>
-                  <ClickAwayListener onClickAway={this.handleClose}>
+                  <ClickAwayListener onClickAway={this.handleCloseNotification}>
                     <MenuList role="menu">
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={this.handleCloseNotification}
                         className={dropdownItem}
                       >
                         {rtlActive
                           ? "إجلاء أوزار الأسيوي حين بل, كما"
-                          : "Mike John responded to your email"}
+                          : "Notification-1"}
                       </MenuItem>
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={this.handleCloseNotification}
                         className={dropdownItem}
                       >
                         {rtlActive
                           ? "شعار إعلان الأرضية قد ذلك"
-                          : "You have 5 new tasks"}
+                          : "Notification-2"}
                       </MenuItem>
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={this.handleCloseNotification}
                         className={dropdownItem}
                       >
                         {rtlActive
                           ? "ثمّة الخاصّة و على. مع جيما"
-                          : "You're now friend with Andrew"}
+                          : "Notification-3"}
                       </MenuItem>
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={this.handleCloseNotification}
                         className={dropdownItem}
                       >
-                        {rtlActive ? "قد علاقة" : "Another Notification"}
+                        {rtlActive ? "قد علاقة" : "Notification-4"}
                       </MenuItem>
                       <MenuItem
-                        onClick={this.handleClose}
+                        onClick={this.handleCloseNotification}
                         className={dropdownItem}
                       >
-                        {rtlActive ? "قد فاتّبع" : "Another One"}
+                        {rtlActive ? "قد فاتّبع" : "Notification-5"}
                       </MenuItem>
                     </MenuList>
                   </ClickAwayListener>
@@ -203,30 +244,81 @@ class HeaderLinks extends React.Component {
             )}
           </Popper>
         </div>
-        <Button
-          color="transparent"
-          aria-label="Person"
-          justIcon
-          className={rtlActive ? classes.buttonLinkRTL : classes.buttonLink}
-          muiClasses={{
-            label: rtlActive ? classes.labelRTL : ""
-          }}
-        >
-          <Person
-            className={
-              classes.headerLinksSvg +
-              " " +
-              (rtlActive
-                ? classes.links + " " + classes.linksRTL
-                : classes.links)
-            }
-          />
-          <Hidden mdUp implementation="css">
-            <span className={classes.linkText}>
-              {rtlActive ? "الملف الشخصي" : "Profile"}
-            </span>
-          </Hidden>
-        </Button>
+        <div className={managerClasses}>
+          <Button
+            color="transparent"
+            justIcon
+            aria-label="Person"
+            aria-owns={openUser ? "menu-list" : null}
+            aria-haspopup="true"
+            onClick={this.handleClickUser}
+            className={rtlActive ? classes.buttonLinkRTL : classes.buttonLink}
+            muiClasses={{
+              label: rtlActive ? classes.labelRTL : ""
+            }}
+            buttonRef={node => {
+              this.anchorEl = node;
+            }}
+          >
+            <Person
+              className={
+                classes.headerLinksSvg +
+                " " +
+                (rtlActive
+                  ? classes.links + " " + classes.linksRTL
+                  : classes.links)
+              }
+            />
+            <Hidden mdUp implementation="css">
+              <span onClick={this.handleClickUser} className={classes.linkText}>
+                {rtlActive ? "إعلام" : "Notification"}
+              </span>
+            </Hidden>
+          </Button>
+          <Popper
+            open={openUser}
+            anchorEl={this.anchorEl}
+            transition
+            disablePortal
+            placement="bottom"
+            className={classNames({
+              [classes.popperClose]: !openUser,
+              [classes.pooperResponsive]: true,
+              [classes.pooperNav]: true
+            })}
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                id="menu-list"
+                style={{ transformOrigin: "0 0 0" }}
+              >
+                <Paper className={classes.dropdown}>
+                  <ClickAwayListener onClickAway={this.handleCloseUser}>
+                    <MenuList role="menu">
+                      <MenuItem
+                        onClick={this.handleCloseUser}
+                        className={dropdownItem}
+                      >
+                        {rtlActive
+                          ? "إجلاء أوزار الأسيوي حين بل, كما"
+                          : "Profile"}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={this.logout}
+                        className={dropdownItem}
+                      >
+                        {rtlActive
+                          ? "شعار إعلان الأرضية قد ذلك"
+                          : "Log Out"}
+                      </MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+        </div>
       </div>
     );
   }
@@ -237,4 +329,17 @@ HeaderLinks.propTypes = {
   rtlActive: PropTypes.bool
 };
 
-export default withStyles(headerLinksStyle)(HeaderLinks);
+function mapStateToProps(state) {
+  return {
+      workingFor: state.user.workingFor,
+      workingForId: state.user.workingForId
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    updateWorkingForId: Actions.updateWorkingForId
+  }, dispatch);
+}
+
+export default withStyles(headerLinksStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderLinks)));

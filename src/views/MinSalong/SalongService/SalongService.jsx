@@ -47,13 +47,19 @@ class SalongService extends React.Component {
     componentWillMount() {
         this.props.getUserData();
         setTimeout(() => {
-            this.getServices();
+            this.getServices(this.props.workingForId);
         }, 100);
     }
+
+    componentWillReceiveProps(nextProps) {
+        if(this.props.workingForId !== nextProps.workingForId) {
+            this.getServices(nextProps.workingForId);
+        }
+    }
     
-    getServices() {
+    getServices(id) {
         this.props.getServices({
-            workingForId: this.props.workingForId
+            workingForId: id
         })
     }
 

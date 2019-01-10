@@ -57,17 +57,20 @@ class OpeningHours extends React.Component {
     componentWillMount() {
         this.props.getUserData();
         setTimeout(() => {
-            this.getHours();
+            this.getHours(this.props.workingForId);
         }, 100);
     }
     
-    getHours() {
+    getHours(id) {
         this.props.getHours({
-            workingForId: this.props.workingForId
+            workingForId: id
         })
     }
 
     componentWillReceiveProps(nextProps) {
+        if(this.props.workingForId !== nextProps.workingForId) {
+            this.getHours(nextProps.workingForId);
+        }
         if (nextProps.openingHours) {
             nextProps.openingHours.map(day => {
                 if (day.dayId === 1) {

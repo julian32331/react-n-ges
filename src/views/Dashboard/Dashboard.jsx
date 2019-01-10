@@ -30,7 +30,18 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state ={ 
-      selectModal: true
+      selectModal: false
+    }
+  }
+  
+  componentWillMount() {
+    if(!localStorage.token) {
+      this.props.history.push("/login");
+    }
+    if(!localStorage.workingForId) {
+      this.setState({
+        selectModal: true
+      })
     }
   }
   
@@ -75,7 +86,14 @@ Dashboard.propTypes = {
 
 function mapStateToProps(state) {
   return {
-  };
+    workingForId: state.user.workingForId
+  }
 }
 
-export default withStyles(dashboardStyle)(Dashboard);
+// function mapDispatchToProps(dispatch) {
+//     return bindActionCreators({
+//       getUserData: Actions.getUserData
+//     }, dispatch);
+// }
+
+export default withStyles(dashboardStyle)(withRouter(connect(mapStateToProps, null)(Dashboard)));
