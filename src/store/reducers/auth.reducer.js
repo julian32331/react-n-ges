@@ -32,7 +32,7 @@ const auth = function (state = initialState, action) {
         {
             return {
                 status: false,
-                errorMsg: action.payload
+                errorMsg: action.errorMsg
             };
         }
         case Actions.GET_COMPANY_DATA:

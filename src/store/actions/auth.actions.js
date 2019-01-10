@@ -36,7 +36,7 @@ export function login(data)
             });
             return dispatch({
                 type: LOGIN_ERROR,
-                errorMsg: JSON.parse(error.request.response).errorMessage
+                errorMsg: JSON.parse(error.request.response).error
             });
         });
 }

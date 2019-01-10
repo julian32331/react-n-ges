@@ -21,6 +21,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Email from "@material-ui/icons/Email";
 import VpnKey from "@material-ui/icons/VpnKey";
 import Warning from "@material-ui/icons/Warning";
+import AddAlert from "@material-ui/icons/AddAlert";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -30,6 +31,9 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Snackbar from "components/Snackbar/Snackbar.jsx";
+
+import Loader from 'react-loader-spinner';
 
 import * as Validator from "validator";
 
@@ -45,13 +49,32 @@ class LoginPage extends React.Component {
       emailState: "",
       password: "",
       passwordState: "",
+      loading: false,
+      alert: false,
+      message: ""
     }
     this.login = this.login.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({
+      loading: false
+    })
     if(nextProps.status) {
       this.props.history.push("/dashboard");
+    }
+    if(nextProps.errorMsg) {
+      if (!this.state.alert) {
+        this.setState({
+          alert: true,
+          message: nextProps.errorMsg
+        });
+        setTimeout(() => {
+          this.setState({
+            alert: false
+          })
+        }, 3000);
+      }
     }
   }
 
@@ -97,6 +120,9 @@ class LoginPage extends React.Component {
   }
 
   login() {
+    this.setState({
+      loading: true
+    });
     this.props.login({
       email: this.state.email,
       password: this.state.password
@@ -177,7 +203,7 @@ class LoginPage extends React.Component {
                     }}
                   />
                   <div className={classes.right + " " + classes.pb_15}>
-                    <Link className={classes.link} to="/resetpassword/12345">Forgot Password?</Link>
+                    <Link className={classes.link} to="/resetpassword">Forgot Password?</Link>
                   </div>
                   <div className={classes.center}>
                     <Button color="info" className={classes.w_100_p} onClick={this.login} disabled={this.canLogin()}>
@@ -187,6 +213,27 @@ class LoginPage extends React.Component {
                     <Link className={classes.link} to="/register">Sign Up</Link>
                   </div>
                 </form>
+                {
+                  this.state.loading? (
+                    <div className={classes.spinner_container}>                    
+                      <Loader 
+                        type="Oval"
+                        color="#00acc1"
+                        height="40"	
+                        width="40"
+                      />
+                    </div> 
+                  ) : undefined
+                }
+                <Snackbar
+                  place="tc"
+                  color="info"
+                  icon={AddAlert}
+                  message={this.state.message}
+                  open={this.state.alert}
+                  closeNotification={() => this.setState({ alert: false })}
+                  close
+                />
               </CardBody>
             </Card>
           </GridItem>
@@ -202,7 +249,8 @@ LoginPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    status: state.auth.status
+    status: state.auth.status,
+    errorMsg: state.auth.errorMsg
   }
 }
 

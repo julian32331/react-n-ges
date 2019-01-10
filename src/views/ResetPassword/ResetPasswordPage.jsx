@@ -66,6 +66,17 @@ class ResetPasswordPage extends React.Component {
     if(nextProps.status) {
       this.props.history.push("/login");
     }
+    if(nextProps.errorMsg) {
+      this.setState({
+        alert: true,
+        message: nextProps.errorMsg
+      })
+      setTimeout(() => {
+        this.setState({
+          alert: false
+        })
+      }, 3000);
+    }
   }
 
   change(event, stateName, type) {
@@ -275,7 +286,8 @@ ResetPasswordPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    status: state.auth.status
+    status: state.auth.status,
+    errorMsg: state.auth.errorMsg
   }
 }
 

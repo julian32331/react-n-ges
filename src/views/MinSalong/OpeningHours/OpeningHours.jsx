@@ -49,9 +49,11 @@ class OpeningHours extends React.Component {
             deleteModal: false,
             newOrUpdateModal: false,
             modalTitle: '',
-            modalData: null
+            modalData: null,
+            canUpdateHours: true
         };
         this.getHours = this.getHours.bind(this);
+        this.updateHours = this.updateHours.bind(this);
     }
 
     componentWillMount() {
@@ -75,6 +77,8 @@ class OpeningHours extends React.Component {
             nextProps.openingHours.map(day => {
                 if (day.dayId === 1) {
                     this.setState({
+                        Monday_id: day.id,
+                        Monday_dayId: day.dayId,
                         Monday_name: day.name,
                         Monday_open: day.open,
                         Monday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
@@ -83,6 +87,8 @@ class OpeningHours extends React.Component {
                 }
                 if (day.dayId === 2) {
                     this.setState({
+                        Tuesday_id: day.id,
+                        Tuesday_dayId: day.dayId,
                         Tuesday_name: day.name,
                         Tuesday_open: day.open,
                         Tuesday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
@@ -91,6 +97,8 @@ class OpeningHours extends React.Component {
                 }
                 if (day.dayId === 3) {
                     this.setState({
+                        Wednesday_id: day.id,
+                        Wednesday_dayId: day.dayId,
                         Wednesday_name: day.name,
                         Wednesday_open: day.open,
                         Wednesday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
@@ -99,6 +107,8 @@ class OpeningHours extends React.Component {
                 }
                 if (day.dayId === 4) {
                     this.setState({
+                        Thursday_id: day.id,
+                        Thursday_dayId: day.dayId,
                         Thursday_name: day.name,
                         Thursday_open: day.open,
                         Thursday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
@@ -107,6 +117,8 @@ class OpeningHours extends React.Component {
                 }
                 if (day.dayId === 5) {
                     this.setState({
+                        Friday_id: day.id,
+                        Friday_dayId: day.dayId,
                         Friday_name: day.name,
                         Friday_open: day.open,
                         Friday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
@@ -115,6 +127,8 @@ class OpeningHours extends React.Component {
                 }
                 if (day.dayId === 6) {
                     this.setState({
+                        Saturday_id: day.id,
+                        Saturday_dayId: day.dayId,
                         Saturday_name: day.name,
                         Saturday_open: day.open,
                         Saturday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
@@ -123,6 +137,8 @@ class OpeningHours extends React.Component {
                 }
                 if (day.dayId === 7) {
                     this.setState({
+                        Sunday_id: day.id,
+                        Sunday_dayId: day.dayId,
                         Sunday_name: day.name,
                         Sunday_open: day.open,
                         Sunday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
@@ -134,11 +150,17 @@ class OpeningHours extends React.Component {
     }
 
     openHandler = name => event => {
-      this.setState({ [name]: event.target.checked });
+        this.setState({ 
+            [name]: event.target.checked,
+            canUpdateHours: false
+        });
     };
 
     timeHandler = name => event => {
-        this.setState({ [name]: moment(event._d).format("HH:mm") });
+        this.setState({ 
+            [name]: moment(event._d).format("HH:mm"),
+            canUpdateHours: false
+        });
     }
 
     onCloseDeleteModal() {
@@ -163,6 +185,27 @@ class OpeningHours extends React.Component {
             newOrUpdateModal: true,
             modalTitle: title,
             modalData: data
+        })
+    }
+
+    updateHours() {
+        let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        let openingHours = [];
+        days.map(day => {
+            let temp = {};
+
+            temp.id = this.state[day + '_id'];
+            temp.dayId = this.state[day + '_dayId'];
+            temp.name = this.state[day + '_name'];
+            temp.open = this.state[day + '_open'];
+            temp.openAt = this.state[day + '_from'].replace(":", "");
+            temp.closeAt = this.state[day + '_to'].replace(":", "");
+
+            openingHours.push(temp);
+        });
+        this.props.updateHours({
+            workingForId: this.props.workingForId,
+            openingHoursData: openingHours
         })
     }
 
@@ -261,6 +304,16 @@ class OpeningHours extends React.Component {
                                 )
                             })
                         }
+                            <GridItem sm={12} className={classes.text_right}>
+                                <Button 
+                                    color="info"
+                                    size="sm"
+                                    disabled={this.state.canUpdateHours}
+                                    onClick={() => this.updateHours()}
+                                >                            
+                                    Save
+                                </Button>
+                            </GridItem>
                         </GridContainer>
                     </CardBody>
                 </Card>
@@ -347,6 +400,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         getUserData : Actions.getUserData,
         getHours    : Actions.getHours,
+        updateHours : Actions.updateHours
     }, dispatch);
 }
 
