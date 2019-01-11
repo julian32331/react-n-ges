@@ -12,3 +12,7 @@ Then node module will be installed
 # Start
 To run project in dev mode please use follow cli
     "yarn start"
+
+# Deploy
+    yarn build
+    After build copy .htaccess file to the build folder
