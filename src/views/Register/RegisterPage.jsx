@@ -16,6 +16,8 @@ import connect from 'react-redux/es/connect/connect';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
@@ -28,6 +30,8 @@ import Home from "@material-ui/icons/Home";
 import Face from "@material-ui/icons/Face";
 import LocationCity from "@material-ui/icons/LocationCity";
 import AddAlert from "@material-ui/icons/AddAlert";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -57,6 +61,8 @@ class RegisterPage extends React.Component {
       emailState: "",
       phone: "",
       phoneState: "",
+      director: "",
+      directorState: "",
       loading: false,
       isBack: false,
       alert: false,
@@ -154,6 +160,20 @@ class RegisterPage extends React.Component {
           this.setState({ [stateName + "State"]: "error" });
         }
         break;
+        
+      case "director":
+        console.log('event: ', event);
+        this.setState({
+          director: event.target.value
+        })
+        if (Validator.verifyLength(event.target.value)) {
+          this.setState({ [stateName + "State"]: "success" });
+        } else if(Validator.verifyLength(event.target.value) === "") {
+          this.setState({ [stateName + "State"]: "" });
+        } else {
+          this.setState({ [stateName + "State"]: "error" });
+        }
+        break;
       default:
         break;
     }
@@ -171,7 +191,7 @@ class RegisterPage extends React.Component {
     }
   }
 
-  canRegister() {
+  canNext() {
     if(this.state.orgNoState === "success" && this.state.phoneState === "success" && this.state.emailState === "success") {
       return false
     } else {
@@ -189,6 +209,14 @@ class RegisterPage extends React.Component {
       mobile: this.state.phone,
       country: "Sweden"
     })
+  }
+
+  canRegister() {
+    if(this.state.orgNoState === "success" && this.state.phoneState === "success" && this.state.emailState === "success" && this.state.directorState === "success") {
+      return false
+    } else {
+      return true
+    }
   }
 
   register() {
@@ -259,7 +287,7 @@ class RegisterPage extends React.Component {
                           undefined
                       ),
                       type: "text",
-                      placeholder: "Org Number * (Ex: 559035-9914)",
+                      placeholder: "Org Number *",
                       onChange: event =>
                         this.change(event, "orgNo", "orgNo"),
                       onKeyDown: this.onKeyDown,
@@ -291,7 +319,7 @@ class RegisterPage extends React.Component {
                           undefined
                       ),
                       type: "text",
-                      placeholder: "Phone Number * (Ex: +461234567)",
+                      placeholder: "Phone Number *",
                       onChange: event =>
                         this.change(event, "phone", "phone"),
                       value: this.state.phone,
@@ -328,7 +356,7 @@ class RegisterPage extends React.Component {
                       value: this.state.email,
                       disabled: this.state.loading || this.state.isSecond
                     }}
-                  />
+                  />               
                   {
                     this.state.isSecond? (
                       <div>
@@ -445,7 +473,57 @@ class RegisterPage extends React.Component {
                             disabled: true,
                             value: this.props.companyData.country
                           }}
-                        />                                
+                        />   
+                        <FormControl
+                            fullWidth
+                          >
+                          <InputLabel
+                            htmlFor="director-select"
+                            className={classes.selectLabel}
+                          >
+                            Choose Director
+                          </InputLabel>
+                          <Select
+                            MenuProps={{
+                              className: classes.selectMenu
+                            }}
+                            classes={{
+                              select: classes.select
+                            }}
+                            value={this.state.director}
+                            onChange={event =>
+                              this.change(event, "director", "director")}
+                            inputProps={{
+                              name: "directorSelect",
+                              id: "director-select",
+                            }}
+                          >
+                            <MenuItem
+                              disabled
+                              classes={{
+                                root: classes.selectMenuItem
+                              }}
+                            >
+                              Choose Director
+                            </MenuItem>
+                            {
+                              this.props.companyData.directors.map((director, index) => {
+                                  return (
+                                      <MenuItem
+                                          classes={{
+                                              root: classes.selectMenuItem,
+                                              selected: classes.selectMenuItemSelected
+                                          }}
+                                          value={director.SOCSECURITYNR}
+                                          key={index}
+                                      >
+                                          {director.NAME}
+                                      </MenuItem>
+                                  )
+                              })
+                            }   
+                          </Select>
+                        </FormControl>                              
                         <div className={classes.center + " " + classes.pt_15}>  
                           <Button color="info" className={classes.w_100_p} onClick={() => this.register()} disabled={this.props.status}>
                             Sign up
@@ -457,7 +535,7 @@ class RegisterPage extends React.Component {
                       </div>
                     ) : (                   
                       <div className={classes.center + " " + classes.pt_15}>
-                        <Button color="info" className={classes.w_100_p} onClick={() => this.next()} disabled={this.canRegister() || this.state.loading}>
+                        <Button color="info" className={classes.w_100_p} onClick={() => this.next()} disabled={this.canNext() || this.state.loading}>
                           Next
                         </Button>
                         <div className={classes.pt_15}>Already have an account?</div>

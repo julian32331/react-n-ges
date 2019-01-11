@@ -7,8 +7,10 @@ import {
   container,
   cardTitle
 } from "assets/jss/material-dashboard-pro-react.jsx";
+import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
 const loginPageStyle = {
+  ...customSelectStyle,
   container: {
     ...container,
     position: "relative",
@@ -66,6 +68,9 @@ const loginPageStyle = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)'
+  },
+  dropdown: {
+    width: '100%',
   }
 };
 
