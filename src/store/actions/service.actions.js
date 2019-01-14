@@ -13,13 +13,10 @@ export function getServices(data) {
     const request = Utils.xapi().post('manager/services', data);
     return (dispatch) =>
         request.then((response) => {
-            if ( !response.data.error )
-            {                
-                return dispatch({
-                    type: GET_SERVICES,
-                    services: response.data.services
-                });
-            }
+            return dispatch({
+                type: GET_SERVICES,
+                services: response.data.services
+            });
         });
 }
 
@@ -27,15 +24,12 @@ export function addService(data) {
     const request = Utils.xapi().post('manager/service/add', data);
     return (dispatch) =>
         request.then((response) => {
-            if ( !response.data.error )
-            {     
-                dispatch(getServices({
-                    workingForId: data.workingForId
-                }));        
-                return dispatch({
-                    type: ADD_SERVICE
-                });
-            }
+            dispatch(getServices({
+                workingForId: data.workingForId
+            }));        
+            return dispatch({
+                type: ADD_SERVICE
+            });
         });
 }
 
@@ -43,15 +37,12 @@ export function updateService(data) {
     const request = Utils.xapi().post('manager/service/update', data);
     return (dispatch) =>
         request.then((response) => {
-            if ( !response.data.error )
-            {          
-                dispatch(getServices({
-                    workingForId: data.workingForId
-                }));  
-                return dispatch({
-                    type: UPDATE_SERVICE,
-                });
-            }
+            dispatch(getServices({
+                workingForId: data.workingForId
+            }));  
+            return dispatch({
+                type: UPDATE_SERVICE,
+            });
         });
 }
 
@@ -59,14 +50,11 @@ export function deleteService(data) {
     const request = Utils.xapi().post('manager/service/delete', data);
     return (dispatch) =>
         request.then((response) => {
-            if ( !response.data.error )
-            {        
-                dispatch(getServices({
-                    workingForId: data.workingForId
-                }));     
-                return dispatch({
-                    type: DELETE_SERVICE
-                });
-            }
+            dispatch(getServices({
+                workingForId: data.workingForId
+            }));     
+            return dispatch({
+                type: DELETE_SERVICE
+            });
         });
 }

@@ -165,32 +165,6 @@ class CheckInOut extends React.Component {
                 }}
               />
             </GridItem>
-            {/* <GridItem xs={3} sm={1}>
-              <FormLabel className={classes.labelHorizontal}>
-                From
-              </FormLabel>
-            </GridItem>
-            <GridItem xs={9} sm={2} md={2} lg={1}>
-              <FormControl fullWidth className={classes.pt_20}>
-                <Datetime
-                  timeFormat={false}
-                  value={this.state.searchFrom}
-                  onChange={this.timeHandler("searchFrom")}
-                />
-              </FormControl>
-            </GridItem>
-            <GridItem xs={3} sm={1}>
-              <FormLabel className={classes.labelHorizontal}>
-                To
-              </FormLabel>
-            </GridItem>
-            <GridItem xs={9} sm={2} md={2} lg={1}>
-              <FormControl fullWidth className={classes.pt_20}>
-                <Datetime
-                  timeFormat={false}
-                />
-              </FormControl>
-            </GridItem> */}
           </GridContainer>
 
           <Table

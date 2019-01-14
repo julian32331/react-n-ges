@@ -1,11 +1,15 @@
 /**
  * Description: Dashboard view
  * Date: 12/21/2018
- * Author: Dnaijel
  */
 
 import React from "react";
 import PropTypes from "prop-types";
+
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -52,6 +56,13 @@ class SalongInformasjon extends React.Component {
             accessCheck: false,
             description: ""
         }
+    }
+
+    componentWillMount() {
+        this.props.getUserData();
+        // setTimeout(() => {
+        //     this.getServices(this.props.workingForId);
+        // }, 100);
     }
 
     change(event, stateName, type, stateNameEqualTo, maxValue) {
@@ -140,6 +151,25 @@ class SalongInformasjon extends React.Component {
         } else {
           return false
         }
+    }
+
+    addInfo() {
+        this.props.addInfo({
+            workingForId: this.props.workingForId,
+            salonData: {
+                email: this.state.email,
+                name: this.state.name,
+                active: "",
+                description: this.state.description,
+                descriptionValidated: "",
+                parking: "",
+                website: this.state.network,
+                address: this.state.address,
+                post: this.state.zip,
+                city: this.state.city,
+                country: "Sweden"
+            }
+        })
     }
 
     render() {
@@ -406,4 +436,19 @@ SalongInformasjon.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(salongInformasjonStyle)(SalongInformasjon);
+function mapStateToProps(state) {
+    return {
+        workingForId    : state.user.workingForId,
+        status: state.info.status,
+        errorMsg: state.info.errorMsg
+    }
+  }
+  
+  function mapDispatchToProps(dispatch) {
+      return bindActionCreators({          
+        getUserData : Actions.getUserData,
+        addInfo: Actions.addInfo
+      }, dispatch);
+  }
+  
+  export default withStyles(salongInformasjonStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SalongInformasjon)));

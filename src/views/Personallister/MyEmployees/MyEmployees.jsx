@@ -1,7 +1,6 @@
 /**
  * Description: My Employess
  * Date: 25/12/2018
- * Author: Dnaijel
  */
 
 import React from "react";
@@ -33,7 +32,9 @@ import Table from "components/Table/Table.jsx";
 
 import myEmployeesStyle from "assets/jss/material-dashboard-pro-react/views/myEmployees/myEmployeesStyle.jsx";
 import NewOrUpdateModal from "./NewOrUpdateModal";
+import DeleteModal from "./DeleteModal";
 import DefaultAvatar from "assets/img/default-avatar.png";
+import * as Utils from 'utils';
 
 class MyEmployees extends React.Component {
 
@@ -41,7 +42,10 @@ class MyEmployees extends React.Component {
     super(props);
     this.state = {
       search: "",
-      checkInModal: false
+      deleteModal: false,
+      newOrUpdateModal: false,
+      modalTitle: '',
+      modalData: null
     }
     this.employees = [];
     this.getEmployees = this.getEmployees.bind(this);
@@ -72,63 +76,82 @@ class MyEmployees extends React.Component {
   
   search(value) {
     let temp = this.props.employees.filter( employee => {
-      return employee.Employee.name.toLowerCase().indexOf(value) !== -1
+      return employee.name.toLowerCase().indexOf(value) !== -1
     });
 
     this.employees = temp;
   }
 
-  onCloseCheckInModal() {
+  // Open and close Delete modal
+  onCloseDeleteModal() {
     this.setState({
-      checkInModal: false
+        deleteModal: false
+    })
+  }
+  onOpenDeleteModal(data) {
+    console.log('data: ', data);
+    this.setState({
+      deleteModal: true,            
+      modalData: data
     })
   }
 
-  onOpenCheckInModal() {
-    this.setState({
-      checkInModal: true,
-    })
+  // Open and close NewOrUpdate modal
+  onCloseNewOrUpdateModal() {
+      this.setState({
+          newOrUpdateModal: false
+      })
+  }
+  onOpenNewOrUpdateModal(title, data=null) {
+      this.setState({
+          newOrUpdateModal: true,
+          modalTitle: title,
+          modalData: data
+      })
   }
 
   render() {
     const { classes } = this.props;
 
-    const buttons = [
-      { color: "info", icon: Edit },
-      { color: "danger", icon: Close }
-    ].map((prop, key) => {
+    const buttons = data => {
       return (
-        <Button color={prop.color} className={classes.actionButton} key={key}>
-          <prop.icon className={classes.icon} />
-        </Button>
-      );
-    });
+          <div>
+              <Button color="info" className={classes.actionButton} onClick={() => this.onOpenNewOrUpdateModal("Update Employee", data)}>
+                  <Edit className={classes.icon} />
+              </Button>                
+              <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenDeleteModal(data)}>
+                  <Close className={classes.icon} />
+              </Button>
+          </div>                
+      )
+    }
 
-    const avatar = 
-      <div className={classes.picture}>
-        <img
-          src={DefaultAvatar}
-          className={classes.picture_src}
-          alt="..."
-        />
-      </div>
+    const avatar = src => {
+      return (
+        <div className={classes.picture}>
+          <img
+            src={'http://18.195.182.166/api/v1' + src}
+            className={classes.picture_src}
+            alt="..."
+          />
+        </div>
+      )
+    }
 
     let employees = [];
     this.employees.map(employee => {
       let temp = [];
       
-      temp.push(employee.Employee.name);
-      temp.push(employee.Employee.EmployeeInformation.position);
-      temp.push(employee.Employee.EmployeeInformation.mobile);
-      temp.push(employee.Employee.SSN);
-      temp.push(avatar);
-      temp.push(employee.Employee.EmployeeInformation.licenseValidated? "Yes" : "No");
-      temp.push(buttons);
+      temp.push(employee.name);
+      temp.push(employee.EmployeeInformation.position);
+      temp.push(employee.EmployeeInformation.mobile);
+      temp.push(employee.SSN);
+      temp.push(avatar(employee.EmployeeInformation.picturePath));
+      temp.push(employee.EmployeeInformation.licenseValidated? "Yes" : "No");
+      temp.push(buttons(employee));
 
       employees.push(temp);
     })
-
-    console.log('employees: ', employees)
 
     return (
       <Card>
@@ -142,7 +165,7 @@ class MyEmployees extends React.Component {
                     <Button 
                         color="info" 
                         size="sm"
-                        onClick={() => this.onOpenCheckInModal()}
+                        onClick={() => this.onOpenNewOrUpdateModal('New Employee')}
                     >                            
                         <Add /> Add Employee
                     </Button>
@@ -204,9 +227,16 @@ class MyEmployees extends React.Component {
             customHeadClassesForCells={[0, 1, 2, 3, 4, 5]}
           />
 
+          <DeleteModal 
+            onOpen={this.state.deleteModal}
+            onClose={this.onCloseDeleteModal.bind(this)}
+            id={this.state.modalData? this.state.modalData.employeeId : null}
+          />
+           
           <NewOrUpdateModal 
-            onOpen={this.state.checkInModal}
-            onClose={this.onCloseCheckInModal.bind(this)} 
+            onOpen={this.state.newOrUpdateModal}
+            onClose={this.onCloseNewOrUpdateModal.bind(this)}
+            modalTitle={this.state.modalTitle}
           />
 
         </CardBody>
@@ -221,7 +251,6 @@ MyEmployees.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    token         : state.user.token,
     workingForId  : state.user.workingForId,
     employees     : state.employees.employees
   };

@@ -18,6 +18,12 @@ const employees = function (state = initialState, action) {
                 employees: action.employees
             };
         }
+        case Actions.DELETE_SERVICE:
+        {
+            return {
+                services: state.employees
+            };
+        }
         default:
         {
             return state

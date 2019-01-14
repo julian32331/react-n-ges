@@ -5,9 +5,8 @@
 import axios from 'axios/index';
 
 import store from './store.js';
-import * as Actions from 'store/actions';
 
-export const root = "http://18.195.182.166/api/v1/";
+export const root = "http://dev.geselle-one.com/api/dev";
 
 export const xapi = () => {
     let token = null;
@@ -15,7 +14,6 @@ export const xapi = () => {
         token = store.getState().user.token;
     } else {
         token = localStorage.token;
-        // store.dispatch(Actions.getUserData());
     }
 
     let headers = null;
