@@ -2,6 +2,10 @@
 // // // Modal component styles
 // #############################
 
+import {
+  infoColor
+} from "assets/jss/material-dashboard-pro-react.jsx";
+
 const modalStyle = theme => ({
   modalRoot: {
     overflow: "auto",
@@ -10,13 +14,12 @@ const modalStyle = theme => ({
   },
   modal: {
     [theme.breakpoints.up("sm")]: {
-      maxWidth: "500px",
-      margin: "1.75rem auto",
-      minWidth: '320px',
+      width: "400px",
+      margin: "1.75rem auto"
     },
     marginHorizontal: 'auto',
     borderRadius: "6px",
-    marginTop: "100px !important",
+    marginTop: "130px !important",
     overflow: "visible",
     maxHeight: "unset",
     position: "relative",
@@ -32,7 +35,9 @@ const modalStyle = theme => ({
   },
   modalTitle: {
     margin: "0",
-    lineHeight: "1.42857143"
+    lineHeight: "1.42857143",
+    color: infoColor,
+    fontWeight: '500'
   },
   modalCloseButton: {
     color: "#999999",

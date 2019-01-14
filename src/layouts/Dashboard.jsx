@@ -14,10 +14,16 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 
+// @material-ui/icons
+import ArrowUpward from "@material-ui/icons/ArrowUpward";
+
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
+import Button from "components/CustomButtons/Button.jsx";
+
+import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
 
 import dashboardRoutes from "routes/dashboard.jsx";
 
@@ -90,6 +96,10 @@ class Dashboard extends React.Component {
       this.setState({ mobileOpen: false });
     }
   }
+  scrollTop() {
+    this.refs.mainPanel.scrollTop = 0;
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     const mainPanel =
@@ -134,6 +144,20 @@ class Dashboard extends React.Component {
             <div className={classes.map}>{switchRoutes}</div>
           )}
           {/* {this.getRoute() ? <Footer fluid /> : null} */}
+          
+          <div className={classes.scrollTop}>
+            <Button
+              justIcon
+              color="info"
+              simple
+              size="lg"
+              style={{padding: '12px', margin: '0px',}}
+              onClick={this.scrollTop.bind(this)}
+            >
+              <ArrowUpward />
+            </Button>
+          </div>
+
         </div>
       </div>
     );

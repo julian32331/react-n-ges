@@ -5,6 +5,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+import moment from 'moment';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -47,6 +48,7 @@ class CheckInModal extends React.Component {
 
     render() {
     const { classes } = this.props;
+    const checkInTime = moment().format("HH:mm");
     return (
         <Dialog
             classes={{
@@ -71,7 +73,7 @@ class CheckInModal extends React.Component {
                 id="checkin-modal-description"
                 className={classes.modalBody}
             >
-                <h4>Who do you wanna check in 17:40?</h4>
+                <h4>Who do you wanna check in {checkInTime}?</h4>
                 <FormControl
                     fullWidth
                     className={classes.selectFormControl}
@@ -136,7 +138,8 @@ class CheckInModal extends React.Component {
             </DialogContent>
             <DialogActions className={classes.modalFooter}>
                 <Button 
-                    color="transparent"
+                    color="danger"
+                    size="sm"
                     onClick={() => this.handleClose()}
                 >
                     Cancel
@@ -144,7 +147,7 @@ class CheckInModal extends React.Component {
                 <Button
                     onClick={() => this.handleClose()}
                     color="info"
-                    simple
+                    size="sm"
                 >
                     Save
                 </Button>

@@ -54,7 +54,19 @@ const appStyle = theme => ({
   },
   mainPanelWithPerfectScrollbar: {
     overflow: "hidden !important"
-  }
+  },
+  scrollTop: {
+    position: 'fixed',
+    bottom: '60px',
+    right: '30px',
+    width: '64px',
+    // height: '64px',
+    // padding: '16px',
+    background: 'rgba(0, 0, 0, 0.3)',
+    zIndex: '1031',
+    borderRadius: '8px',
+    textAlign: 'center',
+}
 });
 
 export default appStyle;
