@@ -18,6 +18,12 @@ const employees = function (state = initialState, action) {
                 employees: action.employees
             };
         }
+        case Actions.UPDATE_EMPLOYEE:
+        {
+            return {
+                services: state.employees
+            };
+        }
         case Actions.DELETE_SERVICE:
         {
             return {

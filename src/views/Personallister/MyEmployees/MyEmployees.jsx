@@ -85,11 +85,10 @@ class MyEmployees extends React.Component {
   // Open and close Delete modal
   onCloseDeleteModal() {
     this.setState({
-        deleteModal: false
+      deleteModal: false
     })
   }
   onOpenDeleteModal(data) {
-    console.log('data: ', data);
     this.setState({
       deleteModal: true,            
       modalData: data
@@ -98,16 +97,17 @@ class MyEmployees extends React.Component {
 
   // Open and close NewOrUpdate modal
   onCloseNewOrUpdateModal() {
-      this.setState({
-          newOrUpdateModal: false
-      })
+    this.setState({
+      newOrUpdateModal: false
+    })
   }
   onOpenNewOrUpdateModal(title, data=null) {
-      this.setState({
-          newOrUpdateModal: true,
-          modalTitle: title,
-          modalData: data
-      })
+    console.log('data: ', data);
+    this.setState({
+      newOrUpdateModal: true,
+      modalTitle: title,
+      modalData: data
+    })
   }
 
   render() {
@@ -237,6 +237,7 @@ class MyEmployees extends React.Component {
             onOpen={this.state.newOrUpdateModal}
             onClose={this.onCloseNewOrUpdateModal.bind(this)}
             modalTitle={this.state.modalTitle}
+            data={this.state.modalData}
           />
 
         </CardBody>

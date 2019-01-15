@@ -60,14 +60,14 @@ class SalongInformasjon extends React.Component {
 
     componentWillMount() {
         this.props.getUserData();
-        // setTimeout(() => {
-        //     this.getServices(this.props.workingForId);
-        // }, 100);
     }
 
     change(event, stateName, type, stateNameEqualTo, maxValue) {
         switch (type) {
             case "name":
+                this.setState({
+                    name: event.target.value
+                })
                 if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else if (Validator.verifyLength(event.target.value) === "") {
@@ -77,6 +77,9 @@ class SalongInformasjon extends React.Component {
                 }
                 break;
             case "address":
+                this.setState({
+                    address: event.target.value
+                })
                 if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else if (Validator.verifyLength(event.target.value) === "") {
@@ -86,6 +89,9 @@ class SalongInformasjon extends React.Component {
                 }
                 break;
             case "zip":
+                this.setState({
+                    zip: event.target.value
+                })
                 if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else if (Validator.verifyLength(event.target.value) === "") {
@@ -95,6 +101,9 @@ class SalongInformasjon extends React.Component {
                 }
                 break;
             case "city":
+                this.setState({
+                    city: event.target.value
+                })
                 if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else if (Validator.verifyLength(event.target.value) === "") {
@@ -104,15 +113,27 @@ class SalongInformasjon extends React.Component {
                 }
                 break;
             case "phone":
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
+                if(this.state.phone.length === 0) {
+                    this.setState({
+                        phone: "+46" + event.target.value
+                    })
+                } else {
+                    this.setState({
+                        phone: event.target.value
+                    })
+                }
+                if (Validator.verifyPhone(event.target.value)) {
                     this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
+                } else if(Validator.verifyPhone(event.target.value) === "") {
                     this.setState({ [stateName + "State"]: "" });
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
                 }
                 break;
             case "email":
+                this.setState({
+                    email: event.target.value
+                })
                 if (Validator.verifyEmail(event.target.value)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else if(Validator.verifyEmail(event.target.value) === "") {
@@ -122,6 +143,9 @@ class SalongInformasjon extends React.Component {
                 }
                 break;
             case "network":
+                this.setState({
+                    network: event.target.value
+                })
                 if (Validator.verifyUrl(event.target.value)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else if (Validator.verifyUrl(event.target.value) === "") {
@@ -159,9 +183,8 @@ class SalongInformasjon extends React.Component {
             salonData: {
                 email: this.state.email,
                 name: this.state.name,
-                active: "",
                 description: this.state.description,
-                descriptionValidated: "",
+                descriptionValidated: false,
                 parking: "",
                 website: this.state.network,
                 address: this.state.address,
@@ -204,6 +227,7 @@ class SalongInformasjon extends React.Component {
                                     ),
                                     onChange: event =>
                                         this.change(event, "name", "name", 0),
+                                    value: this.state.name,
                                     type: "text"
                                 }}
                             />
@@ -228,6 +252,7 @@ class SalongInformasjon extends React.Component {
                                     ),
                                     onChange: event =>
                                         this.change(event, "address", "address", 0),
+                                    value: this.state.address,
                                     type: "text"
                                 }}
                             />
@@ -254,6 +279,7 @@ class SalongInformasjon extends React.Component {
                                     ),
                                     onChange: event =>
                                         this.change(event, "zip", "zip", 0),
+                                    value: this.state.zip,
                                     type: "number"
                                 }}
                             />
@@ -278,6 +304,7 @@ class SalongInformasjon extends React.Component {
                                     ),
                                     onChange: event =>
                                         this.change(event, "city", "city", 0),
+                                    value: this.state.city,
                                     type: "text"
                                 }}
                             />
@@ -303,8 +330,9 @@ class SalongInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "phone", "phone", 0),
-                                    type: "number"
+                                        this.change(event, "phone", "phone"),
+                                    value: this.state.phone,
+                                    type: "text"
                                 }}
                             />
                         </GridItem>
@@ -328,6 +356,7 @@ class SalongInformasjon extends React.Component {
                                     ),
                                     onChange: event =>
                                         this.change(event, "email", "email", 0),
+                                    value: this.state.email,
                                     type: "email"
                                 }}
                             />
@@ -354,6 +383,7 @@ class SalongInformasjon extends React.Component {
                                     ),
                                     onChange: event =>
                                         this.change(event, "network", "network", 0),
+                                    value: this.state.network,
                                     type: "url"
                                 }}
                             />
@@ -422,7 +452,7 @@ class SalongInformasjon extends React.Component {
                             />
                         </GridItem>
                         <GridItem xs={12} sm={12} md={6}>                    
-                            <Button color="info" className={classes.submit} disabled={this.canSubmit()}>LAGRE</Button>
+                            <Button color="info" className={classes.submit} disabled={this.canSubmit()} onClick={this.addInfo.bind(this)}>LAGRE</Button>
                         </GridItem>
                     </GridContainer>
                 </form>
@@ -438,9 +468,7 @@ SalongInformasjon.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        workingForId    : state.user.workingForId,
-        status: state.info.status,
-        errorMsg: state.info.errorMsg
+        workingForId    : state.user.workingForId
     }
   }
   

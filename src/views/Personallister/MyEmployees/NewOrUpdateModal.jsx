@@ -201,18 +201,18 @@ class NewOrUpdateModal extends React.Component {
                 TransitionComponent={Transition}
                 keepMounted
                 onClose={() => this.handleClose()}
-                aria-labelledby="saloon-service-newOrUpdate-modal-title"
-                aria-describedby="saloon-service-newOrUpdate-modal-description"
+                aria-labelledby="my-employee-newOrUpdate-modal-title"
+                aria-describedby="my-employee-newOrUpdate-modal-description"
             >
                 <DialogTitle
-                    id="saloon-service-newOrUpdate-modal-title"
+                    id="my-employee-newOrUpdate-modal-title"
                     disableTypography
                     className={classes.modalHeader}
                 >
                     <h3 className={classes.modalTitle}>{this.props.modalTitle}</h3>
                 </DialogTitle>
                 <DialogContent
-                    id="saloon-service-newOrUpdate-modal-description"
+                    id="my-employee-newOrUpdate-modal-description"
                     className={classes.modalBody}
                 >
                     <form>
@@ -352,8 +352,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        addService      : Actions.addService,
-        updateService   : Actions.updateService
+        updateEmployee   : Actions.updateEmployee
     }, dispatch);
 }
 
