@@ -96,7 +96,7 @@ class LoginPage extends React.Component {
         this.setState({
           password: event.target.value
         })
-        if (Validator.verifyLength(event.target.value, 4)) {
+        if (Validator.verifyLength(event.target.value, 1)) {
           this.setState({ [stateName + "State"]: "success" });
         } else if (Validator.verifyLength(event.target.value) === "") {
           this.setState({ [stateName + "State"]: "" });

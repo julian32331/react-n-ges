@@ -6,7 +6,7 @@ import axios from 'axios/index';
 
 import store from './store.js';
 
-export const root = "http://dev.geselle-one.com/api/dev";
+export const root = "https://dev.geselle-one.com/api/dev";
 
 export const xapi = () => {
     let token = null;

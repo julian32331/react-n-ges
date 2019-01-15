@@ -225,7 +225,7 @@ class RegisterPage extends React.Component {
     });
     this.props.register({
       companyData: {
-        orgNo: this.state.orgNo,
+        orgNo: this.state.orgNo.replace("-", ""),
         email: this.state.email,
         mobile: this.state.phone,
         country: this.props.companyData.country,
