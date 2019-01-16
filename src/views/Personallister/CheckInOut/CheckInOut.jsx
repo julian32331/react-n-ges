@@ -129,10 +129,13 @@ class CheckInOut extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const checkOutButton =
-        <Button color="danger" className={classes.actionButton}>
+    const checkOutButton = data => {
+      return (
+        <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenCheckOutModal(data)}>
           <Remove className={classes.icon} /> Check Out User
         </Button>
+      )
+    }        
 
     let list = [];
     this.list.map(item => {
@@ -141,7 +144,7 @@ class CheckInOut extends React.Component {
       temp.push(item.Employee.employeeId);
       temp.push(moment(item.checkIn).format("MM/DD/YYYY, hh:mm"));
       temp.push(item.checkOut? moment(item.checkOut).format("MM/DD/YYYY, hh:mm") : null);
-      item.checkOut? temp.push("") : temp.push(checkOutButton)
+      item.checkOut? temp.push("") : temp.push(checkOutButton(item))
 
       list.push(temp);
     })
