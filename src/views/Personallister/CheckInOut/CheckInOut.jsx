@@ -47,6 +47,7 @@ class CheckInOut extends React.Component {
       searchTo: "",
       checkInModal: false,
       checkOutModal: false,
+      modalData: null
     }
     this.list = [];
     this.getCheckList = this.getCheckList.bind(this);
@@ -120,9 +121,10 @@ class CheckInOut extends React.Component {
     })
   }
 
-  onOpenCheckOutModal() {
+  onOpenCheckOutModal(data) {
     this.setState({
       checkOutModal: true,
+      modalData: data
     })
   }
 
@@ -230,7 +232,8 @@ class CheckInOut extends React.Component {
 
           <CheckOutModal 
             onOpen={this.state.checkOutModal}
-            onClose={this.onCloseCheckOutModal.bind(this)} 
+            onClose={this.onCloseCheckOutModal.bind(this)}
+            data={this.state.modalData? this.state.modalData.Employee.employeeId : null} 
           />
 
         </CardBody>

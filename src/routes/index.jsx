@@ -11,6 +11,7 @@ var indexRoutes = [
   { path: "/login", name: "Pages", component: Pages },
   { path: "/register", name: "Pages", component: Pages },
   { path: "/resetpassword/:token", name: "Pages", component: Pages },
+  { path: "/forgotpassword", name: "Pages", component: Pages },
   { path: "/", name: "Home", component: Dashboard }
 ];
 

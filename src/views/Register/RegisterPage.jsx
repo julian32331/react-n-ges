@@ -234,7 +234,7 @@ class RegisterPage extends React.Component {
         address: this.props.companyData.address,
         post: this.props.companyData.post,
         city: this.props.companyData.city,
-        authorizedSignerName: name.NAME,
+        authorizedSignerName: name[0].NAME,
         authorizedSignerSSN: this.state.director
       }
     })

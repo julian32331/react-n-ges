@@ -17,6 +17,18 @@ const checkInOut = function (state = initialState, action) {
             return {
                 list: action.list
             };
+        }        
+        case Actions.ADD_CHECKLIST:
+        {
+            return {
+                list: state.list
+            };
+        }        
+        case Actions.UPDATE_CHECKLIST:
+        {
+            return {
+                list: state.list
+            };
         }
         default:
         {

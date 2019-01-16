@@ -6,6 +6,7 @@ import * as Utils from 'utils';
 
 export const GET_CHECKLIST = '[CHECKLIST] GET';
 export const ADD_CHECKLIST = '[CHECKLIST] ADD';
+export const UPDATE_CHECKLIST = '[CHECKLIST] UPDATE';
 
 export function getCheckList(data) {
     const request = Utils.xapi().post('manager/checklist', data);
@@ -19,7 +20,7 @@ export function getCheckList(data) {
 }
 
 export function checkIn(data) {
-    const request = Utils.xapi().post('manager/specialday/add', data);
+    const request = Utils.xapi().post('employee/checkin', data);
     return (dispatch) =>
         request.then((response) => {
             dispatch(getCheckList({
@@ -27,6 +28,19 @@ export function checkIn(data) {
             }));   
             return dispatch({
                 type: ADD_CHECKLIST
+            });
+        });
+}
+
+export function checkOut(data) {
+    const request = Utils.xapi().post('employee/checkout', data);
+    return (dispatch) =>
+        request.then((response) => {
+            dispatch(getCheckList({
+                workingForId: data.workingForId
+            }));   
+            return dispatch({
+                type: UPDATE_CHECKLIST
             });
         });
 }

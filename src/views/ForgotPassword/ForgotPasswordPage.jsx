@@ -37,44 +37,49 @@ import Loader from 'react-loader-spinner';
 
 import * as Validator from "./../../validator";
 
-import loginPageStyle from "assets/jss/material-dashboard-pro-react/views/loginPageStyle";
+import forgotPasswordPageStyle from "assets/jss/material-dashboard-pro-react/views/forgotPasswordPageStyle";
 
 import logo from "assets/img/logo.png";
 
-class LoginPage extends React.Component {
+class ForgotPasswordPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {    
       email: "",
       emailState: "",
-      password: "",
-      passwordState: "",
-      loading: false,
       alert: false,
-      message: ""
+      message: "",
+      loading: false
     }
-    this.login = this.login.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('next props: ', nextProps)
     this.setState({
       loading: false
     })
     if(nextProps.status) {
-      this.props.history.push("/dashboard");
+      this.setState({
+        alert: true,
+        message: "Please check your email. Then you can set your password."
+      });
+      setTimeout(() => {
+        this.setState({
+          alert: false
+        })
+      }, 3000);
     }
     if(nextProps.errorMsg) {
-      if (!this.state.alert) {
+      this.setState({
+        alert: true,
+        message: nextProps.errorMsg
+      })
+      setTimeout(() => {
         this.setState({
-          alert: true,
-          message: nextProps.errorMsg
-        });
-        setTimeout(() => {
-          this.setState({
-            alert: false
-          })
-        }, 3000);
-      }
+          alert: false
+        })
+      }, 3000);
     }
   }
 
@@ -92,41 +97,26 @@ class LoginPage extends React.Component {
           this.setState({ [stateName + "State"]: "error" });
         }
         break;
-      case "password":
-        this.setState({
-          password: event.target.value
-        })
-        if (Validator.verifyLength(event.target.value, 1)) {
-          this.setState({ [stateName + "State"]: "success" });
-        } else if (Validator.verifyLength(event.target.value) === "") {
-          this.setState({ [stateName + "State"]: "" });
-        } else {
-          this.setState({ [stateName + "State"]: "error" });
-        }
-        break;
       default:
         break;
     }
   }
 
-  canLogin() {
-    if(this.state.emailState === "success" && this.state.passwordState === "success") {
+  canSubmit() {
+    if(this.state.emailState === "success") {
       return false
-    // } else if(this.state.email && this.state.emailState === "" && this.state.password && this.state.passwordState === "") {
-    //   return false
     } else {
       return true
     }
   }
 
-  login() {
+  submit() {
     this.setState({
       loading: true
     });
-    this.props.login({
-      email: this.state.email,
-      password: this.state.password
-    });  
+    this.props.forgotPassword({
+      email: this.state.email
+    });
   }
 
   render() {
@@ -172,45 +162,13 @@ class LoginPage extends React.Component {
                       value: this.state.email
                     }}
                   />
-                  <CustomInput
-                    success={this.state.passwordState === "success"}
-                    error={this.state.passwordState === "error"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      startAdornment: (
-                        <InputAdornment
-                          position="start"
-                          className={classes.inputAdornment}
-                        >
-                          <VpnKey className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                      endAdornment:
-                        this.state.passwordState === "error" ? (
-                          <InputAdornment position="end">
-                            <Warning className={classes.danger} />
-                          </InputAdornment>
-                        ) : (
-                          undefined
-                      ),
-                      type: "password",
-                      placeholder: "Password*",
-                      onChange: event =>
-                        this.change(event, "password", "password"),
-                      value: this.state.password
-                    }}
-                  />
-                  <div className={classes.right + " " + classes.pb_15}>
-                    <Link className={classes.link} to="/forgotpassword">Forgot Password?</Link>
-                  </div>
                   <div className={classes.center}>
-                    <Button color="info" className={classes.w_100_p} onClick={this.login} disabled={this.canLogin()}>
-                      Sign In
+                    <Button color="info" className={classes.w_100_p} onClick={this.submit} disabled={this.canSubmit()}>
+                      Send
                     </Button>   
-                    <div className={classes.pt_15}>Don't you have account?</div>
-                    <Link className={classes.link} to="/register">Sign Up</Link>
+                    <div className={classes.pt_15}>
+                      <Link className={classes.link} to="/login">Sign In</Link>
+                    </div>
                   </div>
                 </form>
                 {
@@ -243,7 +201,7 @@ class LoginPage extends React.Component {
   }
 }
 
-LoginPage.propTypes = {
+ForgotPasswordPage.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -256,8 +214,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-      login: Actions.login
+      forgotPassword: Actions.forgotPassword
     }, dispatch);
 }
 
-export default withStyles(loginPageStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginPage)));
+export default withStyles(forgotPasswordPageStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordPage)));

@@ -30,17 +30,17 @@ function Transition(props) {
 class CheckOutModal extends React.Component {
     constructor(props) {
         super(props);
-        this.delete = this.delete.bind(this);
+        this.checkOut = this.checkOut.bind(this);
     }
 
     handleClose() {
         this.props.onClose();
     }
 
-    delete() {
-        this.props.deleteEmployee({
+    checkOut() {
+        this.props.checkOut({
             workingForId: this.props.workingForId,
-            employeeId: this.props.id
+            employeeId: this.props.data
         })
         this.props.onClose();
     }
@@ -57,16 +57,16 @@ class CheckOutModal extends React.Component {
                 TransitionComponent={Transition}
                 keepMounted
                 onClose={() => {this.handleClose()}}
-                aria-labelledby="my-employee-delete-modal-title"
-                aria-describedby="my-employee-delete-modal-description"
+                aria-labelledby="check-out-modal-title"
+                aria-describedby="check-out-modal-description"
             >
                 <DialogContent
-                    id="my-employee-delete-modal-description"
+                    id="check-out-modal-description"
                     className={
                     classes.modalBody + " " + classes.modalSmallBody
                     }
                 >
-                    <h5>Are you sure you want to delete this?</h5>
+                    <h5>Are you sure?</h5>
                 </DialogContent>
                 <DialogActions
                     className={
@@ -84,7 +84,7 @@ class CheckOutModal extends React.Component {
                     No
                     </Button>
                     <Button
-                        onClick={() => this.delete()}
+                        onClick={() => this.checkOut()}
                         color="danger"
                         size="sm"
                         className={
@@ -113,7 +113,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        deleteEmployee: Actions.deleteEmployee
+        checkOut: Actions.checkOut
     }, dispatch);
 }
 

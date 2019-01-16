@@ -54,6 +54,17 @@ class CheckInModal extends React.Component {
       this.setState({ [event.target.name]: event.target.value });
     };
 
+    checkIn() {
+        this.props.checkIn({
+            workingForId: this.props.workingForId,
+            employeeId: this.state.employeeSelect
+        })
+        this.props.onClose();
+        this.setState({
+            employeeSelect: ""
+        })
+    }
+
     render() {
         const { classes } = this.props;
         const checkInTime = moment().format("HH:mm");
@@ -142,7 +153,7 @@ class CheckInModal extends React.Component {
                         Cancel
                     </Button>
                     <Button
-                        onClick={() => this.handleClose()}
+                        onClick={() => this.checkIn()}
                         color="info"
                         size="sm"
                     >
@@ -167,7 +178,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    
+    checkIn: Actions.checkIn
   }, dispatch);
 }
 

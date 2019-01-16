@@ -103,6 +103,29 @@ const auth = function (state = initialState, action) {
                 status: false
             };
         }
+        case Actions.FORGOTPASSWORD:
+        {
+            return {
+                ...initialState,
+                errorMsg: "",
+                status: false
+            };
+        }
+        case Actions.FORGOTPASSWORD_SUCCESS:
+        {
+            return {
+                ...initialState,
+                status: true
+            };
+        }
+        case Actions.FORGOTPASSWORD_ERROR:
+        {
+            return {
+                ...initialState,
+                errorMsg: action.errorMsg,
+                status: false
+            };
+        }
         default:
         {
             return state
