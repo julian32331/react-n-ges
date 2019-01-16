@@ -14,6 +14,7 @@ export const GET_COMPANY_DATA_SUCCESS = '[COMPANY] GET DATA SUCCESS';
 export const GET_COMPANY_DATA_ERROR = '[COMPANY] GET DATA ERROR';
 export const REGISTER = 'REGISTER';
 export const REGISTER_SUCCESS = 'REGISTER SUCCESS';
+export const REGISTER_ERROR = 'REGISTER ERROR';
 export const RESETPASSWORD = 'RESETPASSWORD';
 export const RESETPASSWORD_SUCCESS = 'RESETPASSWORD SUCCESS';
 export const RESETPASSWORD_ERROR = 'RESETPASSWORD ERROR';
@@ -63,16 +64,16 @@ export function getCompanyData(data) {
 export function register(data) {
     const request = Utils.xapi().post('register/company/secondstep', data);
     return (dispatch) => 
-        request.then((response) => {  
-            dispatch({
-                type: REGISTER,
-                data: data.companyData
-            });            
+        request.then((response) => {           
             return dispatch({
                 type: REGISTER_SUCCESS,
-                data: data.companyData
             });
-        })
+        }).catch((error) => {     
+            return dispatch({
+                type: REGISTER_ERROR,
+                errorMsg: JSON.parse(error.request.response).errorMessage
+            });
+        });
 }
 
 export function resetPassword(data) {

@@ -53,7 +53,7 @@ const auth = function (state = initialState, action) {
         case Actions.GET_COMPANY_DATA_ERROR:
         {
             return {
-                ...initialState,
+                ...state,
                 errorMsg: action.errorMsg
             };
         }
@@ -68,9 +68,16 @@ const auth = function (state = initialState, action) {
         case Actions.REGISTER_SUCCESS:
         {
             return {
-                ...initialState,
+                ...state,
                 status: true,
-                companyData: action.data
+            };
+        }
+        case Actions.REGISTER_ERROR:
+        {
+            return {
+                ...state,
+                status: false,
+                errorMsg: action.errorMsg
             };
         }
         case Actions.RESETPASSWORD:

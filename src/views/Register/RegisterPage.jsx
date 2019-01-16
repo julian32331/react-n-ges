@@ -162,13 +162,12 @@ class RegisterPage extends React.Component {
         break;
         
       case "director":
-        console.log('event: ', event);
         this.setState({
           director: event.target.value
         })
-        if (Validator.verifyLength(event.target.value)) {
+        if (Validator.verifyLength("" + event.target.value, 1)) {
           this.setState({ [stateName + "State"]: "success" });
-        } else if(Validator.verifyLength(event.target.value) === "") {
+        } else if(Validator.verifyLength("" + event.target.value, 1) === "") {
           this.setState({ [stateName + "State"]: "" });
         } else {
           this.setState({ [stateName + "State"]: "error" });
@@ -223,6 +222,7 @@ class RegisterPage extends React.Component {
     this.setState({
       loading: false
     });
+    let name = this.props.companyData.directors.filter(director => director.SOCSECURITYNR === this.state.director);
     this.props.register({
       companyData: {
         orgNo: this.state.orgNo.replace("-", ""),
@@ -233,7 +233,9 @@ class RegisterPage extends React.Component {
         addressCO: this.props.companyData.addressCO,
         address: this.props.companyData.address,
         post: this.props.companyData.post,
-        city: this.props.companyData.city
+        city: this.props.companyData.city,
+        authorizedSignerName: name.NAME,
+        authorizedSignerSSN: this.state.director
       }
     })
   }
@@ -252,7 +254,7 @@ class RegisterPage extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    
     return (
       <div className={classes.container}>
         <GridContainer justify="center">
@@ -525,7 +527,7 @@ class RegisterPage extends React.Component {
                           </Select>
                         </FormControl>                              
                         <div className={classes.center + " " + classes.pt_15}>  
-                          <Button color="info" className={classes.w_100_p} onClick={() => this.register()} disabled={this.props.status}>
+                          <Button color="info" className={classes.w_100_p} onClick={() => this.register()} disabled={this.state.directorState !== "success"}>
                             Sign up
                           </Button>
                           <Button color="danger" className={classes.w_100_p} onClick={() => this.cancel()}>
