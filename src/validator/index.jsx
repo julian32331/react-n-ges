@@ -57,7 +57,7 @@ export const verifyOrgNo = (value) => {
 
 export const verifyPhone = (value) => {
     if(value.length === 0) return ""
-    var regx = /\+[0-9]{9}$/;
+    var regx = /^(\+?\d{1,3}[- ]?)?\d{8,10}$/;
     if(regx.test(value)) {
         return true;
     }

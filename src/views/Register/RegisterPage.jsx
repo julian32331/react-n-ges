@@ -131,15 +131,15 @@ class RegisterPage extends React.Component {
         }
         break;
       case "phone":
-        if(this.state.phone.length === 0) {
-          this.setState({
-            phone: "+46" + event.target.value
-          })
-        } else {
+        // if(this.state.phone.length === 0) {
+        //   this.setState({
+        //     phone: "+46" + event.target.value
+        //   })
+        // } else {
           this.setState({
             phone: event.target.value
           })
-        }
+        // }
         if (Validator.verifyPhone(event.target.value)) {
           this.setState({ [stateName + "State"]: "success" });
         } else if(Validator.verifyPhone(event.target.value) === "") {

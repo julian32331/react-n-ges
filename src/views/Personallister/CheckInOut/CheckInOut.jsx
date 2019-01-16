@@ -35,6 +35,7 @@ import Table from "components/Table/Table.jsx";
 
 import checkInOutStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInOutStyle.jsx";
 import CheckInModal from "./CheckInModal";
+import CheckOutModal from "./CheckOutModal";
 
 class CheckInOut extends React.Component {
 
@@ -44,22 +45,31 @@ class CheckInOut extends React.Component {
       search: "",
       searchFrom: "",
       searchTo: "",
-      checkInModal: false
+      checkInModal: false,
+      checkOutModal: false,
     }
     this.list = [];
     this.getCheckList = this.getCheckList.bind(this);
+    this.getEmployees = this.getEmployees.bind(this);
   }
 
   componentWillMount() {
       this.props.getUserData();
       setTimeout(() => {
           this.getCheckList();
+          this.getEmployees();
       }, 100);
   }
 
   getCheckList() {
     this.props.getCheckList({
         workingForId: this.props.workingForId
+    });
+
+  }
+  getEmployees() {
+    this.props.getEmployees({
+      workingForId: this.props.workingForId
     })
   }
 
@@ -101,6 +111,18 @@ class CheckInOut extends React.Component {
   onOpenCheckInModal() {
     this.setState({
       checkInModal: true,
+    })
+  }
+
+  onCloseCheckOutModal() {
+    this.setState({
+      checkOutModal: false
+    })
+  }
+
+  onOpenCheckOutModal() {
+    this.setState({
+      checkOutModal: true,
     })
   }
 
@@ -203,6 +225,11 @@ class CheckInOut extends React.Component {
             onClose={this.onCloseCheckInModal.bind(this)} 
           />
 
+          <CheckOutModal 
+            onOpen={this.state.checkOutModal}
+            onClose={this.onCloseCheckOutModal.bind(this)} 
+          />
+
         </CardBody>
       </Card>
     );
@@ -215,7 +242,6 @@ CheckInOut.propTypes = {
 
 function mapStateToProps(state) {
   return {
-      token       : state.user.token,
       workingForId: state.user.workingForId,
       list        : state.checkInOut.list
   };
@@ -224,6 +250,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getUserData : Actions.getUserData,
+    getEmployees: Actions.getEmployees,
     getCheckList: Actions.getCheckList
   }, dispatch);
 }
