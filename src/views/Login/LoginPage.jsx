@@ -35,7 +35,7 @@ import Snackbar from "components/Snackbar/Snackbar.jsx";
 
 import Loader from 'react-loader-spinner';
 
-import * as Validator from "validator";
+import * as Validator from "./../../validator";
 
 import loginPageStyle from "assets/jss/material-dashboard-pro-react/views/loginPageStyle";
 

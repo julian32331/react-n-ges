@@ -37,7 +37,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 
-import * as Validator from "validator";
+import * as Validator from "./../../validator";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
