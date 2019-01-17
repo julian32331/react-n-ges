@@ -106,7 +106,8 @@ export function resetPassword(data) {
         request.then((response) => {  
             dispatch({
                 type: RESETPASSWORD
-            });            
+            });  
+            dispatch(setUserData(response.data));          
             return dispatch({
                 type: RESETPASSWORD_SUCCESS
             });

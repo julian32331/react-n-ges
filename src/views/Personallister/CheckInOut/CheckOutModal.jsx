@@ -18,6 +18,9 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 
+// @material-ui/icons
+import ErrorOutline from "@material-ui/icons/ErrorOutline";
+
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 
@@ -51,7 +54,7 @@ class CheckOutModal extends React.Component {
             <Dialog
                 classes={{
                     root: classes.center + " " + classes.modalRoot,
-                    paper: classes.modal + " " + classes.modalSmall
+                    paper: classes.modal
                 }}
                 open={this.props.onOpen}
                 TransitionComponent={Transition}
@@ -66,7 +69,8 @@ class CheckOutModal extends React.Component {
                     classes.modalBody + " " + classes.modalSmallBody
                     }
                 >
-                    <h5>Are you sure?</h5>
+                    <ErrorOutline className={classes.danger + " " + classes.warning_icon} />
+                    <h3>Are you sure?</h3>
                 </DialogContent>
                 <DialogActions
                     className={

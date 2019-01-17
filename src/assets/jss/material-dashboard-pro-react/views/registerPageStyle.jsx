@@ -7,6 +7,9 @@ import {
   container,
   cardTitle
 } from "assets/jss/material-dashboard-pro-react.jsx";
+import {
+  dangerColor
+} from "assets/jss/material-dashboard-pro-react.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
 const loginPageStyle = {
@@ -71,6 +74,9 @@ const loginPageStyle = {
   },
   dropdown: {
     width: '100%',
+  },
+  danger: {
+    color: dangerColor + "!important"
   }
 };
 

@@ -64,7 +64,7 @@ class ResetPasswordPage extends React.Component {
       loading: false
     })
     if(nextProps.status) {
-      this.props.history.push("/login");
+      this.props.history.push("/dashboard");
     }
     if(nextProps.errorMsg) {
       this.setState({

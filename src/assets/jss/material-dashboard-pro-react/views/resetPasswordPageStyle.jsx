@@ -6,6 +6,9 @@
 import {
   container
 } from "assets/jss/material-dashboard-pro-react.jsx";
+import {
+  dangerColor
+} from "assets/jss/material-dashboard-pro-react.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
 const resetPasswordPageStyle = {
@@ -67,6 +70,9 @@ const resetPasswordPageStyle = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)'
+  },
+  danger: {
+    color: dangerColor + "!important"
   }
 };
 
