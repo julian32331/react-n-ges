@@ -81,12 +81,25 @@ class CheckInOut extends React.Component {
 
   searchHandler(name, event) {
     this.setState({ [name]: event.target.value });
-    this.search(event.target.value.toLowerCase(), null, null);
+    this.search(event.target.value.toLowerCase(), this.state.searchFrom, this.state.searchTo);
   };
 
-  timeHandler = name => event => {
-    this.setState({ [name]: moment(event._d) });
-    this.search(this.state.search.toLowerCase(), moment(event._d), null);
+  timeHandler(name, event) {
+    if(!moment(event._d).isSame(moment())) {
+      this.setState({ [name]: moment(event._d) });
+      if(name === 'searchFrom') {
+        this.search(this.state.search.toLowerCase(), moment(event._d), this.state.searchTo);
+      } else {
+        this.search(this.state.search.toLowerCase(), this.state.searchFrom,  moment(event._d));
+      }
+    } else {
+      this.setState({ [name]: "" });
+      if(name === 'searchFrom') {
+        this.search(this.state.search.toLowerCase(), "", this.state.searchTo);
+      } else {
+        this.search(this.state.search.toLowerCase(), this.state.searchFrom,  "");
+      }
+    }
   }
   
   search(search, from, to) {
@@ -96,9 +109,13 @@ class CheckInOut extends React.Component {
       return item.Employee.name.toLowerCase().indexOf(search) !== -1
     }) : this.props.list;
 
-    // temp = from? temp.filter( item => {
-    //   return item.Employee.name.toLowerCase().indexOf(search) !== -1
-    // }) : temp;
+    temp = from? temp.filter( item => {
+      return moment(item.checkIn).isSameOrAfter(from);      
+    }) : temp;
+
+    temp = to? temp.filter( item => {
+      return item.checkOut && moment(item.checkOut).isSameOrBefore(to);
+    }) : temp;
 
     this.list = temp;
   }
@@ -191,6 +208,34 @@ class CheckInOut extends React.Component {
                   value: this.state.search  
                 }}
               />
+            </GridItem>
+            <GridItem>
+              <FormLabel className={classes.labelHorizontal}>
+                From
+              </FormLabel>
+            </GridItem>
+            <GridItem md={1}>
+              <FormControl fullWidth className={classes.pt_20}>
+                <Datetime
+                  timeFormat={false}
+                  value={this.state.searchFrom}
+                  onChange={event => this.timeHandler("searchFrom", event)}
+                />
+              </FormControl>
+            </GridItem>
+            <GridItem>
+              <FormLabel className={classes.labelHorizontal}>
+                To
+              </FormLabel>
+            </GridItem>
+            <GridItem md={1}>
+              <FormControl fullWidth className={classes.pt_20}>
+                <Datetime
+                  timeFormat={false}
+                  value={this.state.searchTo}
+                  onChange={event => this.timeHandler("searchTo", event)}
+                />
+              </FormControl>
             </GridItem>
           </GridContainer>
 

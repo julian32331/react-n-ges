@@ -48,6 +48,8 @@ class NewOrUpdateModal extends React.Component {
         this.state = {
             name: "",
             nameState: "",
+            date: "",
+            dateState: "",
             from: "",
             fromState: "",
             to: "",
@@ -219,7 +221,15 @@ class NewOrUpdateModal extends React.Component {
                                 type: "text",
                                 value: this.state.name
                             }}
-                        />                      
+                        />  
+                        <FormControl fullWidth style={{paddingTop: '27px', marginBottom: '17px',}}>
+                            <Datetime
+                                timeFormat={false}
+                                inputProps={{ placeholder: "Date *" }}
+                                value={this.state.from}
+                                onChange={event => this.change(event, "date", "date")}
+                            />
+                        </FormControl>                    
                         <GridContainer style={{paddingTop: '27px', marginBottom: '17px',}}>
                             <GridItem xs={12} sm={12} md={6}>
                                 <FormControl fullWidth>
