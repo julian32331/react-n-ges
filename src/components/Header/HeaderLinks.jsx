@@ -59,6 +59,10 @@ class HeaderLinks extends React.Component {
   handleCloseUser = () => {
     this.setState({ openUser: false });
   }; 
+  profile = () => {
+    this.setState({ openUser: false });
+    this.props.history.push('/profile');
+  }
   logout = () => {
     this.setState({ openUser: false });
     localStorage.clear();
@@ -271,7 +275,7 @@ class HeaderLinks extends React.Component {
             />
             <Hidden mdUp implementation="css">
               <span onClick={this.handleClickUser} className={classes.linkText}>
-                {rtlActive ? "إعلام" : "Notification"}
+                {rtlActive ? "إعلام" : "User"}
               </span>
             </Hidden>
           </Button>
@@ -297,12 +301,12 @@ class HeaderLinks extends React.Component {
                   <ClickAwayListener onClickAway={this.handleCloseUser}>
                     <MenuList role="menu">
                       <MenuItem
-                        onClick={this.handleCloseUser}
+                        onClick={this.profile}
                         className={dropdownItem}
                       >
                         {rtlActive
                           ? "إجلاء أوزار الأسيوي حين بل, كما"
-                          : "Profile"}
+                          : "My Profile"}
                       </MenuItem>
                       <MenuItem
                         onClick={this.logout}

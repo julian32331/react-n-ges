@@ -4,6 +4,7 @@
  */
 
 import Dashboard from "views/Dashboard/Dashboard.jsx";
+import CompanyInformasjon from "views/MinSalong/CompanyInformasjon.jsx";
 import SalongInformasjon from "views/MinSalong/SalongInformasjon.jsx";
 import SalongService from "views/MinSalong/SalongService/SalongService.jsx";
 import OpeningHours from "views/MinSalong/OpeningHours/OpeningHours.jsx";
@@ -11,6 +12,7 @@ import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
+import Profile from "views/Profile/Profile.jsx";
 
 // @material-ui/icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -18,7 +20,13 @@ import Home from "@material-ui/icons/Home";
 import AlarmOn from "@material-ui/icons/AlarmOn";
 import NewReleases from "@material-ui/icons/NewReleases";
 
-var dashRoutes = [
+var dashRoutes = [ 
+  {
+    path: "/profile",
+    name: "Profile",
+    icon: DashboardIcon,
+    component: Profile
+  },
   {
     path: "/dashboard",
     name: "Dashboard",
@@ -73,37 +81,37 @@ var dashRoutes = [
       }
     ]
   },
-  {
-    collapse: true,
-    path: "/intranett",
-    name: "Intranett",
-    state: "intranett",
-    icon: NewReleases,
-    views: [
-      {
-        path: "/intranett/news",
-        name: "News",
-        mini: "N",
-        component: News
-      },
-      {
-        path: "/intranett/faq",
-        name: "FAQ",
-        mini: "F",
-      },
-      {
-        path: "/intranett/marketing",
-        name: "Marketing",
-        mini: "M",
-      },
-      {
-        path: "/intranett/contacts",
-        name: "Contacts",
-        mini: "C",
-        component: Contacts
-      }
-    ]
-  },
+  // {
+  //   collapse: true,
+  //   path: "/intranett",
+  //   name: "Intranett",
+  //   state: "intranett",
+  //   icon: NewReleases,
+  //   views: [
+  //     {
+  //       path: "/intranett/news",
+  //       name: "News",
+  //       mini: "N",
+  //       component: News
+  //     },
+  //     {
+  //       path: "/intranett/faq",
+  //       name: "FAQ",
+  //       mini: "F",
+  //     },
+  //     {
+  //       path: "/intranett/marketing",
+  //       name: "Marketing",
+  //       mini: "M",
+  //     },
+  //     {
+  //       path: "/intranett/contacts",
+  //       name: "Contacts",
+  //       mini: "C",
+  //       component: Contacts
+  //     }
+  //   ]
+  // },
   { redirect: true, path: "/", pathTo: "/dashboard", name: "Dashboard" }
 ];
 export default dashRoutes;

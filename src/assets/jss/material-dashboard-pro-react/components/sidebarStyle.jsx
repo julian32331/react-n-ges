@@ -504,7 +504,7 @@ const sidebarStyle = theme => ({
   userCollapseLinks: {
     marginTop: "-4px",
     "&:hover,&:focus": {
-      color: "#FFFFFF"
+      color: "#000"
     }
   }
 });
