@@ -7,12 +7,19 @@ import * as Actions from '../actions';
 
 const initialState = {
     status: false,
+    info: null,
     errorMsg: ""
 };
 
 const info = function (state = initialState, action) {
     switch ( action.type )
     {
+        case Actions.GET_INFO:
+        {
+            return {
+                info: action.info
+            };
+        }
         case Actions.ADD_INFO:
         {
             return {

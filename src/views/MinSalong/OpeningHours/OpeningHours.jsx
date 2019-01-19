@@ -50,10 +50,12 @@ class OpeningHours extends React.Component {
             newOrUpdateModal: false,
             modalTitle: '',
             modalData: null,
-            canUpdateHours: true
+            canUpdateHours: true,
+            isEdit: false
         };
         this.getHours = this.getHours.bind(this);
         this.updateHours = this.updateHours.bind(this);
+        this.initOpeninHours = this.initOpeninHours.bind(this);
     }
 
     componentWillMount() {
@@ -74,79 +76,83 @@ class OpeningHours extends React.Component {
             this.getHours(nextProps.workingForId);
         }
         if (nextProps.openingHours) {
-            nextProps.openingHours.map(day => {
-                if (day.dayId === 1) {
-                    this.setState({
-                        Monday_id: day.id,
-                        Monday_dayId: day.dayId,
-                        Monday_name: day.name,
-                        Monday_open: day.open,
-                        Monday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
-                        Monday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
-                    });
-                }
-                if (day.dayId === 2) {
-                    this.setState({
-                        Tuesday_id: day.id,
-                        Tuesday_dayId: day.dayId,
-                        Tuesday_name: day.name,
-                        Tuesday_open: day.open,
-                        Tuesday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
-                        Tuesday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
-                    });
-                }
-                if (day.dayId === 3) {
-                    this.setState({
-                        Wednesday_id: day.id,
-                        Wednesday_dayId: day.dayId,
-                        Wednesday_name: day.name,
-                        Wednesday_open: day.open,
-                        Wednesday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
-                        Wednesday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
-                    });
-                }
-                if (day.dayId === 4) {
-                    this.setState({
-                        Thursday_id: day.id,
-                        Thursday_dayId: day.dayId,
-                        Thursday_name: day.name,
-                        Thursday_open: day.open,
-                        Thursday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
-                        Thursday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
-                    });
-                }
-                if (day.dayId === 5) {
-                    this.setState({
-                        Friday_id: day.id,
-                        Friday_dayId: day.dayId,
-                        Friday_name: day.name,
-                        Friday_open: day.open,
-                        Friday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
-                        Friday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
-                    });
-                }
-                if (day.dayId === 6) {
-                    this.setState({
-                        Saturday_id: day.id,
-                        Saturday_dayId: day.dayId,
-                        Saturday_name: day.name,
-                        Saturday_open: day.open,
-                        Saturday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
-                        Saturday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
-                    });
-                }
-                if (day.dayId === 7) {
-                    this.setState({
-                        Sunday_id: day.id,
-                        Sunday_dayId: day.dayId,
-                        Sunday_name: day.name,
-                        Sunday_open: day.open,
-                        Sunday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
-                        Sunday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
-                    });
-                }
-            });
+            this.initOpeninHours(nextProps.openingHours);
         }
+    }
+
+    initOpeninHours(data) {
+        data.map(day => {
+            if (day.dayId === 1) {
+                this.setState({
+                    Monday_id: day.id,
+                    Monday_dayId: day.dayId,
+                    Monday_name: day.name,
+                    Monday_open: day.open,
+                    Monday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
+                    Monday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
+                });
+            }
+            if (day.dayId === 2) {
+                this.setState({
+                    Tuesday_id: day.id,
+                    Tuesday_dayId: day.dayId,
+                    Tuesday_name: day.name,
+                    Tuesday_open: day.open,
+                    Tuesday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
+                    Tuesday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
+                });
+            }
+            if (day.dayId === 3) {
+                this.setState({
+                    Wednesday_id: day.id,
+                    Wednesday_dayId: day.dayId,
+                    Wednesday_name: day.name,
+                    Wednesday_open: day.open,
+                    Wednesday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
+                    Wednesday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
+                });
+            }
+            if (day.dayId === 4) {
+                this.setState({
+                    Thursday_id: day.id,
+                    Thursday_dayId: day.dayId,
+                    Thursday_name: day.name,
+                    Thursday_open: day.open,
+                    Thursday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
+                    Thursday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
+                });
+            }
+            if (day.dayId === 5) {
+                this.setState({
+                    Friday_id: day.id,
+                    Friday_dayId: day.dayId,
+                    Friday_name: day.name,
+                    Friday_open: day.open,
+                    Friday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
+                    Friday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
+                });
+            }
+            if (day.dayId === 6) {
+                this.setState({
+                    Saturday_id: day.id,
+                    Saturday_dayId: day.dayId,
+                    Saturday_name: day.name,
+                    Saturday_open: day.open,
+                    Saturday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
+                    Saturday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
+                });
+            }
+            if (day.dayId === 7) {
+                this.setState({
+                    Sunday_id: day.id,
+                    Sunday_dayId: day.dayId,
+                    Sunday_name: day.name,
+                    Sunday_open: day.open,
+                    Sunday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
+                    Sunday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
+                });
+            }
+        });
     }
 
     openHandler = name => event => {
@@ -260,6 +266,7 @@ class OpeningHours extends React.Component {
                                                 <FormControlLabel
                                                     control={
                                                         <Switch
+                                                            disabled={!this.state.isEdit}
                                                             checked={this.state[`${hour.name}_open`]? this.state[`${hour.name}_open`] : false}
                                                             onChange={this.openHandler(`${hour.name}_open`)}
                                                             classes={{
@@ -282,7 +289,7 @@ class OpeningHours extends React.Component {
                                                     <Datetime
                                                         dateFormat={false}
                                                         timeFormat="HH:mm"
-                                                        inputProps={{ placeholder: "From" }}
+                                                        inputProps={{ placeholder: "From", disabled: !this.state.isEdit }}
                                                         value={this.state[`${hour.name}_from`]}
                                                         onChange={this.timeHandler(`${hour.name}_from`)}
                                                     />
@@ -293,7 +300,7 @@ class OpeningHours extends React.Component {
                                                     <Datetime
                                                         dateFormat={false}
                                                         timeFormat="HH:mm"
-                                                        inputProps={{ placeholder: "To" }}
+                                                        inputProps={{ placeholder: "To", disabled: !this.state.isEdit }}
                                                         value={this.state[`${hour.name}_to`]}
                                                         onChange={this.timeHandler(`${hour.name}_to`)}
                                                     />
@@ -304,16 +311,37 @@ class OpeningHours extends React.Component {
                                 )
                             })
                         }
-                            <GridItem sm={12} className={classes.text_right}>
-                                <Button 
-                                    color="info"
-                                    size="sm"
-                                    disabled={this.state.canUpdateHours}
-                                    onClick={() => this.updateHours()}
-                                >                            
-                                    Save
-                                </Button>
-                            </GridItem>
+                        {                            
+                            this.state.isEdit? (
+                                <GridItem sm={12} className={classes.text_right}>
+                                    <Button 
+                                        color="danger"
+                                        size="sm"
+                                        onClick={() => {this.setState({ isEdit: false, canUpdateHours: true }); this.initOpeninHours(this.props.openingHours)}}
+                                    >                            
+                                        Cancel
+                                    </Button>
+                                    <Button 
+                                        color="info"
+                                        size="sm"
+                                        disabled={this.state.canUpdateHours}
+                                        onClick={() => this.updateHours()}
+                                    >                            
+                                        Save
+                                    </Button>
+                                </GridItem>
+                            ) : (
+                                <GridItem sm={12} className={classes.text_right}>
+                                    <Button 
+                                        color="info"
+                                        size="sm"
+                                        onClick={() => this.setState({ isEdit: true })}
+                                    >                            
+                                        Edit
+                                    </Button>
+                                </GridItem>
+                            )
+                        }    
                         </GridContainer>
                     </CardBody>
                 </Card>

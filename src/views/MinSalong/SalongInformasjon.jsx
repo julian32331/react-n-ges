@@ -54,12 +54,42 @@ class SalongInformasjon extends React.Component {
             networkState: "",
             parkCheck: false,
             accessCheck: false,
-            description: ""
+            description: "",
+            isEdit: false
         }
     }
 
     componentWillMount() {
         this.props.getUserData();
+        setTimeout(() => {
+            this.getInfo(this.props.workingForId);
+        }, 100);
+    }
+
+    getInfo(id) {
+        this.props.getInfo({
+            workingForId: id
+        })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('info: ', nextProps.info)
+        // if(this.props.workingForId !== nextProps.workingForId) {
+        //     this.getInfo(nextProps.workingForId);
+        // }
+
+        if(nextProps.info) {
+            this.setState({
+                name: nextProps.info.name,
+                address: nextProps.info.address,
+                zip: nextProps.info.post,
+                city: nextProps.info.city,
+                // phone: nextProps.info.phone,
+                email: nextProps.info.email,
+                network: nextProps.info.website,
+                description: nextProps.info.description
+            })
+        }
     }
 
     change(event, stateName, type, stateNameEqualTo, maxValue) {
@@ -154,6 +184,10 @@ class SalongInformasjon extends React.Component {
                     this.setState({ [stateName + "State"]: "error" });
                 }
                 break;
+            case "description":
+                this.setState({
+                    description: event.target.value
+                })
             default:
                 break;
         }
@@ -164,17 +198,45 @@ class SalongInformasjon extends React.Component {
     }
 
     canSubmit() {
-        if(this.state.nameState === "" || this.state.nameState === "error" || 
-            this.state.addressState === "" || this.state.addressState === "error" ||
-            this.state.zipState === "" || this.state.zipState === "error" ||
-            this.state.cityState === "" || this.state.cityState === "error" ||
-            this.state.phoneState === "" || this.state.phoneState === "error" ||
-            this.state.emailState === "" || this.state.emailState === "error" ||
-            this.state.networkState === "" || this.state.networkState === "error") {
-          return true
+        if(this.state.nameState === "success" &&
+            this.state.addressState === "success" &&
+            this.state.zipState === "success" &&
+            this.state.cityState === "success" &&
+            this.state.phoneState === "success" &&
+            this.state.emailState === "success" &&
+            this.state.networkState === "success") {
+          return false;
+        } else if(this.state.name !== "" &&
+            this.state.address !== "" &&
+            this.state.zip !== "" &&
+            this.state.city !== "" &&
+            this.state.phone !== "" &&
+            this.state.email !== "" &&
+            this.state.network !== "") {
+            return false;
         } else {
-          return false
+          return true
         }
+    }
+
+    enableEdit() {
+        this.setState({
+            isEdit: true
+        })
+    }
+
+    cancelEdit() {
+        this.setState({
+            name: this.props.info.name,
+            address: this.props.info.address,
+            zip: this.props.info.post,
+            city: this.props.info.city,
+            // phone: this.props.info.phone,
+            email: this.props.info.email,
+            network: this.props.info.website,
+            description: this.props.info.description,            
+            isEdit: false
+        })
     }
 
     addInfo() {
@@ -225,6 +287,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "name", "name", 0),
                                     value: this.state.name,
@@ -250,6 +313,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "address", "address", 0),
                                     value: this.state.address,
@@ -277,6 +341,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "zip", "zip", 0),
                                     value: this.state.zip,
@@ -302,6 +367,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "city", "city", 0),
                                     value: this.state.city,
@@ -329,6 +395,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "phone", "phone"),
                                     value: this.state.phone,
@@ -354,6 +421,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "email", "email", 0),
                                     value: this.state.email,
@@ -381,6 +449,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "network", "network", 0),
                                     value: this.state.network,
@@ -402,6 +471,7 @@ class SalongInformasjon extends React.Component {
                                                 checked: classes.checked,
                                                 root: classes.checkRoot
                                             }}
+                                            disabled={!this.state.isEdit}
                                             checked={this.state.parkCheck}
                                         />
                                     }
@@ -426,6 +496,7 @@ class SalongInformasjon extends React.Component {
                                                 checked: classes.checked,
                                                 root: classes.checkRoot
                                             }}
+                                            disabled={!this.state.isEdit}
                                             checked={this.state.accessCheck}
                                         />
                                     }
@@ -447,13 +518,27 @@ class SalongInformasjon extends React.Component {
                                 }}
                                 inputProps={{
                                     multiline: true,
-                                    rows: 10
+                                    rows: 10,   
+                                    disabled: !this.state.isEdit,                                 
+                                    onChange: event =>
+                                        this.change(event, "description", "description", 0),
+                                    value: this.state.description,
+                                    type: "text"
                                 }}
                             />
                         </GridItem>
-                        <GridItem xs={12} sm={12} md={6}>                    
-                            <Button color="info" className={classes.submit} disabled={this.canSubmit()} onClick={this.addInfo.bind(this)}>LAGRE</Button>
-                        </GridItem>
+                        {
+                            this.state.isEdit? (                      
+                                <GridItem xs={12} sm={12} md={6}>                    
+                                    <Button color="info" size="sm" className={classes.submit} disabled={this.canSubmit()} onClick={this.addInfo.bind(this)}>LAGRE</Button>
+                                    <Button color="danger" size="sm" className={classes.submit} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
+                                </GridItem>                                
+                            ) : (
+                                <GridItem xs={12} sm={12} md={6}>                    
+                                    <Button color="info" size="sm" className={classes.submit} onClick={this.enableEdit.bind(this)}>Edit</Button>
+                                </GridItem> 
+                            )
+                        } 
                     </GridContainer>
                 </form>
             </CardBody>
@@ -468,13 +553,15 @@ SalongInformasjon.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        workingForId    : state.user.workingForId
+        workingForId: state.user.workingForId,
+        info: state.info.info
     }
   }
   
   function mapDispatchToProps(dispatch) {
       return bindActionCreators({          
         getUserData : Actions.getUserData,
+        getInfo: Actions.getInfo,
         addInfo: Actions.addInfo
       }, dispatch);
   }
