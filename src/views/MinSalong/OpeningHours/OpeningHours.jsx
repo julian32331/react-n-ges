@@ -325,7 +325,7 @@ class OpeningHours extends React.Component {
                                         color="info"
                                         size="sm"
                                         disabled={this.state.canUpdateHours}
-                                        onClick={() => this.updateHours()}
+                                        onClick={() => {this.updateHours(); this.setState({ isEdit: false, canUpdateHours: true })}}
                                     >                            
                                         Save
                                     </Button>

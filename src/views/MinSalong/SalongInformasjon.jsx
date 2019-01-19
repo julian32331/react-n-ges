@@ -73,10 +73,9 @@ class SalongInformasjon extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('info: ', nextProps.info)
-        // if(this.props.workingForId !== nextProps.workingForId) {
-        //     this.getInfo(nextProps.workingForId);
-        // }
+        if(this.props.workingForId !== nextProps.workingForId) {
+            this.getInfo(nextProps.workingForId);
+        }
 
         if(nextProps.info) {
             this.setState({

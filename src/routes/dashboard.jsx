@@ -47,6 +47,12 @@ var dashRoutes = [
         component: SalongInformasjon
       },
       {
+        path: "/minsalong/companyInformasjon",
+        name: "Company Informasjon",
+        mini: "CI",
+        component: CompanyInformasjon
+      },
+      {
         path: "/minsalong/salongService",
         name: "Salong Service",
         mini: "SS",
