@@ -5,6 +5,7 @@
 
 import Dashboard from "views/Dashboard/Dashboard.jsx";
 import CompanyInformasjon from "views/MinSalong/CompanyInformasjon.jsx";
+import Salong from "views/MinSalong/Salong.jsx";
 import SalongInformasjon from "views/MinSalong/SalongInformasjon.jsx";
 import SalongService from "views/MinSalong/SalongService/SalongService.jsx";
 import OpeningHours from "views/MinSalong/OpeningHours/OpeningHours.jsx";
@@ -40,6 +41,12 @@ var dashRoutes = [
     state: "openMinSalong",
     icon: Home,
     views: [
+      {
+        path: "/minsalong/addSalong",
+        name: "Salong",
+        mini: "S",
+        component: Salong
+      },
       {
         path: "/minsalong/salongInformasjon",
         name: "Salong Informasjon",
