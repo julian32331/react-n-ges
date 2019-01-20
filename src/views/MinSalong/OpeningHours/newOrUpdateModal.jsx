@@ -63,6 +63,8 @@ class NewOrUpdateModal extends React.Component {
             this.setState({
                 name: nextProps.data.name,
                 nameState: "success",
+                date: nextProps.data.date,
+                dateState: "success",
                 from: nextProps.data.openAt.substr(0,2) + ":" + nextProps.data.openAt.substr(2,2),
                 fromState: "success",
                 to: nextProps.data.closeAt.substr(0,2) + ":" + nextProps.data.closeAt.substr(2,2),
@@ -72,6 +74,8 @@ class NewOrUpdateModal extends React.Component {
             this.setState({
                 name: "",
                 nameState: "",
+                date: "",
+                dateState: "",
                 from: "",
                 fromState: "",
                 to: "",
@@ -84,6 +88,8 @@ class NewOrUpdateModal extends React.Component {
         this.setState({
             name: "",
             nameState: "",
+            date: "",
+            dateState: "",
             from: "",
             fromState: "",
             to: "",
@@ -102,6 +108,7 @@ class NewOrUpdateModal extends React.Component {
                 workingForId: this.props.workingForId,
                 specialDayData: {
                     name: this.state.name,
+                    date: this.state.date,
                     openAt: this.state.from.replace(":", ""),
                     closeAt: this.state.to.replace(":", "")
                 }
@@ -135,6 +142,13 @@ class NewOrUpdateModal extends React.Component {
                     this.setState({ [stateName + "State"]: "error" });
                 }
                 break;
+            case "date":
+                if(!moment(event._d).isSame(moment())) {
+                    this.setState({ date: moment(event._d), dateState: "success" });
+                } else {
+                    this.setState({ date: "", dateState: "error" });
+                }
+                break;
             case "from":
                 let from = this.state.from;
                 this.setState({
@@ -163,7 +177,7 @@ class NewOrUpdateModal extends React.Component {
     }
 
     canSave() {
-        if(this.state.nameState === "success" && this.state.fromState === "success" && this.state.toState === "success") {
+        if(this.state.nameState === "success" && this.state.dateState === "success" && this.state.fromState === "success" && this.state.toState === "success") {
             return false;
         } else if(this.props.data) {
             return false;
@@ -226,7 +240,7 @@ class NewOrUpdateModal extends React.Component {
                             <Datetime
                                 timeFormat={false}
                                 inputProps={{ placeholder: "Date *" }}
-                                value={this.state.from}
+                                value={this.state.date}
                                 onChange={event => this.change(event, "date", "date")}
                             />
                         </FormControl>                    

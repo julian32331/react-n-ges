@@ -167,7 +167,7 @@ class CheckInOut extends React.Component {
     this.list.map(item => {
       let temp = [];
       temp.push(item.Employee.name);
-      temp.push(item.Employee.employeeId);
+      temp.push(item.Employee.SSNumber);
       temp.push(moment(item.checkIn).format("MM/DD/YYYY, hh:mm"));
       temp.push(item.checkOut? moment(item.checkOut).format("MM/DD/YYYY, hh:mm") : null);
       item.checkOut? temp.push("") : temp.push(checkOutButton(item))
@@ -198,19 +198,19 @@ class CheckInOut extends React.Component {
                 </GridItem>
                 <GridItem xs={12} sm={6} className={classes.text_right}>
                   <Button 
-                      color="info" 
-                      size="sm"
-                      onClick={() => this.onOpenCheckInModal()}
-                  >                            
-                      <Add /> Check In USER
-                  </Button>
-                  <Button 
                       color="success" 
                       size="sm"
                       disabled={csvData.length<=1}
                       onClick={() => this.downloadCSV()}
                   >                            
                       <ImportExport /> Export CSV
+                  </Button>
+                  <Button 
+                      color="info" 
+                      size="sm"
+                      onClick={() => this.onOpenCheckInModal()}
+                  >                            
+                      <Add /> Check In USER
                   </Button>
                 </GridItem>
             </GridContainer>
