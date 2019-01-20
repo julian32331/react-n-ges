@@ -22,6 +22,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 // @material-ui/icons
 import Add from "@material-ui/icons/Add";
 import Remove from "@material-ui/icons/Remove";
+import ImportExport from "@material-ui/icons/ImportExport";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -32,6 +33,8 @@ import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Table from "components/Table/Table.jsx";
+
+import {CSVLink, CSVDownload} from 'react-csv';
 
 import checkInOutStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInOutStyle.jsx";
 import CheckInModal from "./CheckInModal";
@@ -145,6 +148,10 @@ class CheckInOut extends React.Component {
     })
   }
 
+  downloadCSV() {
+    this.csvLink.link.click()
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -166,7 +173,20 @@ class CheckInOut extends React.Component {
       item.checkOut? temp.push("") : temp.push(checkOutButton(item))
 
       list.push(temp);
-    })
+    });
+
+    let csvData = [
+      ["Name", "Employee Number", "CheckIn", "CheckOut"]
+    ];
+    this.list.map(item => {
+      let temp = [];
+      temp.push(item.Employee.name);
+      temp.push(item.Employee.employeeId);
+      temp.push(moment(item.checkIn).format("MM/DD/YYYY, hh:mm"));
+      temp.push(item.checkOut? moment(item.checkOut).format("MM/DD/YYYY, hh:mm") : null);
+
+      csvData.push(temp);
+    });
 
     return (
       <Card>
@@ -177,13 +197,21 @@ class CheckInOut extends React.Component {
                   <h3 className={classes.cardTitle}>Check In/Out</h3>
                 </GridItem>
                 <GridItem xs={12} sm={6} className={classes.text_right}>
-                    <Button 
-                        color="info" 
-                        size="sm"
-                        onClick={() => this.onOpenCheckInModal()}
-                    >                            
-                        <Add /> Check In USER
-                    </Button>
+                  <Button 
+                      color="info" 
+                      size="sm"
+                      onClick={() => this.onOpenCheckInModal()}
+                  >                            
+                      <Add /> Check In USER
+                  </Button>
+                  <Button 
+                      color="success" 
+                      size="sm"
+                      disabled={csvData.length<=1}
+                      onClick={() => this.downloadCSV()}
+                  >                            
+                      <ImportExport /> Export CSV
+                  </Button>
                 </GridItem>
             </GridContainer>
           </div>
@@ -242,7 +270,7 @@ class CheckInOut extends React.Component {
           <Table
             tableHead={[
               "Name",
-              "Employe number",
+              "Employee number",
               "Checked In",
               "Checked Out",
               "Action"
@@ -269,6 +297,13 @@ class CheckInOut extends React.Component {
             ]}
             customHeadClassesForCells={[0, 1, 2, 3, 4, 5]}
           />
+
+          <CSVLink
+            data={csvData}
+            filename={"Check_In_Out_" + moment().format("YYYY_MM_DD_HH_mm") + ".csv"}
+            style={{display: 'none',}}
+            ref={(r) => this.csvLink = r}
+            target="_blank"/>
 
           <CheckInModal 
             onOpen={this.state.checkInModal}

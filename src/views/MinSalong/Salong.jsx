@@ -57,8 +57,7 @@ class Salong extends React.Component {
                   }}
                   tabs={[
                     {
-                      tabButton: "Dashboard",
-                      // tabIcon: Dashboard,
+                      tabButton: "Company 1",
                       tabContent: (
                         <span>
                           <p>
@@ -86,8 +85,7 @@ class Salong extends React.Component {
                       )
                     },
                     {
-                      tabButton: "Schedule",
-                      // tabIcon: Schedule,
+                      tabButton: "Company 2",
                       tabContent: (
                         <span>
                           <p>
