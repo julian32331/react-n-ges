@@ -6,7 +6,8 @@
 import * as Actions from '../actions';
 
 const initialState = {
-    employees: []
+    employees: [],
+    employee: null
 };
 
 const employees = function (state = initialState, action) {
@@ -15,19 +16,26 @@ const employees = function (state = initialState, action) {
         case Actions.GET_EMPLOYEES:
         {
             return {
-                employees: action.employees
+                employees: action.employees,
+                employee: state.employee
             };
         }
         case Actions.UPDATE_EMPLOYEE:
         {
             return {
-                services: state.employees
+                employees: state.employees
             };
         }
         case Actions.DELETE_SERVICE:
         {
             return {
-                services: state.employees
+                employees: state.employees
+            };
+        }
+        case Actions.CHECK_EMPLOYEE:
+        {
+            return {
+                employee: action.employee
             };
         }
         default:

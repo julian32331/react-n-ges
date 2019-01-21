@@ -18,6 +18,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
@@ -30,8 +32,6 @@ import Home from "@material-ui/icons/Home";
 import Face from "@material-ui/icons/Face";
 import LocationCity from "@material-ui/icons/LocationCity";
 import AddAlert from "@material-ui/icons/AddAlert";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
