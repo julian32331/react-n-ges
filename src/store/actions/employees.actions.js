@@ -7,7 +7,9 @@ import * as Utils from 'utils';
 export const GET_EMPLOYEES = '[EMPLOYEES] GET';
 export const UPDATE_EMPLOYEE     = '[EMPLOYEE] UPDATE';
 export const DELETE_EMPLOYEE     = '[EMPLOYEE] DELETE';
-export const CHECK_EMPLOYEE      = '[EMPLOYEE] CHECK'   ;
+export const CHECK_EMPLOYEE      = '[EMPLOYEE] CHECK';
+export const CHECK_EMPLOYEE_SUCCESS = '[EMPLOYEE] CHECK SUCCESS';
+export const ADD_EMPLOYEE      = '[EMPLOYEE] ADD';
 
 export function getEmployees({workingForId}) {
     const request = Utils.xapi().post('manager/employees', {
@@ -51,10 +53,26 @@ export function deleteEmployee(data) {
 export function checkEmployee(data) {
     const request = Utils.xapi().post('employee/check', data);
     return (dispatch) =>
-        request.then((response) => {   
+        request.then((response) => {  
+            dispatch({
+                type: CHECK_EMPLOYEE
+            });   
             return dispatch({
-                type: CHECK_EMPLOYEE,
+                type: CHECK_EMPLOYEE_SUCCESS,
                 employee: response.data.employee
+            });
+        });
+}
+
+export function addEmployee(data) {
+    const request = Utils.xapi().post('employee/add', data);
+    return (dispatch) =>
+        request.then((response) => {  
+            dispatch(getEmployees({
+                workingForId: data.workingForId
+            })); 
+            return dispatch({
+                type: ADD_EMPLOYEE
             });
         });
 }

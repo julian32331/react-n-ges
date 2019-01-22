@@ -37,9 +37,11 @@ const customSelectStyle = {
     }
   },
   selectLabel: {
-    fontSize: "12px",
-    textTransform: "uppercase",
-    color: "#3C4858 !important",
+    // fontSize: "12px",
+    fontSize: "14px",
+    // textTransform: "uppercase",
+    // color: "#3C4858 !important",
+    color: "rgba(0, 0, 0, 0.54) !important",
     top: "8px"
   },
   selectMenu: {

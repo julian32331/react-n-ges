@@ -35,7 +35,21 @@ const employees = function (state = initialState, action) {
         case Actions.CHECK_EMPLOYEE:
         {
             return {
+                employees: state.employees,
+                employee: null
+            };
+        }
+        case Actions.CHECK_EMPLOYEE_SUCCESS:
+        {
+            return {
+                employees: state.employees,
                 employee: action.employee
+            };
+        }
+        case Actions.ADD_EMPLOYEE:
+        {
+            return {
+                employees: state.employees
             };
         }
         default:

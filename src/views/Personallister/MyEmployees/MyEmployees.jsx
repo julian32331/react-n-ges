@@ -130,7 +130,7 @@ class MyEmployees extends React.Component {
       return (
         <div className={classes.picture}>
           <img
-            src={'http://18.195.182.166/api/v1' + src}
+            src={Utils.root + src}
             className={classes.picture_src}
             alt="..."
           />

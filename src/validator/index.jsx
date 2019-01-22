@@ -13,7 +13,7 @@ export const verifyEmail = (value) => {
 }
 
 export const verifyLength = (value, length) => {
-    if(value.length === 0) return ""
+    // if(value.length === 0) return ""
     if (value.length >= length) {
         return true;
     }

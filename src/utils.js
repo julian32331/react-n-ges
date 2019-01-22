@@ -6,8 +6,9 @@ import axios from 'axios/index';
 
 import store from './store.js';
 
-export const root = "https://dev.geselle-one.com/api/dev";
-// export const root = "https://geselle-one.com/api/v1";
+export const root = "https://dev.geselle-one.com";
+// export const root = "https://geselle-one.com";
+export const apiRoot = root + "/api/dev";
 
 export const xapi = () => {
     let token = null;
@@ -26,7 +27,7 @@ export const xapi = () => {
     }
 
     let xapi = axios.create({
-        baseURL: root,
+        baseURL: apiRoot,
         headers: headers
     });
 

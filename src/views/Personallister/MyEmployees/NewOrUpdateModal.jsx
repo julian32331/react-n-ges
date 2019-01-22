@@ -38,6 +38,7 @@ import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/comm
 import avatar from "assets/img/faces/marc.jpg";
 
 import * as Validator from "./../../../validator";
+import * as Utils from 'utils';
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
@@ -50,36 +51,57 @@ class NewOrUpdateModal extends React.Component {
             email: "",
             emailState: "",
             consumerOwner: "",
-
+            hasConsumerOwner: false,
+            companyAuthLevel: "",
+            salonAuthLevel: "",
+            bookingPaymentFor: "",
+            productPaymentFor: "",
             
             file: null,
             imagePreviewUrl: avatar,
             firstStep: true,
             secondStep: false,
-            thirdStep: false
+            thirdStep: false,
+
+            name: "",
+            nameState: "",
+            ssn: "",
+            ssnState: "",
+            phone: "",
+            phoneState: "",
+            profession: "",
+            professionState: "",
+            position: "",
+            positionState: "",
+            description: "",
+            descriptionState: "",
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.employee) {
-            console.log('employee founded.');
-            if(nextProps.employee.hasCompany) {
-                this.setState({
-                    firstStep: false,
-                    secondStep: true
-                })
-            } else {
+        if(nextProps.employee !== this.props.employee) {
+            if(nextProps.employee){
+                console.log('employee founded.');
+                if(nextProps.employee.hasCompany) {
+                    this.setState({
+                        firstStep: false,
+                        secondStep: true,
+                        imagePreviewUrl: Utils.root + nextProps.employee.EmployeeInformation.picturePath
+                    })
+                } else {
+                    this.setState({
+                        firstStep: false,
+                        thirdStep: true,
+                        imagePreviewUrl: Utils.root + nextProps.employee.EmployeeInformation.picturePath
+                    })
+                }            
+            } else if(typeof nextProps.employee === 'boolean') {
+                console.log('employee not founded.');
                 this.setState({
                     firstStep: false,
                     thirdStep: true
                 })
-            }            
-        } else if(typeof nextProps.employee === 'boolean') {
-            console.log('employee not founded.');
-            this.setState({
-                firstStep: false,
-                thirdStep: true
-            })
+            }
         }
     }
 
@@ -87,14 +109,36 @@ class NewOrUpdateModal extends React.Component {
         this.setState({
             email: "",
             emailState: "",
+            consumerOwner: "",
+            hasConsumerOwner: false,
+            companyAuthLevel: "",
+            salonAuthLevel: "",
+            bookingPaymentFor: "",
+            productPaymentFor: "",
             
+            file: null,
+            imagePreviewUrl: avatar,
             firstStep: true,
             secondStep: false,
-            thirdStep: false
+            thirdStep: false,
+            
+            name: "",
+            nameState: "",
+            ssn: "",
+            ssnState: "",
+            phone: "",
+            phoneState: "",
+            profession: "",
+            professionState: "",
+            position: "",
+            positionState: "",
+            description: "",
+            descriptionState: "",
         })
     }
 
     handleClose() {
+        console.log('test')
         this.initState();
         this.props.onClose();
     }
@@ -113,7 +157,9 @@ class NewOrUpdateModal extends React.Component {
         reader.readAsDataURL(file);
     }
     handleClick() {
-        this.refs.fileInput.click();
+        if(!this.props.employee) {
+            this.refs.fileInput.click();
+        }
     }
 
     change(event, stateName, type, stateNameEqualTo) {
@@ -124,11 +170,24 @@ class NewOrUpdateModal extends React.Component {
                     [stateName + "State"]: Validator.verifyEmail(event.target.value)? "success" : "error"
                 });
                 break;                
-            case "consumerOwner":
-                console.log('focus: ', event.target.value)
+            case "name":            
+            case "ssn":            
+            case "phone":            
+            case "profession":            
+            case "position":          
+            case "description":
                 this.setState({ 
                     [stateName]: event.target.value,
                     [stateName + "State"]: Validator.verifyLength(event.target.value, stateNameEqualTo)? "success" : "error"
+                });
+                break;                 
+            case "consumerOwner":   
+            case "companyAuthLevel":   
+            case "salonAuthLevel":   
+            case "bookingPaymentFor":   
+            case "productPaymentFor":
+                this.setState({ 
+                    [stateName]: event.target.value,
                 });
                 break;
             default:
@@ -149,6 +208,7 @@ class NewOrUpdateModal extends React.Component {
             this.setState({
                 secondStep: false,
                 thirdStep: true,
+                hasConsumerOwner: true,
                 consumerOwner: "EMPLOYEE"
             })
         } else {
@@ -156,10 +216,43 @@ class NewOrUpdateModal extends React.Component {
             this.setState({
                 secondStep: false,
                 thirdStep: true,
+                hasConsumerOwner: true,
                 consumerOwner: "SALON"
             })
         }
 
+    }
+
+    canSave() {
+        if(this.props.employee) {
+            if(this.state.consumerOwner && this.state.companyAuthLevel && this.state.salonAuthLevel && this.state.bookingPaymentFor && this.state.productPaymentFor) {
+                return false
+            } else {
+                return true
+            }
+        } else {            
+            if(this.state.nameState === "success" && this.state.ssnState === "success" && this.state.phoneState === "success" && this.state.professionState === "success" && this.state.positionState === "success" && this.state.descriptionState === "success" && this.state.consumerOwner && this.state.companyAuthLevel && this.state.salonAuthLevel && this.state.bookingPaymentFor && this.state.productPaymentFor) {
+                return false
+            } else {
+                return true
+            }
+        }
+    }
+
+    save() {
+        console.log('focus')
+        if(this.props.employee) {
+            this.props.addEmployee({
+                workingForId: this.props.workingForId,
+                hairdresserId: this.props.hairdresserId,
+                hairdresserEmail: this.state.email,
+                consumerOwner: this.state.consumerOwner,
+                companyAuthLevel: this.state.companyAuthLevel,
+                salonAuthLevel: this.state.salonAuthLevel,
+                bookingPaymentFor: this.state.bookingPaymentFor,
+                productPaymentFor: this.state.productPaymentFor
+            })
+        }
     }
 
     render() {
@@ -237,18 +330,25 @@ class NewOrUpdateModal extends React.Component {
                             <form>                                  
                                 <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
                                 <a onClick={() => this.handleClick()}>
-                                    <img src={this.state.imagePreviewUrl} style={{width: '130px', height: '130px', borderRadius: '50%'}} alt="..." />
-                                </a>                              
+                                    <img src={this.state.imagePreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%'}} alt="..." />
+                                </a>     
+                                {
+                                    console.log('test: ', this.state.nameState)
+                                }                         
                                 <CustomInput
-                                    success={this.props.employee? true : false}
+                                    success={this.props.employee !== null || this.state.nameState === "success"}
+                                    error={this.state.nameState === "error"}
                                     labelText="Name *"
                                     id="name"
                                     formControlProps={{
                                         fullWidth: true
                                     }}
                                     inputProps={{
-                                        value: this.props.name,
-                                        disabled: true
+                                        value: this.props.employee? this.props.employee.name : this.state.name,
+                                        disabled: this.props.employee? true : false,
+                                        type: "text",
+                                        onChange: event =>
+                                            this.change(event, "name", "name", 1),
                                     }}
                                 />
                                 <CustomInput
@@ -266,29 +366,37 @@ class NewOrUpdateModal extends React.Component {
                                 <GridContainer>
                                     <GridItem xs={12} sm={6}>
                                         <CustomInput
-                                            success={this.props.employee? true : false}
+                                            success={this.props.employee !== null || this.state.ssnState === "success"}
+                                            error={this.state.ssnState === "error"}
                                             labelText="SSNumber *"
                                             id="ssn"
                                             formControlProps={{
                                                 fullWidth: true
                                             }}
                                             inputProps={{
-                                                value: this.props.ssn,
-                                                disabled: true
+                                                value: this.props.employee? this.props.employee.SSNumber : this.state.ssn,
+                                                disabled: this.props.employee? true : false,
+                                                type: "number",                                                
+                                                onChange: event =>
+                                                    this.change(event, "ssn", "ssn", 1),
                                             }}
                                         />
                                     </GridItem>
                                     <GridItem xs={12} sm={6}>
                                         <CustomInput
-                                            success={this.props.employee? true : false}
+                                            success={this.props.employee !== null || this.state.phoneState === "success"}
+                                            error={this.state.phoneState === "error"}
                                             labelText="Phone *"
                                             id="phone"
                                             formControlProps={{
                                                 fullWidth: true
                                             }}
                                             inputProps={{
-                                                value: this.props.phone,
-                                                disabled: true
+                                                value: this.props.employee? this.props.employee.EmployeeInformation.mobile : this.state.phone,
+                                                disabled: this.props.employee? true : false,
+                                                type: "number",                                                
+                                                onChange: event =>
+                                                    this.change(event, "phone", "phone", 1),
                                             }}
                                         />
                                     </GridItem>
@@ -296,35 +404,44 @@ class NewOrUpdateModal extends React.Component {
                                 <GridContainer>
                                     <GridItem xs={12} sm={6}>
                                         <CustomInput
-                                            success={this.props.employee? true : false}
+                                            success={this.props.employee !== null || this.state.professionState === "success"}
+                                            error={this.state.professionState === "error"}
                                             labelText="Profession *"
                                             id="profession"
                                             formControlProps={{
                                                 fullWidth: true
                                             }}
                                             inputProps={{
-                                                value: this.props.profession,
-                                                disabled: true
+                                                value: this.props.employee? this.props.employee.EmployeeInformation.profession : this.state.profession,
+                                                disabled: this.props.employee? true : false,
+                                                type: "text",                                                
+                                                onChange: event =>
+                                                    this.change(event, "profession", "profession", 1),
                                             }}
                                         />
                                     </GridItem>
                                     <GridItem xs={12} sm={6}>
                                         <CustomInput
-                                            success={this.props.employee? true : false}
+                                            success={this.props.employee !== null || this.state.positionState === "success"}
+                                            error={this.state.positionState === "error"}
                                             labelText="Position *"
                                             id="position"
                                             formControlProps={{
                                                 fullWidth: true
                                             }}
                                             inputProps={{
-                                                value: this.props.position,
-                                                disabled: true
+                                                value: this.props.employee? this.props.employee.EmployeeInformation.position : this.state.position,
+                                                disabled: this.props.employee? true : false,
+                                                type: "text",                                                
+                                                onChange: event =>
+                                                    this.change(event, "position", "position", 1),
                                             }}
                                         />
                                     </GridItem>
                                 </GridContainer> 
                                 <CustomInput
-                                    success={this.props.employee? true : false}
+                                    success={this.props.employee !== null || this.state.descriptionState === "success"}
+                                    error={this.state.descriptionState === "error"}
                                     labelText="Description *"
                                     id="description"
                                     formControlProps={{
@@ -333,16 +450,20 @@ class NewOrUpdateModal extends React.Component {
                                     inputProps={{
                                         multiline: true,
                                         rows: 3,
-                                        value: this.props.description,
-                                        disabled: true
+                                        value: this.props.employee? this.props.employee.EmployeeInformation.description : this.state.description,
+                                        disabled: this.props.employee? true : false,
+                                        type: "text",                                                
+                                        onChange: event =>
+                                            this.change(event, "description", "description", 1),
                                     }}
                                 /> 
                                 <FormControl
                                     fullWidth
+                                    className={classes.formControl}
                                 >
                                     <InputLabel
                                         htmlFor="consumerOwner-select"
-                                        className={classes.selectLabel}
+                                        className={this.state.consumerOwner? classes.selectLabel + " " + classes.success : classes.selectLabel}
                                     >
                                         Choose ConsumerOwner *
                                     </InputLabel>
@@ -351,7 +472,7 @@ class NewOrUpdateModal extends React.Component {
                                             className: classes.selectMenu
                                         }}
                                         classes={{
-                                            select: classes.select
+                                            select: classes.select + " " + classes.left + " " + classes.lowercase
                                         }}
                                         value={this.state.consumerOwner}
                                         onChange={event =>
@@ -359,6 +480,7 @@ class NewOrUpdateModal extends React.Component {
                                         inputProps={{
                                             name: "consumerOwnerSelect",
                                             id: "consumerOwner-select",
+                                            readOnly: this.state.hasConsumerOwner
                                         }}
                                     >
                                         <MenuItem
@@ -378,9 +500,236 @@ class NewOrUpdateModal extends React.Component {
                                         >
                                             employee
                                         </MenuItem>
-                                        }   
+                                        <MenuItem
+                                            classes={{
+                                                root: classes.selectMenuItem,
+                                                selected: classes.selectMenuItemSelected
+                                            }}
+                                            value="SALON"
+                                        >
+                                            salon
+                                        </MenuItem>
                                     </Select>
-                                </FormControl>                               
+                                </FormControl>  
+                                <FormControl
+                                    fullWidth
+                                    className={classes.formControl}
+                                >
+                                    <InputLabel
+                                        htmlFor="companyAuthLevel-select"
+                                        className={this.state.companyAuthLevel? classes.selectLabel + " " + classes.success : classes.selectLabel}
+                                    >
+                                        Choose CompanyAuthLevel *
+                                    </InputLabel>
+                                    <Select
+                                        MenuProps={{
+                                            className: classes.selectMenu
+                                        }}
+                                        classes={{
+                                            select: classes.select + " " + classes.left + " " + classes.lowercase
+                                        }}
+                                        value={this.state.companyAuthLevel}
+                                        onChange={event =>
+                                            this.change(event, "companyAuthLevel", "companyAuthLevel", 0)}
+                                        inputProps={{
+                                            name: "companyAuthLevelSelect",
+                                            id: "companyAuthLevel-select",
+                                        }}
+                                    >
+                                        <MenuItem
+                                            disabled
+                                            classes={{
+                                                root: classes.selectMenuItem
+                                            }}
+                                            >
+                                            Choose CompanyAuthLevel
+                                        </MenuItem>
+                                        <MenuItem
+                                            classes={{
+                                                root: classes.selectMenuItem,
+                                                selected: classes.selectMenuItemSelected
+                                            }}
+                                            value="ADMIN"
+                                        >
+                                            admin
+                                        </MenuItem>
+                                        <MenuItem
+                                            classes={{
+                                                root: classes.selectMenuItem,
+                                                selected: classes.selectMenuItemSelected
+                                            }}
+                                            value="EMPLOYEE"
+                                        >
+                                            employee
+                                        </MenuItem>
+                                    </Select>
+                                </FormControl>   
+                                <FormControl
+                                    fullWidth
+                                    className={classes.formControl}
+                                >
+                                    <InputLabel
+                                        htmlFor="salonAuthLevel-select"
+                                        className={this.state.salonAuthLevel? classes.selectLabel + " " + classes.success : classes.selectLabel}
+                                    >
+                                        Choose SalonAuthLevel *
+                                    </InputLabel>
+                                    <Select
+                                        MenuProps={{
+                                            className: classes.selectMenu
+                                        }}
+                                        classes={{
+                                            select: classes.select + " " + classes.left + " " + classes.lowercase
+                                        }}
+                                        value={this.state.salonAuthLevel}
+                                        onChange={event =>
+                                            this.change(event, "salonAuthLevel", "salonAuthLevel", 0)}
+                                        inputProps={{
+                                            name: "salonAuthLevelSelect",
+                                            id: "salonAuthLevel-select",
+                                        }}
+                                    >
+                                        <MenuItem
+                                            disabled
+                                            classes={{
+                                                root: classes.selectMenuItem
+                                            }}
+                                            >
+                                            Choose SalonAuthLevel
+                                        </MenuItem>
+                                        <MenuItem
+                                            classes={{
+                                                root: classes.selectMenuItem,
+                                                selected: classes.selectMenuItemSelected
+                                            }}
+                                            value="ADMIN"
+                                        >
+                                            admin
+                                        </MenuItem>
+                                        <MenuItem
+                                            classes={{
+                                                root: classes.selectMenuItem,
+                                                selected: classes.selectMenuItemSelected
+                                            }}
+                                            value="EMPLOYEE"
+                                        >
+                                            employee
+                                        </MenuItem>
+                                    </Select>
+                                </FormControl>   
+                                {
+                                    this.props.employee.hasCompany? (
+                                        <div>
+                                            <FormControl
+                                                fullWidth
+                                                className={classes.formControl}
+                                            >
+                                                <InputLabel
+                                                    htmlFor="bookingPaymentFor-select"
+                                                    className={this.state.bookingPaymentFor? classes.selectLabel + " " + classes.success : classes.selectLabel}
+                                                >
+                                                    Choose BookingPaymentFor *
+                                                </InputLabel>
+                                                <Select
+                                                    MenuProps={{
+                                                        className: classes.selectMenu
+                                                    }}
+                                                    classes={{
+                                                        select: classes.select + " " + classes.left + " " + classes.lowercase
+                                                    }}
+                                                    value={this.state.bookingPaymentFor}
+                                                    onChange={event =>
+                                                        this.change(event, "bookingPaymentFor", "bookingPaymentFor", 0)}
+                                                    inputProps={{
+                                                        name: "bookingPaymentForSelect",
+                                                        id: "bookingPaymentFor-select",
+                                                    }}
+                                                >
+                                                    <MenuItem
+                                                        disabled
+                                                        classes={{
+                                                            root: classes.selectMenuItem
+                                                        }}
+                                                        >
+                                                        Choose BookingPaymentFor
+                                                    </MenuItem>
+                                                    <MenuItem
+                                                        classes={{
+                                                            root: classes.selectMenuItem,
+                                                            selected: classes.selectMenuItemSelected
+                                                        }}
+                                                        value="EMPLOYEE"
+                                                    >
+                                                        employee
+                                                    </MenuItem>
+                                                    <MenuItem
+                                                        classes={{
+                                                            root: classes.selectMenuItem,
+                                                            selected: classes.selectMenuItemSelected
+                                                        }}
+                                                        value="RENTACHAIR"
+                                                    >
+                                                        rent-a-chair
+                                                    </MenuItem>
+                                                </Select>
+                                            </FormControl>   
+                                            <FormControl
+                                                fullWidth
+                                                className={classes.formControl}
+                                            >
+                                                <InputLabel
+                                                    htmlFor="productPaymentFor-select"
+                                                    className={this.state.productPaymentFor? classes.selectLabel + " " + classes.success : classes.selectLabel}
+                                                >
+                                                    Choose ProductPaymentFor *
+                                                </InputLabel>
+                                                <Select
+                                                    MenuProps={{
+                                                        className: classes.selectMenu
+                                                    }}
+                                                    classes={{
+                                                        select: classes.select + " " + classes.left + " " + classes.lowercase
+                                                    }}
+                                                    value={this.state.productPaymentFor}
+                                                    onChange={event =>
+                                                        this.change(event, "productPaymentFor", "productPaymentFor", 0)}
+                                                    inputProps={{
+                                                        name: "productPaymentForSelect",
+                                                        id: "productPaymentFor-select",
+                                                    }}
+                                                >
+                                                    <MenuItem
+                                                        disabled
+                                                        classes={{
+                                                            root: classes.selectMenuItem
+                                                        }}
+                                                        >
+                                                        Choose ProductPaymentFor
+                                                    </MenuItem>
+                                                    <MenuItem
+                                                        classes={{
+                                                            root: classes.selectMenuItem,
+                                                            selected: classes.selectMenuItemSelected
+                                                        }}
+                                                        value="EMPLOYEE"
+                                                    >
+                                                        employee
+                                                    </MenuItem>
+                                                    <MenuItem
+                                                        classes={{
+                                                            root: classes.selectMenuItem,
+                                                            selected: classes.selectMenuItemSelected
+                                                        }}
+                                                        value="RENTACHAIR"
+                                                    >
+                                                        rent-a-chair
+                                                    </MenuItem>
+                                                </Select>
+                                            </FormControl>  
+                                        </div>
+                                    ) : undefined
+                                }
+                                                       
                             </form>
                         ) : undefined
                     }
@@ -429,22 +778,17 @@ class NewOrUpdateModal extends React.Component {
                     this.state.thirdStep? (                        
                         <DialogActions className={classes.modalFooter}>
                             <Button
-                                onClick={() => this.setState({
-                                    secondStep: false,
-                                    thirdStep: true
-                                })}
+                                onClick={() => this.handleClose()}
                                 color="danger"
                                 style={{width: '100%'}}
                             >
                                 Cancel
                             </Button>
                             <Button
-                                onClick={() => this.setState({
-                                    secondStep: false,
-                                    thirdStep: true
-                                })}
+                                onClick={() => this.save()}
                                 color="info"
                                 style={{width: '100%'}}
+                                disabled={this.canSave()}
                             >
                                 Save
                             </Button>
@@ -469,8 +813,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
+        checkEmployee    : Actions.checkEmployee,
+        addEmployee      : Actions.addEmployee,
         updateEmployee   : Actions.updateEmployee,
-        checkEmployee    : Actions.checkEmployee
     }, dispatch);
 }
 
