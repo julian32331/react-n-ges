@@ -124,7 +124,7 @@ class Dashboard extends React.Component {
         />
         <div
           className={mainPanel}
-          style={{backgroundImage: `url(${image})`}}
+          // style={{backgroundImage: `url(${image})`}}
           ref="mainPanel"
         >
           <Header

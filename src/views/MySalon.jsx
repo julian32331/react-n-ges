@@ -28,7 +28,7 @@ import Table from "components/Table/Table.jsx";
 
 import salonStyle from "assets/jss/material-dashboard-pro-react/views/salonStyle.jsx";
 
-class Salong extends React.Component {
+class MySalon extends React.Component {
   render() {
     const { classes } = this.props;
     const button = 
@@ -247,4 +247,4 @@ class Salong extends React.Component {
   }
 }
 
-export default withStyles(salonStyle)(Salong);
+export default withStyles(salonStyle)(MySalon);

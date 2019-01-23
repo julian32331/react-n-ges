@@ -91,6 +91,7 @@ const sidebarStyle = theme => ({
   },
   whiteBackground: {
     color: "#3C4858",
+    background: 'transparent'
     // "&:after": {
     //   background: "#FFFFFF",
     //   opacity: ".93"

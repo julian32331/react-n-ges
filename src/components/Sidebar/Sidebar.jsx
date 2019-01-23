@@ -146,7 +146,8 @@ class Sidebar extends React.Component {
               onClick={() => this.openCollapse("openAvatar")}
             >
               <ListItemText
-                primary={rtlActive ? "تانيا أندرو" : "Tania Andrew"}
+                // primary={rtlActive ? "تانيا أندرو" : "Tania Andrew"}
+                primary={"Tania Andrew"}
                 secondary={
                   <b
                     className={
@@ -174,10 +175,12 @@ class Sidebar extends React.Component {
                     }
                   >
                     <span className={collapseItemMini}>
-                      {rtlActive ? "مع" : "MP"}
+                      {/* {rtlActive ? "مع" : "MP"} */}
+                      {"MP"}
                     </span>
                     <ListItemText
-                      primary={rtlActive ? "ملفي" : "My Profile"}
+                      // primary={rtlActive ? "ملفي" : "My Profile"}
+                      primary={"My Profile"}
                       disableTypography={true}
                       className={collapseItemText}
                     />
@@ -185,17 +188,19 @@ class Sidebar extends React.Component {
                 </ListItem>
                 <ListItem className={classes.collapseItem}>
                   <NavLink
-                    to="#"
+                    to="/companyInformasjon"
                     className={
                       classes.itemLink + " " + classes.userCollapseLinks
                     }
                   >
                     <span className={collapseItemMini}>
-                      {rtlActive ? "هوع" : "EP"}
+                      {/* {rtlActive ? "هوع" : "CI"} */}
+                      {"CI"}
                     </span>
                     <ListItemText
                       primary={
-                        rtlActive ? "تعديل الملف الشخصي" : "Edit Profile"
+                        // rtlActive ? "تعديل الملف الشخصي" : "Company Information"
+                        "Company Information"
                       }
                       disableTypography={true}
                       className={collapseItemText}
@@ -204,16 +209,18 @@ class Sidebar extends React.Component {
                 </ListItem>
                 <ListItem className={classes.collapseItem}>
                   <NavLink
-                    to="#"
+                    to="/mySalon"
                     className={
                       classes.itemLink + " " + classes.userCollapseLinks
                     }
                   >
                     <span className={collapseItemMini}>
-                      {rtlActive ? "و" : "S"}
+                      {/* {rtlActive ? "و" : "MS"} */}
+                      {"MS"}
                     </span>
                     <ListItemText
-                      primary={rtlActive ? "إعدادات" : "Settings"}
+                      // primary={rtlActive ? "إعدادات" : "My Salons"}
+                      primary={"My Salons"}
                       disableTypography={true}
                       className={collapseItemText}
                     />
@@ -231,7 +238,7 @@ class Sidebar extends React.Component {
           if (prop.redirect) {
             return null;
           }
-          if(prop.name === 'Profile') {
+          if(prop.name === 'Profile' || prop.name === 'Company Information' || prop.name === 'My Salon') {
             return null;
           }
           if (prop.collapse) {
@@ -481,12 +488,12 @@ class Sidebar extends React.Component {
               user={user}
               links={links}
             />
-            {image !== undefined ? (
+            {/* {image !== undefined ? (
               <div
                 className={classes.background}
                 style={{ backgroundImage: "url(" + image + ")" }}
               />
-            ) : null}
+            ) : null} */}
           </Drawer>
         </Hidden>
       </div>

@@ -4,8 +4,6 @@
  */
 
 import Dashboard from "views/Dashboard/Dashboard.jsx";
-import CompanyInformasjon from "views/MinSalong/CompanyInformasjon.jsx";
-import Salong from "views/MinSalong/Salong.jsx";
 import SalongInformasjon from "views/MinSalong/SalongInformasjon.jsx";
 import SalongService from "views/MinSalong/SalongService/SalongService.jsx";
 import OpeningHours from "views/MinSalong/OpeningHours/OpeningHours.jsx";
@@ -13,7 +11,10 @@ import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
+
 import Profile from "views/Profile/Profile.jsx";
+import CompanyInformasjon from "views/CompanyInformasjon.jsx";
+import MySalon from "views/MySalon.jsx";
 
 // @material-ui/icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -25,8 +26,17 @@ var dashRoutes = [
   {
     path: "/profile",
     name: "Profile",
-    icon: DashboardIcon,
     component: Profile
+  },
+  {
+    path: "/companyInformasjon",
+    name: "Company Information",
+    component: CompanyInformasjon
+  },
+  {
+    path: "/mySalon",
+    name: "My Salon",
+    component: MySalon
   },
   {
     path: "/dashboard",
@@ -42,22 +52,10 @@ var dashRoutes = [
     icon: Home,
     views: [
       {
-        path: "/minsalong/addSalong",
-        name: "Salong",
-        mini: "S",
-        component: Salong
-      },
-      {
         path: "/minsalong/salongInformasjon",
         name: "Salong Informasjon",
         mini: "SI",
         component: SalongInformasjon
-      },
-      {
-        path: "/minsalong/companyInformasjon",
-        name: "Company Informasjon",
-        mini: "CI",
-        component: CompanyInformasjon
       },
       {
         path: "/minsalong/salongService",
