@@ -92,14 +92,17 @@ class NewOrUpdateModal extends React.Component {
                     this.setState({
                         firstStep: false,
                         thirdStep: true,
-                        imagePreviewUrl: Utils.root + nextProps.employee.EmployeeInformation.picturePath
+                        imagePreviewUrl: Utils.root + nextProps.employee.EmployeeInformation.picturePath,
+                        consumerOwner: "SALON",
+                        bookingPaymentFor: "COMPANY",
+                        productPaymentFor: "COMPANY"
                     })
                 }            
             } else if(typeof nextProps.employee === 'boolean') {
                 console.log('employee not founded.');
                 this.setState({
                     firstStep: false,
-                    thirdStep: true
+                    secondStep: true
                 })
             }
         }
@@ -138,28 +141,8 @@ class NewOrUpdateModal extends React.Component {
     }
 
     handleClose() {
-        console.log('test')
         this.initState();
         this.props.onClose();
-    }
-
-    handleImageChange(e) {
-        console.log('e: ', e);
-        e.preventDefault();
-        let reader = new FileReader();
-        let file = e.target.files[0];
-        reader.onloadend = () => {
-          this.setState({
-            file: file,
-            imagePreviewUrl: reader.result
-          });
-        };
-        reader.readAsDataURL(file);
-    }
-    handleClick() {
-        if(!this.props.employee) {
-            this.refs.fileInput.click();
-        }
     }
 
     change(event, stateName, type, stateNameEqualTo) {
@@ -195,6 +178,7 @@ class NewOrUpdateModal extends React.Component {
         }
     }
 
+    // Step 1
     checkEmployee() {
         this.props.checkEmployee({
             workingForId: this.props.workingForId,
@@ -202,6 +186,7 @@ class NewOrUpdateModal extends React.Component {
         })
     }
 
+    // Step 2
     selectConsumerOwner(value) {
         if(value) {
             console.log('consumerOwner: ', "EMPLOYEE");
@@ -221,6 +206,44 @@ class NewOrUpdateModal extends React.Component {
             })
         }
 
+    }
+
+    isInviteOrAdd(value) {
+        if(value) {
+            this.props.inviteEmployee({
+                workingForId: this.props.workingForId,
+                email: this.state.email
+            })
+            this.handleClose();
+        } else {
+            this.setState({
+                secondStep: false,
+                thirdStep: true,
+                imagePreviewUrl: avatar,
+                consumerOwner: "SALON",
+                bookingPaymentFor: "COMPANY",
+                productPaymentFor: "COMPANY"
+            })
+        }
+    }
+    
+    handleImageChange(e) {
+        console.log('e: ', e);
+        e.preventDefault();
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        reader.onloadend = () => {
+          this.setState({
+            file: file,
+            imagePreviewUrl: reader.result
+          });
+        };
+        reader.readAsDataURL(file);
+    }
+    handleClick() {
+        if(!this.props.employee) {
+            this.refs.fileInput.click();
+        }
     }
 
     canSave() {
@@ -244,7 +267,7 @@ class NewOrUpdateModal extends React.Component {
         if(this.props.employee) {
             this.props.addEmployee({
                 workingForId: this.props.workingForId,
-                hairdresserId: this.props.hairdresserId,
+                hairdresserId: this.props.employee.hairdresserId,
                 hairdresserEmail: this.state.email,
                 consumerOwner: this.state.consumerOwner,
                 companyAuthLevel: this.state.companyAuthLevel,
@@ -253,6 +276,7 @@ class NewOrUpdateModal extends React.Component {
                 productPaymentFor: this.state.productPaymentFor
             })
         }
+        this.handleClose();
     }
 
     render() {
@@ -318,7 +342,13 @@ class NewOrUpdateModal extends React.Component {
                         this.state.secondStep? (
                             <form>
                                 <Danger>
-                                    <h4>Rent-a-chair own consumer?</h4>
+                                    {
+                                        this.props.employee? (
+                                            <h4>Rent-a-chair own consumer ?</h4>
+                                        ) : (
+                                            <h4>Is employee you are inviting have company ?</h4>
+                                        )
+                                    }                                    
                                 </Danger>
                             </form>
                         ) : undefined
@@ -457,60 +487,64 @@ class NewOrUpdateModal extends React.Component {
                                             this.change(event, "description", "description", 1),
                                     }}
                                 /> 
-                                <FormControl
-                                    fullWidth
-                                    className={classes.formControl}
-                                >
-                                    <InputLabel
-                                        htmlFor="consumerOwner-select"
-                                        className={this.state.consumerOwner? classes.selectLabel + " " + classes.success : classes.selectLabel}
-                                    >
-                                        Choose ConsumerOwner *
-                                    </InputLabel>
-                                    <Select
-                                        MenuProps={{
-                                            className: classes.selectMenu
-                                        }}
-                                        classes={{
-                                            select: classes.select + " " + classes.left + " " + classes.lowercase
-                                        }}
-                                        value={this.state.consumerOwner}
-                                        onChange={event =>
-                                            this.change(event, "consumerOwner", "consumerOwner", 0)}
-                                        inputProps={{
-                                            name: "consumerOwnerSelect",
-                                            id: "consumerOwner-select",
-                                            readOnly: this.state.hasConsumerOwner
-                                        }}
-                                    >
-                                        <MenuItem
-                                            disabled
-                                            classes={{
-                                                root: classes.selectMenuItem
-                                            }}
+                                {
+                                    this.props.employee && this.props.employee.hasCompany? (
+                                        <FormControl
+                                            fullWidth
+                                            className={classes.formControl}
+                                        >
+                                            <InputLabel
+                                                htmlFor="consumerOwner-select"
+                                                className={this.state.consumerOwner? classes.selectLabel + " " + classes.success : classes.selectLabel}
                                             >
-                                            Choose ConsumerOwner
-                                        </MenuItem>
-                                        <MenuItem
-                                            classes={{
-                                                root: classes.selectMenuItem,
-                                                selected: classes.selectMenuItemSelected
-                                            }}
-                                            value="EMPLOYEE"
-                                        >
-                                            employee
-                                        </MenuItem>
-                                        <MenuItem
-                                            classes={{
-                                                root: classes.selectMenuItem,
-                                                selected: classes.selectMenuItemSelected
-                                            }}
-                                            value="SALON"
-                                        >
-                                            salon
-                                        </MenuItem>
-                                    </Select>
-                                </FormControl>  
+                                                Choose ConsumerOwner *
+                                            </InputLabel>
+                                            <Select
+                                                MenuProps={{
+                                                    className: classes.selectMenu
+                                                }}
+                                                classes={{
+                                                    select: classes.select + " " + classes.left + " " + classes.lowercase
+                                                }}
+                                                value={this.state.consumerOwner}
+                                                onChange={event =>
+                                                    this.change(event, "consumerOwner", "consumerOwner", 0)}
+                                                inputProps={{
+                                                    name: "consumerOwnerSelect",
+                                                    id: "consumerOwner-select",
+                                                    readOnly: this.state.hasConsumerOwner
+                                                }}
+                                            >
+                                                <MenuItem
+                                                    disabled
+                                                    classes={{
+                                                        root: classes.selectMenuItem
+                                                    }}
+                                                    >
+                                                    Choose ConsumerOwner
+                                                </MenuItem>
+                                                <MenuItem
+                                                    classes={{
+                                                        root: classes.selectMenuItem,
+                                                        selected: classes.selectMenuItemSelected
+                                                    }}
+                                                    value="EMPLOYEE"
+                                                >
+                                                    employee
+                                                </MenuItem>
+                                                <MenuItem
+                                                    classes={{
+                                                        root: classes.selectMenuItem,
+                                                        selected: classes.selectMenuItemSelected
+                                                    }}
+                                                    value="SALON"
+                                                >
+                                                    salon
+                                                </MenuItem>
+                                            </Select>
+                                        </FormControl>  
+                                    ) : undefined
+                                }
                                 <FormControl
                                     fullWidth
                                     className={classes.formControl}
@@ -618,7 +652,7 @@ class NewOrUpdateModal extends React.Component {
                                     </Select>
                                 </FormControl>   
                                 {
-                                    this.props.employee.hasCompany? (
+                                    this.props.employee && this.props.employee.hasCompany? (
                                         <div>
                                             <FormControl
                                                 fullWidth
@@ -754,22 +788,41 @@ class NewOrUpdateModal extends React.Component {
                 {
                     // Second step
                     this.state.secondStep? (
-                        <DialogActions className={classes.modalFooter}>
-                            <Button
-                                onClick={() => this.selectConsumerOwner(false)}
-                                color="danger"
-                                style={{width: '100%'}}
-                            >
-                                No
-                            </Button>
-                            <Button
-                                onClick={() => this.selectConsumerOwner(true)}
-                                color="info"
-                                style={{width: '100%'}}
-                            >
-                                Yes
-                            </Button>
-                        </DialogActions>                          
+                        this.props.employee? (                                
+                            <DialogActions className={classes.modalFooter}>
+                                <Button
+                                    onClick={() => this.selectConsumerOwner(false)}
+                                    color="danger"
+                                    style={{width: '100%'}}
+                                >
+                                    No
+                                </Button>
+                                <Button
+                                    onClick={() => this.selectConsumerOwner(true)}
+                                    color="info"
+                                    style={{width: '100%'}}
+                                >
+                                    Yes
+                                </Button>
+                            </DialogActions>  
+                        ) : (
+                            <DialogActions className={classes.modalFooter}>
+                                <Button
+                                    onClick={() => this.isInviteOrAdd(false)}
+                                    color="danger"
+                                    style={{width: '100%'}}
+                                >
+                                    No
+                                </Button>
+                                <Button
+                                    onClick={() => this.isInviteOrAdd(true)}
+                                    color="info"
+                                    style={{width: '100%'}}
+                                >
+                                    Yes
+                                </Button>
+                            </DialogActions>  
+                        )                        
                     ) : undefined
                 }
 
@@ -814,6 +867,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         checkEmployee    : Actions.checkEmployee,
+        inviteEmployee   : Actions.inviteEmployee,
         addEmployee      : Actions.addEmployee,
         updateEmployee   : Actions.updateEmployee,
     }, dispatch);

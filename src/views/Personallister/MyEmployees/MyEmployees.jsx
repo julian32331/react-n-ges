@@ -140,17 +140,20 @@ class MyEmployees extends React.Component {
 
     let employees = [];
     this.employees.map(employee => {
-      let temp = [];
-      
-      temp.push(employee.name);
-      temp.push(employee.EmployeeInformation.position);
-      temp.push(employee.EmployeeInformation.mobile);
-      temp.push(employee.SSN);
-      temp.push(avatar(employee.EmployeeInformation.picturePath));
-      temp.push(employee.EmployeeInformation.licenseValidated? "Yes" : "No");
-      temp.push(buttons(employee));
+      if(employee) {
+        let temp = [];
+        
+        temp.push(employee.name);
+        temp.push(employee.EmployeeInformation.position);
+        temp.push(employee.EmployeeInformation.mobile);
+        temp.push(employee.SSN);
+        temp.push(avatar(employee.EmployeeInformation.picturePath));
+        temp.push(employee.EmployeeInformation.licenseValidated? "Yes" : "No");
+        temp.push(buttons(employee));
 
-      employees.push(temp);
+        employees.push(temp);
+
+      }
     })
 
     return (

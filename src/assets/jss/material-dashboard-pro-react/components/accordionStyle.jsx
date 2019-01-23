@@ -1,4 +1,4 @@
-import { primaryColor } from "assets/jss/material-dashboard-pro-react.jsx";
+import { primaryColor, successColor } from "assets/jss/material-dashboard-pro-react.jsx";
 
 const accordionStyle = theme => ({
   root: {
@@ -23,11 +23,11 @@ const accordionStyle = theme => ({
     borderTopRightRadius: "3px",
     color: "#3C4858",
     "&:hover": {
-      color: primaryColor
+      color: successColor
     }
   },
   expansionPanelSummaryExpaned: {
-    color: primaryColor,
+    color: successColor,
     "& $expansionPanelSummaryExpandIcon": {
       [theme.breakpoints.up("md")]: {
         top: "auto !important"
@@ -53,7 +53,7 @@ const accordionStyle = theme => ({
   },
   expansionPanelSummaryExpandIconExpanded: {},
   title: {
-    fontSize: "15px",
+    fontSize: "18px",
     fontWeight: "bolder",
     marginTop: "0",
     marginBottom: "0",

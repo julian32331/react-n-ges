@@ -62,19 +62,19 @@ class SalongInformasjon extends React.Component {
     componentWillMount() {
         this.props.getUserData();
         setTimeout(() => {
-            this.getInfo(this.props.workingForId);
+            this.getSalonInfo(this.props.workingForId);
         }, 100);
     }
 
-    getInfo(id) {
-        this.props.getInfo({
+    getSalonInfo(id) {
+        this.props.getSalonInfo({
             workingForId: id
         })
     }
 
     componentWillReceiveProps(nextProps) {
         if(this.props.workingForId !== nextProps.workingForId) {
-            this.getInfo(nextProps.workingForId);
+            this.getSalonInfo(nextProps.workingForId);
         }
 
         if(nextProps.info) {
@@ -238,8 +238,8 @@ class SalongInformasjon extends React.Component {
         })
     }
 
-    addInfo() {
-        this.props.addInfo({
+    addSalonInfo() {
+        this.props.addSalonInfo({
             workingForId: this.props.workingForId,
             salonData: {
                 email: this.state.email,
@@ -529,7 +529,7 @@ class SalongInformasjon extends React.Component {
                         {
                             this.state.isEdit? (                      
                                 <GridItem xs={12} sm={12} md={6}>                    
-                                    <Button color="info" size="sm" className={classes.submit} disabled={this.canSubmit()} onClick={this.addInfo.bind(this)}>LAGRE</Button>
+                                    <Button color="info" size="sm" className={classes.submit} disabled={this.canSubmit()} onClick={this.addSalonInfo.bind(this)}>LAGRE</Button>
                                     <Button color="danger" size="sm" className={classes.submit} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
                                 </GridItem>                                
                             ) : (
@@ -553,15 +553,15 @@ SalongInformasjon.propTypes = {
 function mapStateToProps(state) {
     return {
         workingForId: state.user.workingForId,
-        info: state.info.info
+        info: state.salonInfo.info
     }
   }
   
   function mapDispatchToProps(dispatch) {
       return bindActionCreators({          
         getUserData : Actions.getUserData,
-        getInfo: Actions.getInfo,
-        addInfo: Actions.addInfo
+        getSalonInfo: Actions.getSalonInfo,
+        addSalonInfo: Actions.addSalonInfo
       }, dispatch);
   }
   

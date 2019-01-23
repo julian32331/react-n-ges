@@ -38,28 +38,104 @@ class CompanyInformasjon extends React.Component {
     constructor(props) {
         super(props);
         this.state = {      
+            memberId: "",
+            memberIdState: "",
             name: "",
             nameState: "",
-            address: "",
-            addressState: "",
-            zip: "",
-            zipState: "",
-            city: "",
-            cityState: "",
-            phone: "",
-            phoneState: "",
+            orgNo: "",
+            orgNoState: "",
             email: "",
             emailState: "",
-            network: "",
-            networkState: "",
-            parkCheck: false,
-            accessCheck: false,
-            description: ""
+            phone: "",
+            phoneState: "",
+            addressCO: "",
+            addressCOState: "",
+            address: "",
+            addressState: "",
+            city: "",
+            cityState: "",
+            country: "",
+            countryState: "",
+            zip: "",
+            zipState: "",
+            billingCO: "",
+            billingCOState: "",
+            billing: "",
+            billingState: "",
+            billingCity: "",
+            billingCityState: "",
+            billingCountry: "",
+            billingCountryState: "",
+            billingEmail: "",
+            billingEmailState: "",
+            accountNo: "",
+            accountNoState: "",
+            bankgiroNo: "",
+            bankgiroNoState: "",
+            plusgiroNo: "",
+            plusgiroNoState: "",
         }
     }
-
+    
     componentWillMount() {
         this.props.getUserData();
+        setTimeout(() => {
+            this.getCompanyInfo(this.props.workingForId);
+        }, 100);
+    }
+
+    getCompanyInfo(id) {
+        this.props.getCompanyInfo({
+            workingForId: id
+        })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(this.props.workingForId !== nextProps.workingForId) {
+            this.getCompanyInfo(nextProps.workingForId);
+        }
+
+        if(nextProps.info) {
+            console.log('nextProps: ', nextProps.info.legalName);
+            this.setState({
+                memberId: nextProps.info.memberId? nextProps.info.memberId : "",
+                memberIdState: nextProps.info.memberId? "success" : "",
+                name: nextProps.info.legalName? nextProps.info.legalName : "",
+                nameState: nextProps.info.legalName? "success" : "",
+                orgNo: nextProps.info.orgNo? nextProps.info.orgNo : "",
+                orgNoState: nextProps.info.orgNo? "success" : "",
+                email: nextProps.info.email? nextProps.info.email : "",
+                emailState: nextProps.info.email? "success" : "",
+                phone: nextProps.info.phone? nextProps.info.phone : "",
+                phoneState: nextProps.info.phone? "success" : "",
+                addressCO: nextProps.info.addressCO? nextProps.info.addressCO : "",
+                addressCOState: nextProps.info.addressCO? "success" : "",
+                address: nextProps.info.address? nextProps.info.address : "",
+                addressState: nextProps.info.address? "success" : "",
+                city: nextProps.info.city? nextProps.info.city : "",
+                cityState: nextProps.info.city? "success" : "",
+                country: nextProps.info.country? nextProps.info.country : "",
+                countryState: nextProps.info.country? "success" : "",
+                zip: nextProps.info.zip? nextProps.info.zip : "",
+                zipState: nextProps.info.zip? "success" : "",
+                billingCO: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCO : "",
+                billingCOState: nextProps.info.CompanyEconomy? "success" : "",
+                billing: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billing : "",
+                billingState: nextProps.info.CompanyEconomy? "success" : "",
+                billingCity: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCity : "",
+                billingCityState: nextProps.info.CompanyEconomy? "success" : "",
+                billingCountry: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCountry : "",
+                billingCountryState: nextProps.info.CompanyEconomy? "success" : "",
+                billingEmail: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingEmail : "",
+                billingEmailState: nextProps.info.CompanyEconomy? "success" : "",
+                accountNo: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.accountNo : "",
+                accountNoState: nextProps.info.CompanyEconomy? "success" : "",
+                bankgiroNo: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.bankgiroNo : "",
+                bankgiroNoState: nextProps.info.CompanyEconomy? "success" : "",
+                plusgiroNo: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.plusgiroNo : "",
+                plusgiroNoState: nextProps.info.CompanyEconomy? "success" : "",
+            })
+        }
     }
 
     change(event, stateName, type, stateNameEqualTo, maxValue) {
@@ -159,43 +235,8 @@ class CompanyInformasjon extends React.Component {
         }
     }
 
-    toggleCheck(event, stateName) {
-        this.setState({ [stateName]: event.target.checked });
-    }
-
-    canSubmit() {
-        if(this.state.nameState === "" || this.state.nameState === "error" || 
-            this.state.addressState === "" || this.state.addressState === "error" ||
-            this.state.zipState === "" || this.state.zipState === "error" ||
-            this.state.cityState === "" || this.state.cityState === "error" ||
-            this.state.phoneState === "" || this.state.phoneState === "error" ||
-            this.state.emailState === "" || this.state.emailState === "error" ||
-            this.state.networkState === "" || this.state.networkState === "error") {
-          return true
-        } else {
-          return false
-        }
-    }
-
-    addInfo() {
-        this.props.addInfo({
-            workingForId: this.props.workingForId,
-            salonData: {
-                email: this.state.email,
-                name: this.state.name,
-                description: this.state.description,
-                descriptionValidated: false,
-                parking: "",
-                website: this.state.network,
-                address: this.state.address,
-                post: this.state.zip,
-                city: this.state.city,
-                country: "Sweden"
-            }
-        })
-    }
-
     render() {
+        console.log('name: ', this.state.name)
         const { classes } = this.props;
         return (
         <Card>
@@ -226,7 +267,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "memberId", "memberId", 0),
+                                        this.change(event, "memberId", "memberId", 1),
                                     value: this.state.memberId,
                                     type: "text"
                                 }}
@@ -251,7 +292,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "name", "name", 0),
+                                        this.change(event, "name", "name", 1),
                                     value: this.state.name,
                                     type: "text"
                                 }}
@@ -276,7 +317,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "orgNo", "orgNo", 0),
+                                        this.change(event, "orgNo", "orgNo", 1),
                                     value: this.state.orgNo,
                                     type: "text"
                                 }}
@@ -303,7 +344,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "email", "email", 0),
+                                        this.change(event, "email", "email", 1),
                                     value: this.state.email,
                                     type: "email"
                                 }}
@@ -328,7 +369,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "phone", "phone"),
+                                        this.change(event, "phone", "phone", 1),
                                     value: this.state.phone,
                                     type: "text"
                                 }}
@@ -355,7 +396,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "addressCO", "addressCO", 0),
+                                        this.change(event, "addressCO", "addressCO", 1),
                                     value: this.state.addressCO,
                                     type: "text"
                                 }}
@@ -380,7 +421,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "address", "address", 0),
+                                        this.change(event, "address", "address", 1),
                                     value: this.state.address,
                                     type: "text"
                                 }}
@@ -407,7 +448,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "city", "city", 0),
+                                        this.change(event, "city", "city", 1),
                                     value: this.state.city,
                                     type: "text"
                                 }}
@@ -432,7 +473,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "country", "country", 0),
+                                        this.change(event, "country", "country", 1),
                                     value: this.state.country,
                                     type: "text"
                                 }}
@@ -457,7 +498,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "zip", "zip", 0),
+                                        this.change(event, "zip", "zip", 1),
                                     value: this.state.zip,
                                     type: "number"
                                 }}
@@ -491,7 +532,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "billingCO", "billingCO", 0),
+                                        this.change(event, "billingCO", "billingCO", 1),
                                     value: this.state.billingCO,
                                     type: "text"
                                 }}
@@ -516,7 +557,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "billing", "billing", 0),
+                                        this.change(event, "billing", "billing", 1),
                                     value: this.state.billing,
                                     type: "text"
                                 }}
@@ -543,7 +584,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "billingCity", "billingCity", 0),
+                                        this.change(event, "billingCity", "billingCity", 1),
                                     value: this.state.billingCity,
                                     type: "text"
                                 }}
@@ -568,7 +609,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "billingCountry", "billingCountry", 0),
+                                        this.change(event, "billingCountry", "billingCountry", 1),
                                     value: this.state.billingCountry,
                                     type: "text"
                                 }}
@@ -593,7 +634,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "billingZip", "billingZip", 0),
+                                        this.change(event, "billingZip", "billingZip", 1),
                                     value: this.state.billingZip,
                                     type: "number"
                                 }}
@@ -620,7 +661,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "billingEmail", "billingEmail", 0),
+                                        this.change(event, "billingEmail", "billingEmail", 1),
                                     value: this.state.billingEmail,
                                     type: "email"
                                 }}
@@ -645,7 +686,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "accountNo", "accountNo"),
+                                        this.change(event, "accountNo", "accountNo", 1),
                                     value: this.state.accountNo,
                                     type: "text"
                                 }}
@@ -672,7 +713,7 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "bankgiroNo", "bankgiroNo", 0),
+                                        this.change(event, "bankgiroNo", "bankgiroNo", 1),
                                     value: this.state.bankgiroNo,
                                     type: "text"
                                 }}
@@ -697,8 +738,8 @@ class CompanyInformasjon extends React.Component {
                                         undefined
                                     ),
                                     onChange: event =>
-                                        this.change(event, "accountNo", "accountNo"),
-                                    value: this.state.accountNo,
+                                        this.change(event, "plusgiroNo", "plusgiroNo", 1),
+                                    value: this.state.plusgiro,
                                     type: "text"
                                 }}
                             />
@@ -706,7 +747,7 @@ class CompanyInformasjon extends React.Component {
                     </GridContainer>
                     <GridContainer justify="flex-end" alignItems="flex-end">
                         <GridItem xs={12} sm={12} md={6}>                    
-                            <Button color="info" className={classes.submit} disabled={this.canSubmit()} onClick={this.addInfo.bind(this)}>LAGRE</Button>
+                            <Button color="info" className={classes.submit} >LAGRE</Button>
                         </GridItem>
                     </GridContainer>
                 </form>
@@ -722,14 +763,15 @@ CompanyInformasjon.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        workingForId    : state.user.workingForId
+        workingForId    : state.user.workingForId,
+        info: state.companyInfo.info
     }
   }
   
   function mapDispatchToProps(dispatch) {
       return bindActionCreators({          
         getUserData : Actions.getUserData,
-        addInfo: Actions.addInfo
+        getCompanyInfo: Actions.getCompanyInfo
       }, dispatch);
   }
   

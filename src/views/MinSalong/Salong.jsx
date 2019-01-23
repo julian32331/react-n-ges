@@ -2,6 +2,7 @@ import React from "react";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import FormLabel from "@material-ui/core/FormLabel";
 
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
@@ -10,6 +11,8 @@ import Info from "@material-ui/icons/Info";
 import LocationOn from "@material-ui/icons/LocationOn";
 import Gavel from "@material-ui/icons/Gavel";
 import HelpOutline from "@material-ui/icons/HelpOutline";
+import Add from "@material-ui/icons/Add";
+import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -19,93 +22,220 @@ import Accordion from "components/Accordion/Accordion.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Button from "components/CustomButtons/Button.jsx";
+import CustomInput from "components/CustomInput/CustomInput.jsx";
+import Table from "components/Table/Table.jsx";
 
-import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
-
-const styles = {
-  cardTitle,
-  pageSubcategoriesTitle: {
-    color: "#3C4858",
-    textDecoration: "none",
-    textAlign: "center"
-  },
-  cardCategory: {
-    margin: "0",
-    color: "#999999"
-  }
-};
+import salonStyle from "assets/jss/material-dashboard-pro-react/views/salonStyle.jsx";
 
 class Salong extends React.Component {
   render() {
     const { classes } = this.props;
+    const button = 
+        <Button simple color="info" size="sm" className={classes.actionButton} >
+            <ArrowForwardIos className={classes.icon} />
+        </Button>
+    let data = [
+      ["Salon1", button],
+      ["Salon2", button],
+      ["Salon3", button],
+      ["Salon4", button]
+    ]
     return (
       <div>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={12}>
-          <Card>
-              <CardHeader>
-                <h4 className={classes.cardTitle}>
-                  Navigation Pills Icons <small> - Vertical Tabs</small>
-                </h4>
+          <GridItem xs={12}>
+            <Card>
+              <CardHeader className={classes.pb_0}>
+                <div className={classes.cardHeader}>
+                  <GridContainer>
+                      <GridItem xs={12} sm={6}>
+                          <h3 className={classes.cardTitle}>Companies / Salons</h3>
+                      </GridItem>
+                      <GridItem xs={12} sm={6} className={classes.text_right}>
+                          <Button 
+                              color="info" 
+                              size="sm"
+                              // onClick={() => this.onOpenNewOrUpdateModal('New Employee')}
+                          >                            
+                              <Add /> Add Company
+                          </Button>
+                      </GridItem>
+                  </GridContainer>
+                </div>
               </CardHeader>
               <CardBody>
-                <NavPills
-                  color="info"
-                  horizontal={{
-                    tabsGrid: { xs: 12, sm: 12, md: 3 },
-                    contentGrid: { xs: 12, sm: 12, md: 9 }
-                  }}
-                  tabs={[
+                <Accordion
+                  active={0}
+                  collapses={[
                     {
-                      tabButton: "Company 1",
-                      tabContent: (
-                        <span>
-                          <p>
-                            Collaboratively administrate empowered markets via
-                            plug-and-play networks. Dynamically procrastinate
-                            B2C users after installed base benefits.
-                          </p>
-                          <br />
-                          <p>
-                            Dramatically visualize customer directed convergence
-                            without revolutionary ROI. Collaboratively
-                            administrate empowered markets via plug-and-play
-                            networks. Dynamically procrastinate B2C users after
-                            installed base benefits.
-                          </p>
-                          <br />
-                          <p>
-                            Dramatically visualize customer directed convergence
-                            without revolutionary ROI. Collaboratively
-                            administrate empowered markets via plug-and-play
-                            networks. Dynamically procrastinate B2C users after
-                            installed base benefits.
-                          </p>
-                        </span>
+                      title: "Company 1",
+                      content: (
+                        <div className={classes.salonContainer}>
+                          <GridContainer justify="space-between">
+                            <GridItem xs={12} sm={6}>
+                              <GridContainer alignItems="center">
+                                <GridItem xs={5} sm={4} md={3} className={classes.text_right + " " + classes.mt_15}>
+                                  <FormLabel className={classes.labelHorizontal}>
+                                    Search :
+                                  </FormLabel>
+                                </GridItem>
+                                <GridItem xs={7} sm={8} md={6}>
+                                  <CustomInput
+                                    id="search"
+                                    formControlProps={{
+                                      fullWidth: true
+                                    }}
+                                    inputProps={{
+                                      type: "search",
+                                      // onChange: event =>
+                                      //   this.searchHandler("search", event),
+                                      // value: this.state.search               
+                                    }}
+                                  />
+                                </GridItem>
+                              </GridContainer>
+                            </GridItem>
+                            <GridItem xs={12} sm={6} className={classes.text_right + " " + classes.mt_27}>
+                              <Button 
+                                  color="info" 
+                                  size="sm"
+                                  // onClick={() => this.onOpenNewOrUpdateModal('New Employee')}
+                              >                            
+                                  <Add /> Add Salon
+                              </Button>
+                            </GridItem>
+                            <GridItem xs={12}>
+                              <Table
+                                tableData={data}
+                                customCellClasses={[
+                                  classes.left,
+                                  classes.right,
+                                ]}
+                                customClassesForCells={[0, 1]}
+                                customHeadCellClasses={[
+                                  classes.left,
+                                  classes.right,
+                                ]}
+                                customHeadClassesForCells={[0, 1]}
+                              />
+                            </GridItem>
+                          </GridContainer>
+                        </div>
                       )
                     },
                     {
-                      tabButton: "Company 2",
-                      tabContent: (
-                        <span>
-                          <p>
-                            Efficiently unleash cross-media information without
-                            cross-media value. Quickly maximize timely
-                            deliverables for real-time schemas.
-                          </p>
-                          <br />
-                          <p>
-                            Dramatically maintain clicks-and-mortar solutions
-                            without functional solutions. Dramatically visualize
-                            customer directed convergence without revolutionary
-                            ROI. Collaboratively administrate empowered markets
-                            via plug-and-play networks. Dynamically
-                            procrastinate B2C users after installed base
-                            benefits.
-                          </p>
-                        </span>
+                      title: "Company 2",
+                      content: (
+                        <div className={classes.salonContainer}>
+                          <GridContainer justify="space-between">
+                            <GridItem xs={12} sm={6}>
+                              <GridContainer alignItems="center">
+                                <GridItem xs={5} sm={4} md={3} className={classes.text_right + " " + classes.mt_15}>
+                                  <FormLabel className={classes.labelHorizontal}>
+                                    Search :
+                                  </FormLabel>
+                                </GridItem>
+                                <GridItem xs={7} sm={8} md={6}>
+                                  <CustomInput
+                                    id="search"
+                                    formControlProps={{
+                                      fullWidth: true
+                                    }}
+                                    inputProps={{
+                                      type: "search",
+                                      // onChange: event =>
+                                      //   this.searchHandler("search", event),
+                                      // value: this.state.search               
+                                    }}
+                                  />
+                                </GridItem>
+                              </GridContainer>
+                            </GridItem>
+                            <GridItem xs={12} sm={6} className={classes.text_right + " " + classes.mt_27}>
+                              <Button 
+                                  color="info" 
+                                  size="sm"
+                                  // onClick={() => this.onOpenNewOrUpdateModal('New Employee')}
+                              >                            
+                                  <Add /> Add Salon
+                              </Button>
+                            </GridItem>
+                            <GridItem xs={12}>
+                              <Table
+                                tableData={data}
+                                customCellClasses={[
+                                  classes.left,
+                                  classes.right,
+                                ]}
+                                customClassesForCells={[0, 1]}
+                                customHeadCellClasses={[
+                                  classes.left,
+                                  classes.right,
+                                ]}
+                                customHeadClassesForCells={[0, 1]}
+                              />
+                            </GridItem>
+                          </GridContainer>
+                        </div>
                       )
-                    }
+                    },
+                    {
+                      title: "Company 3",
+                      content: (
+                        <div className={classes.salonContainer}>
+                          <GridContainer justify="space-between">
+                            <GridItem xs={12} sm={6}>
+                              <GridContainer alignItems="center">
+                                <GridItem xs={5} sm={4} md={3} className={classes.text_right + " " + classes.mt_15}>
+                                  <FormLabel className={classes.labelHorizontal}>
+                                    Search :
+                                  </FormLabel>
+                                </GridItem>
+                                <GridItem xs={7} sm={8} md={6}>
+                                  <CustomInput
+                                    id="search"
+                                    formControlProps={{
+                                      fullWidth: true
+                                    }}
+                                    inputProps={{
+                                      type: "search",
+                                      // onChange: event =>
+                                      //   this.searchHandler("search", event),
+                                      // value: this.state.search               
+                                    }}
+                                  />
+                                </GridItem>
+                              </GridContainer>
+                            </GridItem>
+                            <GridItem xs={12} sm={6} className={classes.text_right + " " + classes.mt_27}>
+                              <Button 
+                                  color="info" 
+                                  size="sm"
+                                  // onClick={() => this.onOpenNewOrUpdateModal('New Employee')}
+                              >                            
+                                  <Add /> Add Salon
+                              </Button>
+                            </GridItem>
+                            <GridItem xs={12}>
+                              <Table
+                                tableData={data}
+                                customCellClasses={[
+                                  classes.left,
+                                  classes.right,
+                                ]}
+                                customClassesForCells={[0, 1]}
+                                customHeadCellClasses={[
+                                  classes.left,
+                                  classes.right,
+                                ]}
+                                customHeadClassesForCells={[0, 1]}
+                              />
+                            </GridItem>
+                          </GridContainer>
+                        </div>
+                      )
+                    },
                   ]}
                 />
               </CardBody>
@@ -117,4 +247,4 @@ class Salong extends React.Component {
   }
 }
 
-export default withStyles(styles)(Salong);
+export default withStyles(salonStyle)(Salong);

@@ -1,7 +1,8 @@
 import {combineReducers} from 'redux';
 import auth from "./auth.reducer";
 import user from "./user.reducer";
-import info from "./info.reducer";
+import salonInfo from "./salonInfo.reducer";
+import companyInfo from "./companyInfo.reducer";
 import service from "./service.reducer";
 import hours from "./hours.reducer";
 import checkInOut from "./checkinout.reducer";
@@ -11,7 +12,8 @@ const createReducer = (asyncReducers) =>
     combineReducers({
         auth,
         user,
-        info,
+        salonInfo,
+        companyInfo,
         service,
         hours,
         checkInOut,

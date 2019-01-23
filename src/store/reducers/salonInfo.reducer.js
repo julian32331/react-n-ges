@@ -1,5 +1,5 @@
 /**
- * Description: Reducer of the info
+ * Description: Reducer of the salon info
  * Date: 1/12/2019
  */
 
@@ -11,30 +11,30 @@ const initialState = {
     errorMsg: ""
 };
 
-const info = function (state = initialState, action) {
+const salonInfo = function (state = initialState, action) {
     switch ( action.type )
     {
-        case Actions.GET_INFO:
+        case Actions.GET_SALON_INFO:
         {
             return {
                 info: action.info
             };
         }
-        case Actions.ADD_INFO:
+        case Actions.ADD_SALON_INFO:
         {
             return {
                 status: false,
                 errorMsg: ""
             };
         }
-        case Actions.ADD_INFO_SUCCESS:
+        case Actions.ADD_SALON_INFO_SUCCESS:
         {
             return {
                 ...initialState,
                 status: true
             };
         }
-        case Actions.ADD_INFO_SUCCESS:
+        case Actions.ADD_SALON_INFO_SUCCESS:
         {
             return {
                 status: false,
@@ -48,4 +48,4 @@ const info = function (state = initialState, action) {
     }
 };
 
-export default info;
+export default salonInfo;

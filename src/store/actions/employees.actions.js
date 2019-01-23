@@ -9,6 +9,7 @@ export const UPDATE_EMPLOYEE     = '[EMPLOYEE] UPDATE';
 export const DELETE_EMPLOYEE     = '[EMPLOYEE] DELETE';
 export const CHECK_EMPLOYEE      = '[EMPLOYEE] CHECK';
 export const CHECK_EMPLOYEE_SUCCESS = '[EMPLOYEE] CHECK SUCCESS';
+export const INVITE_EMPLOYEE      = '[EMPLOYEE] INVITE';
 export const ADD_EMPLOYEE      = '[EMPLOYEE] ADD';
 
 export function getEmployees({workingForId}) {
@@ -60,6 +61,16 @@ export function checkEmployee(data) {
             return dispatch({
                 type: CHECK_EMPLOYEE_SUCCESS,
                 employee: response.data.employee
+            });
+        });
+}
+
+export function inviteEmployee(data) {
+    const request = Utils.xapi().post('employee/invite/rentachair', data);
+    return (dispatch) =>
+        request.then((response) => { 
+            return dispatch({
+                type: INVITE_EMPLOYEE
             });
         });
 }

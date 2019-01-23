@@ -45,6 +45,12 @@ const employees = function (state = initialState, action) {
                 employees: state.employees,
                 employee: action.employee
             };
+        }        
+        case Actions.INVITE_EMPLOYEE:
+        {
+            return {
+                employees: state.employees
+            };
         }
         case Actions.ADD_EMPLOYEE:
         {
