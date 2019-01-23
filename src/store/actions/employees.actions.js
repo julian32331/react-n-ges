@@ -9,8 +9,10 @@ export const UPDATE_EMPLOYEE     = '[EMPLOYEE] UPDATE';
 export const DELETE_EMPLOYEE     = '[EMPLOYEE] DELETE';
 export const CHECK_EMPLOYEE      = '[EMPLOYEE] CHECK';
 export const CHECK_EMPLOYEE_SUCCESS = '[EMPLOYEE] CHECK SUCCESS';
+export const CHECK_EMPLOYEE_ERROR = '[EMPLOYEE] CHECK ERROR';
 export const INVITE_EMPLOYEE      = '[EMPLOYEE] INVITE';
-export const ADD_EMPLOYEE      = '[EMPLOYEE] ADD';
+export const ADD_EXIST_EMPLOYEE      = '[EMPLOYEE] EXIST ADD';
+export const ADD_NON_EXIST_EMPLOYEE      = '[EMPLOYEE] NON EXIST ADD';
 
 export function getEmployees({workingForId}) {
     const request = Utils.xapi().post('manager/employees', {
@@ -62,6 +64,14 @@ export function checkEmployee(data) {
                 type: CHECK_EMPLOYEE_SUCCESS,
                 employee: response.data.employee
             });
+        }).catch((error) => {     
+            dispatch({
+                type: CHECK_EMPLOYEE
+            });  
+            return dispatch({
+                type: CHECK_EMPLOYEE_ERROR,
+                errorMsg: JSON.parse(error.request.response).errorMessage
+            });
         });
 }
 
@@ -75,7 +85,7 @@ export function inviteEmployee(data) {
         });
 }
 
-export function addEmployee(data) {
+export function addExistEmployee(data) {
     const request = Utils.xapi().post('employee/add', data);
     return (dispatch) =>
         request.then((response) => {  
@@ -83,7 +93,20 @@ export function addEmployee(data) {
                 workingForId: data.workingForId
             })); 
             return dispatch({
-                type: ADD_EMPLOYEE
+                type: ADD_EXIST_EMPLOYEE
+            });
+        });
+}
+
+export function addNonExistEmployee(data, id) {
+    const request = Utils.xapi('multipart/form-data').post('employee/invite', data);
+    return (dispatch) =>
+        request.then((response) => {  
+            dispatch(getEmployees({
+                workingForId: id
+            })); 
+            return dispatch({
+                type: ADD_NON_EXIST_EMPLOYEE
             });
         });
 }

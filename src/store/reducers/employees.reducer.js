@@ -7,7 +7,8 @@ import * as Actions from '../actions';
 
 const initialState = {
     employees: [],
-    employee: null
+    employee: null,
+    errorMsg: "",
 };
 
 const employees = function (state = initialState, action) {
@@ -20,12 +21,10 @@ const employees = function (state = initialState, action) {
                 employee: state.employee
             };
         }
+        case Actions.ADD_EXIST_EMPLOYEE:
+        case Actions.ADD_NON_EXIST_EMPLOYEE:
+        case Actions.INVITE_EMPLOYEE:
         case Actions.UPDATE_EMPLOYEE:
-        {
-            return {
-                employees: state.employees
-            };
-        }
         case Actions.DELETE_SERVICE:
         {
             return {
@@ -45,17 +44,13 @@ const employees = function (state = initialState, action) {
                 employees: state.employees,
                 employee: action.employee
             };
-        }        
-        case Actions.INVITE_EMPLOYEE:
-        {
-            return {
-                employees: state.employees
-            };
         }
-        case Actions.ADD_EMPLOYEE:
+        case Actions.CHECK_EMPLOYEE_ERROR:
         {
             return {
-                employees: state.employees
+                employees: state.employees,
+                employee: null,
+                errorMsg: action.errorMsg
             };
         }
         default:

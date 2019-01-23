@@ -10,7 +10,7 @@ export const root = "https://dev.geselle-one.com";
 // export const root = "https://geselle-one.com";
 export const apiRoot = root + "/api/dev";
 
-export const xapi = () => {
+export const xapi = (optional) => {
     let token = null;
     if (store.getState().user.token) {
         token = store.getState().user.token;
@@ -22,7 +22,8 @@ export const xapi = () => {
 
     if (token) {
         headers = {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
+            'Content-Type': optional
         }
     }
 

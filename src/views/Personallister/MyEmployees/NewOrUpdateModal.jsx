@@ -6,6 +6,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import FormData from "form-data";
+
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
 import {withRouter} from 'react-router-dom';
@@ -39,6 +41,7 @@ import avatar from "assets/img/faces/marc.jpg";
 
 import * as Validator from "./../../../validator";
 import * as Utils from 'utils';
+
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
@@ -254,7 +257,7 @@ class NewOrUpdateModal extends React.Component {
                 return true
             }
         } else {            
-            if(this.state.nameState === "success" && this.state.ssnState === "success" && this.state.phoneState === "success" && this.state.professionState === "success" && this.state.positionState === "success" && this.state.descriptionState === "success" && this.state.consumerOwner && this.state.companyAuthLevel && this.state.salonAuthLevel && this.state.bookingPaymentFor && this.state.productPaymentFor) {
+            if(this.state.file && this.state.nameState === "success" && this.state.ssnState === "success" && this.state.phoneState === "success" && this.state.professionState === "success" && this.state.positionState === "success" && this.state.descriptionState === "success" && this.state.consumerOwner && this.state.companyAuthLevel && this.state.salonAuthLevel && this.state.bookingPaymentFor && this.state.productPaymentFor) {
                 return false
             } else {
                 return true
@@ -265,7 +268,7 @@ class NewOrUpdateModal extends React.Component {
     save() {
         console.log('focus')
         if(this.props.employee) {
-            this.props.addEmployee({
+            this.props.addExistEmployee({
                 workingForId: this.props.workingForId,
                 hairdresserId: this.props.employee.hairdresserId,
                 hairdresserEmail: this.state.email,
@@ -275,6 +278,24 @@ class NewOrUpdateModal extends React.Component {
                 bookingPaymentFor: this.state.bookingPaymentFor,
                 productPaymentFor: this.state.productPaymentFor
             })
+        } else {
+            let payload = new FormData();
+            payload.append('avatar', this.state.file, 'avatar.png');
+            payload.append('workingForId', this.props.workingForId);
+            payload.append('email', this.state.email);
+            payload.append('SSNumber', this.state.ssn);
+            payload.append('mobile', this.state.phone);
+            payload.append('profession', this.state.profession);
+            payload.append('position', this.state.position);
+            payload.append('description', this.state.description);
+            payload.append('consumerOwner', this.state.consumerOwner);
+            payload.append('companyAuthLevel', this.state.companyAuthLevel);
+            payload.append('salonAuthLevel', this.state.salonAuthLevel);
+            payload.append('bookingPaymentFor', this.state.bookingPaymentFor);
+            payload.append('productPaymentFor', this.state.productPaymentFor);
+
+            this.props.addNonExistEmployee(payload, this.props.workingForId);
+
         }
         this.handleClose();
     }
@@ -868,7 +889,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         checkEmployee    : Actions.checkEmployee,
         inviteEmployee   : Actions.inviteEmployee,
-        addEmployee      : Actions.addEmployee,
+        addExistEmployee      : Actions.addExistEmployee,
+        addNonExistEmployee   : Actions.addNonExistEmployee,
         updateEmployee   : Actions.updateEmployee,
     }, dispatch);
 }
