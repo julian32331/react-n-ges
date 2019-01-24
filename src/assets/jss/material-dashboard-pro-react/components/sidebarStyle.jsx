@@ -162,7 +162,7 @@ const sidebarStyle = theme => ({
     fontSize:"24px",
   },
   logoSpan: {
-    color: "green"
+    color: infoColor
   },
   logoNormalRTL: {
     textAlign: "right"

@@ -23,8 +23,6 @@ import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sid
 
 import * as Utils from 'utils';
 
-import avatar from "assets/img/faces/avatar.jpg";
-
 var ps;
 
 // We've created this component so we can have a ref to the wrapper of the links that appears in our sidebar.
