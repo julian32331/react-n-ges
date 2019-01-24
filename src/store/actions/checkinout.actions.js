@@ -6,6 +6,7 @@ import * as Utils from 'utils';
 
 export const GET_CHECKLIST = '[CHECKLIST] GET';
 export const ADD_CHECKLIST = '[CHECKLIST] ADD';
+export const ADD_CHECKLIST_ERROR = '[CHECKLIST] ADD ERROR';
 export const UPDATE_CHECKLIST = '[CHECKLIST] UPDATE';
 
 export function getCheckList(data) {
@@ -29,7 +30,15 @@ export function checkIn(data) {
             return dispatch({
                 type: ADD_CHECKLIST
             });
-        });
+        }).catch((error) => {
+            dispatch({
+                type: ADD_CHECKLIST
+            })
+            return dispatch({
+                type: ADD_CHECKLIST_ERROR,
+                errorMsg: JSON.parse(error.request.response).errorMessage
+            });
+        });;
 }
 
 export function checkOut(data) {

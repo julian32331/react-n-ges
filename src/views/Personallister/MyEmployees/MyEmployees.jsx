@@ -33,7 +33,8 @@ import Table from "components/Table/Table.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 
 import myEmployeesStyle from "assets/jss/material-dashboard-pro-react/views/myEmployees/myEmployeesStyle.jsx";
-import NewOrUpdateModal from "./NewOrUpdateModal";
+import NewModal from "./NewModal";
+import UpdateModal from "./UpdateModal";
 import DeleteModal from "./DeleteModal";
 import DefaultAvatar from "assets/img/default-avatar.png";
 import * as Utils from 'utils';
@@ -45,7 +46,8 @@ class MyEmployees extends React.Component {
     this.state = {
       search: "",
       deleteModal: false,
-      newOrUpdateModal: false,
+      newModal: false,
+      updateModal: false,
       modalTitle: '',
       modalData: null,
       alert: false,
@@ -113,16 +115,30 @@ class MyEmployees extends React.Component {
     })
   }
 
-  // Open and close NewOrUpdate modal
-  onCloseNewOrUpdateModal() {
+  // Open and close New modal
+  onCloseNewModal() {
     this.setState({
-      newOrUpdateModal: false
+      newModal: false
     })
   }
-  onOpenNewOrUpdateModal(title, data=null) {
+  onOpenNewModal(title, data=null) {
+    this.setState({
+      newModal: true,
+      modalTitle: title,
+      modalData: data
+    })
+  }
+  
+  // Open and close Update modal
+  onCloseUpdateModal() {
+    this.setState({
+      updateModal: false
+    })
+  }
+  onOpenUpdateModal(title, data=null) {
     console.log('data: ', data);
     this.setState({
-      newOrUpdateModal: true,
+      updateModal: true,
       modalTitle: title,
       modalData: data
     })
@@ -134,7 +150,7 @@ class MyEmployees extends React.Component {
     const buttons = data => {
       return (
           <div>
-              <Button color="info" className={classes.actionButton} onClick={() => this.onOpenNewOrUpdateModal("Update Employee", data)}>
+              <Button color="info" className={classes.actionButton} onClick={() => this.onOpenUpdateModal("Update Employee", data)}>
                   <Edit className={classes.icon} />
               </Button>                
               <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenDeleteModal(data)}>
@@ -186,7 +202,7 @@ class MyEmployees extends React.Component {
                     <Button 
                         color="info" 
                         size="sm"
-                        onClick={() => this.onOpenNewOrUpdateModal('New Employee')}
+                        onClick={() => this.onOpenNewModal('New Employee')}
                     >                            
                         <Add /> Add Employee
                     </Button>
@@ -254,9 +270,16 @@ class MyEmployees extends React.Component {
             id={this.state.modalData? this.state.modalData.employeeId : null}
           />
            
-          <NewOrUpdateModal 
-            onOpen={this.state.newOrUpdateModal}
-            onClose={this.onCloseNewOrUpdateModal.bind(this)}
+          <NewModal 
+            onOpen={this.state.newModal}
+            onClose={this.onCloseNewModal.bind(this)}
+            modalTitle={this.state.modalTitle}
+            data={this.state.modalData}
+          />
+           
+          <UpdateModal 
+            onOpen={this.state.updateModal}
+            onClose={this.onCloseUpdateModal.bind(this)}
             modalTitle={this.state.modalTitle}
             data={this.state.modalData}
           />

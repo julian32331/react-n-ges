@@ -1,5 +1,5 @@
 /**
- * Descirption: NewOrUpdate modal for saloon service
+ * Descirption: NewOrUpdate modal for my employee
  * Date: 12/23/2018
  */
 
@@ -47,7 +47,7 @@ function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
 
-class NewOrUpdateModal extends React.Component {
+class NewModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -231,7 +231,7 @@ class NewOrUpdateModal extends React.Component {
     }
     
     handleImageChange(e) {
-        console.log('e: ', e);
+        console.log('e: ', e.target.files[0].size);
         e.preventDefault();
         let reader = new FileReader();
         let file = e.target.files[0];
@@ -283,6 +283,7 @@ class NewOrUpdateModal extends React.Component {
             payload.append('avatar', this.state.file, 'avatar.png');
             payload.append('workingForId', this.props.workingForId);
             payload.append('email', this.state.email);
+            payload.append('name', this.state.name);
             payload.append('SSNumber', this.state.ssn);
             payload.append('mobile', this.state.phone);
             payload.append('profession', this.state.profession);
@@ -874,7 +875,7 @@ class NewOrUpdateModal extends React.Component {
     }
 }
 
-NewOrUpdateModal.propTypes = {
+NewModal.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -895,4 +896,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(NewOrUpdateModal)));
+export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(NewModal)));

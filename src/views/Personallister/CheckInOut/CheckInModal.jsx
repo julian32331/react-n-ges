@@ -59,10 +59,10 @@ class CheckInModal extends React.Component {
             workingForId: this.props.workingForId,
             employeeId: this.state.employeeSelect
         })
-        this.props.onClose();
         this.setState({
             employeeSelect: ""
         })
+        this.props.onClose();
     }
 
     render() {
@@ -172,7 +172,8 @@ CheckInModal.propTypes = {
 function mapStateToProps(state) {
   return {
     workingForId: state.user.workingForId,
-    employees: state.employees.employees
+    employees: state.employees.employees,
+    errorMsg    : state.checkInOut.errorMsg
   };
 }
 

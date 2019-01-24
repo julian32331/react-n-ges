@@ -10,8 +10,12 @@ export const UPDATE_USER_WORKINGFORID = '[USER] UPDATE WORKINGFORID';
 export function setUserData(user) {    
     let token = user.token;
     let workingFor = JSON.stringify(user.workingFor);
+    let name = user.employeeName;
+    let avatar = user.avatar;
     localStorage.setItem('token', token);
     localStorage.setItem('workingFor', workingFor);
+    localStorage.setItem('username', name);
+    localStorage.setItem('avatar', avatar);
     
     return (dispatch) => {
         dispatch({

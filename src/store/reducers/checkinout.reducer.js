@@ -6,7 +6,8 @@
 import * as Actions from '../actions';
 
 const initialState = {
-    list: []
+    list: [],
+    errorMsg: "",
 };
 
 const checkInOut = function (state = initialState, action) {
@@ -15,19 +16,23 @@ const checkInOut = function (state = initialState, action) {
         case Actions.GET_CHECKLIST:
         {
             return {
-                list: action.list
-            };
-        }        
-        case Actions.ADD_CHECKLIST:
-        {
-            return {
-                list: state.list
+                list: action.list,
+                errorMsg: state.errorMsg
             };
         }        
         case Actions.UPDATE_CHECKLIST:
+        case Actions.ADD_CHECKLIST:
         {
             return {
-                list: state.list
+                list: state.list,
+                errorMsg: ""
+            };
+        }  
+        case Actions.ADD_CHECKLIST_ERROR:
+        {
+            return {
+                list: state.list,
+                errorMsg: action.errorMsg
             };
         }
         default:

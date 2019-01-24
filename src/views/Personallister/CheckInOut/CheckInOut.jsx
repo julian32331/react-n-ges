@@ -23,6 +23,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import Add from "@material-ui/icons/Add";
 import Remove from "@material-ui/icons/Remove";
 import ImportExport from "@material-ui/icons/ImportExport";
+import AddAlert from "@material-ui/icons/AddAlert";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -33,6 +34,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Table from "components/Table/Table.jsx";
+import Snackbar from "components/Snackbar/Snackbar.jsx";
 
 import {CSVLink, CSVDownload} from 'react-csv';
 
@@ -50,7 +52,9 @@ class CheckInOut extends React.Component {
       searchTo: "",
       checkInModal: false,
       checkOutModal: false,
-      modalData: null
+      modalData: null,
+      alert: false,
+      message: ""
     }
     this.list = [];
     this.getCheckList = this.getCheckList.bind(this);
@@ -78,8 +82,22 @@ class CheckInOut extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.list)
+    if(nextProps.list) 
       this.list = nextProps.list;
+
+    if(nextProps.errorMsg) {
+      if (!this.state.alert) {
+        this.setState({
+          alert: true,
+          message: nextProps.errorMsg
+        });
+        setTimeout(() => {
+          this.setState({
+            alert: false
+          })
+        }, 3000);
+      }
+    }
   }
 
   searchHandler(name, event) {
@@ -316,6 +334,16 @@ class CheckInOut extends React.Component {
             data={this.state.modalData? this.state.modalData.Employee.employeeId : null} 
           />
 
+          
+          <Snackbar
+            place="tc"
+            color="info"
+            icon={AddAlert}
+            message={this.state.message}
+            open={this.state.alert}
+            closeNotification={() => this.setState({ alert: false })}
+            close
+          />
         </CardBody>
       </Card>
     );
@@ -329,7 +357,8 @@ CheckInOut.propTypes = {
 function mapStateToProps(state) {
   return {
       workingForId: state.user.workingForId,
-      list        : state.checkInOut.list
+      list        : state.checkInOut.list,
+      errorMsg    : state.checkInOut.errorMsg
   };
 }
 

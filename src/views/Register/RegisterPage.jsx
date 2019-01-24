@@ -140,13 +140,13 @@ class RegisterPage extends React.Component {
             phone: event.target.value
           })
         }
-        if (Validator.verifyPhone(event.target.value)) {
-          this.setState({ [stateName + "State"]: "success" });
-        } else if(Validator.verifyPhone(event.target.value) === "") {
-          this.setState({ [stateName + "State"]: "" });
-        } else {
-          this.setState({ [stateName + "State"]: "error" });
-        }
+        // if (Validator.verifyPhone(event.target.value)) {
+        //   this.setState({ [stateName + "State"]: "success" });
+        // } else if(Validator.verifyPhone(event.target.value) === "") {
+        //   this.setState({ [stateName + "State"]: "" });
+        // } else {
+        //   this.setState({ [stateName + "State"]: "error" });
+        // }
         break;
       case "email":
         this.setState({
@@ -191,7 +191,8 @@ class RegisterPage extends React.Component {
   }
 
   canNext() {
-    if(this.state.orgNoState === "success" && this.state.phoneState === "success" && this.state.emailState === "success") {
+    // if(this.state.orgNoState === "success" && this.state.phoneState === "success" && this.state.emailState === "success") {
+    if(this.state.orgNoState === "success" && this.state.emailState === "success") {
       return false
     } else {
       return true
@@ -211,7 +212,8 @@ class RegisterPage extends React.Component {
   }
 
   canRegister() {
-    if(this.state.orgNoState === "success" && this.state.phoneState === "success" && this.state.emailState === "success" && this.state.directorState === "success") {
+    // if(this.state.orgNoState === "success" && this.state.phoneState === "success" && this.state.emailState === "success" && this.state.directorState === "success") {
+    if(this.state.orgNoState === "success" && this.state.emailState === "success" && this.state.directorState === "success") {
       return false
     } else {
       return true

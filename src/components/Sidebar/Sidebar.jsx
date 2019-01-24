@@ -21,6 +21,8 @@ import HeaderLinks from "components/Header/HeaderLinks.jsx";
 
 import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.jsx";
 
+import * as Utils from 'utils';
+
 import avatar from "assets/img/faces/avatar.jpg";
 
 var ps;
@@ -136,7 +138,7 @@ class Sidebar extends React.Component {
     var user = (
       <div className={userWrapperClass}>
         <div className={photo}>
-          <img src={avatar} className={classes.avatarImg} alt="..." />
+          <img src={Utils.root + localStorage.avatar} className={classes.avatarImg} alt="..." />
         </div>
         <List className={classes.list}>
           <ListItem className={classes.item + " " + classes.userItem}>
@@ -147,7 +149,7 @@ class Sidebar extends React.Component {
             >
               <ListItemText
                 // primary={rtlActive ? "تانيا أندرو" : "Tania Andrew"}
-                primary={"Tania Andrew"}
+                primary={localStorage.username}
                 secondary={
                   <b
                     className={
