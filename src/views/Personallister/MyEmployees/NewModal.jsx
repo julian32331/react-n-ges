@@ -42,7 +42,6 @@ import avatar from "assets/img/faces/marc.jpg";
 import * as Validator from "./../../../validator";
 import * as Utils from 'utils';
 
-
 function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
@@ -61,7 +60,8 @@ class NewModal extends React.Component {
             productPaymentFor: "",
             
             file: null,
-            imagePreviewUrl: avatar,
+            withAvatar: false,
+            imagePreviewUrl: Utils.defaultAvatar,
             firstStep: true,
             secondStep: false,
             thirdStep: false,
@@ -123,7 +123,8 @@ class NewModal extends React.Component {
             productPaymentFor: "",
             
             file: null,
-            imagePreviewUrl: avatar,
+            withAvatar: false,
+            imagePreviewUrl: Utils.defaultAvatar,
             firstStep: true,
             secondStep: false,
             thirdStep: false,
@@ -222,7 +223,7 @@ class NewModal extends React.Component {
             this.setState({
                 secondStep: false,
                 thirdStep: true,
-                imagePreviewUrl: avatar,
+                imagePreviewUrl: Utils.defaultAvatar,
                 consumerOwner: "SALON",
                 bookingPaymentFor: "COMPANY",
                 productPaymentFor: "COMPANY"
@@ -231,13 +232,13 @@ class NewModal extends React.Component {
     }
     
     handleImageChange(e) {
-        console.log('e: ', e.target.files[0].size);
         e.preventDefault();
         let reader = new FileReader();
         let file = e.target.files[0];
         reader.onloadend = () => {
           this.setState({
             file: file,
+            withAvatar: true,
             imagePreviewUrl: reader.result
           });
         };
@@ -257,7 +258,7 @@ class NewModal extends React.Component {
                 return true
             }
         } else {            
-            if(this.state.file && this.state.nameState === "success" && this.state.ssnState === "success" && this.state.phoneState === "success" && this.state.professionState === "success" && this.state.positionState === "success" && this.state.descriptionState === "success" && this.state.consumerOwner && this.state.companyAuthLevel && this.state.salonAuthLevel && this.state.bookingPaymentFor && this.state.productPaymentFor) {
+            if(this.state.nameState === "success" && this.state.ssnState === "success" && this.state.phoneState === "success" && this.state.professionState === "success" && this.state.positionState === "success" && this.state.descriptionState === "success" && this.state.consumerOwner && this.state.companyAuthLevel && this.state.salonAuthLevel && this.state.bookingPaymentFor && this.state.productPaymentFor) {
                 return false
             } else {
                 return true
@@ -281,6 +282,7 @@ class NewModal extends React.Component {
         } else {
             let payload = new FormData();
             payload.append('avatar', this.state.file, 'avatar.png');
+            payload.append('withAvatar', this.state.withAvatar);
             payload.append('workingForId', this.props.workingForId);
             payload.append('email', this.state.email);
             payload.append('name', this.state.name);

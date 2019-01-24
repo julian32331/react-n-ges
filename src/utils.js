@@ -11,6 +11,8 @@ export const apiRoot = root + "/api/dev";
 // export const root = "https://geselle-one.com";
 // export const apiRoot = root + "/api/v1";
 
+export const defaultAvatar = root + '/employees/avatar/default-male.png';
+
 export const xapi = (optional) => {
     let token = null;
     if (store.getState().user.token) {
