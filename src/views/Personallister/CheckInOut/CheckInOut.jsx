@@ -36,7 +36,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Table from "components/Table/Table.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 
-import {CSVLink, CSVDownload} from 'react-csv';
+import {CSVLink} from 'react-csv';
 
 import checkInOutStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInOutStyle.jsx";
 import CheckInModal from "./CheckInModal";
@@ -238,7 +238,7 @@ class CheckInOut extends React.Component {
           <GridContainer>
             <GridItem xs={3} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
-                Search
+                Search :
               </FormLabel>
             </GridItem>
             <GridItem xs={9} sm={3} md={3} lg={2}>
@@ -255,12 +255,12 @@ class CheckInOut extends React.Component {
                 }}
               />
             </GridItem>
-            <GridItem>
+            <GridItem xs={3} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
-                From
+                From :
               </FormLabel>
             </GridItem>
-            <GridItem md={1}>
+            <GridItem xs={9} sm={2}>
               <FormControl fullWidth className={classes.pt_20}>
                 <Datetime
                   timeFormat={false}
@@ -269,12 +269,12 @@ class CheckInOut extends React.Component {
                 />
               </FormControl>
             </GridItem>
-            <GridItem>
+            <GridItem xs={3} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
-                To
+                To :
               </FormLabel>
             </GridItem>
-            <GridItem md={1}>
+            <GridItem xs={9} sm={2}>
               <FormControl fullWidth className={classes.pt_20}>
                 <Datetime
                   timeFormat={false}

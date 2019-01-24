@@ -62,7 +62,7 @@ const appStyle = theme => ({
     width: '64px',
     // height: '64px',
     // padding: '16px',
-    background: 'rgba(0, 0, 0, 0.3)',
+    background: 'rgba(0, 0, 0, 0.15)',
     zIndex: '1031',
     borderRadius: '8px',
     textAlign: 'center',

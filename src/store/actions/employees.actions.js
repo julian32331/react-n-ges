@@ -27,12 +27,12 @@ export function getEmployees({workingForId}) {
         });
 }
 
-export function updateEmployee(data) {
-    const request = Utils.xapi().post('manager/employee/update', data);
+export function updateEmployee(data, id) {
+    const request = Utils.xapi('multipart/form-data').post('manager/employee/update', data);
     return (dispatch) =>
         request.then((response) => {
             dispatch(getEmployees({
-                workingForId: data.workingForId
+                workingForId: id
             }));  
             return dispatch({
                 type: UPDATE_EMPLOYEE,

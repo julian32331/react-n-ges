@@ -64,12 +64,30 @@ class NewModal extends React.Component {
             description: "",
             descriptionState: "",            
             file: null,
-            imagePreviewUrl: avatar
+            isChangedAvatar: false,
+            imagePreviewUrl: ""
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        
+        if(nextProps.data) {
+            console.log('data: ', nextProps.data);
+            this.setState({
+                name: nextProps.data.name,
+                nameState: "success",
+                email: nextProps.data.email,
+                emailState: "success",
+                phone: nextProps.data.EmployeeInformation.mobile,
+                phoneState: "success",
+                profession: nextProps.data.EmployeeInformation.profession,
+                professionState: "success",
+                position: nextProps.data.EmployeeInformation.position,
+                positionState: "success",
+                description: nextProps.data.EmployeeInformation.description,
+                descriptionState: "success",       
+                imagePreviewUrl: Utils.root + nextProps.data.EmployeeInformation.picturePath
+            })
+        }        
     }
 
     initState() {
@@ -87,7 +105,8 @@ class NewModal extends React.Component {
             description: "",
             descriptionState: "",            
             file: null,
-            imagePreviewUrl: avatar
+            isChangedAvatar: false,
+            imagePreviewUrl: ""
         })
     }
 
@@ -120,13 +139,13 @@ class NewModal extends React.Component {
     }
     
     handleImageChange(e) {
-        console.log('e: ', e.target.files[0].size);
         e.preventDefault();
         let reader = new FileReader();
         let file = e.target.files[0];
         reader.onloadend = () => {
           this.setState({
             file: file,
+            isChangedAvatar: true,
             imagePreviewUrl: reader.result
           });
         };
@@ -139,7 +158,7 @@ class NewModal extends React.Component {
     }
 
     canSave() {         
-        if(this.state.file && this.state.nameState === "success" && this.state.ssnState === "success" && this.state.phoneState === "success" && this.state.professionState === "success" && this.state.positionState === "success" && this.state.descriptionState === "success" && this.state.consumerOwner && this.state.companyAuthLevel && this.state.salonAuthLevel && this.state.bookingPaymentFor && this.state.productPaymentFor) {
+        if(this.state.nameState === "success" && this.state.emailState === "success" && this.state.phoneState === "success" && this.state.professionState === "success" && this.state.positionState === "success" && this.state.descriptionState === "success") {
             return false
         } else {
             return true
@@ -147,19 +166,20 @@ class NewModal extends React.Component {
     }
 
     save() {
-        console.log('focus')
-        if(this.props.employee) {
-            this.props.addExistEmployee({
-                workingForId: this.props.workingForId,
-                hairdresserId: this.props.employee.hairdresserId,
-                hairdresserEmail: this.state.email,
-                consumerOwner: this.state.consumerOwner,
-                companyAuthLevel: this.state.companyAuthLevel,
-                salonAuthLevel: this.state.salonAuthLevel,
-                bookingPaymentFor: this.state.bookingPaymentFor,
-                productPaymentFor: this.state.productPaymentFor
-            })
-        }
+        let payload = new FormData();
+        payload.append('workingForId', this.props.workingForId);
+        payload.append('avatar', this.state.file, 'avatar.png');
+        payload.append('hasAvatarChanged', this.state.isChangedAvatar)
+        payload.append('email', this.state.email);
+        payload.append('name', this.state.name);
+        payload.append('mobile', this.state.phone);
+        payload.append('profession', this.state.profession);
+        payload.append('position', this.state.position);
+        payload.append('description', this.state.description);
+        payload.append('employeeId', this.props.data.EmployeeInformation.employee_id);
+        payload.append('employeeInformationId', this.props.data.EmployeeInformation.id);
+
+        this.props.updateEmployee(payload, this.props.workingForId)
         this.handleClose();
     }
 
@@ -194,12 +214,9 @@ class NewModal extends React.Component {
                         <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
                         <a onClick={() => this.handleClick()}>
                             <img src={this.state.imagePreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%'}} alt="..." />
-                        </a>     
-                        {
-                            console.log('test: ', this.state.nameState)
-                        }                         
+                        </a>                           
                         <CustomInput
-                            success={this.props.employee !== null || this.state.nameState === "success"}
+                            success={this.state.nameState === "success"}
                             error={this.state.nameState === "error"}
                             labelText="Name *"
                             id="name"
@@ -207,27 +224,29 @@ class NewModal extends React.Component {
                                 fullWidth: true
                             }}
                             inputProps={{
-                                value: this.props.employee? this.props.employee.name : this.state.name,
-                                disabled: this.props.employee? true : false,
+                                value: this.state.name,
                                 type: "text",
                                 onChange: event =>
                                     this.change(event, "name", "name", 1),
                             }}
                         />
                         <CustomInput
-                            success={this.props.employee? true : false}
+                            success={this.state.emailState === "success"}
+                            error={this.state.emailState === "error"}
                             labelText="Email *"
                             id="email"
                             formControlProps={{
                                 fullWidth: true
                             }}
                             inputProps={{
-                                value: this.state.email,
-                                disabled: true
+                                value: this.state.email, 
+                                type: "email",                                              
+                                onChange: event =>
+                                    this.change(event, "email", "email"),
                             }}
                         />
                         <CustomInput
-                            success={this.props.employee !== null || this.state.phoneState === "success"}
+                            success={this.state.phoneState === "success"}
                             error={this.state.phoneState === "error"}
                             labelText="Phone *"
                             id="phone"
@@ -235,8 +254,7 @@ class NewModal extends React.Component {
                                 fullWidth: true
                             }}
                             inputProps={{
-                                value: this.props.employee? this.props.employee.EmployeeInformation.mobile : this.state.phone,
-                                disabled: this.props.employee? true : false,
+                                value: this.state.phone,
                                 type: "number",                                                
                                 onChange: event =>
                                     this.change(event, "phone", "phone", 1),
@@ -245,7 +263,7 @@ class NewModal extends React.Component {
                         <GridContainer>
                             <GridItem xs={12} sm={6}>
                                 <CustomInput
-                                    success={this.props.employee !== null || this.state.professionState === "success"}
+                                    success={this.state.professionState === "success"}
                                     error={this.state.professionState === "error"}
                                     labelText="Profession *"
                                     id="profession"
@@ -253,8 +271,7 @@ class NewModal extends React.Component {
                                         fullWidth: true
                                     }}
                                     inputProps={{
-                                        value: this.props.employee? this.props.employee.EmployeeInformation.profession : this.state.profession,
-                                        disabled: this.props.employee? true : false,
+                                        value: this.state.profession,
                                         type: "text",                                                
                                         onChange: event =>
                                             this.change(event, "profession", "profession", 1),
@@ -263,7 +280,7 @@ class NewModal extends React.Component {
                             </GridItem>
                             <GridItem xs={12} sm={6}>
                                 <CustomInput
-                                    success={this.props.employee !== null || this.state.positionState === "success"}
+                                    success={this.state.positionState === "success"}
                                     error={this.state.positionState === "error"}
                                     labelText="Position *"
                                     id="position"
@@ -271,8 +288,7 @@ class NewModal extends React.Component {
                                         fullWidth: true
                                     }}
                                     inputProps={{
-                                        value: this.props.employee? this.props.employee.EmployeeInformation.position : this.state.position,
-                                        disabled: this.props.employee? true : false,
+                                        value: this.state.position,
                                         type: "text",                                                
                                         onChange: event =>
                                             this.change(event, "position", "position", 1),
@@ -281,7 +297,7 @@ class NewModal extends React.Component {
                             </GridItem>
                         </GridContainer> 
                         <CustomInput
-                            success={this.props.employee !== null || this.state.descriptionState === "success"}
+                            success={this.state.descriptionState === "success"}
                             error={this.state.descriptionState === "error"}
                             labelText="Description *"
                             id="description"
@@ -291,8 +307,7 @@ class NewModal extends React.Component {
                             inputProps={{
                                 multiline: true,
                                 rows: 3,
-                                value: this.props.employee? this.props.employee.EmployeeInformation.description : this.state.description,
-                                disabled: this.props.employee? true : false,
+                                value: this.state.description,
                                 type: "text",                                                
                                 onChange: event =>
                                     this.change(event, "description", "description", 1),
@@ -329,16 +344,11 @@ NewModal.propTypes = {
 function mapStateToProps(state) {
     return {
         workingForId    : state.user.workingForId,
-        employee        : state.employees.employee
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        checkEmployee    : Actions.checkEmployee,
-        inviteEmployee   : Actions.inviteEmployee,
-        addExistEmployee      : Actions.addExistEmployee,
-        addNonExistEmployee   : Actions.addNonExistEmployee,
         updateEmployee   : Actions.updateEmployee,
     }, dispatch);
 }
