@@ -32,7 +32,7 @@ const customSelectStyle = {
         borderBottomColor: "#D2D2D2 !important"
       },
       "&:after": {
-        borderBottomColor: primaryColor + "!important"
+        borderBottomColor: infoColor + "!important"
       }
     }
   },
