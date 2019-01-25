@@ -127,7 +127,7 @@ class CheckInOut extends React.Component {
     let temp = [];
 
     temp = search? this.props.list.filter( item => {
-      return item.Employee.name.toLowerCase().indexOf(search) !== -1
+      return item.name.toLowerCase().indexOf(search) !== -1
     }) : this.props.list;
 
     temp = from? temp.filter( item => {
@@ -184,8 +184,8 @@ class CheckInOut extends React.Component {
     let list = [];
     this.list.map(item => {
       let temp = [];
-      temp.push(item.Employee.name);
-      temp.push(item.Employee.SSNumber);
+      temp.push(item.name);
+      temp.push(item.ss_number);
       temp.push(moment(item.checkIn).format("MM/DD/YYYY, hh:mm"));
       temp.push(item.checkOut? moment(item.checkOut).format("MM/DD/YYYY, hh:mm") : null);
       item.checkOut? temp.push("") : temp.push(checkOutButton(item))
@@ -198,8 +198,8 @@ class CheckInOut extends React.Component {
     ];
     this.list.map(item => {
       let temp = [];
-      temp.push(item.Employee.name);
-      temp.push(item.Employee.employeeId);
+      temp.push(item.name);
+      temp.push(item.employeeId);
       temp.push(moment(item.checkIn).format("MM/DD/YYYY, hh:mm"));
       temp.push(item.checkOut? moment(item.checkOut).format("MM/DD/YYYY, hh:mm") : null);
 
@@ -333,7 +333,7 @@ class CheckInOut extends React.Component {
           <CheckOutModal 
             onOpen={this.state.checkOutModal}
             onClose={this.onCloseCheckOutModal.bind(this)}
-            data={this.state.modalData? this.state.modalData.Employee.employeeId : null} 
+            data={this.state.modalData? this.state.modalData.employeeId : null} 
           />
 
           

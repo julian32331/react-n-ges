@@ -94,20 +94,20 @@ class RegisterPage extends React.Component {
         isSecond: true
       })
     }
-    if(nextProps.status) {
-      console.log('focus')
-      if (!this.state.alert) {
-        this.setState({
-          alert: true,
-          message: "Please check your email. Then you can set your password."
-        });
-        setTimeout(() => {
-          this.setState({
-            alert: false
-          })
-        }, 3000);
-      }
-    }
+    // if(nextProps.status) {
+    //   console.log('focus')
+    //   if (!this.state.alert) {
+    //     this.setState({
+    //       alert: true,
+    //       message: "Please check your email. Then you can set your password."
+    //     });
+    //     setTimeout(() => {
+    //       this.setState({
+    //         alert: false
+    //       })
+    //     }, 3000);
+    //   }
+    // }
   }
 
   change(event, stateName, type) {
@@ -266,288 +266,301 @@ class RegisterPage extends React.Component {
                 <img src={logo} height={54} alt="logo" />
               </CardHeader>
               <CardBody className={classes.pb_0}>
-                <form className={classes.form}>
-                  <CustomInput
-                    success={this.state.orgNoState === "success"}
-                    error={this.state.orgNoState === "error"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      startAdornment: (
-                        <InputAdornment
-                          position="start"
-                          className={classes.inputAdornment}
-                        >                          
-                          <PictureInPicture className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                      endAdornment:
-                        this.state.orgNoState === "error" ? (
-                          <InputAdornment position="end">
-                            <Warning className={classes.danger} />
-                          </InputAdornment>
-                        ) : (
-                          undefined
-                      ),
-                      type: "text",
-                      placeholder: "Org Number *",
-                      onChange: event =>
-                        this.change(event, "orgNo", "orgNo"),
-                      onKeyDown: this.onKeyDown,
-                      value: this.state.orgNo,
-                      disabled: this.state.loading || this.state.isSecond
-                    }}
-                  />
-                  <CustomInput
-                    success={this.state.phoneState === "success"}
-                    error={this.state.phoneState === "error"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      startAdornment: (
-                        <InputAdornment
-                          position="start"
-                          className={classes.inputAdornment}
-                        >
-                          <Phone className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                      endAdornment:
-                        this.state.phoneState === "error" ? (
-                          <InputAdornment position="end">
-                            <Warning className={classes.danger} />
-                          </InputAdornment>
-                        ) : (
-                          undefined
-                      ),
-                      type: "text",
-                      placeholder: "Phone Number *",
-                      onChange: event =>
-                        this.change(event, "phone", "phone"),
-                      value: this.state.phone,
-                      disabled: this.state.loading || this.state.isSecond
-                    }}
-                  />
-                  <CustomInput
-                    success={this.state.emailState === "success"}
-                    error={this.state.emailState === "error"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      startAdornment: (
-                        <InputAdornment
-                          position="start"
-                          className={classes.inputAdornment}
-                        >
-                          <Email className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                      endAdornment:
-                        this.state.emailState === "error" ? (
-                          <InputAdornment position="end">
-                            <Warning className={classes.danger} />
-                          </InputAdornment>
-                        ) : (
-                          undefined
-                      ),
-                      type: "email",
-                      placeholder: "Email *",
-                      onChange: event =>
-                        this.change(event, "email", "email"),
-                      value: this.state.email,
-                      disabled: this.state.loading || this.state.isSecond
-                    }}
-                  />               
-                  {
-                    this.state.isSecond? (
-                      <div>
-                        <CustomInput
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            startAdornment: (
-                              <InputAdornment
-                                position="start"
-                                className={classes.inputAdornment}
-                              >
-                                <Face className={classes.inputAdornmentIcon} />
-                              </InputAdornment>
-                            ),
-                            type: "text",
-                            placeholder: "Legal Name",
-                            disabled: true,
-                            value: this.props.companyData.legalName
-                          }}
-                        />
-                        <CustomInput
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            startAdornment: (
-                              <InputAdornment
-                                position="start"
-                                className={classes.inputAdornment}
-                              >
-                                <Home className={classes.inputAdornmentIcon} />
-                              </InputAdornment>
-                            ),
-                            type: "text",
-                            placeholder: "Address Co",
-                            disabled: true,
-                            value: this.props.companyData.addressCO
-                          }}
-                        />
-                        <CustomInput
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            startAdornment: (
-                              <InputAdornment
-                                position="start"
-                                className={classes.inputAdornment}
-                              >
-                                <Home className={classes.inputAdornmentIcon} />
-                              </InputAdornment>
-                            ),
-                            type: "text",
-                            placeholder: "Address",
-                            disabled: true,
-                            value: this.props.companyData.address
-                          }}
-                        />
-                        <CustomInput
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            startAdornment: (
-                              <InputAdornment
-                                position="start"
-                                className={classes.inputAdornment}
-                              >
-                                <Book className={classes.inputAdornmentIcon} />
-                              </InputAdornment>
-                            ),
-                            type: "text",
-                            placeholder: "Post",
-                            disabled: true,
-                            value: this.props.companyData.post
-                          }}
-                        />
-                        <CustomInput
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            startAdornment: (
-                              <InputAdornment
-                                position="start"
-                                className={classes.inputAdornment}
-                              >
-                                <LocationCity className={classes.inputAdornmentIcon} />
-                              </InputAdornment>
-                            ),
-                            type: "text",
-                            placeholder: "City",
-                            disabled: true,
-                            value: this.props.companyData.city
-                          }}
-                        />
-                        <CustomInput
-                          formControlProps={{
-                            fullWidth: true
-                          }}
-                          inputProps={{
-                            startAdornment: (
-                              <InputAdornment
-                                position="start"
-                                className={classes.inputAdornment}
-                              >
-                                <Place className={classes.inputAdornmentIcon} />
-                              </InputAdornment>
-                            ),
-                            type: "text",
-                            placeholder: "Country",
-                            disabled: true,
-                            value: this.props.companyData.country
-                          }}
-                        />   
-                        <FormControl
-                            fullWidth
-                          >
-                          <InputLabel
-                            htmlFor="director-select"
-                            className={classes.selectLabel}
-                          >
-                            Choose Director
-                          </InputLabel>
-                          <Select
-                            MenuProps={{
-                              className: classes.selectMenu
-                            }}
-                            classes={{
-                              select: classes.select
-                            }}
-                            value={this.state.director}
-                            onChange={event =>
-                              this.change(event, "director", "director")}
-                            inputProps={{
-                              name: "directorSelect",
-                              id: "director-select",
-                            }}
-                          >
-                            <MenuItem
-                              disabled
-                              classes={{
-                                root: classes.selectMenuItem
-                              }}
-                            >
-                              Choose Director
-                            </MenuItem>
-                            {
-                              this.props.companyData.directors.map((director, index) => {
-                                  return (
-                                      <MenuItem
-                                          classes={{
-                                              root: classes.selectMenuItem,
-                                              selected: classes.selectMenuItemSelected
-                                          }}
-                                          value={director.SOCSECURITYNR}
-                                          key={index}
-                                      >
-                                          {director.NAME}
-                                      </MenuItem>
-                                  )
-                              })
-                            }   
-                          </Select>
-                        </FormControl>                              
-                        <div className={classes.center + " " + classes.pt_15}>  
-                          <Button color="info" className={classes.w_100_p} onClick={() => this.register()} disabled={this.state.directorState !== "success"}>
-                            Sign up
-                          </Button>
-                          <Button color="danger" className={classes.w_100_p} onClick={() => this.cancel()}>
-                            Cancel
-                          </Button>
-                        </div>       
-                      </div>
-                    ) : (                   
+                {/* {
+                  this.props.status? ( */}
+                    <div>
+                      <h3>Klart!</h3>
+                      <div>Nu har du fått ett sms och ett e-post som innehåller vårt medlemsavtal. avtalet signerar du med BankID och så fort det är undertecknat får du ett e-post med din personliga inloggning.</div>                      
+                      <div>Varmt välkommen som medlem i Geselle!</div>                      
                       <div className={classes.center + " " + classes.pt_15}>
-                        <Button color="info" className={classes.w_100_p} onClick={() => this.next()} disabled={this.canNext() || this.state.loading}>
-                          Next
-                        </Button>
-                        <div className={classes.pt_15}>Already have an account?</div>
                         <Link className={classes.link} to="/login">Sign In</Link>
                       </div>
-                    )
-                  }
-                </form>
+                    </div>
+                  {/* ) : (
+                    <form className={classes.form}>
+                      <CustomInput
+                        success={this.state.orgNoState === "success"}
+                        error={this.state.orgNoState === "error"}
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          startAdornment: (
+                            <InputAdornment
+                              position="start"
+                              className={classes.inputAdornment}
+                            >                          
+                              <PictureInPicture className={classes.inputAdornmentIcon} />
+                            </InputAdornment>
+                          ),
+                          endAdornment:
+                            this.state.orgNoState === "error" ? (
+                              <InputAdornment position="end">
+                                <Warning className={classes.danger} />
+                              </InputAdornment>
+                            ) : (
+                              undefined
+                          ),
+                          type: "text",
+                          placeholder: "Org Number *",
+                          onChange: event =>
+                            this.change(event, "orgNo", "orgNo"),
+                          onKeyDown: this.onKeyDown,
+                          value: this.state.orgNo,
+                          disabled: this.state.loading || this.state.isSecond
+                        }}
+                      />
+                      <CustomInput
+                        success={this.state.phoneState === "success"}
+                        error={this.state.phoneState === "error"}
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          startAdornment: (
+                            <InputAdornment
+                              position="start"
+                              className={classes.inputAdornment}
+                            >
+                              <Phone className={classes.inputAdornmentIcon} />
+                            </InputAdornment>
+                          ),
+                          endAdornment:
+                            this.state.phoneState === "error" ? (
+                              <InputAdornment position="end">
+                                <Warning className={classes.danger} />
+                              </InputAdornment>
+                            ) : (
+                              undefined
+                          ),
+                          type: "text",
+                          placeholder: "Phone Number *",
+                          onChange: event =>
+                            this.change(event, "phone", "phone"),
+                          value: this.state.phone,
+                          disabled: this.state.loading || this.state.isSecond
+                        }}
+                      />
+                      <CustomInput
+                        success={this.state.emailState === "success"}
+                        error={this.state.emailState === "error"}
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          startAdornment: (
+                            <InputAdornment
+                              position="start"
+                              className={classes.inputAdornment}
+                            >
+                              <Email className={classes.inputAdornmentIcon} />
+                            </InputAdornment>
+                          ),
+                          endAdornment:
+                            this.state.emailState === "error" ? (
+                              <InputAdornment position="end">
+                                <Warning className={classes.danger} />
+                              </InputAdornment>
+                            ) : (
+                              undefined
+                          ),
+                          type: "email",
+                          placeholder: "Email *",
+                          onChange: event =>
+                            this.change(event, "email", "email"),
+                          value: this.state.email,
+                          disabled: this.state.loading || this.state.isSecond
+                        }}
+                      />               
+                      {
+                        this.state.isSecond? (
+                          <div>
+                            <CustomInput
+                              formControlProps={{
+                                fullWidth: true
+                              }}
+                              inputProps={{
+                                startAdornment: (
+                                  <InputAdornment
+                                    position="start"
+                                    className={classes.inputAdornment}
+                                  >
+                                    <Face className={classes.inputAdornmentIcon} />
+                                  </InputAdornment>
+                                ),
+                                type: "text",
+                                placeholder: "Legal Name",
+                                disabled: true,
+                                value: this.props.companyData.legalName
+                              }}
+                            />
+                            <CustomInput
+                              formControlProps={{
+                                fullWidth: true
+                              }}
+                              inputProps={{
+                                startAdornment: (
+                                  <InputAdornment
+                                    position="start"
+                                    className={classes.inputAdornment}
+                                  >
+                                    <Home className={classes.inputAdornmentIcon} />
+                                  </InputAdornment>
+                                ),
+                                type: "text",
+                                placeholder: "Address Co",
+                                disabled: true,
+                                value: this.props.companyData.addressCO
+                              }}
+                            />
+                            <CustomInput
+                              formControlProps={{
+                                fullWidth: true
+                              }}
+                              inputProps={{
+                                startAdornment: (
+                                  <InputAdornment
+                                    position="start"
+                                    className={classes.inputAdornment}
+                                  >
+                                    <Home className={classes.inputAdornmentIcon} />
+                                  </InputAdornment>
+                                ),
+                                type: "text",
+                                placeholder: "Address",
+                                disabled: true,
+                                value: this.props.companyData.address
+                              }}
+                            />
+                            <CustomInput
+                              formControlProps={{
+                                fullWidth: true
+                              }}
+                              inputProps={{
+                                startAdornment: (
+                                  <InputAdornment
+                                    position="start"
+                                    className={classes.inputAdornment}
+                                  >
+                                    <Book className={classes.inputAdornmentIcon} />
+                                  </InputAdornment>
+                                ),
+                                type: "text",
+                                placeholder: "Post",
+                                disabled: true,
+                                value: this.props.companyData.post
+                              }}
+                            />
+                            <CustomInput
+                              formControlProps={{
+                                fullWidth: true
+                              }}
+                              inputProps={{
+                                startAdornment: (
+                                  <InputAdornment
+                                    position="start"
+                                    className={classes.inputAdornment}
+                                  >
+                                    <LocationCity className={classes.inputAdornmentIcon} />
+                                  </InputAdornment>
+                                ),
+                                type: "text",
+                                placeholder: "City",
+                                disabled: true,
+                                value: this.props.companyData.city
+                              }}
+                            />
+                            <CustomInput
+                              formControlProps={{
+                                fullWidth: true
+                              }}
+                              inputProps={{
+                                startAdornment: (
+                                  <InputAdornment
+                                    position="start"
+                                    className={classes.inputAdornment}
+                                  >
+                                    <Place className={classes.inputAdornmentIcon} />
+                                  </InputAdornment>
+                                ),
+                                type: "text",
+                                placeholder: "Country",
+                                disabled: true,
+                                value: this.props.companyData.country
+                              }}
+                            />   
+                            <FormControl
+                                fullWidth
+                              >
+                              <InputLabel
+                                htmlFor="director-select"
+                                className={classes.selectLabel}
+                              >
+                                Choose Director
+                              </InputLabel>
+                              <Select
+                                MenuProps={{
+                                  className: classes.selectMenu
+                                }}
+                                classes={{
+                                  select: classes.select
+                                }}
+                                value={this.state.director}
+                                onChange={event =>
+                                  this.change(event, "director", "director")}
+                                inputProps={{
+                                  name: "directorSelect",
+                                  id: "director-select",
+                                }}
+                              >
+                                <MenuItem
+                                  disabled
+                                  classes={{
+                                    root: classes.selectMenuItem
+                                  }}
+                                >
+                                  Choose Director
+                                </MenuItem>
+                                {
+                                  this.props.companyData.directors.map((director, index) => {
+                                      return (
+                                          <MenuItem
+                                              classes={{
+                                                  root: classes.selectMenuItem,
+                                                  selected: classes.selectMenuItemSelected
+                                              }}
+                                              value={director.SOCSECURITYNR}
+                                              key={index}
+                                          >
+                                              {director.NAME}
+                                          </MenuItem>
+                                      )
+                                  })
+                                }   
+                              </Select>
+                            </FormControl>                              
+                            <div className={classes.center + " " + classes.pt_15}>  
+                              <Button color="info" className={classes.w_100_p} onClick={() => this.register()} disabled={this.state.directorState !== "success"}>
+                                Sign up
+                              </Button>
+                              <Button color="danger" className={classes.w_100_p} onClick={() => this.cancel()}>
+                                Cancel
+                              </Button>
+                            </div>       
+                          </div>
+                        ) : (                   
+                          <div className={classes.center + " " + classes.pt_15}>
+                            <Button color="info" className={classes.w_100_p} onClick={() => this.next()} disabled={this.canNext() || this.state.loading}>
+                              Next
+                            </Button>
+                            <div className={classes.pt_15}>Already have an account?</div>
+                            <Link className={classes.link} to="/login">Sign In</Link>
+                          </div>
+                        )
+                      }
+                    </form>
+                  )
+                }                 */}
                 {
                   this.state.loading? (
                     <div className={classes.spinner_container}>                    
