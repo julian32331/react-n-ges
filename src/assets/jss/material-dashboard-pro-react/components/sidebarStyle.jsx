@@ -89,8 +89,9 @@ const sidebarStyle = theme => ({
       opacity: ".93"
     }
   },
-  whiteBackground: {
-    color: "#3C4858",
+  whiteBackground: {    
+    // color: "#3C4858",
+    color: "#505a68",
     background: 'transparent',
     [theme.breakpoints.down("sm")]: {
       background: '#fff',
@@ -264,7 +265,8 @@ const sidebarStyle = theme => ({
     ...defaultFont,
     margin: "0",
     lineHeight: "30px",
-    fontSize: "14px",
+    // fontSize: "14px",
+    fontSize: "16px",
     transform: "translate3d(0px, 0, 0)",
     opacity: "1",
     transition: "transform 300ms ease 0s, opacity 300ms ease 0s",
@@ -334,8 +336,9 @@ const sidebarStyle = theme => ({
     position: "relative",
     float: "left",
     display: "inherit",
-    transition: "transform 300ms ease 0s, opacity 300ms ease 0s",
-    fontSize: "14px"
+    transition: "transform 300ms ease 0s, opacity 300ms ease 0s",    
+    // fontSize: "14px",
+    fontSize: "16px"
   },
   collapseItemMiniRTL: {
     float: "right",
@@ -352,7 +355,8 @@ const sidebarStyle = theme => ({
     whiteSpace: "nowrap",
     display: "block",
     transition: "transform 300ms ease 0s, opacity 300ms ease 0s",
-    fontSize: "14px"
+    // fontSize: "14px",
+    fontSize: "16px"
   },
   collapseItemTextRTL: {
     textAlign: "right"
