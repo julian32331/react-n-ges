@@ -9,8 +9,11 @@ import {
 const commonStyle = {
     cardTitle: {
       marginTop: "0",
-      marginBottom: "3px",
-      color: "#3C4858",
+      // marginBottom: "3px",
+      color: "#434343",
+      fontSize: '24px',
+      fontFamily: 'Source Sans Pro',
+      fontWeight: '700',
     },
     cardHeader: {
       zIndex: "3",
