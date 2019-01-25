@@ -124,7 +124,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
   cursor: pointer;
   border-radius: 100%;
   transition: all 0.2s ease-out;
-  border: 1px solid #9c27b0;
+  border: 1px solid #7da8ae;
   background: #FFFFFF;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
 
@@ -142,7 +142,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
   cursor: pointer;
   border-radius: 100%;
   transition: all 0.2s ease-out;
-  border: 1px solid #9c27b0;
+  border: 1px solid #7da8ae;
   background: #FFFFFF;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
 
@@ -322,10 +322,10 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   border: 1px solid #333; }
 
 .noUi-target.slider-primary .noUi-connect, .noUi-target.slider-primary.noUi-connect {
-  background-color: #9c27b0; }
+  background-color: #7da8ae; }
 
 .noUi-target.slider-primary .noUi-handle {
-  border-color: #9c27b0; }
+  border-color: #7da8ae; }
 
 .noUi-target.slider-info .noUi-connect, .noUi-target.slider-info.noUi-connect {
   background-color: #00bcd4; }
@@ -477,7 +477,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     margin-top: 0; }
   .rdt input.form-control {
     border: 0;
-    background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+    background-image: linear-gradient(#7da8ae, #7da8ae), linear-gradient(#D2D2D2, #D2D2D2);
     background-size: 0 2px, 100% 1px;
     background-repeat: no-repeat;
     background-position: center bottom, center calc(100% - 1px);
@@ -497,7 +497,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     color: #555; }
   .rdt input.form-control:focus {
     outline: none;
-    background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+    background-image: linear-gradient(#7da8ae, #7da8ae), linear-gradient(#D2D2D2, #D2D2D2);
     background-size: 100% 2px, 100% 1px;
     box-shadow: none;
     transition-duration: 0.3s; }
@@ -574,7 +574,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   padding: 0px;
   border-radius: 50%; }
   .rdtDay.rdtToday.rdtActive, .rdtDay.rdtActive, .rdtDay.rdtActive:hover {
-    background-color: #9c27b0 !important;
+    background-color: #7da8ae !important;
     color: #FFFFFF;
     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(156, 39, 176, 0.4); }
 
@@ -641,7 +641,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .rdtPicker th.rdtNext,
 .rdtPicker th.rdtPrev,
 .rdtPicker .rdtTimeToggle {
-  color: #9c27b0; }
+  color: #7da8ae; }
 
 .rdtPrev span,
 .rdtNext span {
@@ -717,9 +717,9 @@ td.rdtYear:hover {
     border: 1px solid transparent; }
 
 .rdtCounters .rdtCounter:last-child .rdtCount {
-  color: #9c27b0;
+  color: #7da8ae;
   border-radius: 50%;
-  border: 1px solid #9c27b0; }
+  border: 1px solid #7da8ae; }
 
 .rdtCounterSeparator {
   padding: 7px;
@@ -785,7 +785,7 @@ td.rdtYear:hover {
     .rdtMonths .rdtYear.rdtActive,
     .rdtYears .rdtMonth.rdtActive,
     .rdtYears .rdtYear.rdtActive {
-      background-color: #9c27b0 !important;
+      background-color: #7da8ae !important;
       color: #FFFFFF; }
 
 .sweet-alert:focus {
@@ -793,7 +793,7 @@ td.rdtYear:hover {
 
 .sweet-alert input.form-control {
   border: 0;
-  background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#7da8ae, #7da8ae), linear-gradient(#D2D2D2, #D2D2D2);
   background-size: 0 2px, 100% 1px;
   background-repeat: no-repeat;
   background-position: center bottom, center calc(100% - 1px);
@@ -814,7 +814,7 @@ td.rdtYear:hover {
 
 .sweet-alert input.form-control:focus {
   outline: none;
-  background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#7da8ae, #7da8ae), linear-gradient(#D2D2D2, #D2D2D2);
   background-size: 100% 2px, 100% 1px;
   box-shadow: none;
   transition-duration: 0.3s; }
@@ -998,7 +998,7 @@ button.rbc-input::-moz-focus-inner {
   .open > .rbc-toolbar button.dropdown-toggle,
   .open > .rbc-toolbar button.dropdown-toggle:focus,
   .open > .rbc-toolbar button.dropdown-toggle:hover {
-    background-color: #9c27b0;
+    background-color: #7da8ae;
     color: #FFFFFF; }
   .rbc-toolbar button:focus, .rbc-toolbar button:active, .rbc-toolbar button:hover {
     box-shadow: 0 14px 26px -12px rgba(156, 39, 176, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2); }
@@ -1012,11 +1012,11 @@ button.rbc-input::-moz-focus-inner {
     box-shadow: none; }
   .rbc-toolbar button.btn-simple {
     background-color: transparent;
-    color: #9c27b0;
+    color: #7da8ae;
     box-shadow: none; }
     .rbc-toolbar button.btn-simple:hover, .rbc-toolbar button.btn-simple:focus, .rbc-toolbar button.btn-simple:active {
       background-color: transparent;
-      color: #9c27b0; }
+      color: #7da8ae; }
 
 .rbc-toolbar button:focus {
   outline: none; }
@@ -1956,10 +1956,10 @@ button.rbc-input::-moz-focus-inner {
 
 .ReactTable .rt-thead.-filters select, .ReactTable .-pagination .select-wrap select {
   border: 0;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#9c27b0), to(#9c27b0)), -webkit-gradient(linear, left top, left bottom, from(#D2D2D2), to(#D2D2D2));
-  background-image: -webkit-linear-gradient(#9c27b0, #9c27b0), -webkit-linear-gradient(#D2D2D2, #D2D2D2);
-  background-image: -o-linear-gradient(#9c27b0, #9c27b0), -o-linear-gradient(#D2D2D2, #D2D2D2);
-  background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#7da8ae), to(#7da8ae)), -webkit-gradient(linear, left top, left bottom, from(#D2D2D2), to(#D2D2D2));
+  background-image: -webkit-linear-gradient(#7da8ae, #7da8ae), -webkit-linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: -o-linear-gradient(#7da8ae, #7da8ae), -o-linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#7da8ae, #7da8ae), linear-gradient(#D2D2D2, #D2D2D2);
   background-size: 0 2px, 100% 1px;
   background-repeat: no-repeat;
   background-position: center bottom, center calc(100% - 1px);
@@ -1975,7 +1975,7 @@ button.rbc-input::-moz-focus-inner {
   height: 36px; }
   .ReactTable .rt-thead.-filters select:focus, .ReactTable .-pagination .select-wrap select:focus {
     outline: none;
-    background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+    background-image: linear-gradient(#7da8ae, #7da8ae), linear-gradient(#D2D2D2, #D2D2D2);
     background-size: 100% 2px, 100% 1px;
     box-shadow: none;
     transition-duration: 0.3s; }
@@ -2052,7 +2052,7 @@ button.rbc-input::-moz-focus-inner {
   width: 70px;
   text-align: center;
   border: 0;
-  background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#7da8ae, #7da8ae), linear-gradient(#D2D2D2, #D2D2D2);
   background-size: 0 2px, 100% 1px;
   background-repeat: no-repeat;
   background-position: center bottom, center calc(100% - 1px);
@@ -2071,7 +2071,7 @@ button.rbc-input::-moz-focus-inner {
   color: #555; }
   .ReactTable .rt-thead.-filters input:focus, .ReactTable .-pagination .-pageJump input:focus {
     outline: none;
-    background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
+    background-image: linear-gradient(#7da8ae, #7da8ae), linear-gradient(#D2D2D2, #D2D2D2);
     background-size: 100% 2px, 100% 1px;
     box-shadow: none;
     transition-duration: 0.3s; }
@@ -2207,7 +2207,7 @@ button.rbc-input::-moz-focus-inner {
       background-color: transparent;
       color: #FFFFFF; }
   .react-tagsinput .react-tagsinput-tag.primary {
-    background-color: #9c27b0;
+    background-color: #7da8ae;
     color: #FFFFFF; }
   .react-tagsinput .react-tagsinput-tag.info {
     background-color: #00bcd4;
@@ -2290,7 +2290,7 @@ blockquote p {
   font-style: italic; }
 
 a {
-  color: #9c27b0;
+  color: #7da8ae;
   text-decoration: none; }
 
 a:hover, a:focus {
