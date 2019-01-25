@@ -45,8 +45,6 @@ class ResetPasswordPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {    
-      email: "",
-      emailState: "",
       password: "",
       passwordState: "",
       c_password: "",
@@ -59,7 +57,6 @@ class ResetPasswordPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('next props: ', nextProps)
     this.setState({
       loading: false
     })
@@ -81,18 +78,6 @@ class ResetPasswordPage extends React.Component {
 
   change(event, stateName, type) {
     switch (type) {
-      case "email":
-        this.setState({
-          email: event.target.value
-        })
-        if (Validator.verifyEmail(event.target.value)) {
-          this.setState({ [stateName + "State"]: "success" });
-        } else if(Validator.verifyEmail(event.target.value) === "") {
-          this.setState({ [stateName + "State"]: "" });
-        } else {
-          this.setState({ [stateName + "State"]: "error" });
-        }
-        break;
       case "password":
         this.setState({
           password: event.target.value
@@ -120,7 +105,7 @@ class ResetPasswordPage extends React.Component {
   }
 
   canSubmit() {
-    if(this.state.emailState === "success" && this.state.passwordState === "success" && this.state.c_passwordState === "success") {
+    if(this.state.passwordState === "success" && this.state.c_passwordState === "success") {
       return false
     } else {
       return true
@@ -132,7 +117,6 @@ class ResetPasswordPage extends React.Component {
       loading: true
     });
     this.props.resetPassword({
-      email: this.state.email,
       password: this.state.password,
       token: this.props.match.params.token
     });
@@ -151,36 +135,6 @@ class ResetPasswordPage extends React.Component {
               </CardHeader>
               <CardBody className={classes.pb_0}>
                 <form className={classes.form}>
-                  <CustomInput
-                    success={this.state.emailState === "success"}
-                    error={this.state.emailState === "error"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      startAdornment: (
-                        <InputAdornment
-                          position="start"
-                          className={classes.inputAdornment}
-                        >
-                          <Email className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                      endAdornment:
-                        this.state.emailState === "error" ? (
-                          <InputAdornment position="end">
-                            <Warning className={classes.danger} />
-                          </InputAdornment>
-                        ) : (
-                          undefined
-                      ),
-                      type: "email",
-                      placeholder: "Email*",
-                      onChange: event =>
-                        this.change(event, "email", "email"),
-                      value: this.state.email
-                    }}
-                  />
                   <CustomInput
                     success={this.state.passwordState === "success"}
                     error={this.state.passwordState === "error"}
