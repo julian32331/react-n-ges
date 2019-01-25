@@ -14,8 +14,9 @@ const salongServiceStyle = theme => ({
     marginBottom: '20px',
   },
   bg_title: {
-    background: '#dddddd',
-    color: '#3C4858',
+    background: '#dedede',
+    color: '#505050',
+    fontFamily: 'Roboto',
     borderTopLeftRadius: '5px',
     borderBottomLeftRadius: '5px',
     [theme.breakpoints.down('sm')]: {
@@ -27,28 +28,34 @@ const salongServiceStyle = theme => ({
   title_container: {
     padding: '15px 0',
     [theme.breakpoints.up('lg')]: {
-      padding: '15px 20px'
+      padding: '15px 8px'
     }
   },
   title: {
-    fontSize: '24px', 
-    fontWeight: '400'
+    fontSize: '23px', 
+    fontWeight: '500'
   },
   time: {
-    marginTop: '10px'
-  },
-  title_item: {
-    fontSize: '16px', 
+    marginTop: '10px',
     fontWeight: '400'
   },
+  title_item: {
+    fontFamily: 'Roboto',
+    fontSize: '14px', 
+    fontWeight: '700'
+  },
   price: {
+    fontWeight: '400',
     [theme.breakpoints.down('sm')]: {
       marginTop: '10px'
     }
   },
   bg_content: {
     background: '#eeeeee',
-    fontSize: '16px',
+    fontSize: '14px',
+    fontFamily: 'Roboto',
+    fontWeight: '400',
+    color: '#505050',
     paddingTop: '15px !important',
     paddingBottom: '15px !important'
   },
