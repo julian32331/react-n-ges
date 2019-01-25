@@ -67,11 +67,13 @@ const customInputStyle = {
     }
   },
   input: {
-    color: "#495057",
+    // color: "#495057",
+    color: "#aaaaaa",
     "&,&::placeholder": {
       fontSize: "14px",
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-      fontWeight: "400",
+      // fontWeight: "400",
+      fontWeight: "500",
       lineHeight: "1.42857",
       opacity: "1"
     },
