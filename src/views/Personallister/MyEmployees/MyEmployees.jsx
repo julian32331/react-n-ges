@@ -245,21 +245,21 @@ class MyEmployees extends React.Component {
             ]}
             tableData={employees}
             customCellClasses={[
-              classes.center,
-              classes.center,
-              classes.center,
-              classes.center,
-              classes.center,
-              classes.center,
+              classes.center + " " + classes.td,
+              classes.center + " " + classes.td,
+              classes.center + " " + classes.td,
+              classes.center + " " + classes.td,
+              classes.center + " " + classes.td,
+              classes.center + " " + classes.td,
             ]}
             customClassesForCells={[0, 1, 2, 3, 4, 5]}
             customHeadCellClasses={[
-              classes.center,
-              classes.center,
-              classes.center,
-              classes.center,
-              classes.center,
-              classes.center,
+              classes.center + " " + classes.th,
+              classes.center + " " + classes.th,
+              classes.center + " " + classes.th,
+              classes.center + " " + classes.th,
+              classes.center + " " + classes.th,
+              classes.center + " " + classes.th,
             ]}
             customHeadClassesForCells={[0, 1, 2, 3, 4, 5]}
           />

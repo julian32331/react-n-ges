@@ -376,17 +376,17 @@ class OpeningHours extends React.Component {
                                     ]}
                                     tableData={specialDays}
                                     customCellClasses={[
-                                        classes.center,
-                                        classes.center,
-                                        classes.center,
-                                        classes.center
+                                        classes.center + " " + classes.td,
+                                        classes.center + " " + classes.td,
+                                        classes.center + " " + classes.td,
+                                        classes.center + " " + classes.td
                                     ]}
                                     customClassesForCells={[0, 1, 2, 3]}
                                     customHeadCellClasses={[
-                                        classes.center,
-                                        classes.center,
-                                        classes.center,
-                                        classes.center
+                                        classes.center + " " + classes.th,
+                                        classes.center + " " + classes.th,
+                                        classes.center + " " + classes.th,
+                                        classes.center + " " + classes.th
                                     ]}
                                     customHeadClassesForCells={[0, 1, 2, 3]}
                                 />

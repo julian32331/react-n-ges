@@ -261,8 +261,9 @@ class CheckInOut extends React.Component {
               </FormLabel>
             </GridItem>
             <GridItem xs={9} sm={2}>
-              <FormControl fullWidth className={classes.pt_20}>
+              <FormControl fullWidth className={classes.pt_22}>
                 <Datetime
+                  dateFormat={"YYYY-MM-DD"}
                   timeFormat={false}
                   value={this.state.searchFrom}
                   onChange={event => this.timeHandler("searchFrom", event)}
@@ -275,8 +276,9 @@ class CheckInOut extends React.Component {
               </FormLabel>
             </GridItem>
             <GridItem xs={9} sm={2}>
-              <FormControl fullWidth className={classes.pt_20}>
+              <FormControl fullWidth className={classes.pt_22}>
                 <Datetime
+                  dateFormat={"YYYY-MM-DD"}
                   timeFormat={false}
                   value={this.state.searchTo}
                   onChange={event => this.timeHandler("searchTo", event)}
@@ -297,21 +299,21 @@ class CheckInOut extends React.Component {
               list
             }
             customCellClasses={[
-              classes.center,
-              classes.center,
-              classes.center,
-              classes.center,
-              classes.center,
-              classes.center,
+              classes.center + " " + classes.td,
+              classes.center + " " + classes.td,
+              classes.center + " " + classes.td,
+              classes.center + " " + classes.td,
+              classes.center + " " + classes.td,
+              classes.center + " " + classes.td,
             ]}
             customClassesForCells={[0, 1, 2, 3, 4, 5]}
             customHeadCellClasses={[
-              classes.center,
-              classes.center,
-              classes.center,
-              classes.center,
-              classes.center,
-              classes.center,
+              classes.center + " " + classes.th,
+              classes.center + " " + classes.th,
+              classes.center + " " + classes.th,
+              classes.center + " " + classes.th,
+              classes.center + " " + classes.th,
+              classes.center + " " + classes.th,
             ]}
             customHeadClassesForCells={[0, 1, 2, 3, 4, 5]}
           />

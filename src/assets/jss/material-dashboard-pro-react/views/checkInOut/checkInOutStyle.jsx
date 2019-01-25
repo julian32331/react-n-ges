@@ -20,8 +20,8 @@ const checkInOutStyle = theme => ({
   pt_0: {
     paddingTop: '0',
   },
-  pt_20: {
-    paddingTop: '20px',
+  pt_22: {
+    paddingTop: '22px',
   }
 });
 

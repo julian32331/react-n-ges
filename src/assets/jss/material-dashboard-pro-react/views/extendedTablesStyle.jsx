@@ -82,6 +82,16 @@ const extendedTablesStyle = {
     ...cardTitle,
     marginTop: "15px",
     marginBottom: "0px"
+  },
+  th: {
+    color: '#434343',
+    fontSize: '20px !important'
+  },
+  td: {
+    color: '#505050',
+    fontSize: '14px !important',
+    fontFamily: 'Roboto',
+    fontWeight: '700',
   }
 };
 
