@@ -57,7 +57,8 @@ class CheckInModal extends React.Component {
     checkIn() {
         this.props.checkIn({
             workingForId: this.props.workingForId,
-            employeeId: this.state.employeeSelect
+            employeeId: this.state.employeeSelect,
+            source: "WEB"
         })
         this.setState({
             employeeSelect: ""

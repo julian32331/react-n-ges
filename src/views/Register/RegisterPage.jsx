@@ -59,6 +59,8 @@ class RegisterPage extends React.Component {
       orgNoState: "",
       email: "",
       emailState: "",
+      emailPerson: "",
+      emailPersonState: "",
       phone: "",
       phoneState: "",
       director: "",
@@ -160,6 +162,18 @@ class RegisterPage extends React.Component {
           this.setState({ [stateName + "State"]: "error" });
         }
         break;
+      case "emailPerson":
+        this.setState({
+          emailPerson: event.target.value
+        })
+        if (Validator.verifyEmail(event.target.value)) {
+          this.setState({ [stateName + "State"]: "success" });
+        } else if(Validator.verifyEmail(event.target.value) === "") {
+          this.setState({ [stateName + "State"]: "" });
+        } else {
+          this.setState({ [stateName + "State"]: "error" });
+        }
+        break;
         
       case "director":
         this.setState({
@@ -206,6 +220,7 @@ class RegisterPage extends React.Component {
     this.props.getCompanyData({
       orgNo: this.state.orgNo,
       email: this.state.email,
+      salesPersonEmail: this.state.emailPerson,
       mobile: this.state.phone,
       country: "Sweden"
     })
@@ -229,6 +244,7 @@ class RegisterPage extends React.Component {
       companyData: {
         orgNo: this.state.orgNo.replace("-", ""),
         email: this.state.email,
+        salesPersonEmail: this.state.emailPerson,
         mobile: this.state.phone,
         country: this.props.companyData.country,
         legalName: this.props.companyData.legalName,
@@ -266,8 +282,8 @@ class RegisterPage extends React.Component {
                 <img src={logo} height={54} alt="logo" />
               </CardHeader>
               <CardBody className={classes.pb_0}>
-                {/* {
-                  this.props.status? ( */}
+                {
+                  this.props.status? (
                     <div>
                       <h3>Klart!</h3>
                       <div>Nu har du fått ett sms och ett e-post som innehåller vårt medlemsavtal. avtalet signerar du med BankID och så fort det är undertecknat får du ett e-post med din personliga inloggning.</div>                      
@@ -276,7 +292,7 @@ class RegisterPage extends React.Component {
                         <Link className={classes.link} to="/login">Sign In</Link>
                       </div>
                     </div>
-                  {/* ) : (
+                  ) : (
                     <form className={classes.form}>
                       <CustomInput
                         success={this.state.orgNoState === "success"}
@@ -371,7 +387,41 @@ class RegisterPage extends React.Component {
                           value: this.state.email,
                           disabled: this.state.loading || this.state.isSecond
                         }}
-                      />               
+                      />  
+                      {
+                        !this.state.isSecond? (
+                          <CustomInput
+                            success={this.state.emailPersonState === "success"}
+                            error={this.state.emailPersonState === "error"}
+                            formControlProps={{
+                              fullWidth: true
+                            }}
+                            inputProps={{
+                              startAdornment: (
+                                <InputAdornment
+                                  position="start"
+                                  className={classes.inputAdornment}
+                                >
+                                  <Email className={classes.inputAdornmentIcon} />
+                                </InputAdornment>
+                              ),
+                              endAdornment:
+                                this.state.emailPersonState === "error" ? (
+                                  <InputAdornment position="end">
+                                    <Warning className={classes.danger} />
+                                  </InputAdornment>
+                                ) : (
+                                  undefined
+                              ),
+                              type: "email",
+                              placeholder: "Email for Sales Person",
+                              onChange: event =>
+                                this.change(event, "emailPerson", "emailPerson"),
+                              value: this.state.emailPerson
+                            }}
+                          />             
+                        ) : undefined
+                      }                      
                       {
                         this.state.isSecond? (
                           <div>
@@ -560,7 +610,7 @@ class RegisterPage extends React.Component {
                       }
                     </form>
                   )
-                }                 */}
+                }                
                 {
                   this.state.loading? (
                     <div className={classes.spinner_container}>                    

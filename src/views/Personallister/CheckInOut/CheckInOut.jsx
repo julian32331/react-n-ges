@@ -131,11 +131,11 @@ class CheckInOut extends React.Component {
     }) : this.props.list;
 
     temp = from? temp.filter( item => {
-      return moment(item.check_in).isSameOrAfter(from);      
+      return moment(item.checkIn).isSameOrAfter(from);      
     }) : temp;
 
     temp = to? temp.filter( item => {
-      return item.check_out && moment(item.check_out).isSameOrBefore(to);
+      return item.checkOut && moment(item.checkOut).isSameOrBefore(to);
     }) : temp;
 
     this.list = temp;
@@ -185,10 +185,10 @@ class CheckInOut extends React.Component {
     this.list.map(item => {
       let temp = [];
       temp.push(item.name);
-      temp.push(item.ss_number);
-      temp.push(moment(item.check_in).format("MM/DD/YYYY, hh:mm"));
-      temp.push(item.check_out? moment(item.check_out).format("MM/DD/YYYY, hh:mm") : null);
-      item.check_out? temp.push("") : temp.push(checkOutButton(item))
+      temp.push(item.SSNumber);
+      temp.push(moment(item.checkIn).format("MM/DD/YYYY, hh:mm"));
+      temp.push(item.checkOut? moment(item.checkOut).format("MM/DD/YYYY, hh:mm") : null);
+      item.checkOut? temp.push("") : temp.push(checkOutButton(item))
 
       list.push(temp);
     });
@@ -200,8 +200,8 @@ class CheckInOut extends React.Component {
       let temp = [];
       temp.push(item.name);
       temp.push(item.employeeId);
-      temp.push(moment(item.check_in).format("MM/DD/YYYY, hh:mm"));
-      temp.push(item.check_out? moment(item.check_out).format("MM/DD/YYYY, hh:mm") : null);
+      temp.push(moment(item.checkIn).format("MM/DD/YYYY, hh:mm"));
+      temp.push(item.checkOut? moment(item.checkOut).format("MM/DD/YYYY, hh:mm") : null);
 
       csvData.push(temp);
     });
@@ -333,7 +333,7 @@ class CheckInOut extends React.Component {
           <CheckOutModal 
             onOpen={this.state.checkOutModal}
             onClose={this.onCloseCheckOutModal.bind(this)}
-            data={this.state.modalData? this.state.modalData.id : null} 
+            data={this.state.modalData? this.state.modalData.personnelListId : null} 
           />
 
           
