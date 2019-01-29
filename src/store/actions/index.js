@@ -6,3 +6,4 @@ export * from './service.actions';
 export * from './hours.actions';
 export * from './checkinout.actions';
 export * from './employees.actions';
+export * from './mySalons.actions';

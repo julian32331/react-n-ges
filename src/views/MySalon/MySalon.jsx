@@ -1,5 +1,10 @@
 import React from "react";
 
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -20,8 +25,41 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Table from "components/Table/Table.jsx";
 
 import mySalonStyle from "assets/jss/material-dashboard-pro-react/views/mySalon/mySalonStyle.jsx";
+import AddSalonModal from "./AddSalonModal";
 
 class MySalon extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      addSalonModal: false,
+    };
+  }
+
+  componentWillMount() {
+      this.props.getUserData();
+      // setTimeout(() => {
+      //     this.getServices(this.props.workingForId);
+      // }, 100);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.props.workingForId !== nextProps.workingForId) {
+        // this.getServices(nextProps.workingForId);
+    }
+  }
+
+  onCloseAddSalonModal() {
+    this.setState({
+      addSalonModal: false
+    })
+  }
+  onOpenAddSalonModal() {
+    this.setState({
+      addSalonModal: true
+    })
+  }
+
   render() {
     const { classes } = this.props;
     const button = 
@@ -49,7 +87,7 @@ class MySalon extends React.Component {
                           <Button 
                               color="info" 
                               size="sm"
-                              // onClick={() => this.onOpenNewOrUpdateModal('New Employee')}
+                              // onClick={() => this.onOpenAddSalonModal()}
                           >                            
                               <Add /> Add Company
                           </Button>
@@ -93,7 +131,7 @@ class MySalon extends React.Component {
                               <Button 
                                   color="info" 
                                   size="sm"
-                                  // onClick={() => this.onOpenNewOrUpdateModal('New Employee')}
+                                  onClick={() => this.onOpenAddSalonModal()}
                               >                            
                                   <Add /> Add Salon
                               </Button>
@@ -230,7 +268,11 @@ class MySalon extends React.Component {
                       )
                     },
                   ]}
-                />
+                />                
+                <AddSalonModal 
+                  onOpen={this.state.addSalonModal}
+                  onClose={this.onCloseAddSalonModal.bind(this)}
+                /> 
               </CardBody>
             </Card>
           </GridItem>
@@ -240,4 +282,16 @@ class MySalon extends React.Component {
   }
 }
 
-export default withStyles(mySalonStyle)(MySalon);
+function mapStateToProps(state) {
+  return {
+    workingForId    : state.user.workingForId,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+      getUserData : Actions.getUserData
+  }, dispatch);
+}
+
+export default withStyles(mySalonStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(MySalon)));

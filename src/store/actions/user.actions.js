@@ -7,7 +7,7 @@ export const SET_USER_DATA = '[USER] SET DATA';
 export const GET_USER_DATA = '[USER] GET DATA';
 export const UPDATE_USER_WORKINGFORID = '[USER] UPDATE WORKINGFORID';
 
-export function setUserData(user) {    
+export function setUserData(user) {  
     let token = user.token;
     let workingFor = JSON.stringify(user.workingFor);
     let name = user.employeeName;

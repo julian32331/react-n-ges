@@ -9,10 +9,12 @@ import {
 } from "assets/jss/material-dashboard-pro-react.jsx";
 import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
+import customCheckboxRadioSwitch from "assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.jsx";
 
 const commonModalStyle = theme => ({
   ...modalStyle(theme),
   ...customSelectStyle,
+  ...customCheckboxRadioSwitch,
   center: {
     textAlign: "center"
   },
