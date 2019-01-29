@@ -83,7 +83,7 @@ class SalongInformasjon extends React.Component {
                 address: nextProps.info.address,
                 zip: nextProps.info.post,
                 city: nextProps.info.city,
-                // phone: nextProps.info.phone,
+                phone: nextProps.info.telephone,
                 email: nextProps.info.email,
                 network: nextProps.info.website,
                 description: nextProps.info.description
@@ -230,7 +230,7 @@ class SalongInformasjon extends React.Component {
             address: this.props.info.address,
             zip: this.props.info.post,
             city: this.props.info.city,
-            // phone: this.props.info.phone,
+            phone: this.props.info.telephone,
             email: this.props.info.email,
             network: this.props.info.website,
             description: this.props.info.description,            

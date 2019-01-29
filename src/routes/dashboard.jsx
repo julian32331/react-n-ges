@@ -14,7 +14,7 @@ import Contacts from "views/Intranett/Contacts/Contacts.jsx";
 
 import Profile from "views/Profile/Profile.jsx";
 import CompanyInformasjon from "views/CompanyInformasjon.jsx";
-import MySalon from "views/MySalon.jsx";
+import MySalon from "views/MySalon/MySalon.jsx";
 
 // @material-ui/icons
 import DashboardIcon from "@material-ui/icons/Dashboard";

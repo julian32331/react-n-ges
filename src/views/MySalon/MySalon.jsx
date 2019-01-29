@@ -5,19 +5,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import FormLabel from "@material-ui/core/FormLabel";
 
 // @material-ui/icons
-import Dashboard from "@material-ui/icons/Dashboard";
-import Schedule from "@material-ui/icons/Schedule";
-import Info from "@material-ui/icons/Info";
-import LocationOn from "@material-ui/icons/LocationOn";
-import Gavel from "@material-ui/icons/Gavel";
-import HelpOutline from "@material-ui/icons/HelpOutline";
 import Add from "@material-ui/icons/Add";
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import NavPills from "components/NavPills/NavPills.jsx";
 import Accordion from "components/Accordion/Accordion.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
@@ -26,7 +19,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Table from "components/Table/Table.jsx";
 
-import salonStyle from "assets/jss/material-dashboard-pro-react/views/salonStyle.jsx";
+import mySalonStyle from "assets/jss/material-dashboard-pro-react/views/mySalon/mySalonStyle.jsx";
 
 class MySalon extends React.Component {
   render() {
@@ -247,4 +240,4 @@ class MySalon extends React.Component {
   }
 }
 
-export default withStyles(salonStyle)(MySalon);
+export default withStyles(mySalonStyle)(MySalon);

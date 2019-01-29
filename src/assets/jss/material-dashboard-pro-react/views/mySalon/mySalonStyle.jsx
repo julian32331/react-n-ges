@@ -5,7 +5,7 @@
 
 import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
 
-const salongInformasjonStyle = theme => ({
+const mySalonStyle = theme => ({
     ...commonStyle,
     salonContainer: {
       width: '100%',
@@ -38,4 +38,4 @@ const salongInformasjonStyle = theme => ({
     }
   });
   
-export default salongInformasjonStyle;
+export default mySalonStyle;
