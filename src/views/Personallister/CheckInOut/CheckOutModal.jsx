@@ -43,7 +43,8 @@ class CheckOutModal extends React.Component {
     checkOut() {
         this.props.checkOut({
             workingForId: this.props.workingForId,
-            personnelListId: this.props.data
+            personnelListId: this.props.data,
+            source: "WEB"
         })
         this.props.onClose();
     }
