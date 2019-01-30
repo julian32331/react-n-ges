@@ -6,39 +6,22 @@
 import * as Actions from '../actions';
 
 const initialState = {
-    status: false,
-    info: null,
-    errorMsg: ""
+    data: []
 };
 
-const salonInfo = function (state = initialState, action) {
+const mySalons = function (state = initialState, action) {
     switch ( action.type )
     {
-        case Actions.GET_SALON_INFO:
+        case Actions.GET_COMPANY_SALON:
         {
             return {
-                info: action.info
+                data: action.data
             };
         }
-        case Actions.ADD_SALON_INFO:
+        case Actions.ADD_SALON:
         {
             return {
-                status: false,
-                errorMsg: ""
-            };
-        }
-        case Actions.ADD_SALON_INFO_SUCCESS:
-        {
-            return {
-                ...initialState,
-                status: true
-            };
-        }
-        case Actions.ADD_SALON_INFO_SUCCESS:
-        {
-            return {
-                status: false,
-                errorMsg: action.errorMsg
+                data: state.data
             };
         }
         default:
@@ -47,3 +30,5 @@ const salonInfo = function (state = initialState, action) {
         }
     }
 };
+
+export default mySalons;

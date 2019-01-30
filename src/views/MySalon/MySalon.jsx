@@ -38,9 +38,15 @@ class MySalon extends React.Component {
 
   componentWillMount() {
       this.props.getUserData();
-      // setTimeout(() => {
-      //     this.getServices(this.props.workingForId);
-      // }, 100);
+      setTimeout(() => {
+        this.getCompanySalon(this.props.workingForId);
+      }, 100);
+  }
+    
+  getCompanySalon(id) {
+      this.props.getCompanySalon({
+          workingForId: id
+      })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,15 +69,91 @@ class MySalon extends React.Component {
   render() {
     const { classes } = this.props;
     const button = 
-        <Button simple color="info" size="sm" className={classes.actionButton} >
-            <ArrowForwardIos className={classes.icon} />
-        </Button>
-    let data = [
-      ["Salon1", button],
-      ["Salon2", button],
-      ["Salon3", button],
-      ["Salon4", button]
-    ]
+      <Button simple color="info" size="sm" className={classes.actionButton} >
+        <ArrowForwardIos className={classes.icon} />
+      </Button>
+
+    let arr = [];
+    this.props.data.map(company => {
+      let temp = {
+        companyName: "",
+        salons: []
+      };
+
+      temp.companyName = company.companyName;
+      company.salons.map(salon => {
+        let temp1 = [];
+
+        temp1.push(salon);
+        temp1.push(button);
+
+        temp.salons.push(temp1);
+      });
+      arr.push(temp);
+    });
+
+    let accordian = [];
+    arr.map(item => {
+      let temp2 = {
+        title: item.companyName,
+        content: (
+          <div className={classes.salonContainer}>
+            <GridContainer justify="space-between">
+              <GridItem xs={12} sm={6}>
+                {/* <GridContainer alignItems="center">
+                  <GridItem xs={5} sm={4} md={3} className={classes.text_right + " " + classes.mt_15}>
+                    <FormLabel className={classes.labelHorizontal}>
+                      Search :
+                    </FormLabel>
+                  </GridItem>
+                  <GridItem xs={7} sm={8} md={6}>
+                    <CustomInput
+                      id="search"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        type: "search",
+                        // onChange: event =>
+                        //   this.searchHandler("search", event),
+                        // value: this.state.search               
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer> */}
+              </GridItem>
+              <GridItem xs={12} sm={6} className={classes.text_right + " " + classes.mt_27}>
+                <Button 
+                    color="info" 
+                    size="sm"
+                    onClick={() => this.onOpenAddSalonModal()}
+                >                            
+                    <Add /> Add Salon
+                </Button>
+              </GridItem>
+              <GridItem xs={12}>
+                <Table
+                  tableData={item.salons}
+                  customCellClasses={[
+                    classes.left,
+                    classes.right,
+                  ]}
+                  customClassesForCells={[0, 1]}
+                  customHeadCellClasses={[
+                    classes.left,
+                    classes.right,
+                  ]}
+                  customHeadClassesForCells={[0, 1]}
+                />
+              </GridItem>
+            </GridContainer>
+          </div>
+        )
+      };
+      accordian.push(temp2);
+    })
+
+
     return (
       <div>
         <GridContainer>
@@ -98,176 +180,7 @@ class MySalon extends React.Component {
               <CardBody>
                 <Accordion
                   active={0}
-                  collapses={[
-                    {
-                      title: "Company 1",
-                      content: (
-                        <div className={classes.salonContainer}>
-                          <GridContainer justify="space-between">
-                            <GridItem xs={12} sm={6}>
-                              <GridContainer alignItems="center">
-                                <GridItem xs={5} sm={4} md={3} className={classes.text_right + " " + classes.mt_15}>
-                                  <FormLabel className={classes.labelHorizontal}>
-                                    Search :
-                                  </FormLabel>
-                                </GridItem>
-                                <GridItem xs={7} sm={8} md={6}>
-                                  <CustomInput
-                                    id="search"
-                                    formControlProps={{
-                                      fullWidth: true
-                                    }}
-                                    inputProps={{
-                                      type: "search",
-                                      // onChange: event =>
-                                      //   this.searchHandler("search", event),
-                                      // value: this.state.search               
-                                    }}
-                                  />
-                                </GridItem>
-                              </GridContainer>
-                            </GridItem>
-                            <GridItem xs={12} sm={6} className={classes.text_right + " " + classes.mt_27}>
-                              <Button 
-                                  color="info" 
-                                  size="sm"
-                                  onClick={() => this.onOpenAddSalonModal()}
-                              >                            
-                                  <Add /> Add Salon
-                              </Button>
-                            </GridItem>
-                            <GridItem xs={12}>
-                              <Table
-                                tableData={data}
-                                customCellClasses={[
-                                  classes.left,
-                                  classes.right,
-                                ]}
-                                customClassesForCells={[0, 1]}
-                                customHeadCellClasses={[
-                                  classes.left,
-                                  classes.right,
-                                ]}
-                                customHeadClassesForCells={[0, 1]}
-                              />
-                            </GridItem>
-                          </GridContainer>
-                        </div>
-                      )
-                    },
-                    {
-                      title: "Company 2",
-                      content: (
-                        <div className={classes.salonContainer}>
-                          <GridContainer justify="space-between">
-                            <GridItem xs={12} sm={6}>
-                              <GridContainer alignItems="center">
-                                <GridItem xs={5} sm={4} md={3} className={classes.text_right + " " + classes.mt_15}>
-                                  <FormLabel className={classes.labelHorizontal}>
-                                    Search :
-                                  </FormLabel>
-                                </GridItem>
-                                <GridItem xs={7} sm={8} md={6}>
-                                  <CustomInput
-                                    id="search"
-                                    formControlProps={{
-                                      fullWidth: true
-                                    }}
-                                    inputProps={{
-                                      type: "search",
-                                      // onChange: event =>
-                                      //   this.searchHandler("search", event),
-                                      // value: this.state.search               
-                                    }}
-                                  />
-                                </GridItem>
-                              </GridContainer>
-                            </GridItem>
-                            <GridItem xs={12} sm={6} className={classes.text_right + " " + classes.mt_27}>
-                              <Button 
-                                  color="info" 
-                                  size="sm"
-                                  // onClick={() => this.onOpenNewOrUpdateModal('New Employee')}
-                              >                            
-                                  <Add /> Add Salon
-                              </Button>
-                            </GridItem>
-                            <GridItem xs={12}>
-                              <Table
-                                tableData={data}
-                                customCellClasses={[
-                                  classes.left,
-                                  classes.right,
-                                ]}
-                                customClassesForCells={[0, 1]}
-                                customHeadCellClasses={[
-                                  classes.left,
-                                  classes.right,
-                                ]}
-                                customHeadClassesForCells={[0, 1]}
-                              />
-                            </GridItem>
-                          </GridContainer>
-                        </div>
-                      )
-                    },
-                    {
-                      title: "Company 3",
-                      content: (
-                        <div className={classes.salonContainer}>
-                          <GridContainer justify="space-between">
-                            <GridItem xs={12} sm={6}>
-                              <GridContainer alignItems="center">
-                                <GridItem xs={5} sm={4} md={3} className={classes.text_right + " " + classes.mt_15}>
-                                  <FormLabel className={classes.labelHorizontal}>
-                                    Search :
-                                  </FormLabel>
-                                </GridItem>
-                                <GridItem xs={7} sm={8} md={6}>
-                                  <CustomInput
-                                    id="search"
-                                    formControlProps={{
-                                      fullWidth: true
-                                    }}
-                                    inputProps={{
-                                      type: "search",
-                                      // onChange: event =>
-                                      //   this.searchHandler("search", event),
-                                      // value: this.state.search               
-                                    }}
-                                  />
-                                </GridItem>
-                              </GridContainer>
-                            </GridItem>
-                            <GridItem xs={12} sm={6} className={classes.text_right + " " + classes.mt_27}>
-                              <Button 
-                                  color="info" 
-                                  size="sm"
-                                  // onClick={() => this.onOpenNewOrUpdateModal('New Employee')}
-                              >                            
-                                  <Add /> Add Salon
-                              </Button>
-                            </GridItem>
-                            <GridItem xs={12}>
-                              <Table
-                                tableData={data}
-                                customCellClasses={[
-                                  classes.left,
-                                  classes.right,
-                                ]}
-                                customClassesForCells={[0, 1]}
-                                customHeadCellClasses={[
-                                  classes.left,
-                                  classes.right,
-                                ]}
-                                customHeadClassesForCells={[0, 1]}
-                              />
-                            </GridItem>
-                          </GridContainer>
-                        </div>
-                      )
-                    },
-                  ]}
+                  collapses={accordian}
                 />                
                 <AddSalonModal 
                   onOpen={this.state.addSalonModal}
@@ -285,12 +198,14 @@ class MySalon extends React.Component {
 function mapStateToProps(state) {
   return {
     workingForId    : state.user.workingForId,
+    data: state.mySalons.data
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-      getUserData : Actions.getUserData
+      getUserData: Actions.getUserData,
+      getCompanySalon: Actions.getCompanySalon 
   }, dispatch);
 }
 
