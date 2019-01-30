@@ -20,6 +20,10 @@ const profileStyles = {
   },
   updateProfileButton: {
     float: "right"
+  },
+  submit: {
+    float: 'right',
+    marginBottom: '15px',
   }
 };
 export default profileStyles;

@@ -49,7 +49,8 @@ class Profile extends React.Component {
       description: "",
       descriptionState: "",
       file: null,
-      imagePreviewUrl: ""
+      imagePreviewUrl: "",
+      isEdit: false
     };
   }
 
@@ -102,6 +103,48 @@ class Profile extends React.Component {
     this.refs.fileInput.click();
   }
 
+  enableEdit() {
+    this.setState({
+      isEdit: true
+    })
+  }
+
+  cancelEdit() {
+    this.setState({
+      name: this.props.data.name,
+      orgNo: this.props.data.ss_number,
+      email: this.props.data.email,
+      phone: this.props.data.EmployeeInformation.mobile,
+      position: this.props.data.EmployeeInformation.position,
+      profession: this.props.data.EmployeeInformation.profession,
+      description: this.props.data.EmployeeInformation.description,
+      imagePreviewUrl: Utils.root + this.props.data.EmployeeInformation.picturePath, 
+      isEdit: false
+    })
+  }
+
+  canSubmit() {
+    if(this.state.nameState === "success" &&
+        this.state.addressState === "success" &&
+        this.state.zipState === "success" &&
+        this.state.cityState === "success" &&
+        this.state.phoneState === "success" &&
+        this.state.emailState === "success" &&
+        this.state.networkState === "success") {
+      return false;
+    } else if(this.state.name !== "" &&
+        this.state.address !== "" &&
+        this.state.zip !== "" &&
+        this.state.city !== "" &&
+        this.state.phone !== "" &&
+        this.state.email !== "" &&
+        this.state.network !== "") {
+        return false;
+    } else {
+      return true
+    }
+  }
+
   render() {    
     const { classes } = this.props;
     return (
@@ -112,7 +155,7 @@ class Profile extends React.Component {
               <CardAvatar profile>
                 <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
                 <a onClick={() => this.handleClick()}>
-                  <img src={this.state.imagePreviewUrl} style={{width: '130px', height: '130px'}} alt="..." />
+                  <img src={this.state.imagePreviewUrl} style={{minWidth: '130px', minHeight: '130px', width: '130px', height: '130px'}} alt="..." />
                 </a>
               </CardAvatar>
               <CardBody profile>
@@ -310,9 +353,18 @@ class Profile extends React.Component {
                     />
                   </GridItem>
                 </GridContainer>
-                <Button color="info" className={classes.updateProfileButton}>
-                  Update Profile
-                </Button>
+                {
+                  this.state.isEdit? (                      
+                    <GridItem xs={12}>                    
+                      <Button color="info" className={classes.submit} disabled={this.canSubmit()}>Save</Button>
+                      <Button color="danger" className={classes.submit} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
+                    </GridItem>                                
+                  ) : (
+                    <GridItem xs={12}>                    
+                      <Button color="info" className={classes.submit} onClick={this.enableEdit.bind(this)}>Edit</Button>
+                    </GridItem> 
+                  )
+                } 
               </CardBody>
             </Card>
           </GridItem>

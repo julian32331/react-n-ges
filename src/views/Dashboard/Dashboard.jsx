@@ -85,6 +85,44 @@ class Dashboard extends React.Component {
                 </CardBody>
               </Card>
             </GridItem>
+            <GridItem xs={12} sm={12} md={4}>
+              <Card product className={classes.cardHover}>
+                <CardHeader image className={classes.cardHeaderHover}>
+                  <a href="#pablo" onClick={e => e.preventDefault()}>
+                    <img src={blog} alt="..." />
+                  </a>
+                </CardHeader>
+                <CardBody>
+                  <h4 className={classes.cardProductTitle}>
+                    <a href="#pablo" onClick={e => e.preventDefault()}>
+                      Velkommen til geselle
+                    </a>
+                  </h4>
+                  <p className={classes.cardProductDesciprion}>
+                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
+                  </p>
+                </CardBody>
+              </Card>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={4}>
+              <Card product className={classes.cardHover}>
+                <CardHeader image className={classes.cardHeaderHover}>
+                  <a href="#pablo" onClick={e => e.preventDefault()}>
+                    <img src={blog} alt="..." />
+                  </a>
+                </CardHeader>
+                <CardBody>
+                  <h4 className={classes.cardProductTitle}>
+                    <a href="#pablo" onClick={e => e.preventDefault()}>
+                      Velkommen til geselle
+                    </a>
+                  </h4>
+                  <p className={classes.cardProductDesciprion}>
+                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
+                  </p>
+                </CardBody>
+              </Card>
+            </GridItem>
           </GridContainer>
         </CardBody>
 
