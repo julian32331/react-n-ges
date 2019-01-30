@@ -21,7 +21,7 @@ const commonStyle = {
     },
     cardContent: {
       position: "relative",
-      minHeight: "50vh",
+      minHeight: "20vh",
     },
     danger: {
       color: dangerColor + "!important"

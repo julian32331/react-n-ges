@@ -8,6 +8,7 @@ import hours from "./hours.reducer";
 import checkInOut from "./checkinout.reducer";
 import employees from "./employees.reducer";
 import mySalons from "./mySalons.reducer";
+import profile from "./profile.reducer";
 
 const createReducer = (asyncReducers) =>
     combineReducers({
@@ -20,6 +21,7 @@ const createReducer = (asyncReducers) =>
         checkInOut,
         employees,
         mySalons,
+        profile,
         ...asyncReducers
     });
 

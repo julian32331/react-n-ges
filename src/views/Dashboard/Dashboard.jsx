@@ -14,6 +14,7 @@ import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import Place from "@material-ui/icons/Place";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -21,9 +22,12 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import CardFooter from "components/Card/CardFooter.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle.jsx";
 import SelectModal from "./SelectModal.jsx";
+
+import blog from "assets/img/blog.jpg";
 
 class Dashboard extends React.Component {
 
@@ -62,9 +66,24 @@ class Dashboard extends React.Component {
         </CardHeader>
         <CardBody>
           <GridContainer>
-            <GridItem md={12}>
-              <div className={classes.cardContent}>
-              </div>
+            <GridItem xs={12} sm={12} md={4}>
+              <Card product className={classes.cardHover}>
+                <CardHeader image className={classes.cardHeaderHover}>
+                  <a href="#pablo" onClick={e => e.preventDefault()}>
+                    <img src={blog} alt="..." />
+                  </a>
+                </CardHeader>
+                <CardBody>
+                  <h4 className={classes.cardProductTitle}>
+                    <a href="#pablo" onClick={e => e.preventDefault()}>
+                      Velkommen til geselle
+                    </a>
+                  </h4>
+                  <p className={classes.cardProductDesciprion}>
+                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
+                  </p>
+                </CardBody>
+              </Card>
             </GridItem>
           </GridContainer>
         </CardBody>
@@ -73,9 +92,9 @@ class Dashboard extends React.Component {
           onOpen={this.state.selectModal}
           onClose={this.onCloseSelectModal.bind(this)}
         />
-
       </Card>
 
+      
     );
   }
 }

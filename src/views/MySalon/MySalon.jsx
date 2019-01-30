@@ -45,13 +45,13 @@ class MySalon extends React.Component {
     
   getCompanySalon(id) {
       this.props.getCompanySalon({
-          workingForId: id
+        workingForId: id
       })
   }
 
   componentWillReceiveProps(nextProps) {
     if(this.props.workingForId !== nextProps.workingForId) {
-        // this.getServices(nextProps.workingForId);
+      this.getCompanySalon(nextProps.workingForId);
     }
   }
 
