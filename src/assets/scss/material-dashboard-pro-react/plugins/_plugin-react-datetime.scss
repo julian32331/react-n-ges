@@ -295,9 +295,9 @@ td.rdtYear:hover {
 .rdtCounters{
   .rdtCounter:last-child{
     .rdtCount{
-      color: $brand-primary;
-      border-radius: 50%;
-      border: 1px solid $brand-primary;
+      // color: $brand-primary;
+      // border-radius: 50%;
+      // border: 1px solid $brand-primary;
     }
   }
 }
@@ -311,7 +311,8 @@ td.rdtYear:hover {
   cursor: pointer;
   display: block;
   border-radius: 50%;
-  color: $grey-A200;
+  // color: $grey-A200;
+  color: $brand-primary;
   -webkit-transition: all 60ms ease-in;
   -moz-transition: all 60ms ease-in;
   -o-transition: all 60ms ease-in;
