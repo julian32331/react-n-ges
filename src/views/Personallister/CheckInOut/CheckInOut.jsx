@@ -236,12 +236,12 @@ class CheckInOut extends React.Component {
         </CardHeader>
         <CardBody className={classes.pt_0}>
           <GridContainer>
-            <GridItem xs={3} sm={1} md={2} lg={1}>
+            <GridItem xs={4} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
                 Search :
               </FormLabel>
             </GridItem>
-            <GridItem xs={9} sm={3} md={3} lg={2}>
+            <GridItem xs={8} sm={3} md={3} lg={2}>
               <CustomInput
                 id="search"
                 formControlProps={{
@@ -255,12 +255,12 @@ class CheckInOut extends React.Component {
                 }}
               />
             </GridItem>
-            <GridItem xs={3} sm={1} md={2} lg={1}>
+            <GridItem xs={4} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
                 From :
               </FormLabel>
             </GridItem>
-            <GridItem xs={9} sm={2}>
+            <GridItem xs={8} sm={2}>
               <FormControl fullWidth className={classes.pt_22}>
                 <Datetime
                   dateFormat={"YYYY-MM-DD"}
@@ -270,12 +270,12 @@ class CheckInOut extends React.Component {
                 />
               </FormControl>
             </GridItem>
-            <GridItem xs={3} sm={1} md={2} lg={1}>
+            <GridItem xs={4} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
                 To :
               </FormLabel>
             </GridItem>
-            <GridItem xs={9} sm={2}>
+            <GridItem xs={8} sm={2}>
               <FormControl fullWidth className={classes.pt_22}>
                 <Datetime
                   dateFormat={"YYYY-MM-DD"}

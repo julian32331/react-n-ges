@@ -79,14 +79,22 @@ class SalongInformasjon extends React.Component {
 
         if(nextProps.info) {
             this.setState({
-                name: nextProps.info.name,
-                address: nextProps.info.address,
-                zip: nextProps.info.post,
-                city: nextProps.info.city,
-                phone: nextProps.info.telephone,
-                email: nextProps.info.email,
-                network: nextProps.info.website,
-                description: nextProps.info.description
+                name: nextProps.info.name? nextProps.info.name : "",
+                nameState: nextProps.info.name? "success" : "error",
+                address: nextProps.info.address? nextProps.info.address : "",
+                addressState: nextProps.info.address? "success" : "error",
+                zip: nextProps.info.post? nextProps.info.post : "",
+                zipState: nextProps.info.post? "success" : "error",
+                city: nextProps.info.city? nextProps.info.city : "",
+                cityState: nextProps.info.city? "success" : "error",
+                phone: nextProps.info.telephone? nextProps.info.telephone : "",
+                phoneState: nextProps.info.telephone? "success" : "error",
+                email: nextProps.info.email? nextProps.info.email : "",
+                emailState: nextProps.info.email? "success" : "error",
+                network: nextProps.info.website? nextProps.info.website : "",
+                networkState: nextProps.info.website? "success" : "error",
+                description: nextProps.info.description? nextProps.info.description : "",
+                descriptionState: nextProps.info.description? "success" : "error",
             })
         }
     }
@@ -226,16 +234,24 @@ class SalongInformasjon extends React.Component {
 
     cancelEdit() {
         this.setState({
-            name: this.props.info.name,
-            address: this.props.info.address,
-            zip: this.props.info.post,
-            city: this.props.info.city,
-            phone: this.props.info.telephone,
-            email: this.props.info.email,
-            network: this.props.info.website,
-            description: this.props.info.description,            
+            name: this.props.info.name? this.props.info.name : "",
+            nameState: this.props.info.name? "success" : "error",
+            address: this.props.info.address? this.props.info.address : "",
+            addressState: this.props.info.address? "success" : "error",
+            zip: this.props.info.post? this.props.info.post : "",
+            zipState: this.props.info.post? "success" : "error",
+            city: this.props.info.city? this.props.info.city : "",
+            cityState: this.props.info.city? "success" : "error",
+            phone: this.props.info.telephone? this.props.info.telephone : "",
+            phoneState: this.props.info.telephone? "success" : "error",
+            email: this.props.info.email? this.props.info.email : "",
+            emailState: this.props.info.email? "success" : "error",
+            network: this.props.info.website? this.props.info.website : "",
+            networkState: this.props.info.website? "success" : "error",
+            description: this.props.info.description? this.props.info.description : "",
+            descriptionState: this.props.info.description? "success" : "error",
             isEdit: false
-        })
+        });
     }
 
     addSalonInfo() {
@@ -246,14 +262,15 @@ class SalongInformasjon extends React.Component {
                 name: this.state.name,
                 description: this.state.description,
                 descriptionValidated: false,
-                parking: "",
+                parking: this.state.parkCheck,
                 website: this.state.network,
                 address: this.state.address,
                 post: this.state.zip,
                 city: this.state.city,
                 country: "Sweden"
             }
-        })
+        });
+        this.cancelEdit();
     }
 
     render() {

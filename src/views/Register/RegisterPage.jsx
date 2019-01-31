@@ -616,7 +616,7 @@ class RegisterPage extends React.Component {
                     <div className={classes.spinner_container}>                    
                       <Loader 
                         type="Oval"
-                        color="#00acc1"
+                        color="#7da8ae"
                         height="40"	
                         width="40"
                       />

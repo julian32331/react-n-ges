@@ -5,6 +5,8 @@ import * as Actions from 'store/actions';
 import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 
+import FormData from "form-data";
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -28,6 +30,7 @@ import CardAvatar from "components/Card/CardAvatar.jsx";
 import profileStyles from "assets/jss/material-dashboard-pro-react/views/profileStyles.jsx";
 
 import avatar from "assets/img/faces/marc.jpg";
+import * as Validator from "./../../validator";
 import * as Utils from 'utils';
 
 class Profile extends React.Component {
@@ -50,6 +53,7 @@ class Profile extends React.Component {
       descriptionState: "",
       file: null,
       imagePreviewUrl: "",
+      isChangedAvatar: false,
       isEdit: false
     };
   }
@@ -74,12 +78,19 @@ class Profile extends React.Component {
     if(nextProps.data) {
       this.setState({
         name: nextProps.data.name,
+        nameState: nextProps.data.name? "success" : "error",
         orgNo: nextProps.data.ss_number,
+        orgNoState: nextProps.data.ss_number? "success" : "error",
         email: nextProps.data.email,
+        emailState: nextProps.data.email? "success" : "error",
         phone: nextProps.data.EmployeeInformation.mobile,
+        phoneState: nextProps.data.EmployeeInformation.mobile? "success" : "error",
         position: nextProps.data.EmployeeInformation.position,
+        positionState: nextProps.data.EmployeeInformation.position? "success" : "error",
         profession: nextProps.data.EmployeeInformation.profession,
+        professionState: nextProps.data.EmployeeInformation.profession? "success" : "error",
         description: nextProps.data.EmployeeInformation.description,
+        descriptionState: nextProps.data.EmployeeInformation.description? "success" : "error",
         imagePreviewUrl: Utils.root + nextProps.data.EmployeeInformation.picturePath
       })
     }
@@ -93,6 +104,7 @@ class Profile extends React.Component {
     reader.onloadend = () => {
       this.setState({
         file: file,
+        isChangedAvatar: true,
         imagePreviewUrl: reader.result
       });
     };
@@ -100,12 +112,33 @@ class Profile extends React.Component {
   }
 
   handleClick() {
-    this.refs.fileInput.click();
+    if(this.state.isEdit)
+      this.refs.fileInput.click();
   }
 
   enableEdit() {
     this.setState({
       isEdit: true
+    })
+  }
+
+  initState() {
+    this.setState({
+      name: "",
+      nameState: "",
+      email: "",
+      emailState: "",
+      phone: "",
+      phoneState: "",
+      profession: "",
+      professionState: "",
+      position: "",
+      positionState: "",
+      description: "",
+      descriptionState: "",            
+      file: null,
+      isChangedAvatar: false,
+      imagePreviewUrl: ""
     })
   }
 
@@ -124,25 +157,61 @@ class Profile extends React.Component {
   }
 
   canSubmit() {
-    if(this.state.nameState === "success" &&
-        this.state.addressState === "success" &&
-        this.state.zipState === "success" &&
-        this.state.cityState === "success" &&
-        this.state.phoneState === "success" &&
-        this.state.emailState === "success" &&
-        this.state.networkState === "success") {
+    if(this.state.nameState === "success" 
+      && this.state.orgNoState === "success" 
+      && this.state.emailState === "success" 
+      && this.state.phoneState === "success" 
+      && this.state.professionState === "success" 
+      && this.state.positionState === "success" 
+      && this.state.descriptionState === "success") {
       return false;
-    } else if(this.state.name !== "" &&
-        this.state.address !== "" &&
-        this.state.zip !== "" &&
-        this.state.city !== "" &&
-        this.state.phone !== "" &&
-        this.state.email !== "" &&
-        this.state.network !== "") {
-        return false;
     } else {
       return true
     }
+  }
+
+  change(event, stateName, type, stateNameEqualTo) {
+    switch (type) {
+        case "email":
+            this.setState({ 
+                [stateName]: event.target.value,
+                [stateName + "State"]: Validator.verifyEmail(event.target.value)? "success" : "error"
+            });
+            break;                
+        case "name":              
+        case "orgNo":                  
+        case "phone":            
+        case "profession":            
+        case "position":          
+        case "description":
+            this.setState({ 
+                [stateName]: event.target.value,
+                [stateName + "State"]: Validator.verifyLength(event.target.value, stateNameEqualTo)? "success" : "error"
+            });
+            break;      
+        default:
+            break;
+    }
+  
+  }
+  save() {
+    let payload = new FormData();
+    payload.append('workingForId', this.props.workingForId);
+    payload.append('avatar', this.state.file, 'avatar.png');
+    payload.append('hasAvatarChanged', this.state.isChangedAvatar)
+    payload.append('email', this.state.email);
+    payload.append('name', this.state.name);
+    // payload.append('name', this.state.name);
+    payload.append('mobile', this.state.phone);
+    payload.append('profession', this.state.profession);
+    payload.append('position', this.state.position);
+    payload.append('description', this.state.description);
+    payload.append('employeeId', this.props.data.employeeId);
+
+    this.props.updateProfile(payload, this.props.workingForId)
+    this.setState({
+      isEdit: false
+    })
   }
 
   render() {    
@@ -208,7 +277,7 @@ class Profile extends React.Component {
                         onChange: event =>
                             this.change(event, "orgNo", "orgNo", 1),
                         value: this.state.orgNo,
-                        type: "text"
+                        type: "number"
                       }}
                     />
                   </GridItem>
@@ -356,7 +425,7 @@ class Profile extends React.Component {
                 {
                   this.state.isEdit? (                      
                     <GridItem xs={12}>                    
-                      <Button color="info" className={classes.submit} disabled={this.canSubmit()}>Save</Button>
+                      <Button color="info" className={classes.submit} disabled={this.canSubmit()} onClick={this.save.bind(this)}>Save</Button>
                       <Button color="danger" className={classes.submit} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
                     </GridItem>                                
                   ) : (
@@ -384,7 +453,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getUserData: Actions.getUserData,
-    getProfileData: Actions.getProfileData
+    getProfileData: Actions.getProfileData,
+    updateProfile: Actions.updateProfile
   }, dispatch);
 }
 

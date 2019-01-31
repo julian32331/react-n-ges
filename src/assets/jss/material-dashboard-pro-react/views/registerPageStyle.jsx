@@ -45,13 +45,14 @@ const loginPageStyle = {
     textAlign: "right"
   },
   link: {
-    color: "#00acc1",
+    color: "#7da8ae",
     fontWeight: "400",
+    fontFamily: "Source Sans Pro",
     "&:hover": {      
-      color: "#00acc1",
+      color: "#7da8ae",
     },    
     "&:focus": {      
-      color: "#00acc1",
+      color: "#7da8ae",
     }
   },
   w_100_p: {

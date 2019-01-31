@@ -18,6 +18,12 @@ const profile = function (state = initialState, action) {
                 data: action.data
             };
         }
+        case Actions.UPDATE_PROFIEL_DATA:
+        {
+            return {
+                data: state.data
+            };
+        }
         default:
         {
             return state

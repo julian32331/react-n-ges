@@ -5,8 +5,8 @@
 
 import * as Utils from 'utils';
 
-export const GET_PROFILE_DATA = '[PROFILE] DATA GET' ;
-// export const ADD_SALON        = '[SALON] ADD';
+export const GET_PROFILE_DATA = '[PROFILE] DATA GET';
+export const UPDATE_PROFIEL_DATA = '[PROFILE] DATA UPDATE';
 
 export function getProfileData(data) {    
     const request = Utils.xapi().post('manager/employee/profile', data);
@@ -19,21 +19,15 @@ export function getProfileData(data) {
         });
 }
 
-// export function addSalon(data) {
-//     const request = Utils.xapi().post('manager/salon/add', data);
-//     return (dispatch) =>
-//         request.then((response) => {   
-//             dispatch(setUserData(
-//                 response.data
-//             ));   
-//             dispatch(updateWorkingForId(
-//                 data.workingForId    
-//             )); 
-//             dispatch(getCompanySalon({
-//                 workingForId: data.workingForId
-//             }));
-//             return dispatch({
-//                 type: ADD_SALON
-//             });
-//         });
-// }
+export function updateProfile(data, id) {
+    const request = Utils.xapi('multipart/form-data').post('manager/employee/update', data);
+    return (dispatch) =>
+        request.then((response) => {
+            dispatch(getProfileData({
+                workingForId: id
+            }));  
+            return dispatch({
+                type: UPDATE_PROFIEL_DATA,
+            });
+        });
+}

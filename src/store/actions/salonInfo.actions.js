@@ -28,6 +28,9 @@ export function addSalonInfo(data) {
             dispatch({
                 type: ADD_SALON_INFO
             }); 
+            dispatch(getSalonInfo({
+                workingForId: data.workingForId
+            }));
             return dispatch({
                 type: ADD_SALON_INFO_SUCCESS
             });

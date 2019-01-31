@@ -214,7 +214,7 @@ class MyEmployees extends React.Component {
           <GridContainer>
             <GridItem xs={3} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
-                Search
+                Search :
               </FormLabel>
             </GridItem>
             <GridItem xs={9} sm={3} md={3} lg={2}>

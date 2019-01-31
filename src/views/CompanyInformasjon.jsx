@@ -58,14 +58,14 @@ class CompanyInformasjon extends React.Component {
             countryState: "",
             zip: "",
             zipState: "",
-            billingCO: "",
-            billingCOState: "",
-            billing: "",
-            billingState: "",
-            billingCity: "",
-            billingCityState: "",
-            billingCountry: "",
-            billingCountryState: "",
+            // billingCO: "",
+            // billingCOState: "",
+            // billing: "",
+            // billingState: "",
+            // billingCity: "",
+            // billingCityState: "",
+            // billingCountry: "",
+            // billingCountryState: "",
             billingEmail: "",
             billingEmailState: "",
             accountNo: "",
@@ -118,14 +118,14 @@ class CompanyInformasjon extends React.Component {
                 countryState: nextProps.info.country? "success" : "",
                 zip: nextProps.info.zip? nextProps.info.zip : "",
                 zipState: nextProps.info.zip? "success" : "",
-                billingCO: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCO : "",
-                billingCOState: nextProps.info.CompanyEconomy? "success" : "",
-                billing: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billing : "",
-                billingState: nextProps.info.CompanyEconomy? "success" : "",
-                billingCity: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCity : "",
-                billingCityState: nextProps.info.CompanyEconomy? "success" : "",
-                billingCountry: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCountry : "",
-                billingCountryState: nextProps.info.CompanyEconomy? "success" : "",
+                // billingCO: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCO : "",
+                // billingCOState: nextProps.info.CompanyEconomy? "success" : "",
+                // billing: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billing : "",
+                // billingState: nextProps.info.CompanyEconomy? "success" : "",
+                // billingCity: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCity : "",
+                // billingCityState: nextProps.info.CompanyEconomy? "success" : "",
+                // billingCountry: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCountry : "",
+                // billingCountryState: nextProps.info.CompanyEconomy? "success" : "",
                 billingEmail: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingEmail : "",
                 billingEmailState: nextProps.info.CompanyEconomy? "success" : "",
                 accountNo: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.accountNo : "",
@@ -512,7 +512,7 @@ class CompanyInformasjon extends React.Component {
                             </div>
                         </GridItem>
                     </GridContainer>
-                    <GridContainer>                          
+                    {/* <GridContainer>                          
                         <GridItem xs={12} sm={12} md={6}>                      
                             <CustomInput
                                 success={this.state.billingCOState === "success"}
@@ -640,7 +640,7 @@ class CompanyInformasjon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                    </GridContainer>
+                    </GridContainer> */}
                     <GridContainer>
                         <GridItem xs={12} sm={12} md={6}>
                             <CustomInput
