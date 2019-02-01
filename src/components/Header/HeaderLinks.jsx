@@ -152,7 +152,7 @@ class HeaderLinks extends React.Component {
             }
           </Select>
         </div>
-        <div className={managerClasses}>
+        {/* <div className={managerClasses}>
           <Button
             color="transparent"
             justIcon
@@ -247,7 +247,7 @@ class HeaderLinks extends React.Component {
               </Grow>
             )}
           </Popper>
-        </div>
+        </div> */}
         <div className={managerClasses}>
           <Button
             color="transparent"

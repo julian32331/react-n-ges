@@ -45,8 +45,6 @@ class Profile extends React.Component {
       emailState: "",
       phone: "",
       phoneState: "",
-      position: "",
-      positionState: "",
       profession: "",
       professionState: "",
       description: "",
@@ -73,7 +71,7 @@ class Profile extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(this.props.workingForId !== nextProps.workingForId) {
-      // this.getServices(nextProps.workingForId);
+      this.getProfileData(nextProps.workingForId);
     }
     if(nextProps.data) {
       this.setState({
@@ -85,8 +83,6 @@ class Profile extends React.Component {
         emailState: nextProps.data.email? "success" : "error",
         phone: nextProps.data.EmployeeInformation.mobile,
         phoneState: nextProps.data.EmployeeInformation.mobile? "success" : "error",
-        position: nextProps.data.EmployeeInformation.position,
-        positionState: nextProps.data.EmployeeInformation.position? "success" : "error",
         profession: nextProps.data.EmployeeInformation.profession,
         professionState: nextProps.data.EmployeeInformation.profession? "success" : "error",
         description: nextProps.data.EmployeeInformation.description,
@@ -132,8 +128,6 @@ class Profile extends React.Component {
       phoneState: "",
       profession: "",
       professionState: "",
-      position: "",
-      positionState: "",
       description: "",
       descriptionState: "",            
       file: null,
@@ -145,12 +139,17 @@ class Profile extends React.Component {
   cancelEdit() {
     this.setState({
       name: this.props.data.name,
+      nameState: this.props.data.name? "success" : "error",
       orgNo: this.props.data.ss_number,
+      orgNoState: this.props.data.ss_number? "success" : "error",
       email: this.props.data.email,
+      emailState: this.props.data.email? "success" : "error",
       phone: this.props.data.EmployeeInformation.mobile,
-      position: this.props.data.EmployeeInformation.position,
+      phoneState: this.props.data.EmployeeInformation.mobile? "success" : "error",
       profession: this.props.data.EmployeeInformation.profession,
+      professionState: this.props.data.EmployeeInformation.profession? "success" : "error",
       description: this.props.data.EmployeeInformation.description,
+      descriptionState: this.props.data.EmployeeInformation.description? "success" : "error",
       imagePreviewUrl: Utils.root + this.props.data.EmployeeInformation.picturePath, 
       isEdit: false
     })
@@ -160,9 +159,7 @@ class Profile extends React.Component {
     if(this.state.nameState === "success" 
       && this.state.orgNoState === "success" 
       && this.state.emailState === "success" 
-      && this.state.phoneState === "success" 
       && this.state.professionState === "success" 
-      && this.state.positionState === "success" 
       && this.state.descriptionState === "success") {
       return false;
     } else {
@@ -182,7 +179,7 @@ class Profile extends React.Component {
         case "orgNo":                  
         case "phone":            
         case "profession":            
-        case "position":          
+        // case "position":          
         case "description":
             this.setState({ 
                 [stateName]: event.target.value,
@@ -204,7 +201,6 @@ class Profile extends React.Component {
     // payload.append('name', this.state.name);
     payload.append('mobile', this.state.phone);
     payload.append('profession', this.state.profession);
-    payload.append('position', this.state.position);
     payload.append('description', this.state.description);
     payload.append('employeeId', this.props.data.employeeId);
 
@@ -337,7 +333,7 @@ class Profile extends React.Component {
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
-                  <GridItem xs={12} sm={6} md={6}>
+                  {/* <GridItem xs={12} sm={6} md={6}>
                     <CustomInput
                       success={this.state.positionState === "success"}
                       error={this.state.positionState === "error"}
@@ -362,7 +358,7 @@ class Profile extends React.Component {
                         type: "text"
                       }}
                     />
-                  </GridItem>
+                  </GridItem> */}
                   <GridItem xs={12} sm={6} md={6}>
                     <CustomInput
                       success={this.state.professionState === "success"}

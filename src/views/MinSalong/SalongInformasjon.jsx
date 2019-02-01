@@ -138,6 +138,7 @@ class SalongInformasjon extends React.Component {
                 }
                 break;
             case "city":
+            case "phone":
                 this.setState({
                     city: event.target.value
                 })
@@ -149,24 +150,24 @@ class SalongInformasjon extends React.Component {
                     this.setState({ [stateName + "State"]: "error" });
                 }
                 break;
-            case "phone":
-                if(this.state.phone.length === 0) {
-                    this.setState({
-                        phone: "+46" + event.target.value
-                    })
-                } else {
-                    this.setState({
-                        phone: event.target.value
-                    })
-                }
-                if (Validator.verifyPhone(event.target.value)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else if(Validator.verifyPhone(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
+            // case "phone":
+            //     if(this.state.phone.length === 0) {
+            //         this.setState({
+            //             phone: "+46" + event.target.value
+            //         })
+            //     } else {
+            //         this.setState({
+            //             phone: event.target.value
+            //         })
+            //     }
+            //     if (Validator.verifyPhone(event.target.value)) {
+            //         this.setState({ [stateName + "State"]: "success" });
+            //     } else if(Validator.verifyPhone(event.target.value) === "") {
+            //         this.setState({ [stateName + "State"]: "" });
+            //     } else {
+            //         this.setState({ [stateName + "State"]: "error" });
+            //     }
+            //     break;
             case "email":
                 this.setState({
                     email: event.target.value

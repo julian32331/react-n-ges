@@ -86,8 +86,6 @@ class LoginPage extends React.Component {
         })
         if (Validator.verifyEmail(event.target.value)) {
           this.setState({ [stateName + "State"]: "success" });
-        } else if(Validator.verifyEmail(event.target.value) === "") {
-          this.setState({ [stateName + "State"]: "" });
         } else {
           this.setState({ [stateName + "State"]: "error" });
         }
@@ -98,8 +96,6 @@ class LoginPage extends React.Component {
         })
         if (Validator.verifyLength(event.target.value, 1)) {
           this.setState({ [stateName + "State"]: "success" });
-        } else if (Validator.verifyLength(event.target.value) === "") {
-          this.setState({ [stateName + "State"]: "" });
         } else {
           this.setState({ [stateName + "State"]: "error" });
         }
@@ -119,7 +115,8 @@ class LoginPage extends React.Component {
     }
   }
 
-  login() {
+  login(ev) {    
+    ev.preventDefault();
     this.setState({
       loading: true
     });
@@ -141,7 +138,7 @@ class LoginPage extends React.Component {
                 <img src={logo} height={54} alt="logo" />
               </CardHeader>
               <CardBody className={classes.pb_0}>
-                <form className={classes.form}>
+                <form className={classes.form} onSubmit={this.login}>
                   <CustomInput
                     success={this.state.emailState === "success"}
                     error={this.state.emailState === "error"}
@@ -206,7 +203,8 @@ class LoginPage extends React.Component {
                     <Link className={classes.link} to="/forgotpassword">Forgot Password?</Link>
                   </div>
                   <div className={classes.center}>
-                    <Button color="info" className={classes.w_100_p} onClick={this.login} disabled={this.canLogin()}>
+                    <Button color="info" className={classes.w_100_p} disabled={this.canLogin()} ref="login" type="submit">
+                    {/* onClick={this.login} */}
                       Sign In
                     </Button>   
                     <div className={classes.pt_15}>Don't you have account?</div>

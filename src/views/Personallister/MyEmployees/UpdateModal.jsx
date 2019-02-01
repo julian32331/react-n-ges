@@ -59,13 +59,13 @@ class NewModal extends React.Component {
             phoneState: "",
             profession: "",
             professionState: "",
-            position: "",
-            positionState: "",
             description: "",
             descriptionState: "",            
-            file: null,
+            avatar: null,
             isChangedAvatar: false,
-            imagePreviewUrl: ""
+            avatarPreviewUrl: "",
+            license: null,
+            licensePreviewUrl: "",
         }
     }
 
@@ -81,11 +81,10 @@ class NewModal extends React.Component {
                 phoneState: "success",
                 profession: nextProps.data.EmployeeInformation.profession,
                 professionState: "success",
-                position: nextProps.data.EmployeeInformation.position,
-                positionState: "success",
                 description: nextProps.data.EmployeeInformation.description,
                 descriptionState: "success",       
-                imagePreviewUrl: Utils.root + nextProps.data.EmployeeInformation.picturePath
+                avatarPreviewUrl: Utils.root + nextProps.data.EmployeeInformation.picturePath,
+                licensePreviewUrl: Utils.root + nextProps.data.EmployeeInformation.licensePath
             })
         }        
     }
@@ -100,13 +99,13 @@ class NewModal extends React.Component {
             phoneState: "",
             profession: "",
             professionState: "",
-            position: "",
-            positionState: "",
             description: "",
             descriptionState: "",            
-            file: null,
+            avatar: null,
             isChangedAvatar: false,
-            imagePreviewUrl: ""
+            avatarPreviewUrl: "",
+            license: null,
+            licensePreviewUrl: "",
         })
     }
 
@@ -125,8 +124,7 @@ class NewModal extends React.Component {
                 break;                
             case "name":                  
             case "phone":            
-            case "profession":            
-            case "position":          
+            case "profession":          
             case "description":
                 this.setState({ 
                     [stateName]: event.target.value,
@@ -138,27 +136,46 @@ class NewModal extends React.Component {
         }
     }
     
-    handleImageChange(e) {
+    handleAvatarChange(e) {
         e.preventDefault();
         let reader = new FileReader();
         let file = e.target.files[0];
         reader.onloadend = () => {
           this.setState({
-            file: file,
+            avatar: file,
             isChangedAvatar: true,
-            imagePreviewUrl: reader.result
+            avatarPreviewUrl: reader.result
           });
         };
         reader.readAsDataURL(file);
     }
-    handleClick() {
-        if(!this.props.employee) {
-            this.refs.fileInput.click();
+    handleLicenseChange(e) {
+        e.preventDefault();
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        reader.onloadend = () => {
+          this.setState({
+            license: file,
+            licensePreviewUrl: reader.result
+          });
+        };
+        reader.readAsDataURL(file);
+    }
+    handleClick(name) {
+        if(name=="avatar") {
+            if(!this.props.employee) {
+                this.refs.avatarInput.click();
+            }
+        } else {
+            if(!this.props.employee) {
+                this.refs.licenseInput.click();
+            }
         }
+        
     }
 
     canSave() {         
-        if(this.state.nameState === "success" && this.state.emailState === "success" && this.state.phoneState === "success" && this.state.professionState === "success" && this.state.positionState === "success" && this.state.descriptionState === "success") {
+        if(this.state.nameState === "success" && this.state.emailState === "success" && this.state.phoneState === "success" && this.state.professionState === "success" && this.state.descriptionState === "success") {
             return false
         } else {
             return true
@@ -168,16 +185,16 @@ class NewModal extends React.Component {
     save() {
         let payload = new FormData();
         payload.append('workingForId', this.props.workingForId);
-        payload.append('avatar', this.state.file, 'avatar.png');
+        payload.append('avatar', this.state.avatar, 'avatar.png');
         payload.append('hasAvatarChanged', this.state.isChangedAvatar)
         payload.append('email', this.state.email);
         payload.append('name', this.state.name);
         payload.append('mobile', this.state.phone);
         payload.append('profession', this.state.profession);
-        payload.append('position', this.state.position);
         payload.append('description', this.state.description);
         payload.append('employeeId', this.props.data.EmployeeInformation.employee_id);
         payload.append('employeeInformationId', this.props.data.EmployeeInformation.id);
+        payload.append('license', this.state.license, 'license.png');
 
         this.props.updateEmployee(payload, this.props.workingForId)
         this.handleClose();
@@ -210,11 +227,25 @@ class NewModal extends React.Component {
                     id="my-employee-newOrUpdate-modal-description"
                     className={classes.modalBody}
                 >
-                    <form>                                  
-                        <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
+                    <form>     
+                        <GridContainer>
+                            <GridItem xs={6}>
+                                <input type="file" hidden onChange={this.handleAvatarChange.bind(this)} ref="avatarInput" />
+                                <a onClick={() => this.handleClick("avatar")}>
+                                    <img src={this.state.avatarPreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%'}} alt="..." />
+                                </a>
+                            </GridItem>
+                            <GridItem xs={6}>
+                                <input type="file" hidden onChange={this.handleLicenseChange.bind(this)} ref="licenseInput" />
+                                <a onClick={() => this.handleClick("license")}>
+                                    <img src={this.state.licensePreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%'}} alt="..." />
+                                </a>
+                            </GridItem>
+                        </GridContainer>                             
+                        {/* <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
                         <a onClick={() => this.handleClick()}>
                             <img src={this.state.imagePreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%'}} alt="..." />
-                        </a>                           
+                        </a>                            */}
                         <CustomInput
                             success={this.state.nameState === "success"}
                             error={this.state.nameState === "error"}
@@ -259,43 +290,22 @@ class NewModal extends React.Component {
                                 onChange: event =>
                                     this.change(event, "phone", "phone", 1),
                             }}
-                        />                              
-                        <GridContainer>
-                            <GridItem xs={12} sm={6}>
-                                <CustomInput
-                                    success={this.state.professionState === "success"}
-                                    error={this.state.professionState === "error"}
-                                    labelText="Profession *"
-                                    id="profession"
-                                    formControlProps={{
-                                        fullWidth: true
-                                    }}
-                                    inputProps={{
-                                        value: this.state.profession,
-                                        type: "text",                                                
-                                        onChange: event =>
-                                            this.change(event, "profession", "profession", 1),
-                                    }}
-                                />
-                            </GridItem>
-                            <GridItem xs={12} sm={6}>
-                                <CustomInput
-                                    success={this.state.positionState === "success"}
-                                    error={this.state.positionState === "error"}
-                                    labelText="Position *"
-                                    id="position"
-                                    formControlProps={{
-                                        fullWidth: true
-                                    }}
-                                    inputProps={{
-                                        value: this.state.position,
-                                        type: "text",                                                
-                                        onChange: event =>
-                                            this.change(event, "position", "position", 1),
-                                    }}
-                                />
-                            </GridItem>
-                        </GridContainer> 
+                        />                            
+                        <CustomInput
+                            success={this.state.professionState === "success"}
+                            error={this.state.professionState === "error"}
+                            labelText="Profession *"
+                            id="profession"
+                            formControlProps={{
+                                fullWidth: true
+                            }}
+                            inputProps={{
+                                value: this.state.profession,
+                                type: "text",                                                
+                                onChange: event =>
+                                    this.change(event, "profession", "profession", 1),
+                            }}
+                        />
                         <CustomInput
                             success={this.state.descriptionState === "success"}
                             error={this.state.descriptionState === "error"}

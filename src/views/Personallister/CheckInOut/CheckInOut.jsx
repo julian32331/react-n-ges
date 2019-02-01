@@ -58,30 +58,35 @@ class CheckInOut extends React.Component {
     }
     this.list = [];
     this.getCheckList = this.getCheckList.bind(this);
-    this.getEmployees = this.getEmployees.bind(this);
+    // this.getEmployees = this.getEmployees.bind(this);
   }
 
   componentWillMount() {
       this.props.getUserData();
       setTimeout(() => {
-          this.getCheckList();
-          this.getEmployees();
+        this.getCheckList(this.props.workingForId);
+        this.getEmployees(this.props.workingForId);
       }, 100);
   }
 
-  getCheckList() {
+  getCheckList(id) {
     this.props.getCheckList({
-        workingForId: this.props.workingForId
+        workingForId: id
     });
 
   }
-  getEmployees() {
+  getEmployees(id) {
     this.props.getEmployees({
-      workingForId: this.props.workingForId
+      workingForId: id
     })
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps){    
+    if(this.props.workingForId !== nextProps.workingForId) {
+      this.getCheckList(nextProps.workingForId);
+      this.getEmployees(nextProps.workingForId);
+    }
+
     if(nextProps.list) 
       this.list = nextProps.list;
 
@@ -284,6 +289,25 @@ class CheckInOut extends React.Component {
                   onChange={event => this.timeHandler("searchTo", event)}
                 />
               </FormControl>
+            </GridItem>
+            <GridItem xs={12} sm={1}>
+              <div className={classes.pt_22}>
+                <Button 
+                    color="info" 
+                    size="sm"
+                    style={{width: '100%'}}
+                    onClick={() => {
+                        this.setState({
+                          search: "",
+                          searchFrom: "",
+                          searchTo: ""
+                        });
+                        this.search(null, null, null)
+                      }
+                    }
+                > Clear
+                </Button>
+              </div>
             </GridItem>
           </GridContainer>
 

@@ -106,8 +106,8 @@ class CompanyInformasjon extends React.Component {
                 orgNoState: nextProps.info.orgNo? "success" : "",
                 email: nextProps.info.email? nextProps.info.email : "",
                 emailState: nextProps.info.email? "success" : "",
-                phone: nextProps.info.phone? nextProps.info.phone : "",
-                phoneState: nextProps.info.phone? "success" : "",
+                phone: nextProps.info.mobile? nextProps.info.mobile : "",
+                phoneState: nextProps.info.mobile? "success" : "",
                 addressCO: nextProps.info.addressCO? nextProps.info.addressCO : "",
                 addressCOState: nextProps.info.addressCO? "success" : "",
                 address: nextProps.info.address? nextProps.info.address : "",
@@ -116,8 +116,8 @@ class CompanyInformasjon extends React.Component {
                 cityState: nextProps.info.city? "success" : "",
                 country: nextProps.info.country? nextProps.info.country : "",
                 countryState: nextProps.info.country? "success" : "",
-                zip: nextProps.info.zip? nextProps.info.zip : "",
-                zipState: nextProps.info.zip? "success" : "",
+                zip: nextProps.info.post? nextProps.info.post : "",
+                zipState: nextProps.info.post? "success" : "",
                 // billingCO: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCO : "",
                 // billingCOState: nextProps.info.CompanyEconomy? "success" : "",
                 // billing: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billing : "",
@@ -177,6 +177,7 @@ class CompanyInformasjon extends React.Component {
                 }
                 break;
             case "city":
+            case "phone":
                 this.setState({
                     city: event.target.value
                 })
@@ -188,24 +189,24 @@ class CompanyInformasjon extends React.Component {
                     this.setState({ [stateName + "State"]: "error" });
                 }
                 break;
-            case "phone":
-                if(this.state.phone.length === 0) {
-                    this.setState({
-                        phone: "+46" + event.target.value
-                    })
-                } else {
-                    this.setState({
-                        phone: event.target.value
-                    })
-                }
-                if (Validator.verifyPhone(event.target.value)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else if(Validator.verifyPhone(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
+            // case "phone":
+            //     if(this.state.phone.length === 0) {
+            //         this.setState({
+            //             phone: "+46" + event.target.value
+            //         })
+            //     } else {
+            //         this.setState({
+            //             phone: event.target.value
+            //         })
+            //     }
+            //     if (Validator.verifyPhone(event.target.value)) {
+            //         this.setState({ [stateName + "State"]: "success" });
+            //     } else if(Validator.verifyPhone(event.target.value) === "") {
+            //         this.setState({ [stateName + "State"]: "" });
+            //     } else {
+            //         this.setState({ [stateName + "State"]: "error" });
+            //     }
+            //     break;
             case "email":
                 this.setState({
                     email: event.target.value

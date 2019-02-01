@@ -60,17 +60,21 @@ class MyEmployees extends React.Component {
   componentWillMount() {
       this.props.getUserData();
       setTimeout(() => {
-          this.getEmployees();
+          this.getEmployees(this.props.workingForId);
       }, 100);
   }
 
-  getEmployees() {
+  getEmployees(id) {
     this.props.getEmployees({
-      workingForId: this.props.workingForId
+      workingForId: id
     })
   }
 
   componentWillReceiveProps(nextProps){
+    if(this.props.workingForId !== nextProps.workingForId) {
+      this.getEmployees(nextProps.workingForId);
+    }
+
     if(nextProps.employees)
       this.employees = nextProps.employees;
 
@@ -178,7 +182,6 @@ class MyEmployees extends React.Component {
         let temp = [];
         
         temp.push(employee.name);
-        temp.push(employee.EmployeeInformation.position);
         temp.push(employee.EmployeeInformation.mobile);
         temp.push(employee.SSN);
         temp.push(avatar(employee.EmployeeInformation.picturePath));
@@ -236,7 +239,6 @@ class MyEmployees extends React.Component {
           <Table
             tableHead={[
               "Name",
-              "Position",
               "Phone Number",
               "Personalnr",
               "Avatar",

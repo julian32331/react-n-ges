@@ -24,6 +24,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import FormControl from "@material-ui/core/FormControl";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 
 // @material-ui/icons
 import Warning from "@material-ui/icons/Warning";
@@ -48,6 +50,7 @@ class NewOrUpdateModal extends React.Component {
         this.state = {
             name: "",
             nameState: "",
+            isOpened: true,
             date: "",
             dateState: "",
             from: "",
@@ -63,7 +66,7 @@ class NewOrUpdateModal extends React.Component {
             this.setState({
                 name: nextProps.data.name,
                 nameState: "success",
-                date: nextProps.data.date,
+                date: moment(nextProps.data.date).format("DD/MM/YYYY"),
                 dateState: "success",
                 from: nextProps.data.openAt.substr(0,2) + ":" + nextProps.data.openAt.substr(2,2),
                 fromState: "success",
@@ -101,6 +104,12 @@ class NewOrUpdateModal extends React.Component {
         this.initState();
         this.props.onClose();
     }
+
+    openHandler = name => event => {
+        this.setState({ 
+            [name]: event.target.checked,
+        });
+    };
 
     save(isNew) {
         if(isNew) {
@@ -235,39 +244,63 @@ class NewOrUpdateModal extends React.Component {
                                 type: "text",
                                 value: this.state.name
                             }}
-                        />  
+                        /> 
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={this.state.isOpened}
+                                    onChange={this.openHandler('isOpened')}
+                                    classes={{
+                                        switchBase: classes.switchBase,
+                                        checked: classes.switchChecked,
+                                        icon: classes.switchIcon,
+                                        iconChecked: classes.switchIconChecked,
+                                        bar: classes.switchBar
+                                    }}
+                                />
+                            }
+                            classes={{
+                                label: classes.label
+                            }}
+                            label="Salon opened?"
+                        />                        
                         <FormControl fullWidth style={{paddingTop: '27px', marginBottom: '17px',}}>
                             <Datetime
                                 timeFormat={false}
+                                dateFormat={"DD/MM/YYYY"}
                                 inputProps={{ placeholder: "Date *" }}
                                 value={this.state.date}
                                 onChange={event => this.change(event, "date", "date")}
                             />
-                        </FormControl>                    
-                        <GridContainer style={{paddingTop: '27px', marginBottom: '17px',}}>
-                            <GridItem xs={12} sm={12} md={6}>
-                                <FormControl fullWidth>
-                                    <Datetime
-                                        dateFormat={false}
-                                        timeFormat={"HH:mm"}
-                                        inputProps={{ placeholder: "From *" }}
-                                        value={this.state.from}
-                                        onChange={event => this.change(event, "from", "from")}
-                                    />
-                                </FormControl>
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={6}>
-                                <FormControl fullWidth>
-                                    <Datetime
-                                        dateFormat={false}
-                                        timeFormat={"HH:mm"}
-                                        inputProps={{ placeholder: "To *" }}
-                                        value={this.state.to}
-                                        onChange={event => this.change(event, "to", "to")}
-                                    />
-                                </FormControl>
-                            </GridItem>
-                        </GridContainer>
+                        </FormControl>     
+                        {
+                            this.state.isOpened? (
+                                <GridContainer style={{paddingTop: '27px', marginBottom: '17px',}}>
+                                    <GridItem xs={12} sm={12} md={6}>
+                                        <FormControl fullWidth>
+                                            <Datetime
+                                                dateFormat={false}
+                                                timeFormat={"HH:mm"}
+                                                inputProps={{ placeholder: "From *" }}
+                                                value={this.state.from}
+                                                onChange={event => this.change(event, "from", "from")}
+                                            />
+                                        </FormControl>
+                                    </GridItem>
+                                    <GridItem xs={12} sm={12} md={6}>
+                                        <FormControl fullWidth>
+                                            <Datetime
+                                                dateFormat={false}
+                                                timeFormat={"HH:mm"}
+                                                inputProps={{ placeholder: "To *" }}
+                                                value={this.state.to}
+                                                onChange={event => this.change(event, "to", "to")}
+                                            />
+                                        </FormControl>
+                                    </GridItem>
+                                </GridContainer>
+                            ) : undefined
+                        }               
                 </form>
                 </DialogContent>
                 <DialogActions className={classes.modalFooter}>

@@ -36,12 +36,17 @@ export const verifyNumber = (value) => {
 }
 
 export const verifyUrl = (value) => {
-    try {
-        new URL(value);
+    var urlRex = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+    if (urlRex.test(value)) {
         return true;
-    } catch (_) {
-        return false;
     }
+    return false;
+    // try {
+    //     new URL(value);
+    //     return true;
+    // } catch (_) {
+    //     return false;
+    // }
 }
 
 export const verifyOrgNo = (value) => {

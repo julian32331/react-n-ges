@@ -236,6 +236,7 @@ class OpeningHours extends React.Component {
             let temp = [];
 
             temp.push(day.name);
+            temp.push(moment(day.date).format("DD/MM/YYYY"));
             temp.push(day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2));
             temp.push(day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2));
             temp.push(buttons(day));
@@ -284,28 +285,41 @@ class OpeningHours extends React.Component {
                                                     label={this.state[`${hour.name}_name`]}
                                                 />
                                             </GridItem>
-                                            <GridItem xs={8} sm={3} md={2}>
-                                                <FormControl fullWidth>
-                                                    <Datetime
-                                                        dateFormat={false}
-                                                        timeFormat="HH:mm"
-                                                        inputProps={{ placeholder: "From", disabled: !this.state.isEdit }}
-                                                        value={this.state[`${hour.name}_from`]}
-                                                        onChange={this.timeHandler(`${hour.name}_from`)}
-                                                    />
-                                                </FormControl>
-                                            </GridItem>
-                                            <GridItem xs={8} sm={3} md={2}>
-                                                <FormControl fullWidth>
-                                                    <Datetime
-                                                        dateFormat={false}
-                                                        timeFormat="HH:mm"
-                                                        inputProps={{ placeholder: "To", disabled: !this.state.isEdit }}
-                                                        value={this.state[`${hour.name}_to`]}
-                                                        onChange={this.timeHandler(`${hour.name}_to`)}
-                                                    />
-                                                </FormControl>
-                                            </GridItem>
+                                            {
+                                                this.state[`${hour.name}_open`]? (
+                                                    <GridItem xs={8} sm={4} md={3}>
+                                                    <GridContainer>
+                                                    <GridItem xs={6}>
+                                                        <FormControl fullWidth>
+                                                            <Datetime
+                                                                dateFormat={false}
+                                                                timeFormat="HH:mm"
+                                                                inputProps={{ placeholder: "From", disabled: !this.state.isEdit }}
+                                                                value={this.state[`${hour.name}_from`]}
+                                                                onChange={this.timeHandler(`${hour.name}_from`)}
+                                                            />
+                                                        </FormControl>
+                                                    </GridItem>
+                                                    <GridItem xs={6}>
+                                                        <FormControl fullWidth>
+                                                            <Datetime
+                                                                dateFormat={false}
+                                                                timeFormat="HH:mm"
+                                                                inputProps={{ placeholder: "To", disabled: !this.state.isEdit }}
+                                                                value={this.state[`${hour.name}_to`]}
+                                                                onChange={this.timeHandler(`${hour.name}_to`)}
+                                                            />
+                                                        </FormControl>
+                                                    </GridItem>
+                                                    </GridContainer>
+                                                    </GridItem>
+                                                ) : (
+                                                    <GridItem xs={8} sm={4} md={3}>                                                        
+                                                    
+                                                    </GridItem>
+                                                )
+                                            }
+                                            
                                         </GridContainer>                          
                                     </GridItem>
                                 )
@@ -370,6 +384,7 @@ class OpeningHours extends React.Component {
                                 <Table
                                     tableHead={[
                                         "Name",
+                                        "Date",
                                         "From",
                                         "To",
                                         "Actions"

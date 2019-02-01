@@ -5,6 +5,7 @@
 
 import {
   dangerColor,
+  infoColor,
   successColor,
 } from "assets/jss/material-dashboard-pro-react.jsx";
 import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
@@ -36,7 +37,16 @@ const commonModalStyle = theme => ({
   formControl: {
     marginBottom: '20px',
     paddingTop: '5px'
-  }
+  },
+  switchIconChecked: {
+    borderColor: infoColor,
+    transform: "translateX(0px)!important"
+  },
+  switchChecked: {
+    "& + $switchBar": {
+      backgroundColor: infoColor + " !important"
+    }
+  },
 });
 
 export default commonModalStyle;

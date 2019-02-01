@@ -74,8 +74,6 @@ class NewModal extends React.Component {
             phoneState: "",
             profession: "",
             professionState: "",
-            position: "",
-            positionState: "",
             description: "",
             descriptionState: "",
         }
@@ -137,8 +135,6 @@ class NewModal extends React.Component {
             phoneState: "",
             profession: "",
             professionState: "",
-            position: "",
-            positionState: "",
             description: "",
             descriptionState: "",
         })
@@ -161,7 +157,6 @@ class NewModal extends React.Component {
             case "ssn":            
             case "phone":            
             case "profession":            
-            case "position":          
             case "description":
                 this.setState({ 
                     [stateName]: event.target.value,
@@ -258,7 +253,7 @@ class NewModal extends React.Component {
                 return true
             }
         } else {            
-            if(this.state.nameState === "success" && this.state.ssnState === "success" && this.state.phoneState === "success" && this.state.professionState === "success" && this.state.positionState === "success" && this.state.descriptionState === "success" && this.state.consumerOwner && this.state.companyAuthLevel && this.state.salonAuthLevel && this.state.bookingPaymentFor && this.state.productPaymentFor) {
+            if(this.state.nameState === "success" && this.state.ssnState === "success" && this.state.phoneState === "success" && this.state.professionState === "success" && this.state.descriptionState === "success" && this.state.consumerOwner && this.state.companyAuthLevel && this.state.salonAuthLevel && this.state.bookingPaymentFor && this.state.productPaymentFor) {
                 return false
             } else {
                 return true
@@ -289,7 +284,6 @@ class NewModal extends React.Component {
             payload.append('SSNumber', this.state.ssn);
             payload.append('mobile', this.state.phone);
             payload.append('profession', this.state.profession);
-            payload.append('position', this.state.position);
             payload.append('description', this.state.description);
             payload.append('consumerOwner', this.state.consumerOwner);
             payload.append('companyAuthLevel', this.state.companyAuthLevel);
@@ -454,45 +448,23 @@ class NewModal extends React.Component {
                                             }}
                                         />
                                     </GridItem>
-                                </GridContainer>                                
-                                <GridContainer>
-                                    <GridItem xs={12} sm={6}>
-                                        <CustomInput
-                                            success={this.props.employee !== null || this.state.professionState === "success"}
-                                            error={this.state.professionState === "error"}
-                                            labelText="Profession *"
-                                            id="profession"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                value: this.props.employee? this.props.employee.EmployeeInformation.profession : this.state.profession,
-                                                disabled: this.props.employee? true : false,
-                                                type: "text",                                                
-                                                onChange: event =>
-                                                    this.change(event, "profession", "profession", 1),
-                                            }}
-                                        />
-                                    </GridItem>
-                                    <GridItem xs={12} sm={6}>
-                                        <CustomInput
-                                            success={this.props.employee !== null || this.state.positionState === "success"}
-                                            error={this.state.positionState === "error"}
-                                            labelText="Position *"
-                                            id="position"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                value: this.props.employee? this.props.employee.EmployeeInformation.position : this.state.position,
-                                                disabled: this.props.employee? true : false,
-                                                type: "text",                                                
-                                                onChange: event =>
-                                                    this.change(event, "position", "position", 1),
-                                            }}
-                                        />
-                                    </GridItem>
-                                </GridContainer> 
+                                </GridContainer>                
+                                <CustomInput
+                                    success={this.props.employee !== null || this.state.professionState === "success"}
+                                    error={this.state.professionState === "error"}
+                                    labelText="Profession *"
+                                    id="profession"
+                                    formControlProps={{
+                                        fullWidth: true
+                                    }}
+                                    inputProps={{
+                                        value: this.props.employee? this.props.employee.EmployeeInformation.profession : this.state.profession,
+                                        disabled: this.props.employee? true : false,
+                                        type: "text",                                                
+                                        onChange: event =>
+                                            this.change(event, "profession", "profession", 1),
+                                    }}
+                                />
                                 <CustomInput
                                     success={this.props.employee !== null || this.state.descriptionState === "success"}
                                     error={this.state.descriptionState === "error"}
