@@ -177,7 +177,6 @@ class CompanyInformasjon extends React.Component {
                 }
                 break;
             case "city":
-            case "phone":
                 this.setState({
                     city: event.target.value
                 })
@@ -188,7 +187,13 @@ class CompanyInformasjon extends React.Component {
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
                 }
-                break;
+                break;     
+            case "phone":        
+                this.setState({ 
+                    [stateName]: event.target.value,
+                    [stateName + "State"]: Validator.verifyLength(event.target.value, stateNameEqualTo)? "success" : "error"
+                });
+                break;  
             // case "phone":
             //     if(this.state.phone.length === 0) {
             //         this.setState({

@@ -96,7 +96,8 @@ class NewOrUpdateModal extends React.Component {
             from: "",
             fromState: "",
             to: "",
-            toState: ""
+            toState: "",
+            isOpened: true,
         })
     }
 

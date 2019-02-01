@@ -83,22 +83,22 @@ class NewModal extends React.Component {
         if(nextProps.employee !== this.props.employee) {
             if(nextProps.employee){
                 console.log('employee founded.');
-                if(nextProps.employee.hasCompany) {
-                    this.setState({
-                        firstStep: false,
-                        secondStep: true,
-                        imagePreviewUrl: Utils.root + nextProps.employee.EmployeeInformation.picturePath
-                    })
-                } else {
+                // if(nextProps.employee.hasCompany) {
+                //     this.setState({
+                //         firstStep: false,
+                //         secondStep: true,
+                //         imagePreviewUrl: Utils.root + nextProps.employee.EmployeeInformation.picturePath
+                //     })
+                // } else {
                     this.setState({
                         firstStep: false,
                         thirdStep: true,
                         imagePreviewUrl: Utils.root + nextProps.employee.EmployeeInformation.picturePath,
                         consumerOwner: "SALON",
-                        bookingPaymentFor: "COMPANY",
-                        productPaymentFor: "COMPANY"
+                        bookingPaymentFor: nextProps.employee.hasCompany? "COMPANY" : "",
+                        productPaymentFor: nextProps.employee.hasCompany? "COMPANY" : ""
                     })
-                }            
+                // }            
             } else if(typeof nextProps.employee === 'boolean') {
                 console.log('employee not founded.');
                 this.setState({
@@ -508,7 +508,7 @@ class NewModal extends React.Component {
                                                 inputProps={{
                                                     name: "consumerOwnerSelect",
                                                     id: "consumerOwner-select",
-                                                    readOnly: this.state.hasConsumerOwner
+                                                    // readOnly: this.state.hasConsumerOwner
                                                 }}
                                             >
                                                 <MenuItem
@@ -673,6 +673,7 @@ class NewModal extends React.Component {
                                                     inputProps={{
                                                         name: "bookingPaymentForSelect",
                                                         id: "bookingPaymentFor-select",
+                                                        readOnly: this.props.employee.hasCompany? true : false
                                                     }}
                                                 >
                                                     <MenuItem
@@ -688,9 +689,9 @@ class NewModal extends React.Component {
                                                             root: classes.selectMenuItem,
                                                             selected: classes.selectMenuItemSelected
                                                         }}
-                                                        value="EMPLOYEE"
+                                                        value="COMPANY"
                                                     >
-                                                        employee
+                                                        company
                                                     </MenuItem>
                                                     <MenuItem
                                                         classes={{
@@ -726,6 +727,7 @@ class NewModal extends React.Component {
                                                     inputProps={{
                                                         name: "productPaymentForSelect",
                                                         id: "productPaymentFor-select",
+                                                        readOnly: this.props.employee.hasCompany? true : false
                                                     }}
                                                 >
                                                     <MenuItem
@@ -741,9 +743,9 @@ class NewModal extends React.Component {
                                                             root: classes.selectMenuItem,
                                                             selected: classes.selectMenuItemSelected
                                                         }}
-                                                        value="EMPLOYEE"
+                                                        value="COMPANY"
                                                     >
-                                                        employee
+                                                        company
                                                     </MenuItem>
                                                     <MenuItem
                                                         classes={{

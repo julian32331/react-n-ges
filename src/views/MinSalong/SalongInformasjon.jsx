@@ -138,7 +138,6 @@ class SalongInformasjon extends React.Component {
                 }
                 break;
             case "city":
-            case "phone":
                 this.setState({
                     city: event.target.value
                 })
@@ -150,24 +149,32 @@ class SalongInformasjon extends React.Component {
                     this.setState({ [stateName + "State"]: "error" });
                 }
                 break;
-            // case "phone":
-            //     if(this.state.phone.length === 0) {
-            //         this.setState({
-            //             phone: "+46" + event.target.value
-            //         })
-            //     } else {
-            //         this.setState({
-            //             phone: event.target.value
-            //         })
-            //     }
-            //     if (Validator.verifyPhone(event.target.value)) {
-            //         this.setState({ [stateName + "State"]: "success" });
-            //     } else if(Validator.verifyPhone(event.target.value) === "") {
-            //         this.setState({ [stateName + "State"]: "" });
-            //     } else {
-            //         this.setState({ [stateName + "State"]: "error" });
-            //     }
-            //     break;
+            case "phone":
+                this.setState({
+                    phone: event.target.value
+                })
+                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "error" });
+                }
+                // if(this.state.phone.length === 0) {
+                //     this.setState({
+                //         phone: "+46" + event.target.value
+                //     })
+                // } else {
+                //     this.setState({
+                //         phone: event.target.value
+                //     })
+                // }
+                // if (Validator.verifyPhone(event.target.value)) {
+                //     this.setState({ [stateName + "State"]: "success" });
+                // } else if(Validator.verifyPhone(event.target.value) === "") {
+                //     this.setState({ [stateName + "State"]: "" });
+                // } else {
+                //     this.setState({ [stateName + "State"]: "error" });
+                // }
+                break;
             case "email":
                 this.setState({
                     email: event.target.value
@@ -262,7 +269,8 @@ class SalongInformasjon extends React.Component {
                 email: this.state.email,
                 name: this.state.name,
                 description: this.state.description,
-                descriptionValidated: false,
+                telephone: this.state.phone,
+                // descriptionValidated: false,
                 parking: this.state.parkCheck,
                 website: this.state.network,
                 address: this.state.address,
@@ -271,7 +279,10 @@ class SalongInformasjon extends React.Component {
                 country: "Sweden"
             }
         });
-        this.cancelEdit();
+        // this.cancelEdit();
+        this.setState({
+            isEdit: false
+        })
     }
 
     render() {
@@ -414,7 +425,7 @@ class SalongInformasjon extends React.Component {
                                     ),
                                     disabled: !this.state.isEdit,
                                     onChange: event =>
-                                        this.change(event, "phone", "phone"),
+                                        this.change(event, "phone", "phone", 1),
                                     value: this.state.phone,
                                     type: "text"
                                 }}
