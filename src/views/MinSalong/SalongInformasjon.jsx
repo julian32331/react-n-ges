@@ -95,6 +95,8 @@ class SalongInformasjon extends React.Component {
                 networkState: nextProps.info.website? "success" : "error",
                 description: nextProps.info.description? nextProps.info.description : "",
                 descriptionState: nextProps.info.description? "success" : "error",
+                parkCheck: nextProps.info.parking,
+                // accessCheck: nextProps.info.description
             })
         }
     }

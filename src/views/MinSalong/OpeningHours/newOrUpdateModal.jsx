@@ -187,7 +187,7 @@ class NewOrUpdateModal extends React.Component {
     }
 
     canSave() {
-        if(this.state.nameState === "success" && this.state.dateState === "success" && this.state.fromState === "success" && this.state.toState === "success") {
+        if((this.state.nameState === "success" && this.state.dateState === "success" && this.state.fromState === "success" && this.state.toState === "success") || (this.state.nameState === "success" && this.state.dateState === "success")) {
             return false;
         } else if(this.props.data) {
             return false;
