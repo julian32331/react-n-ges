@@ -24,6 +24,7 @@ import Add from "@material-ui/icons/Add";
 import Remove from "@material-ui/icons/Remove";
 import ImportExport from "@material-ui/icons/ImportExport";
 import AddAlert from "@material-ui/icons/AddAlert";
+import Edit from "@material-ui/icons/Edit";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -40,7 +41,9 @@ import {CSVLink} from 'react-csv';
 
 import checkInOutStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInOutStyle.jsx";
 import CheckInModal from "./CheckInModal";
+import MCheckInModal from "./MCheckInModal";
 import CheckOutModal from "./CheckOutModal";
+import EditModal from "./EditModal";
 
 class CheckInOut extends React.Component {
 
@@ -52,6 +55,8 @@ class CheckInOut extends React.Component {
       searchTo: "",
       checkInModal: false,
       checkOutModal: false,
+      mCheckInModal: false,
+      editModal: false,
       modalData: null,
       alert: false,
       message: ""
@@ -151,7 +156,6 @@ class CheckInOut extends React.Component {
       checkInModal: false
     })
   }
-
   onOpenCheckInModal() {
     this.setState({
       checkInModal: true,
@@ -163,10 +167,32 @@ class CheckInOut extends React.Component {
       checkOutModal: false
     })
   }
-
   onOpenCheckOutModal(data) {
     this.setState({
       checkOutModal: true,
+      modalData: data
+    })
+  }
+  
+  onCloseMCheckInModal() {
+    this.setState({
+      mCheckInModal: false
+    })
+  }
+  onOpenMCheckInModal() {
+    this.setState({
+      mCheckInModal: true,
+    })
+  }
+
+  onCloseEditModal() {
+    this.setState({
+      editModal: false
+    })
+  }
+  onOpenEditModal(data) {
+    this.setState({
+      editModal: true,
       modalData: data
     })
   }
@@ -178,13 +204,30 @@ class CheckInOut extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const checkOutButton = data => {
+    const actionButtons = data => {
       return (
-        <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenCheckOutModal(data)}>
-          <Remove className={classes.icon} /> Check Out User
+        // <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenCheckOutModal(data)}>
+        //   <Remove className={classes.icon} /> Check Out User
+        // </Button>
+        
+        <div>
+          <Button color="info" className={classes.actionButton} onClick={() => this.onOpenCheckOutModal(data)}>
+              <Remove className={classes.icon} /> Check Out
+          </Button>                
+          <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenEditModal(data)}>
+              <Edit className={classes.icon} /> Edit
+          </Button>
+        </div> 
+      )
+    }  
+    
+    const editButton = data => {
+      return (               
+        <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenEditModal(data)}>
+            <Edit className={classes.icon} /> Edit
         </Button>
       )
-    }        
+    }
 
     let list = [];
     this.list.map(item => {
@@ -193,7 +236,7 @@ class CheckInOut extends React.Component {
       temp.push(item.SSNumber);
       temp.push(moment(item.checkIn).format("MM/DD/YYYY, hh:mm"));
       temp.push(item.checkOut? moment(item.checkOut).format("MM/DD/YYYY, hh:mm") : null);
-      item.checkOut? temp.push("") : temp.push(checkOutButton(item))
+      item.canCheckOut? temp.push(actionButtons(item)) : temp.push(editButton(item))
 
       list.push(temp);
     });
@@ -233,7 +276,14 @@ class CheckInOut extends React.Component {
                       size="sm"
                       onClick={() => this.onOpenCheckInModal()}
                   >                            
-                      <Add /> Check In USER
+                      <Add /> Check In
+                  </Button>
+                  <Button 
+                      color="info" 
+                      size="sm"
+                      onClick={() => this.onOpenMCheckInModal()}
+                  >                            
+                      <Add /> Manual Check In
                   </Button>
                 </GridItem>
             </GridContainer>
@@ -354,9 +404,20 @@ class CheckInOut extends React.Component {
             onClose={this.onCloseCheckInModal.bind(this)} 
           />
 
+          <MCheckInModal 
+            onOpen={this.state.mCheckInModal}
+            onClose={this.onCloseMCheckInModal.bind(this)} 
+          />
+
           <CheckOutModal 
             onOpen={this.state.checkOutModal}
             onClose={this.onCloseCheckOutModal.bind(this)}
+            data={this.state.modalData? this.state.modalData.personnelListId : null} 
+          />
+
+          <EditModal 
+            onOpen={this.state.editModal}
+            onClose={this.onCloseEditModal.bind(this)}
             data={this.state.modalData? this.state.modalData.personnelListId : null} 
           />
 

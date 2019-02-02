@@ -48,7 +48,6 @@ class SelectModal extends React.Component {
         super(props);
         this.state = {
             company: "",
-            saloon: "",
         }
 
         this.props.getUserData();
@@ -67,8 +66,10 @@ class SelectModal extends React.Component {
     };
 
     handleClose() {
-        this.props.updateWorkingForId(this.state.company);
-        this.props.onClose();
+        if(this.state.company) {
+            this.props.updateWorkingForId(this.state.company);
+            this.props.onClose();
+        }
     }
 
     render() {

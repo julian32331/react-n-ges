@@ -17,11 +17,13 @@ const checkInOut = function (state = initialState, action) {
         {
             return {
                 list: action.list,
-                errorMsg: state.errorMsg
+                errorMsg: ""
             };
         }        
         case Actions.UPDATE_CHECKLIST:
         case Actions.ADD_CHECKLIST:
+        case Actions.ADD_CHECKLIST_MANUALLY:
+        case Actions.EDIT_CHECKLIST:
         {
             return {
                 list: state.list,
@@ -29,6 +31,7 @@ const checkInOut = function (state = initialState, action) {
             };
         }  
         case Actions.ADD_CHECKLIST_ERROR:
+        case Actions.ADD_CHECKLIST_MANUALLY_ERROR:
         {
             return {
                 list: state.list,
