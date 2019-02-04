@@ -27,7 +27,7 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle.jsx";
 import SelectModal from "./SelectModal.jsx";
 
-import blog from "assets/img/blog.jpg";
+import dashboard from "assets/img/dashboard.jpg";
 
 class Dashboard extends React.Component {
 
@@ -39,13 +39,16 @@ class Dashboard extends React.Component {
   }
   
   componentWillMount() {
+    let workingFor = JSON.parse(localStorage.workingFor);
     if(!localStorage.token) {
       this.props.history.push("/login");
     }
-    if(!localStorage.workingForId) {
+    if(!localStorage.workingForId && workingFor.length > 1) {
       this.setState({
         selectModal: true
       })
+    } else {
+      this.props.updateWorkingForId(workingFor[0]['workingForId']);
     }
   }
   
@@ -59,80 +62,24 @@ class Dashboard extends React.Component {
     const { classes } = this.props;
     return (
       <Card>
-        <CardHeader>            
-          <div className={classes.cardHeader}>
-              <h3 className={classes.cardTitle}>Dashboard</h3>
-          </div>
-        </CardHeader>
-        <CardBody>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={4}>
-              <Card product className={classes.cardHover}>
-                <CardHeader image className={classes.cardHeaderHover}>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    <img src={blog} alt="..." />
-                  </a>
-                </CardHeader>
-                <CardBody>
-                  <h4 className={classes.cardProductTitle}>
-                    <a href="#pablo" onClick={e => e.preventDefault()}>
-                      Velkommen til geselle
-                    </a>
-                  </h4>
-                  <p className={classes.cardProductDesciprion}>
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
-                  </p>
-                </CardBody>
-              </Card>
-            </GridItem>
-            <GridItem xs={12} sm={12} md={4}>
-              <Card product className={classes.cardHover}>
-                <CardHeader image className={classes.cardHeaderHover}>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    <img src={blog} alt="..." />
-                  </a>
-                </CardHeader>
-                <CardBody>
-                  <h4 className={classes.cardProductTitle}>
-                    <a href="#pablo" onClick={e => e.preventDefault()}>
-                      Velkommen til geselle
-                    </a>
-                  </h4>
-                  <p className={classes.cardProductDesciprion}>
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
-                  </p>
-                </CardBody>
-              </Card>
-            </GridItem>
-            <GridItem xs={12} sm={12} md={4}>
-              <Card product className={classes.cardHover}>
-                <CardHeader image className={classes.cardHeaderHover}>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    <img src={blog} alt="..." />
-                  </a>
-                </CardHeader>
-                <CardBody>
-                  <h4 className={classes.cardProductTitle}>
-                    <a href="#pablo" onClick={e => e.preventDefault()}>
-                      Velkommen til geselle
-                    </a>
-                  </h4>
-                  <p className={classes.cardProductDesciprion}>
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
-                  </p>
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
+        <CardBody className={classes.cardContent}>
+          <h2 className={classes.text_center}>Dashboard</h2>
+          <p style={{width: '60%', margin: '0 auto', fontSize: '20px', lineHeight: '25px'}}>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
+          </p>
+          <p style={{width: '60%', margin: '0 auto', fontSize: '20px', lineHeight: '25px', marginTop: '10px'}}>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
+          </p>
+          <p style={{width: '60%', margin: '0 auto', fontSize: '20px', lineHeight: '25px', marginTop: '10px'}}>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
+          </p>
         </CardBody>
 
         <SelectModal
           onOpen={this.state.selectModal}
           onClose={this.onCloseSelectModal.bind(this)}
         />
-      </Card>
-
-      
+      </Card>      
     );
   }
 }
@@ -147,10 +94,10 @@ function mapStateToProps(state) {
   }
 }
 
-// function mapDispatchToProps(dispatch) {
-//     return bindActionCreators({
-//       getUserData: Actions.getUserData
-//     }, dispatch);
-// }
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+      updateWorkingForId: Actions.updateWorkingForId
+    }, dispatch);
+}
 
-export default withStyles(dashboardStyle)(withRouter(connect(mapStateToProps, null)(Dashboard)));
+export default withStyles(dashboardStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard)));

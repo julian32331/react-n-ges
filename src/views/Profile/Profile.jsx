@@ -229,7 +229,7 @@ class Profile extends React.Component {
                     <CustomInput
                       success={this.state.nameState === "success"}
                       error={this.state.nameState === "error"}
-                      labelText="Legal Name *"
+                      labelText="Name *"
                       id="legal-name"
                       formControlProps={{
                           fullWidth: true
@@ -255,7 +255,7 @@ class Profile extends React.Component {
                     <CustomInput
                       success={this.state.orgNoState === "success"}
                       error={this.state.orgNoState === "error"}
-                      labelText="Org Number"
+                      labelText="Personal Number"
                       id="org-number"
                       formControlProps={{
                         fullWidth: true

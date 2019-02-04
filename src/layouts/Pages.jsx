@@ -14,8 +14,6 @@ import pagesRoutes from "routes/pages.jsx";
 
 import pagesStyle from "assets/jss/material-dashboard-pro-react/layouts/pagesStyle.jsx";
 
-import bgImage from "assets/img/register.jpg";
-
 class Pages extends React.Component {
   componentDidMount() {
     document.body.style.overflow = "unset";
@@ -27,12 +25,7 @@ class Pages extends React.Component {
         <div className={classes.wrapper} ref="wrapper">
           <div
             className={classes.fullPage}
-            style={{ backgroundImage: "url(" + bgImage + ")" }}
           >
-            <div className={classes.leaf1}></div>
-            <div className={classes.leaf2}></div>
-            <div className={classes.leaf3}></div>
-            <div className={classes.leaf4}></div>
             <Switch>
               {pagesRoutes.map((prop, key) => {
                 if (prop.collapse) {

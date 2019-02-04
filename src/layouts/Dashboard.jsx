@@ -143,7 +143,7 @@ class Dashboard extends React.Component {
           )}
           {/* {this.getRoute() ? <Footer fluid /> : null} */}
           
-          <div className={classes.scrollTop}>
+          {/* <div className={classes.scrollTop}>
             <Button
               justIcon
               color="info"
@@ -154,7 +154,7 @@ class Dashboard extends React.Component {
             >
               <ArrowUpward />
             </Button>
-          </div>
+          </div> */}
 
         </div>
       </div>

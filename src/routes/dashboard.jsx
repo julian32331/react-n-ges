@@ -45,12 +45,12 @@ var dashRoutes = [
     icon: DashboardIcon,
     component: Dashboard
   },
-  {
-    path: "/createsalon",
-    name: "Creat First Salon",
-    icon: DashboardIcon,
-    component: CreateSalon
-  },
+  // {
+  //   path: "/createsalon",
+  //   name: "Creat First Salon",
+  //   icon: DashboardIcon,
+  //   component: CreateSalon
+  // },
   {
     collapse: true,
     path: "/minsalong",
