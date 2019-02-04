@@ -20,6 +20,27 @@ const companyInfo = function (state = initialState, action) {
                 info: action.info
             };
         }
+        case Actions.UPDATE_SALON_INFO:
+        {
+            return {
+                status: false,
+                errorMsg: ""
+            };
+        }
+        case Actions.UPDATE_SALON_INFO_SUCCESS:
+        {
+            return {
+                ...initialState,
+                status: true
+            };
+        }
+        case Actions.UPDATE_SALON_INFO_SUCCESS:
+        {
+            return {
+                status: false,
+                errorMsg: action.errorMsg
+            };
+        }
         default:
         {
             return state

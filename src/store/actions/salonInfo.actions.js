@@ -7,8 +7,9 @@ import * as Utils from 'utils';
 
 export const GET_SALON_INFO           = '[SALON INFO] GET';
 export const ADD_SALON_INFO           = '[SALON INFO] ADD';
-export const ADD_SALON_INFO_SUCCESS   = '[SALON INFO] ADD SUCCESS';
-export const ADD_SALON_INFO_ERROR     = '[SALON INFO] ADD ERROR';
+export const UPDATE_SALON_INFO           = '[SALON INFO] UPDATE';
+export const UPDATE_SALON_INFO_SUCCESS   = '[SALON INFO] UPDATE SUCCESS';
+export const UPDATE_SALON_INFO_ERROR     = '[SALON INFO] UPDATE ERROR';
 
 export function getSalonInfo(data) {
     const request = Utils.xapi().post('manager/salon', data);
@@ -22,24 +23,32 @@ export function getSalonInfo(data) {
 }
 
 export function addSalonInfo(data) {
+    const request = Utils.xapi().post('register/salon', data);
+    return (dispatch) =>
+        request.then((response) => {    
+            console.log('response: ', response.data)
+        })
+}
+
+export function updateSalonInfo(data) {
     const request = Utils.xapi().post('manager/salon/update', data);
     return (dispatch) =>
         request.then(() => {          
             dispatch({
-                type: ADD_SALON_INFO
+                type: UPDATE_SALON_INFO
             }); 
             dispatch(getSalonInfo({
                 workingForId: data.workingForId
             }));
             return dispatch({
-                type: ADD_SALON_INFO_SUCCESS
+                type: UPDATE_SALON_INFO_SUCCESS
             });
         }).catch((error) => {     
             dispatch({
-                type: ADD_SALON_INFO
+                type: UPDATE_SALON_INFO
             });
             return dispatch({
-                type: ADD_SALON_INFO_ERROR,
+                type: UPDATE_SALON_INFO_ERROR,
                 errorMsg: JSON.parse(error.request.response).error
             });
         });

@@ -4,6 +4,7 @@
  */
 
 import Dashboard from "views/Dashboard/Dashboard.jsx";
+import CreateSalon from "views/CreateSalon.jsx";
 import SalongInformasjon from "views/MinSalong/SalongInformasjon.jsx";
 import SalongService from "views/MinSalong/SalongService/SalongService.jsx";
 import OpeningHours from "views/MinSalong/OpeningHours/OpeningHours.jsx";
@@ -43,6 +44,12 @@ var dashRoutes = [
     name: "Dashboard",
     icon: DashboardIcon,
     component: Dashboard
+  },
+  {
+    path: "/createsalon",
+    name: "Creat First Salon",
+    icon: DashboardIcon,
+    component: CreateSalon
   },
   {
     collapse: true,

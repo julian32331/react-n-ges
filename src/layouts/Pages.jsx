@@ -29,6 +29,10 @@ class Pages extends React.Component {
             className={classes.fullPage}
             style={{ backgroundImage: "url(" + bgImage + ")" }}
           >
+            <div className={classes.leaf1}></div>
+            <div className={classes.leaf2}></div>
+            <div className={classes.leaf3}></div>
+            <div className={classes.leaf4}></div>
             <Switch>
               {pagesRoutes.map((prop, key) => {
                 if (prop.collapse) {

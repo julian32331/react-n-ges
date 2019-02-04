@@ -74,6 +74,7 @@ class CompanyInformasjon extends React.Component {
             bankgiroNoState: "",
             plusgiroNo: "",
             plusgiroNoState: "",
+            isEdit: false
         }
     }
     
@@ -118,22 +119,14 @@ class CompanyInformasjon extends React.Component {
                 countryState: nextProps.info.country? "success" : "",
                 zip: nextProps.info.post? nextProps.info.post : "",
                 zipState: nextProps.info.post? "success" : "",
-                // billingCO: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCO : "",
-                // billingCOState: nextProps.info.CompanyEconomy? "success" : "",
-                // billing: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billing : "",
-                // billingState: nextProps.info.CompanyEconomy? "success" : "",
-                // billingCity: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCity : "",
-                // billingCityState: nextProps.info.CompanyEconomy? "success" : "",
-                // billingCountry: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingCountry : "",
-                // billingCountryState: nextProps.info.CompanyEconomy? "success" : "",
-                billingEmail: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.billingEmail : "",
-                billingEmailState: nextProps.info.CompanyEconomy? "success" : "",
-                accountNo: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.accountNo : "",
-                accountNoState: nextProps.info.CompanyEconomy? "success" : "",
-                bankgiroNo: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.bankgiroNo : "",
-                bankgiroNoState: nextProps.info.CompanyEconomy? "success" : "",
-                plusgiroNo: nextProps.info.CompanyEconomy? nextProps.info.CompanyEconomy.plusgiroNo : "",
-                plusgiroNoState: nextProps.info.CompanyEconomy? "success" : "",
+                billingEmail: nextProps.info.CompanyEconomy? (nextProps.info.CompanyEconomy.billingEmail? nextProps.info.CompanyEconomy.billingEmail : "") : "",
+                billingEmailState: nextProps.info.CompanyEconomy? (nextProps.info.CompanyEconomy.billingEmail? "success" : "") : "",
+                accountNo: nextProps.info.CompanyEconomy? (nextProps.info.CompanyEconomy.accountNo? nextProps.info.CompanyEconomy.accountNo : "") : "",
+                accountNoState: nextProps.info.CompanyEconomy? (nextProps.info.CompanyEconomy.accountNo? "success" : "") : "",
+                bankgiroNo: nextProps.info.CompanyEconomy? (nextProps.info.CompanyEconomy.bankgiroNo? nextProps.info.CompanyEconomy.bankgiroNo : "") : "",
+                bankgiroNoState: nextProps.info.CompanyEconomy? (nextProps.info.CompanyEconomy.bankgiroNo? "success" : "") : "",
+                plusgiroNo: nextProps.info.CompanyEconomy? (nextProps.info.CompanyEconomy.plusgiroNo? nextProps.info.CompanyEconomy.plusgiroNo : "") : "",
+                plusgiroNoState: nextProps.info.CompanyEconomy? (nextProps.info.CompanyEconomy.plusgiroNo? "success" : "") : "",
             })
         }
     }
@@ -213,8 +206,9 @@ class CompanyInformasjon extends React.Component {
             //     }
             //     break;
             case "email":
+            case "billingEmail":
                 this.setState({
-                    email: event.target.value
+                    [stateName]: event.target.value
                 })
                 if (Validator.verifyEmail(event.target.value)) {
                     this.setState({ [stateName + "State"]: "success" });
@@ -236,9 +230,109 @@ class CompanyInformasjon extends React.Component {
                     this.setState({ [stateName + "State"]: "error" });
                 }
                 break;
+            case "memberId":  
+            case "orgNo":   
+            case "addressCO":  
+            case "country":  
+            case "accountNo":
+            case "bankgiroNo":  
+            case "plusgiroNo":         
+                this.setState({ 
+                    [stateName]: event.target.value,
+                    [stateName + "State"]: Validator.verifyLength(event.target.value, stateNameEqualTo)? "success" : "error"
+                });
+                break;
             default:
                 break;
         }
+    }
+
+    enableEdit() {
+        this.setState({
+            isEdit: true
+        })
+    }
+
+    cancelEdit() {
+        this.setState({
+            memberId: this.props.info.memberId? this.props.info.memberId : "",
+            memberIdState: this.props.info.memberId? "success" : "",
+            name: this.props.info.legalName? this.props.info.legalName : "",
+            nameState: this.props.info.legalName? "success" : "",
+            orgNo: this.props.info.orgNo? this.props.info.orgNo : "",
+            orgNoState: this.props.info.orgNo? "success" : "",
+            email: this.props.info.email? this.props.info.email : "",
+            emailState: this.props.info.email? "success" : "",
+            phone: this.props.info.mobile? this.props.info.mobile : "",
+            phoneState: this.props.info.mobile? "success" : "",
+            addressCO: this.props.info.addressCO? this.props.info.addressCO : "",
+            addressCOState: this.props.info.addressCO? "success" : "",
+            address: this.props.info.address? this.props.info.address : "",
+            addressState: this.props.info.address? "success" : "",
+            city: this.props.info.city? this.props.info.city : "",
+            cityState: this.props.info.city? "success" : "",
+            country: this.props.info.country? this.props.info.country : "",
+            countryState: this.props.info.country? "success" : "",
+            zip: this.props.info.post? this.props.info.post : "",
+            zipState: this.props.info.post? "success" : "",
+            billingEmail: this.props.info.CompanyEconomy? this.props.info.CompanyEconomy.billingEmail : "",
+            billingEmailState: this.props.info.CompanyEconomy? "success" : "",
+            accountNo: this.props.info.CompanyEconomy? this.props.info.CompanyEconomy.accountNo : "",
+            accountNoState: this.props.info.CompanyEconomy? "success" : "",
+            bankgiroNo: this.props.info.CompanyEconomy? this.props.info.CompanyEconomy.bankgiroNo : "",
+            bankgiroNoState: this.props.info.CompanyEconomy? "success" : "",
+            plusgiroNo: this.props.info.CompanyEconomy? this.props.info.CompanyEconomy.plusgiroNo : "",
+            plusgiroNoState: this.props.info.CompanyEconomy? "success" : "",
+            isEdit: false
+        });
+    }
+
+    canSubmit() {
+        if(this.state.memberIdState === "success" &&
+            this.state.nameState === "success" &&
+            this.state.orgNoState === "success" &&
+            this.state.emailState === "success" &&
+            this.state.phoneState === "success" &&
+            this.state.addressCOState === "success" &&
+            this.state.addressState === "success" &&
+            this.state.cityState === "success" &&
+            this.state.countryState === "success" &&
+            this.state.zipState === "success" &&
+            this.state.billingEmailState === "success" &&
+            this.state.accountNoState === "success" &&
+            this.state.bankgiroNoState === "success" &&
+            this.state.plusgiroNoState === "success") {
+            return false;
+        } else {
+            return true
+        }
+    }
+
+    updateCompanyInfo() {
+        this.props.updateCompanyInfo({
+            workingForId: this.props.workingForId,
+            companyData: {
+                memberId: this.state.memberId,
+                legalName: this.state.name,
+                orgNo: this.state.orgNo,
+                email: this.state.email,
+                mobile: this.state.phone,
+                addressCO: this.state.addressCO,
+                address: this.state.address,
+                city: this.state.city,
+                country: this.state.country,
+                post: this.state.zip,
+            },
+            companyEconomyData: {                
+                billingEmail: this.state.billingEmail,
+                accountNo: this.state.accountNo,
+                bankgiroNo: this.state.bankgiroNo,
+                plusgiroNo: this.state.plusgiroNo
+            }
+        });
+        this.setState({
+            isEdit: false
+        })
     }
 
     render() {
@@ -272,6 +366,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "memberId", "memberId", 1),
                                     value: this.state.memberId,
@@ -297,6 +392,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "name", "name", 1),
                                     value: this.state.name,
@@ -322,6 +418,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "orgNo", "orgNo", 1),
                                     value: this.state.orgNo,
@@ -349,6 +446,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "email", "email", 1),
                                     value: this.state.email,
@@ -374,6 +472,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "phone", "phone", 1),
                                     value: this.state.phone,
@@ -401,6 +500,7 @@ class CompanyInformasjon extends React.Component {
                                         ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "addressCO", "addressCO", 1),
                                     value: this.state.addressCO,
@@ -426,6 +526,7 @@ class CompanyInformasjon extends React.Component {
                                         ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "address", "address", 1),
                                     value: this.state.address,
@@ -453,6 +554,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "city", "city", 1),
                                     value: this.state.city,
@@ -478,6 +580,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "country", "country", 1),
                                     value: this.state.country,
@@ -503,6 +606,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "zip", "zip", 1),
                                     value: this.state.zip,
@@ -518,135 +622,6 @@ class CompanyInformasjon extends React.Component {
                             </div>
                         </GridItem>
                     </GridContainer>
-                    {/* <GridContainer>                          
-                        <GridItem xs={12} sm={12} md={6}>                      
-                            <CustomInput
-                                success={this.state.billingCOState === "success"}
-                                error={this.state.billingCOState === "error"}
-                                labelText="BillingCO *"
-                                id="billingCO"
-                                formControlProps={{
-                                    fullWidth: true
-                                }}
-                                inputProps={{
-                                    endAdornment:
-                                        this.state.billingCOState === "error" ? (
-                                        <InputAdornment position="end">
-                                            <Warning className={classes.danger} />
-                                        </InputAdornment>
-                                        ) : (
-                                        undefined
-                                    ),
-                                    onChange: event =>
-                                        this.change(event, "billingCO", "billingCO", 1),
-                                    value: this.state.billingCO,
-                                    type: "text"
-                                }}
-                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={6}>                      
-                            <CustomInput
-                                success={this.state.billingState === "success"}
-                                error={this.state.billingState === "error"}
-                                labelText="Billing *"
-                                id="billing"
-                                formControlProps={{
-                                    fullWidth: true
-                                }}
-                                inputProps={{
-                                    endAdornment:
-                                        this.state.billingState === "error" ? (
-                                        <InputAdornment position="end">
-                                            <Warning className={classes.danger} />
-                                        </InputAdornment>
-                                        ) : (
-                                        undefined
-                                    ),
-                                    onChange: event =>
-                                        this.change(event, "billing", "billing", 1),
-                                    value: this.state.billing,
-                                    type: "text"
-                                }}
-                            />
-                        </GridItem>
-                    </GridContainer>
-                    <GridContainer>
-                        <GridItem xs={12} sm={4} md={4}>
-                            <CustomInput
-                                success={this.state.billingCityState === "success"}
-                                error={this.state.billingCityState === "error"}
-                                labelText="Billing City *"
-                                id="billing-city"
-                                formControlProps={{
-                                    fullWidth: true
-                                }}
-                                inputProps={{
-                                    endAdornment:
-                                      this.state.billingCityState === "error" ? (
-                                        <InputAdornment position="end">
-                                          <Warning className={classes.danger} />
-                                        </InputAdornment>
-                                      ) : (
-                                        undefined
-                                    ),
-                                    onChange: event =>
-                                        this.change(event, "billingCity", "billingCity", 1),
-                                    value: this.state.billingCity,
-                                    type: "text"
-                                }}
-                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={4} md={4}>
-                            <CustomInput
-                                success={this.state.billingCountryState === "success"}
-                                error={this.state.billingCountryState === "error"}
-                                labelText="Billing Country *"
-                                id="billing-country"
-                                formControlProps={{
-                                    fullWidth: true
-                                }}
-                                inputProps={{
-                                    endAdornment:
-                                      this.state.billingCountryState === "error" ? (
-                                        <InputAdornment position="end">
-                                          <Warning className={classes.danger} />
-                                        </InputAdornment>
-                                      ) : (
-                                        undefined
-                                    ),
-                                    onChange: event =>
-                                        this.change(event, "billingCountry", "billingCountry", 1),
-                                    value: this.state.billingCountry,
-                                    type: "text"
-                                }}
-                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={4} md={4}>
-                            <CustomInput
-                                success={this.state.billingZipState === "success"}
-                                error={this.state.billingZipState === "error"}
-                                labelText="Billing Post Nummer *"
-                                id="billing-zip"
-                                formControlProps={{
-                                    fullWidth: true
-                                }}
-                                inputProps={{
-                                    endAdornment:
-                                      this.state.billingZipState === "error" ? (
-                                        <InputAdornment position="end">
-                                          <Warning className={classes.danger} />
-                                        </InputAdornment>
-                                      ) : (
-                                        undefined
-                                    ),
-                                    onChange: event =>
-                                        this.change(event, "billingZip", "billingZip", 1),
-                                    value: this.state.billingZip,
-                                    type: "number"
-                                }}
-                            />
-                        </GridItem>
-                    </GridContainer> */}
                     <GridContainer>
                         <GridItem xs={12} sm={12} md={6}>
                             <CustomInput
@@ -666,6 +641,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "billingEmail", "billingEmail", 1),
                                     value: this.state.billingEmail,
@@ -691,6 +667,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "accountNo", "accountNo", 1),
                                     value: this.state.accountNo,
@@ -718,6 +695,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "bankgiroNo", "bankgiroNo", 1),
                                     value: this.state.bankgiroNo,
@@ -743,19 +721,32 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "plusgiroNo", "plusgiroNo", 1),
-                                    value: this.state.plusgiro,
+                                    value: this.state.plusgiroNo,
                                     type: "text"
                                 }}
                             />
                         </GridItem>
                     </GridContainer>
                     <GridContainer justify="flex-end" alignItems="flex-end">
-                        <GridItem xs={12} sm={12} md={6}>                    
+                        {/* <GridItem xs={12} sm={12} md={6}>                    
                             <Button color="info" className={classes.submit} >LAGRE</Button>
-                        </GridItem>
-                    </GridContainer>
+                        </GridItem> */}                   
+                        {
+                            this.state.isEdit? (                      
+                                <GridItem xs={12} sm={12} md={6}>                    
+                                    <Button color="info" size="sm" className={classes.submit} disabled={this.canSubmit()} onClick={this.updateCompanyInfo.bind(this)}>LAGRE</Button>
+                                    <Button color="danger" size="sm" className={classes.submit} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
+                                </GridItem>                                
+                            ) : (
+                                <GridItem xs={12} sm={12} md={6}>                    
+                                    <Button color="info" size="sm" className={classes.submit} onClick={this.enableEdit.bind(this)}>Edit</Button>
+                                </GridItem> 
+                            )
+                        } 
+                    </GridContainer> 
                 </form>
             </CardBody>
         </Card>
@@ -777,7 +768,8 @@ function mapStateToProps(state) {
   function mapDispatchToProps(dispatch) {
       return bindActionCreators({          
         getUserData : Actions.getUserData,
-        getCompanyInfo: Actions.getCompanyInfo
+        getCompanyInfo: Actions.getCompanyInfo,        
+        updateCompanyInfo: Actions.updateCompanyInfo
       }, dispatch);
   }
   

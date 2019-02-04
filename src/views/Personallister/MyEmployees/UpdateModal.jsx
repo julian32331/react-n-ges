@@ -38,6 +38,7 @@ import Danger from "components/Typography/Danger.jsx";
 
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 import avatar from "assets/img/faces/marc.jpg";
+import cert from "assets/img/cert.png";
 
 import * as Validator from "./../../../validator";
 import * as Utils from 'utils';
@@ -65,7 +66,7 @@ class NewModal extends React.Component {
             isChangedAvatar: false,
             avatarPreviewUrl: "",
             license: null,
-            licensePreviewUrl: "",
+            licensePreviewUrl: cert,
         }
     }
 
@@ -105,7 +106,7 @@ class NewModal extends React.Component {
             isChangedAvatar: false,
             avatarPreviewUrl: "",
             license: null,
-            licensePreviewUrl: "",
+            licensePreviewUrl: cert,
         })
     }
 
@@ -228,7 +229,7 @@ class NewModal extends React.Component {
                     className={classes.modalBody}
                 >
                     <form>     
-                        <GridContainer>
+                        <GridContainer alignItems="center">
                             <GridItem xs={6}>
                                 <input type="file" hidden onChange={this.handleAvatarChange.bind(this)} ref="avatarInput" />
                                 <a onClick={() => this.handleClick("avatar")}>

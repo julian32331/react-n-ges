@@ -20,21 +20,21 @@ const salonInfo = function (state = initialState, action) {
                 info: action.info
             };
         }
-        case Actions.ADD_SALON_INFO:
+        case Actions.UPDATE_SALON_INFO:
         {
             return {
                 status: false,
                 errorMsg: ""
             };
         }
-        case Actions.ADD_SALON_INFO_SUCCESS:
+        case Actions.UPDATE_SALON_INFO_SUCCESS:
         {
             return {
                 ...initialState,
                 status: true
             };
         }
-        case Actions.ADD_SALON_INFO_SUCCESS:
+        case Actions.UPDATE_SALON_INFO_SUCCESS:
         {
             return {
                 status: false,

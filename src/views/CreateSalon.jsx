@@ -1,6 +1,6 @@
 /**
- * Description: Dashboard view
- * Date: 12/21/2018
+ * Description: Salon create
+ * Date: 2/4/2019
  */
 
 import React from "react";
@@ -30,11 +30,11 @@ import CardBody from "components/Card/CardBody.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import * as Validator from "../../validator";
+import * as Validator from "./../validator";
 
 import salongInformasjonStyle from "assets/jss/material-dashboard-pro-react/views/salongInformasjonStyle.jsx";
 
-class SalongInformasjon extends React.Component {
+class CreateSalon extends React.Component {
     constructor(props) {
         super(props);
         this.state = {      
@@ -54,128 +54,30 @@ class SalongInformasjon extends React.Component {
             networkState: "",
             parkCheck: false,
             accessCheck: false,
-            description: "",
-            isEdit: false
+            description: ""
         }
     }
 
     componentWillMount() {
         this.props.getUserData();
-        setTimeout(() => {
-            this.getSalonInfo(this.props.workingForId);
-        }, 100);
-    }
-
-    getSalonInfo(id) {
-        this.props.getSalonInfo({
-            workingForId: id
-        })
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if(this.props.workingForId !== nextProps.workingForId) {
-            this.getSalonInfo(nextProps.workingForId);
-        }
-
-        if(nextProps.info) {
-            this.setState({
-                name: nextProps.info.name? nextProps.info.name : "",
-                nameState: nextProps.info.name? "success" : "error",
-                address: nextProps.info.address? nextProps.info.address : "",
-                addressState: nextProps.info.address? "success" : "error",
-                zip: nextProps.info.post? nextProps.info.post : "",
-                zipState: nextProps.info.post? "success" : "error",
-                city: nextProps.info.city? nextProps.info.city : "",
-                cityState: nextProps.info.city? "success" : "error",
-                phone: nextProps.info.telephone? nextProps.info.telephone : "",
-                phoneState: nextProps.info.telephone? "success" : "error",
-                email: nextProps.info.email? nextProps.info.email : "",
-                emailState: nextProps.info.email? "success" : "error",
-                network: nextProps.info.website? nextProps.info.website : "",
-                networkState: nextProps.info.website? "success" : "error",
-                description: nextProps.info.description? nextProps.info.description : "",
-                descriptionState: nextProps.info.description? "success" : "error",
-                parkCheck: nextProps.info.parking,
-                // accessCheck: nextProps.info.description
-            })
-        }
     }
 
     change(event, stateName, type, stateNameEqualTo, maxValue) {
         switch (type) {
             case "name":
-                this.setState({
-                    name: event.target.value
-                })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
             case "address":
-                this.setState({
-                    address: event.target.value
-                })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
             case "zip":
-                this.setState({
-                    zip: event.target.value
-                })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
             case "city":
-                this.setState({
-                    city: event.target.value
-                })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
             case "phone":
+            case "description":
                 this.setState({
-                    phone: event.target.value
+                    [stateName]: event.target.value
                 })
                 if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
                 }
-                // if(this.state.phone.length === 0) {
-                //     this.setState({
-                //         phone: "+46" + event.target.value
-                //     })
-                // } else {
-                //     this.setState({
-                //         phone: event.target.value
-                //     })
-                // }
-                // if (Validator.verifyPhone(event.target.value)) {
-                //     this.setState({ [stateName + "State"]: "success" });
-                // } else if(Validator.verifyPhone(event.target.value) === "") {
-                //     this.setState({ [stateName + "State"]: "" });
-                // } else {
-                //     this.setState({ [stateName + "State"]: "error" });
-                // }
                 break;
             case "email":
                 this.setState({
@@ -183,8 +85,6 @@ class SalongInformasjon extends React.Component {
                 })
                 if (Validator.verifyEmail(event.target.value)) {
                     this.setState({ [stateName + "State"]: "success" });
-                } else if(Validator.verifyEmail(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
                 }
@@ -201,10 +101,6 @@ class SalongInformasjon extends React.Component {
                     this.setState({ [stateName + "State"]: "error" });
                 }
                 break;
-            case "description":
-                this.setState({
-                    description: event.target.value
-                })
             default:
                 break;
         }
@@ -222,69 +118,26 @@ class SalongInformasjon extends React.Component {
             this.state.phoneState === "success" &&
             this.state.emailState === "success" &&
             this.state.networkState === "success") {
-          return false;
-        } else if(this.state.name !== "" &&
-            this.state.address !== "" &&
-            this.state.zip !== "" &&
-            this.state.city !== "" &&
-            this.state.phone !== "" &&
-            this.state.email !== "" &&
-            this.state.network !== "") {
             return false;
         } else {
-          return true
+            return true
         }
     }
 
-    enableEdit() {
-        this.setState({
-            isEdit: true
-        })
-    }
-
-    cancelEdit() {
-        this.setState({
-            name: this.props.info.name? this.props.info.name : "",
-            nameState: this.props.info.name? "success" : "error",
-            address: this.props.info.address? this.props.info.address : "",
-            addressState: this.props.info.address? "success" : "error",
-            zip: this.props.info.post? this.props.info.post : "",
-            zipState: this.props.info.post? "success" : "error",
-            city: this.props.info.city? this.props.info.city : "",
-            cityState: this.props.info.city? "success" : "error",
-            phone: this.props.info.telephone? this.props.info.telephone : "",
-            phoneState: this.props.info.telephone? "success" : "error",
-            email: this.props.info.email? this.props.info.email : "",
-            emailState: this.props.info.email? "success" : "error",
-            network: this.props.info.website? this.props.info.website : "",
-            networkState: this.props.info.website? "success" : "error",
-            description: this.props.info.description? this.props.info.description : "",
-            descriptionState: this.props.info.description? "success" : "error",
-            isEdit: false
-        });
-    }
-
-    updateSalonInfo() {
-        this.props.updateSalonInfo({
+    addSalonInfo() {
+        this.props.addSalonInfo({
             workingForId: this.props.workingForId,
-            salonData: {
-                email: this.state.email,
-                name: this.state.name,
-                description: this.state.description,
-                telephone: this.state.phone,
-                // descriptionValidated: false,
-                parking: this.state.parkCheck,
-                website: this.state.network,
-                address: this.state.address,
-                post: this.state.zip,
-                city: this.state.city,
-                country: "Sweden"
-            }
+            email: this.state.email,
+            name: this.state.name,
+            description: this.state.description,
+            telephone: this.state.phone,
+            parking: this.state.parkCheck,
+            website: this.state.network,
+            address: this.state.address,
+            post: this.state.zip,
+            city: this.state.city,
+            country: "Sweden"
         });
-        // this.cancelEdit();
-        this.setState({
-            isEdit: false
-        })
     }
 
     render() {
@@ -293,7 +146,7 @@ class SalongInformasjon extends React.Component {
         <Card>
             <CardHeader>            
                 <div className={classes.cardHeader}>
-                    <h3 className={classes.cardTitle}>Salong Informasjon</h3>
+                    <h3 className={classes.cardTitle}>Create First Salon</h3>
                 </div>
             </CardHeader>
             <CardBody>
@@ -317,7 +170,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    disabled: !this.state.isEdit,
+                                    
                                     onChange: event =>
                                         this.change(event, "name", "name", 0),
                                     value: this.state.name,
@@ -343,7 +196,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    disabled: !this.state.isEdit,
+                                    
                                     onChange: event =>
                                         this.change(event, "address", "address", 0),
                                     value: this.state.address,
@@ -371,7 +224,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    disabled: !this.state.isEdit,
+                                    
                                     onChange: event =>
                                         this.change(event, "zip", "zip", 0),
                                     value: this.state.zip,
@@ -397,7 +250,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    disabled: !this.state.isEdit,
+                                    
                                     onChange: event =>
                                         this.change(event, "city", "city", 0),
                                     value: this.state.city,
@@ -425,7 +278,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    disabled: !this.state.isEdit,
+                                    
                                     onChange: event =>
                                         this.change(event, "phone", "phone", 1),
                                     value: this.state.phone,
@@ -451,7 +304,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    disabled: !this.state.isEdit,
+                                    
                                     onChange: event =>
                                         this.change(event, "email", "email", 0),
                                     value: this.state.email,
@@ -479,7 +332,7 @@ class SalongInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    disabled: !this.state.isEdit,
+                                    
                                     onChange: event =>
                                         this.change(event, "network", "network", 0),
                                     value: this.state.network,
@@ -501,7 +354,6 @@ class SalongInformasjon extends React.Component {
                                                 checked: classes.checked,
                                                 root: classes.checkRoot
                                             }}
-                                            disabled={!this.state.isEdit}
                                             checked={this.state.parkCheck}
                                         />
                                     }
@@ -526,7 +378,6 @@ class SalongInformasjon extends React.Component {
                                                 checked: classes.checked,
                                                 root: classes.checkRoot
                                             }}
-                                            disabled={!this.state.isEdit}
                                             checked={this.state.accessCheck}
                                         />
                                     }
@@ -549,26 +400,17 @@ class SalongInformasjon extends React.Component {
                                 inputProps={{
                                     multiline: true,
                                     rows: 10,   
-                                    disabled: !this.state.isEdit,                                 
+                                                                     
                                     onChange: event =>
                                         this.change(event, "description", "description", 0),
                                     value: this.state.description,
                                     type: "text"
                                 }}
                             />
-                        </GridItem>
-                        {
-                            this.state.isEdit? (                      
-                                <GridItem xs={12} sm={12} md={6}>                    
-                                    <Button color="info" size="sm" className={classes.submit} disabled={this.canSubmit()} onClick={this.updateSalonInfo.bind(this)}>LAGRE</Button>
-                                    <Button color="danger" size="sm" className={classes.submit} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
-                                </GridItem>                                
-                            ) : (
-                                <GridItem xs={12} sm={12} md={6}>                    
-                                    <Button color="info" size="sm" className={classes.submit} onClick={this.enableEdit.bind(this)}>Edit</Button>
-                                </GridItem> 
-                            )
-                        } 
+                        </GridItem>                    
+                        <GridItem xs={12} sm={12} md={6}>                    
+                            <Button color="info" size="sm" className={classes.submit} disabled={this.canSubmit()} onClick={this.addSalonInfo.bind(this)}>LAGRE</Button>
+                        </GridItem>  
                     </GridContainer>
                 </form>
             </CardBody>
@@ -577,23 +419,21 @@ class SalongInformasjon extends React.Component {
     }
 }
 
-SalongInformasjon.propTypes = {
-  classes: PropTypes.object.isRequired
+CreateSalon.propTypes = {
+    classes: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
     return {
-        workingForId: state.user.workingForId,
-        info: state.salonInfo.info
+        workingForId: state.user.workingForId
     }
-  }
+}
   
-  function mapDispatchToProps(dispatch) {
-      return bindActionCreators({          
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({          
         getUserData : Actions.getUserData,
-        getSalonInfo: Actions.getSalonInfo,
-        updateSalonInfo: Actions.updateSalonInfo
-      }, dispatch);
-  }
+        addSalonInfo: Actions.addSalonInfo
+    }, dispatch);
+}
   
-  export default withStyles(salongInformasjonStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SalongInformasjon)));
+export default withStyles(salongInformasjonStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateSalon)));

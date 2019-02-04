@@ -421,12 +421,12 @@ class Profile extends React.Component {
                 {
                   this.state.isEdit? (                      
                     <GridItem xs={12}>                    
-                      <Button color="info" className={classes.submit} disabled={this.canSubmit()} onClick={this.save.bind(this)}>Save</Button>
-                      <Button color="danger" className={classes.submit} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
+                      <Button color="info" size="sm" className={classes.submit} disabled={this.canSubmit()} onClick={this.save.bind(this)}>Save</Button>
+                      <Button color="danger" size="sm" className={classes.submit} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
                     </GridItem>                                
                   ) : (
                     <GridItem xs={12}>                    
-                      <Button color="info" className={classes.submit} onClick={this.enableEdit.bind(this)}>Edit</Button>
+                      <Button color="info" size="sm" className={classes.submit} onClick={this.enableEdit.bind(this)}>Edit</Button>
                     </GridItem> 
                   )
                 } 
