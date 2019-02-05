@@ -100,8 +100,10 @@ class EditModal extends React.Component {
             case "checkInEditable":
             case "checkOutEditable":
                 if(!moment(event._d).isSame(moment())) {
+                    console.log('focus: ', event._d)
                     this.setState({ [stateName]: moment(event._d).format("YYYY-MM-DD HH:mm:ss"), [stateName + "State"]: "success" });
                 } else {
+                    console.log('focus*********')
                     this.setState({ [stateName]: "", [stateName + "State"]: "error" });
                 }
                 break;

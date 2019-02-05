@@ -9,6 +9,8 @@ const initialState = {
     token: "",
     workingFor: "",
     workingForId: null,
+    isEmployee: "",
+    avatar: "",
 };
 
 const user = function (state = initialState, action) {
@@ -19,7 +21,9 @@ const user = function (state = initialState, action) {
             return {
                 token: action.token,
                 workingFor: action.workingFor,
-                workingForId: null
+                workingForId: null,
+                isEmployee: true,
+                avatar: "",
             };
         }
         case Actions.GET_USER_DATA:
@@ -38,7 +42,18 @@ const user = function (state = initialState, action) {
                 token: state.token,
                 workingFor: state.workingFor,
                 workingForId: action.workingForId,
-                isEmployee: action.isEmployee
+                isEmployee: action.isEmployee,
+                avatar: state.avatar
+            };
+        }
+        case Actions.UPDATE_USER_AVATAR:
+        {
+            return {
+                token: state.token,
+                workingFor: state.workingFor,
+                workingForId: state.workingForId,
+                isEmployee: state.isEmployee,
+                avatar: action.avatar
             };
         }
         default:

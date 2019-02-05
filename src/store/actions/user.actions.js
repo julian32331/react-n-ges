@@ -6,6 +6,7 @@
 export const SET_USER_DATA = '[USER] SET DATA';
 export const GET_USER_DATA = '[USER] GET DATA';
 export const UPDATE_USER_WORKINGFORID = '[USER] UPDATE WORKINGFORID';
+export const UPDATE_USER_AVATAR = '[USER] UPDATE AVATAR';
 
 export function setUserData(user) {  
     let token = user.token;
@@ -54,6 +55,17 @@ export function updateWorkingForId(data) {
             type: UPDATE_USER_WORKINGFORID,
             workingForId: data.workingForId,
             isEmployee: data.isEmployee
+        })
+    }
+}
+
+export function updateAvatar(img) {
+    localStorage.setItem('avatar', img);
+
+    return (dispatch) => {
+        dispatch({
+            type: UPDATE_USER_AVATAR,
+            avatar: img
         })
     }
 }
