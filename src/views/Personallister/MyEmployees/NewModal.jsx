@@ -93,7 +93,7 @@ class NewModal extends React.Component {
                     this.setState({
                         firstStep: false,
                         thirdStep: true,
-                        imagePreviewUrl: Utils.root + nextProps.employee.EmployeeInformation.picturePath,
+                        imagePreviewUrl: nextProps.employee.EmployeeInformatio? Utils.root + nextProps.employee.EmployeeInformation.picturePath : Utils.defaultAvatar,
                         consumerOwner: "SALON",
                         bookingPaymentFor: nextProps.employee.hasCompany? "COMPANY" : "",
                         productPaymentFor: nextProps.employee.hasCompany? "COMPANY" : ""
@@ -440,7 +440,7 @@ class NewModal extends React.Component {
                                                 fullWidth: true
                                             }}
                                             inputProps={{
-                                                value: this.props.employee? this.props.employee.EmployeeInformation.mobile : this.state.phone,
+                                                value: this.props.employee? (this.props.employee.EmployeeInformation? this.props.employee.EmployeeInformation.mobile : this.state.phone) : this.state.phone,
                                                 disabled: this.props.employee? true : false,
                                                 type: "number",                                                
                                                 onChange: event =>
@@ -458,7 +458,7 @@ class NewModal extends React.Component {
                                         fullWidth: true
                                     }}
                                     inputProps={{
-                                        value: this.props.employee? this.props.employee.EmployeeInformation.profession : this.state.profession,
+                                        value: this.props.employee? (this.props.employee.EmployeeInformation? this.props.employee.EmployeeInformation.profession : this.state.profession) : this.state.profession,
                                         disabled: this.props.employee? true : false,
                                         type: "text",                                                
                                         onChange: event =>
@@ -476,7 +476,7 @@ class NewModal extends React.Component {
                                     inputProps={{
                                         multiline: true,
                                         rows: 3,
-                                        value: this.props.employee? this.props.employee.EmployeeInformation.description : this.state.description,
+                                        value: this.props.employee? (this.props.employee.EmployeeInformation? this.props.employee.EmployeeInformation.description : this.state.description) : this.state.description,
                                         disabled: this.props.employee? true : false,
                                         type: "text",                                                
                                         onChange: event =>
@@ -673,7 +673,7 @@ class NewModal extends React.Component {
                                                     inputProps={{
                                                         name: "bookingPaymentForSelect",
                                                         id: "bookingPaymentFor-select",
-                                                        readOnly: this.props.employee.hasCompany? true : false
+                                                        readOnly: this.props.employee.hasCompany? false : true
                                                     }}
                                                 >
                                                     <MenuItem
@@ -727,7 +727,7 @@ class NewModal extends React.Component {
                                                     inputProps={{
                                                         name: "productPaymentForSelect",
                                                         id: "productPaymentFor-select",
-                                                        readOnly: this.props.employee.hasCompany? true : false
+                                                        readOnly: this.props.employee.hasCompany? false : true
                                                     }}
                                                 >
                                                     <MenuItem

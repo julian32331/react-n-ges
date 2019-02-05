@@ -31,6 +31,7 @@ export function getUserData() {
     let workingFor = localStorage.workingFor;
     let workingForId = localStorage.workingForId;
     let isEmployee = localStorage.isEmployee
+    let avatar = localStorage.avatar
     
     return (dispatch) => {
         dispatch({
@@ -38,7 +39,8 @@ export function getUserData() {
             token,
             workingFor,
             workingForId,
-            isEmployee
+            isEmployee,
+            avatar
         })
     }
 }

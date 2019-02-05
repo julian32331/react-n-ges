@@ -28,7 +28,8 @@ const user = function (state = initialState, action) {
                 token: action.token,
                 workingFor: action.workingFor,
                 workingForId: action.workingForId,
-                isEmployee: action.isEmployee
+                isEmployee: action.isEmployee,
+                avatar: action.avatar
             };
         }
         case Actions.UPDATE_USER_WORKINGFORID:

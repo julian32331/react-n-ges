@@ -12,6 +12,7 @@ export function getProfileData(data) {
     const request = Utils.xapi().post('manager/employee/profile', data);
     return (dispatch) =>
         request.then((response) => {
+            localStorage.setItem('avatar', response.data.EmployeeInformation.picturePath)
             return dispatch({
                 type: GET_PROFILE_DATA,
                 data: response.data

@@ -232,6 +232,11 @@ class CheckInOut extends React.Component {
     let list = [];
     this.list.map(item => {
       let temp = [];
+      if(item.checkInEditable || item.checkOutEditable || item.editComment) {
+        temp.push("(Redigerad)")
+      } else {
+        temp.push("")
+      }
       temp.push(item.name);
       temp.push(item.SSNumber);
       temp.push(moment(item.checkIn).format("YYYY-MM-DD HH:mm"));
@@ -366,6 +371,7 @@ class CheckInOut extends React.Component {
 
           <Table
             tableHead={[
+              "",
               "Name",
               "Employee number",
               "Checked In",
@@ -421,7 +427,7 @@ class CheckInOut extends React.Component {
           <EditModal 
             onOpen={this.state.editModal}
             onClose={this.onCloseEditModal.bind(this)}
-            data={this.state.modalData? this.state.modalData.personnelListId : null} 
+            data={this.state.modalData} 
           />
 
           

@@ -5,6 +5,11 @@ import PerfectScrollbar from "perfect-scrollbar";
 import { NavLink } from "react-router-dom";
 import cx from "classnames";
 
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Drawer from "@material-ui/core/Drawer";
@@ -136,7 +141,7 @@ class Sidebar extends React.Component {
     var user = (
       <div className={userWrapperClass}>
         <div className={photo}>
-          <img src={Utils.root + localStorage.avatar} className={classes.avatarImg} alt="..." />
+          <img src={Utils.root + this.props.avatar} className={classes.avatarImg} alt="..." />
         </div>
         <List className={classes.list}>
           <ListItem className={classes.item + " " + classes.userItem}>
@@ -525,4 +530,11 @@ Sidebar.propTypes = {
   routes: PropTypes.arrayOf(PropTypes.object)
 };
 
-export default withStyles(sidebarStyle)(Sidebar);
+// export default withStyles(sidebarStyle)(Sidebar);
+
+function mapStateToProps(state) {
+  return {
+    avatar: state.user.avatar
+  };
+}
+export default withStyles(sidebarStyle)(withRouter(connect(mapStateToProps)(Sidebar)));

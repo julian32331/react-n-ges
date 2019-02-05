@@ -57,6 +57,17 @@ class EditModal extends React.Component {
         this.save = this.save.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.data) {
+            console.log('data: ', nextProps.data);
+            this.setState({
+                checkInEditable: nextProps.data.checkInEditable? moment(nextProps.data.checkInEditable).format("YYYY-MM-DD HH:mm") : "",
+                checkOutEditable: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("YYYY-MM-DD HH:mm") : "",
+                editComment: nextProps.data.editComment? nextProps.data.editComment : ""
+            })
+        }
+    }
+
     initState() {
         this.setState({
             checkInEditable: "",
@@ -75,7 +86,7 @@ class EditModal extends React.Component {
     save() { 
         this.props.editCheckInOut({
             workingForId: this.props.workingForId,
-            personnelListId: this.props.data,
+            personnelListId: this.props.data.personnelListId,
             checkInEditable: this.state.checkInEditable,
             checkOutEditable: this.state.checkOutEditable,
             editComment: this.state.editComment                    
@@ -89,7 +100,7 @@ class EditModal extends React.Component {
             case "checkInEditable":
             case "checkOutEditable":
                 if(!moment(event._d).isSame(moment())) {
-                    this.setState({ [stateName]: moment(event._d), [stateName + "State"]: "success" });
+                    this.setState({ [stateName]: moment(event._d).format("YYYY-MM-DD HH:mm:ss"), [stateName + "State"]: "success" });
                 } else {
                     this.setState({ [stateName]: "", [stateName + "State"]: "error" });
                 }
