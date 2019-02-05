@@ -27,7 +27,8 @@ const user = function (state = initialState, action) {
             return {
                 token: action.token,
                 workingFor: action.workingFor,
-                workingForId: action.workingForId
+                workingForId: action.workingForId,
+                isEmployee: action.isEmployee
             };
         }
         case Actions.UPDATE_USER_WORKINGFORID:
@@ -35,7 +36,8 @@ const user = function (state = initialState, action) {
             return {
                 token: state.token,
                 workingFor: state.workingFor,
-                workingForId: action.workingForId
+                workingForId: action.workingForId,
+                isEmployee: action.isEmployee
             };
         }
         default:

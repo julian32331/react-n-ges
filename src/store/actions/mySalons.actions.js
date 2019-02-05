@@ -23,13 +23,19 @@ export function getCompanySalon(data) {
 export function addSalon(data) {
     const request = Utils.xapi().post('manager/salon/add', data);
     return (dispatch) =>
-        request.then((response) => {   
+        request.then((response) => {  
+            console.log('response: ', response) 
+            console.log('data: ', data.workingForId) 
+            let companyAuthLevel = response.data.workingFor.find(item => {
+                return item.workingForId === Number(data.workingForId)
+            }).companyAuthLevel;
             dispatch(setUserData(
                 response.data
             ));   
-            dispatch(updateWorkingForId(
-                data.workingForId    
-            )); 
+            dispatch(updateWorkingForId({
+                workingForId: data.workingForId,
+                isEmployee: companyAuthLevel === "EMPLOYEE"? true : false
+            })); 
             dispatch(getCompanySalon({
                 workingForId: data.workingForId
             }));

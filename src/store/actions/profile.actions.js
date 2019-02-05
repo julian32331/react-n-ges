@@ -20,7 +20,7 @@ export function getProfileData(data) {
 }
 
 export function updateProfile(data, id) {
-    const request = Utils.xapi('multipart/form-data').post('manager/employee/update', data);
+    const request = Utils.xapi('multipart/form-data').post('manager/employee/profile/update', data);
     return (dispatch) =>
         request.then((response) => {
             dispatch(getProfileData({

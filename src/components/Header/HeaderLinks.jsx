@@ -70,8 +70,19 @@ class HeaderLinks extends React.Component {
   }
 
   handleSaloon = event => {
-    this.setState({ [event.target.name]: event.target.value });
-    this.props.updateWorkingForId(event.target.value);
+    let companyAuthLevel = JSON.parse(this.props.workingFor).find(item => {
+        return item.workingForId === event.target.value
+    }).companyAuthLevel;
+    this.setState({ 
+        [event.target.name]: Number(event.target.value),
+        isEmployee: companyAuthLevel === "EMPLOYEE"? true : false
+    });
+    this.props.updateWorkingForId({
+      workingForId: Number(event.target.value),
+      isEmployee: companyAuthLevel === "EMPLOYEE"? true : false
+    });
+    // this.setState({ [event.target.name]: event.target.value });
+    // this.props.updateWorkingForId(event.target.value);
   };
 
   render() {

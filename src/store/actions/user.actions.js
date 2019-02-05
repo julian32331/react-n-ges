@@ -30,24 +30,28 @@ export function getUserData() {
     let token = localStorage.token;
     let workingFor = localStorage.workingFor;
     let workingForId = localStorage.workingForId;
+    let isEmployee = localStorage.isEmployee
     
     return (dispatch) => {
         dispatch({
             type: GET_USER_DATA,
             token,
             workingFor,
-            workingForId
+            workingForId,
+            isEmployee
         })
     }
 }
 
-export function updateWorkingForId(workingForId) {
-    localStorage.setItem('workingForId', workingForId);
+export function updateWorkingForId(data) {
+    localStorage.setItem('workingForId', Number(data.workingForId));
+    localStorage.setItem('isEmployee', data.isEmployee);
 
     return (dispatch) => {
         dispatch({
             type: UPDATE_USER_WORKINGFORID,
-            workingForId
+            workingForId: data.workingForId,
+            isEmployee: data.isEmployee
         })
     }
 }

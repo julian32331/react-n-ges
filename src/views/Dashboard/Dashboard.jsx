@@ -48,7 +48,10 @@ class Dashboard extends React.Component {
         selectModal: true
       })
     } else {
-      this.props.updateWorkingForId(workingFor[0]['workingForId']);
+      this.props.updateWorkingForId({
+        workingForId: Number(workingFor[0]['workingForId']),
+        isEmployee: workingFor[0]['companyAuthLevel'] === "EMPLOYEE"? true : false
+      });
     }
   }
   

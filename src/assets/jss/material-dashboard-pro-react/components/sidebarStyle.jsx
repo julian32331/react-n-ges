@@ -2,6 +2,7 @@
 // // // Sidebar styles
 // #############################
 
+import bg from "assets/img/bg.png";
 import {
   drawerWidth,
   drawerMiniWidth,
@@ -73,6 +74,9 @@ const sidebarStyle = theme => ({
       content: '""',
       display: "block",
       top: "0"
+    },
+    "&:hover": {
+      backgroundImage: "url(" + bg + ")"
     }
   },
   blackBackground: {

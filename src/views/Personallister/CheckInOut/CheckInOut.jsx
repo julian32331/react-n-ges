@@ -234,22 +234,25 @@ class CheckInOut extends React.Component {
       let temp = [];
       temp.push(item.name);
       temp.push(item.SSNumber);
-      temp.push(moment(item.checkIn).format("MM/DD/YYYY, hh:mm"));
-      temp.push(item.checkOut? moment(item.checkOut).format("MM/DD/YYYY, hh:mm") : null);
+      temp.push(moment(item.checkIn).format("YYYY-MM-DD HH:mm"));
+      temp.push(item.checkOut? moment(item.checkOut).format("YYYY-MM-DD HH:mm") : null);
       item.canCheckOut? temp.push(actionButtons(item)) : temp.push(editButton(item))
 
       list.push(temp);
     });
 
     let csvData = [
-      ["Name", "Employee Number", "CheckIn", "CheckOut"]
+      ["Name", "Employee Number", "CheckIn", "CheckOut", "CheckInEditable", "CheckOutEditable", "EditComment"]
     ];
     this.list.map(item => {
       let temp = [];
       temp.push(item.name);
       temp.push(item.employeeId);
-      temp.push(moment(item.checkIn).format("MM/DD/YYYY, hh:mm"));
-      temp.push(item.checkOut? moment(item.checkOut).format("MM/DD/YYYY, hh:mm") : null);
+      temp.push(moment(item.checkIn).format("YYYY-MM-DD HH:mm"));
+      temp.push(item.checkOut? moment(item.checkOut).format("YYYY-MM-DD HH:mm") : "-");
+      temp.push(item.checkInEditable? moment(item.checkInEditable).format("YYYY-MM-DD HH:mm") : "-");
+      temp.push(item.checkOutEditable? moment(item.checkOutEditable).format("YYYY-MM-DD HH:mm") : "-");
+      temp.push(item.editComment? item.editComment : "-");
 
       csvData.push(temp);
     });

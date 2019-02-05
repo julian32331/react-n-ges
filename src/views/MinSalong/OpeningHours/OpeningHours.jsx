@@ -236,7 +236,7 @@ class OpeningHours extends React.Component {
             let temp = [];
 
             temp.push(day.name);
-            temp.push(moment(day.date).format("DD/MM/YYYY"));
+            temp.push(moment(day.date).format("YYYY-MM-DD"));
             temp.push(day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2));
             temp.push(day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2));
             temp.push(buttons(day));

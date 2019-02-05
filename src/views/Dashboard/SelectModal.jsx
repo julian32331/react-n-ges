@@ -48,6 +48,7 @@ class SelectModal extends React.Component {
         super(props);
         this.state = {
             company: "",
+            isEmployee: false
         }
 
         this.props.getUserData();
@@ -62,12 +63,21 @@ class SelectModal extends React.Component {
     }
 
     handleSelect = event => {
-      this.setState({ [event.target.name]: event.target.value });
+        let companyAuthLevel = JSON.parse(this.props.workingFor).find(item => {
+            return item.workingForId === event.target.value
+        }).companyAuthLevel;
+        this.setState({ 
+            [event.target.name]: Number(event.target.value),
+            isEmployee: companyAuthLevel === "EMPLOYEE"? true : false
+        });
     };
 
     handleClose() {
         if(this.state.company) {
-            this.props.updateWorkingForId(this.state.company);
+            this.props.updateWorkingForId({
+                workingForId: this.state.company,
+                isEmployee: this.state.isEmployee
+            });
             this.props.onClose();
         }
     }
@@ -82,8 +92,7 @@ class SelectModal extends React.Component {
             JSON.parse(this.props.workingFor).map(item => {
                 let temp = {}
                 temp['name'] = item.Salon? item.Company.legalName + "/" + item.Salon.name : item.Company.legalName;
-                temp['value'] = item.workingForId;
-    
+                temp['value'] = item.workingForId;    
                 companies.push(temp);
             });
         }
@@ -169,6 +178,7 @@ class SelectModal extends React.Component {
                         onClick={() => this.handleClose()}
                         color="info"
                         size="sm"
+                        disabled={this.state.company? false : true}
                     >
                         Done
                     </Button>

@@ -66,7 +66,7 @@ class NewOrUpdateModal extends React.Component {
             this.setState({
                 name: nextProps.data.name,
                 nameState: "success",
-                date: moment(nextProps.data.date).format("DD/MM/YYYY"),
+                date: moment(nextProps.data.date).format("YYYY-MM-DD"),
                 dateState: "success",
                 from: nextProps.data.openAt.substr(0,2) + ":" + nextProps.data.openAt.substr(2,2),
                 fromState: "success",
