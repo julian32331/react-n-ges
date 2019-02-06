@@ -64,7 +64,7 @@ class SelectModal extends React.Component {
 
     handleSelect = event => {
         let companyAuthLevel = JSON.parse(this.props.workingFor).find(item => {
-            return item.workingForId === event.target.value
+            return item.workingForId == event.target.value
         }).companyAuthLevel;
         this.setState({ 
             [event.target.name]: Number(event.target.value),

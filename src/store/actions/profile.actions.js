@@ -4,7 +4,7 @@
  */
 
 import * as Utils from 'utils';
-import {updateAvatar} from './user.actions';
+import {updateAvatarName} from './user.actions';
 
 export const GET_PROFILE_DATA = '[PROFILE] DATA GET';
 export const UPDATE_PROFIEL_DATA = '[PROFILE] DATA UPDATE';
@@ -24,9 +24,11 @@ export function updateProfile(data, id) {
     const request = Utils.xapi('multipart/form-data').post('manager/employee/profile/update', data);
     return (dispatch) =>
         request.then((response) => {
-            dispatch(updateAvatar(
-                response.data.newAvatar
-            ));
+            dispatch(updateAvatarName({
+                avatar: response.data.EmployeeInformation.picturePath,
+                name: response.data.name
+                // TODO; user name is needed
+            }));      
             return dispatch({
                 type: UPDATE_PROFIEL_DATA
             });

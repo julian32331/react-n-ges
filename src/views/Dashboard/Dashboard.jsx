@@ -39,20 +39,27 @@ class Dashboard extends React.Component {
   }
   
   componentWillMount() {
-    let workingFor = JSON.parse(localStorage.workingFor);
-    if(!localStorage.token) {
-      this.props.history.push("/login");
-    }
-    if(!localStorage.workingForId && workingFor.length > 1) {
-      this.setState({
-        selectModal: true
-      })
-    } else {
-      this.props.updateWorkingForId({
-        workingForId: Number(workingFor[0]['workingForId']),
-        isEmployee: workingFor[0]['companyAuthLevel'] === "EMPLOYEE"? true : false
-      });
-    }
+    this.props.getUserData();
+    setTimeout(() => {
+      let workingFor = [];
+      if(this.props.workingFor) {
+        workingFor = JSON.parse(this.props.workingFor);
+      }    
+      if(!this.props.token) {
+        this.props.history.push("/login");
+      }
+      if(!this.props.workingForId && workingFor.length > 1) {
+        this.setState({
+          selectModal: true
+        })
+      } else {
+        this.props.updateWorkingForId({
+          workingForId: Number(workingFor[0]['workingForId']),
+          isEmployee: workingFor[0]['companyAuthLevel'] === "EMPLOYEE"? true : false
+        });
+      }
+    }, 100);
+    
   }
   
   onCloseSelectModal() {
@@ -93,12 +100,15 @@ Dashboard.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    workingForId: state.user.workingForId
+    token: state.user.token,
+    workingForId: state.user.workingForId,
+    workingFor: state.user.workingFor
   }
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
+      getUserData : Actions.getUserData,
       updateWorkingForId: Actions.updateWorkingForId
     }, dispatch);
 }

@@ -23,7 +23,7 @@ import Home from "@material-ui/icons/Home";
 import AlarmOn from "@material-ui/icons/AlarmOn";
 import NewReleases from "@material-ui/icons/NewReleases";
 
-var dashRoutes = [ 
+export var dashRoutes1 = [ 
   {
     path: "/profile",
     name: "Profile",
@@ -45,12 +45,6 @@ var dashRoutes = [
     icon: DashboardIcon,
     component: Dashboard
   },
-  // {
-  //   path: "/createsalon",
-  //   name: "Creat First Salon",
-  //   icon: DashboardIcon,
-  //   component: CreateSalon
-  // },
   {
     collapse: true,
     path: "/minsalong",
@@ -132,4 +126,14 @@ var dashRoutes = [
   // },
   { redirect: true, path: "/", pathTo: "/dashboard", name: "Dashboard" }
 ];
-export default dashRoutes;
+
+export var dashRoutes2 = [  
+  {
+    path: "/createsalon",
+    name: "Creat First Salon",
+    icon: Home,
+    component: CreateSalon
+  },
+  { redirect: true, path: "/", pathTo: "/createsalon", name: "Creat First Salon" }
+]
+// export default dashRoutes;

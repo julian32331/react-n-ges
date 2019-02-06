@@ -7,6 +7,12 @@ import React from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
 import { Switch, Route, Redirect } from "react-router-dom";
+
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -24,26 +30,13 @@ import Sidebar from "components/Sidebar/Sidebar.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import dashboardRoutes from "routes/dashboard.jsx";
+import {dashRoutes1, dashRoutes2} from "routes/dashboard.jsx";
 
 import appStyle from "assets/jss/material-dashboard-pro-react/layouts/dashboardStyle.jsx";
 
 import image from "assets/img/bg.png";
 
-const switchRoutes = (
-  <Switch>
-    {dashboardRoutes.map((prop, key) => {
-      if (prop.redirect)
-        return <Redirect from={prop.path} to={prop.pathTo} key={key} />;
-      if (prop.collapse)
-        return prop.views.map((prop, key) => {
-          return (
-            <Route path={prop.path} component={prop.component} key={key} />
-          );
-        });
-      return <Route path={prop.path} component={prop.component} key={key} />;
-    })}
-  </Switch>
-);
+
 
 var ps;
 
@@ -99,6 +92,40 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    let routes = dashRoutes1;
+    console.log('workingFor1: ', this.props.workingFor);
+    if(this.props.workingFor) {
+      let Salon = JSON.parse(this.props.workingFor).find(item => {
+        return item.workingForId == this.props.workingForId
+      });
+      console.log('Salon: ', Salon);
+      console.log('workingForId: ', this.props.workingForId);
+      console.log('workingFor: ', JSON.parse(this.props.workingFor)[0]['workingForId']);
+      console.log('focus-value: ', Salon);
+      if(Salon) {
+        if(Salon.Salon) {
+          routes = dashRoutes1;
+        } else {
+          routes = dashRoutes2;
+        }
+      }
+      
+    }
+    const switchRoutes = (
+      <Switch>
+        {routes.map((prop, key) => {
+          if (prop.redirect)
+            return <Redirect from={prop.path} to={prop.pathTo} key={key} />;
+          if (prop.collapse)
+            return prop.views.map((prop, key) => {
+              return (
+                <Route path={prop.path} component={prop.component} key={key} />
+              );
+            });
+          return <Route path={prop.path} component={prop.component} key={key} />;
+        })}
+      </Switch>
+    );
     const { classes, ...rest } = this.props;
     const mainPanel =
       classes.mainPanel +
@@ -111,7 +138,7 @@ class Dashboard extends React.Component {
     return (
       <div className={classes.wrapper}>
         <Sidebar
-          routes={dashboardRoutes}
+          routes={routes}
           logoText={"GESELLE"}
           logoText2={"ONE"}
           image={image}
@@ -130,7 +157,7 @@ class Dashboard extends React.Component {
           <Header
             sidebarMinimize={this.sidebarMinimize.bind(this)}
             miniActive={this.state.miniActive}
-            routes={dashboardRoutes}
+            routes={dashRoutes1}
             handleDrawerToggle={this.handleDrawerToggle}
             {...rest}
           />
@@ -166,4 +193,12 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(appStyle)(Dashboard);
+// export default withStyles(appStyle)(Dashboard);
+function mapStateToProps(state) {
+  return {
+    workingForId: state.user.workingForId,
+    workingFor: state.user.workingFor
+  };
+}
+
+export default withStyles(appStyle)(withRouter(connect(mapStateToProps)(Dashboard)));

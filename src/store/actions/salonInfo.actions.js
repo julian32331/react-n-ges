@@ -4,6 +4,7 @@
  */
 
 import * as Utils from 'utils';
+import {setUserData, updateWorkingForId} from './user.actions';
 
 export const GET_SALON_INFO           = '[SALON INFO] GET';
 export const ADD_SALON_INFO           = '[SALON INFO] ADD';
@@ -25,8 +26,17 @@ export function getSalonInfo(data) {
 export function addSalonInfo(data) {
     const request = Utils.xapi().post('register/salon', data);
     return (dispatch) =>
-        request.then((response) => {    
-            console.log('response: ', response.data)
+        request.then((response) => {  
+            dispatch(setUserData(
+                response.data
+            ));           
+            let companyAuthLevel = response.data.workingFor.find(item => {
+                return item.workingForId === Number(data.workingForId)
+            }).companyAuthLevel;
+            dispatch(updateWorkingForId({
+                workingForId: data.workingForId,
+                isEmployee: companyAuthLevel === "EMPLOYEE"? true : false
+            }));
         })
 }
 

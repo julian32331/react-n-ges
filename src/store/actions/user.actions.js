@@ -11,18 +11,20 @@ export const UPDATE_USER_AVATAR = '[USER] UPDATE AVATAR';
 export function setUserData(user) {  
     let token = user.token;
     let workingFor = JSON.stringify(user.workingFor);
-    let name = user.employeeName;
+    let username = user.employeeName;
     let avatar = user.avatar;
     localStorage.setItem('token', token);
     localStorage.setItem('workingFor', workingFor);
-    localStorage.setItem('username', name);
+    localStorage.setItem('username', username);
     localStorage.setItem('avatar', avatar);
     
     return (dispatch) => {
         dispatch({
             type   : SET_USER_DATA,
             token,
-            workingFor
+            workingFor,
+            username,
+            avatar
         })
     }
 }
@@ -32,7 +34,8 @@ export function getUserData() {
     let workingFor = localStorage.workingFor;
     let workingForId = localStorage.workingForId;
     let isEmployee = localStorage.isEmployee
-    let avatar = localStorage.avatar
+    let avatar = localStorage.avatar;
+    let username = localStorage.username;
     
     return (dispatch) => {
         dispatch({
@@ -41,7 +44,8 @@ export function getUserData() {
             workingFor,
             workingForId,
             isEmployee,
-            avatar
+            avatar,
+            username
         })
     }
 }
@@ -59,13 +63,15 @@ export function updateWorkingForId(data) {
     }
 }
 
-export function updateAvatar(img) {
-    localStorage.setItem('avatar', img);
+export function updateAvatarName(data) {
+    localStorage.setItem('avatar', data.avatar);
+    localStorage.setItem('username', data.name);
 
     return (dispatch) => {
         dispatch({
             type: UPDATE_USER_AVATAR,
-            avatar: img
+            avatar: data.avatar,
+            username: data.name
         })
     }
 }

@@ -167,15 +167,6 @@ class Profile extends React.Component {
     }
   }
 
-  canEdit() {
-    console.log('this.props.isEmployee: ', typeof (this.props.isEmployee)) 
-    if(this.props.isEmployee == "true") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   change(event, stateName, type, stateNameEqualTo) {
     switch (type) {
         case "email":
@@ -435,7 +426,7 @@ class Profile extends React.Component {
                     </GridItem>                                
                   ) : (
                     <GridItem xs={12}>                    
-                      <Button color="info" size="sm" className={classes.submit} disabled={this.canEdit()} onClick={this.enableEdit.bind(this)}>Edit</Button>
+                      <Button color="info" size="sm" className={classes.submit} disabled={this.props.isEmployee} onClick={this.enableEdit.bind(this)}>Edit</Button>
                     </GridItem> 
                   )
                 } 

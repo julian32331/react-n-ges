@@ -9,7 +9,7 @@ const initialState = {
     token: "",
     workingFor: "",
     workingForId: null,
-    isEmployee: "",
+    isEmployee: false,
     avatar: "",
 };
 
@@ -22,8 +22,9 @@ const user = function (state = initialState, action) {
                 token: action.token,
                 workingFor: action.workingFor,
                 workingForId: null,
-                isEmployee: true,
-                avatar: "",
+                username: action.username,
+                isEmployee: state.isEmployee,
+                avatar: state.isEmployee,
             };
         }
         case Actions.GET_USER_DATA:
@@ -31,8 +32,9 @@ const user = function (state = initialState, action) {
             return {
                 token: action.token,
                 workingFor: action.workingFor,
-                workingForId: action.workingForId,
-                isEmployee: action.isEmployee,
+                workingForId: Number(action.workingForId),
+                username: action.username,
+                isEmployee: action.isEmployee == 'true',
                 avatar: action.avatar
             };
         }
@@ -41,8 +43,9 @@ const user = function (state = initialState, action) {
             return {
                 token: state.token,
                 workingFor: state.workingFor,
-                workingForId: action.workingForId,
-                isEmployee: action.isEmployee,
+                workingForId: Number(action.workingForId),
+                username: state.username,
+                isEmployee: action.isEmployee == 'true',
                 avatar: state.avatar
             };
         }
@@ -51,8 +54,9 @@ const user = function (state = initialState, action) {
             return {
                 token: state.token,
                 workingFor: state.workingFor,
-                workingForId: state.workingForId,
-                isEmployee: state.isEmployee,
+                workingForId: Number(state.workingForId),
+                username: action.username,
+                isEmployee: state.isEmployee == 'true',
                 avatar: action.avatar
             };
         }

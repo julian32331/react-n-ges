@@ -152,7 +152,7 @@ class Sidebar extends React.Component {
             >
               <ListItemText
                 // primary={rtlActive ? "تانيا أندرو" : "Tania Andrew"}
-                primary={localStorage.username}
+                primary={this.props.username}
                 secondary={
                   <b
                     className={
@@ -534,7 +534,8 @@ Sidebar.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    avatar: state.user.avatar
+    avatar: state.user.avatar,
+    username: state.user.username
   };
 }
 export default withStyles(sidebarStyle)(withRouter(connect(mapStateToProps)(Sidebar)));
