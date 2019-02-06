@@ -6,10 +6,10 @@ const extendedTablesStyle = {
   ...customCheckboxRadioSwitch,
   ...buttonGroupStyle,
   right: {
-    textAlign: "right"
+    textAlign: "right !important"
   },
   center: {
-    textAlign: "center"
+    textAlign: "center !important"
   },
   description: {
     maxWidth: "150px"

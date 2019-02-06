@@ -12,7 +12,7 @@ import Close from "@material-ui/icons/Close";
 import Check from "@material-ui/icons/Check";
 import Remove from "@material-ui/icons/Remove";
 import Add from "@material-ui/icons/Add";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -108,11 +108,9 @@ class ShoppingCart extends React.Component {
                 tableHead={[
                   "",
                   "PRODUCT",
-                  "COLOR",
-                  "SIZE",
                   "PRICE",
                   "QTY",
-                  "AMOUNT"
+                  ""
                 ]}
                 tableData={[
                   [
@@ -128,8 +126,6 @@ class ShoppingCart extends React.Component {
                         by Dolce&amp;Gabbana
                       </small>
                     </span>,
-                    "Red",
-                    "M",
                     <span>
                       <small className={classes.tdNumberSmall}>€</small> 549
                     </span>,
@@ -154,12 +150,24 @@ class ShoppingCart extends React.Component {
                         </Button>
                       </div>
                     </span>,
-                    <span>
-                      <small className={classes.tdNumberSmall}>€</small> 549
-                    </span>,
-                    <Button simple className={classes.actionButton}>
-                      <Close className={classes.icon} />
-                    </Button>
+                    <div>
+                      <Button
+                        justIcon
+                        round
+                        color="danger"
+                        className={classes.marginRight}
+                      >
+                        <Close className={classes.icons} />
+                      </Button>
+                      <Button
+                        justIcon
+                        round
+                        color="info"
+                        className={classes.marginRight}
+                      >
+                        <AddShoppingCart className={classes.icons} />
+                      </Button>
+                    </div>
                   ],
                   [
                     <div className={classes.imgContainer}>
@@ -172,8 +180,6 @@ class ShoppingCart extends React.Component {
                       <br />
                       <small className={classes.tdNameSmall}>by Pucci</small>
                     </span>,
-                    "Purple",
-                    "M",
                     <span>
                       <small className={classes.tdNumberSmall}>€</small> 499
                     </span>,
@@ -198,12 +204,24 @@ class ShoppingCart extends React.Component {
                         </Button>
                       </div>
                     </span>,
-                    <span>
-                      <small className={classes.tdNumberSmall}>€</small> 998
-                    </span>,
-                    <Button simple className={classes.actionButton}>
-                      <Close className={classes.icon} />
-                    </Button>
+                    <div>
+                      <Button
+                        justIcon
+                        round
+                        color="danger"
+                        className={classes.marginRight}
+                      >
+                        <Close className={classes.icons} />
+                      </Button>
+                      <Button
+                        justIcon
+                        round
+                        color="info"
+                        className={classes.marginRight}
+                      >
+                        <AddShoppingCart className={classes.icons} />
+                      </Button>
+                    </div>
                   ],
                   [
                     <div className={classes.imgContainer}>
@@ -218,8 +236,6 @@ class ShoppingCart extends React.Component {
                         by Valentino
                       </small>
                     </span>,
-                    "White",
-                    "XL",
                     <span>
                       <small className={classes.tdNumberSmall}>€</small> 799
                     </span>,
@@ -244,55 +260,41 @@ class ShoppingCart extends React.Component {
                         </Button>
                       </div>
                     </span>,
-                    <span>
-                      <small className={classes.tdNumberSmall}>€</small> 799
-                    </span>,
-                    <Button simple className={classes.actionButton}>
-                      <Close className={classes.icon} />
-                    </Button>
+                    <div>
+                      <Button
+                        justIcon
+                        round
+                        color="danger"
+                        className={classes.marginRight}
+                      >
+                        <Close className={classes.icons} />
+                      </Button>
+                      <Button
+                        justIcon
+                        round
+                        color="info"
+                        className={classes.marginRight}
+                      >
+                        <AddShoppingCart className={classes.icons} />
+                      </Button>
+                    </div>
                   ],
-                  // {
-                  //   total: true,
-                  //   colspan: "5",
-                  //   amount: (
-                  //     <span>
-                  //       <small>€</small>2,346
-                  //     </span>
-                  //   )
-                  // },
-                  // {
-                  //   purchase: true,
-                  //   colspan: "6",
-                  //   col: {
-                  //     colspan: 2,
-                  //     text: (
-                  //       <Button color="info" round>
-                  //         Complete Purchase{" "}
-                  //         <KeyboardArrowRight className={classes.icon} />
-                  //       </Button>
-                  //     )
-                  //   }
-                  // }
                 ]}
                 tableShopping
                 customHeadCellClasses={[
                   classes.center,
-                  classes.description,
-                  classes.description,
-                  classes.right,
-                  classes.right,
+                  classes.center,
+                  classes.center,
                   classes.right
                 ]}
-                customHeadClassesForCells={[0, 2, 3, 4, 5, 6]}
+                customHeadClassesForCells={[0, 2, 3, 4]}
                 customCellClasses={[
                   classes.tdName,
-                  classes.customFont,
-                  classes.customFont,
-                  classes.tdNumber,
-                  classes.tdNumber + " " + classes.tdNumberAndButtonGroup,
+                  classes.tdNumber + " " + classes.center,
+                  classes.tdNumber + " " + classes.tdNumberAndButtonGroup + " " + classes.center,
                   classes.tdNumber
                 ]}
-                customClassesForCells={[1, 2, 3, 4, 5, 6]}
+                customClassesForCells={[1, 2, 3, 4]}
               />
             </CardBody>
           </Card>
