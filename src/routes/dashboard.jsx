@@ -12,6 +12,7 @@ import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
+import B2BShop from "views/B2BShop/B2BShop.jsx";
 
 import Profile from "views/Profile/Profile.jsx";
 import CompanyInformasjon from "views/CompanyInformasjon.jsx";
@@ -22,6 +23,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import Home from "@material-ui/icons/Home";
 import AlarmOn from "@material-ui/icons/AlarmOn";
 import NewReleases from "@material-ui/icons/NewReleases";
+import Shop from "@material-ui/icons/Shop";
 
 export var dashRoutes1 = [ 
   {
@@ -92,6 +94,12 @@ export var dashRoutes1 = [
         component: MyEmployees
       }
     ]
+  },
+  {
+    path: "/b2bshop",
+    name: "B2B Shop",
+    icon: Shop,
+    component: B2BShop
   },
   // {
   //   collapse: true,
