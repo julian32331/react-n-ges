@@ -24,13 +24,13 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 
-import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
+import productsStyle from "assets/jss/material-dashboard-pro-react/views/b2bshop/productsStyle.jsx";
 
 import product1 from "assets/img/product1.jpg";
 import product2 from "assets/img/product2.jpg";
 import product3 from "assets/img/product3.jpg";
 
-class B2BShop extends React.Component {
+class ShoppingCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -102,11 +102,8 @@ class B2BShop extends React.Component {
       <GridContainer>
         <GridItem xs={12}>
           <Card>
-            <CardHeader color="rose" icon>
-              {/* <h2 className={classes.cardIconTitle}>Shopping Cart Table</h2>               */}
-              <h3 className={classes.cardIconTitle}>B2BShop</h3>
-            </CardHeader>
             <CardBody>
+              <h3 className={classes.cardTitle}>ShoppingCart</h3>
               <Table
                 tableHead={[
                   "",
@@ -115,8 +112,7 @@ class B2BShop extends React.Component {
                   "SIZE",
                   "PRICE",
                   "QTY",
-                  "AMOUNT",
-                  ""
+                  "AMOUNT"
                 ]}
                 tableData={[
                   [
@@ -306,4 +302,4 @@ class B2BShop extends React.Component {
   }
 }
 
-export default withStyles(extendedTablesStyle)(B2BShop);
+export default withStyles(productsStyle)(ShoppingCart);

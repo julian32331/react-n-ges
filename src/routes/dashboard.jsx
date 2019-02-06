@@ -12,7 +12,8 @@ import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
-import B2BShop from "views/B2BShop/B2BShop.jsx";
+import Products from "views/B2BShop/Products/Products.jsx";
+import ShoppingCart from "views/B2BShop/ShoppingCart/ShoppingCart.jsx";
 
 import Profile from "views/Profile/Profile.jsx";
 import CompanyInformasjon from "views/CompanyInformasjon.jsx";
@@ -96,10 +97,30 @@ export var dashRoutes1 = [
     ]
   },
   {
+    collapse: true,
     path: "/b2bshop",
     name: "B2B Shop",
+    state: "b2bshop",
     icon: Shop,
-    component: B2BShop
+    views: [
+      {
+        path: "/b2bshop/products",
+        name: "Products",
+        mini: "P",
+        component: Products
+      },
+      {
+        path: "/b2bshop/cart",
+        name: "Shopping Cart",
+        mini: "SC",
+        component: ShoppingCart
+      },
+      {
+        path: "/b2bshop/orders",
+        name: "Orders",
+        mini: "O",
+      }
+    ]
   },
   // {
   //   collapse: true,
