@@ -21,6 +21,12 @@ const dashboardStyle = theme => ({
   },
   text_center: {
     textAlign: 'center'
+  },
+  spinner_container: {
+    position: 'absolute',
+    top: '50%',
+    left: '42%',
+    transform: 'translate(-50%, -50%)'
   }
 });
 

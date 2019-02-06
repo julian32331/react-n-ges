@@ -93,15 +93,10 @@ class Dashboard extends React.Component {
 
   render() {
     let routes = dashRoutes1;
-    console.log('workingFor1: ', this.props.workingFor);
     if(this.props.workingFor) {
       let Salon = JSON.parse(this.props.workingFor).find(item => {
         return item.workingForId == this.props.workingForId
       });
-      console.log('Salon: ', Salon);
-      console.log('workingForId: ', this.props.workingForId);
-      console.log('workingFor: ', JSON.parse(this.props.workingFor)[0]['workingForId']);
-      console.log('focus-value: ', Salon);
       if(Salon) {
         if(Salon.Salon) {
           routes = dashRoutes1;
@@ -137,30 +132,37 @@ class Dashboard extends React.Component {
       });
     return (
       <div className={classes.wrapper}>
-        <Sidebar
-          routes={routes}
-          logoText={"GESELLE"}
-          logoText2={"ONE"}
-          image={image}
-          handleDrawerToggle={this.handleDrawerToggle}
-          open={this.state.mobileOpen}
-          color="blue"
-          bgColor="white"
-          miniActive={this.state.miniActive}
-          {...rest}
-        />
+        {
+          this.props.token? (
+              <Sidebar
+                routes={routes}
+                logoText={"GESELLE"}
+                logoText2={"ONE"}
+                image={image}
+                handleDrawerToggle={this.handleDrawerToggle}
+                open={this.state.mobileOpen}
+                color="blue"
+                bgColor="white"
+                miniActive={this.state.miniActive}
+                {...rest}
+              />
+          ) : undefined
+        }
         <div
           className={mainPanel}
-          // style={{backgroundImage: `url(${image})`}}
           ref="mainPanel"
         >
-          <Header
-            sidebarMinimize={this.sidebarMinimize.bind(this)}
-            miniActive={this.state.miniActive}
-            routes={dashRoutes1}
-            handleDrawerToggle={this.handleDrawerToggle}
-            {...rest}
-          />
+          {
+            this.props.token? (
+              <Header
+                sidebarMinimize={this.sidebarMinimize.bind(this)}
+                miniActive={this.state.miniActive}
+                routes={dashRoutes1}
+                handleDrawerToggle={this.handleDrawerToggle}
+                {...rest}
+              />
+            ) : undefined
+          }
           {this.getRoute() ? (
             <div className={classes.content}>
               <div className={classes.container}>{switchRoutes}</div>
@@ -168,21 +170,6 @@ class Dashboard extends React.Component {
           ) : (
             <div className={classes.map}>{switchRoutes}</div>
           )}
-          {/* {this.getRoute() ? <Footer fluid /> : null} */}
-          
-          {/* <div className={classes.scrollTop}>
-            <Button
-              justIcon
-              color="info"
-              simple
-              size="lg"
-              style={{padding: '12px', margin: '0px',}}
-              onClick={this.scrollTop.bind(this)}
-            >
-              <ArrowUpward />
-            </Button>
-          </div> */}
-
         </div>
       </div>
     );
@@ -196,6 +183,7 @@ Dashboard.propTypes = {
 // export default withStyles(appStyle)(Dashboard);
 function mapStateToProps(state) {
   return {
+    token: state.user.token,
     workingForId: state.user.workingForId,
     workingFor: state.user.workingFor
   };

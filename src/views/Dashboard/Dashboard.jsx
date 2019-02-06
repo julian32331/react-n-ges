@@ -27,6 +27,8 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle.jsx";
 import SelectModal from "./SelectModal.jsx";
 
+import Loader from 'react-loader-spinner';
+
 import dashboard from "assets/img/dashboard.jpg";
 
 class Dashboard extends React.Component {
@@ -34,7 +36,8 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state ={ 
-      selectModal: false
+      selectModal: false,
+      isLoading: true
     }
   }
   
@@ -47,17 +50,21 @@ class Dashboard extends React.Component {
       }    
       if(!this.props.token) {
         this.props.history.push("/login");
-      }
-      if(!this.props.workingForId && workingFor.length > 1) {
-        this.setState({
-          selectModal: true
-        })
       } else {
-        this.props.updateWorkingForId({
-          workingForId: Number(workingFor[0]['workingForId']),
-          isEmployee: workingFor[0]['companyAuthLevel'] === "EMPLOYEE"? true : false
-        });
+        if(!this.props.workingForId && workingFor.length > 1) {
+          this.setState({
+            selectModal: true
+          })
+        } else {
+          this.props.updateWorkingForId({
+            workingForId: Number(workingFor[0]['workingForId']),
+            isEmployee: workingFor[0]['companyAuthLevel'] === "EMPLOYEE"? true : false
+          });
+        }
       }
+      this.setState({
+        isLoading: false
+      })
     }, 100);
     
   }
@@ -71,25 +78,40 @@ class Dashboard extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Card>
-        <CardBody className={classes.cardContent}>
-          <h2 className={classes.text_center}>Dashboard</h2>
-          <p style={{width: '60%', margin: '0 auto', fontSize: '20px', lineHeight: '25px'}}>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
-          </p>
-          <p style={{width: '60%', margin: '0 auto', fontSize: '20px', lineHeight: '25px', marginTop: '10px'}}>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
-          </p>
-          <p style={{width: '60%', margin: '0 auto', fontSize: '20px', lineHeight: '25px', marginTop: '10px'}}>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
-          </p>
-        </CardBody>
+      <div>
+      {
+        this.state.isLoading? (
+          <div className={classes.spinner_container}>                    
+            <Loader 
+              type="Oval"
+              color="#7da8ae"
+              height="40"	
+              width="40"
+            />
+          </div>
+        ) : (
+          <Card>
+            <CardBody className={classes.cardContent}>
+              <h2 className={classes.text_center}>Dashboard</h2>
+              <p style={{width: '60%', margin: '0 auto', fontSize: '20px', lineHeight: '25px'}}>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
+              </p>
+              <p style={{width: '60%', margin: '0 auto', fontSize: '20px', lineHeight: '25px', marginTop: '10px'}}>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
+              </p>
+              <p style={{width: '60%', margin: '0 auto', fontSize: '20px', lineHeight: '25px', marginTop: '10px'}}>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
+              </p>
+            </CardBody>
 
-        <SelectModal
-          onOpen={this.state.selectModal}
-          onClose={this.onCloseSelectModal.bind(this)}
-        />
-      </Card>      
+            <SelectModal
+              onOpen={this.state.selectModal}
+              onClose={this.onCloseSelectModal.bind(this)}
+            />
+          </Card> 
+        )
+      }    
+      </div>       
     );
   }
 }
