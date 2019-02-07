@@ -92,15 +92,18 @@ class Dashboard extends React.Component {
         ) : (
           <Card>
             <CardBody className={classes.cardContent}>
-              <h2 className={classes.text_center}>Dashboard</h2>
-              <p style={{width: '60%', margin: '0 auto', fontSize: '20px', lineHeight: '25px'}}>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
+              <h2 className={classes.text_center}>VARMT VÄLKOMMEN TILL GESELLE</h2>
+              <p style={{width: '60%', textAlign: 'center', margin: '10px auto 0', fontSize: '20px', lineHeight: '25px'}}>
+                Nordeuropas största frisörkedja för frisörer och salonger med frisörlicens & gesäll brev.
               </p>
-              <p style={{width: '60%', margin: '0 auto', fontSize: '20px', lineHeight: '25px', marginTop: '10px'}}>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
+              <p style={{width: '60%', textAlign: 'center', margin: '10px auto 0', fontSize: '20px', lineHeight: '25px'}}>
+                Vi ser fram emot att ta väl hand om dig, och att vi tillsammans skapar förutsättningarna för att återta kraften online och offline till alla våra medlemmar.
               </p>
-              <p style={{width: '60%', margin: '0 auto', fontSize: '20px', lineHeight: '25px', marginTop: '10px'}}>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim
+              <p style={{width: '60%', textAlign: 'center', margin: '10px auto 0', fontSize: '20px', lineHeight: '25px'}}>
+                Geselle One är världens modernaste IT plattform för frisörer & salonger, och vår grundfilosofi är att det ska vara enkelt att driva salong och att lönsamheten till våra medlemmar är vårt fokus.
+              </p>
+              <p style={{width: '60%', textAlign: 'center', margin: '10px auto 0', fontSize: '20px', lineHeight: '25px'}}>
+                På Geselle One intranät kommer vi löpande gå ut med nyheter i världklass.
               </p>
             </CardBody>
 
