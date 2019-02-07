@@ -58,14 +58,6 @@ class CompanyInformasjon extends React.Component {
             countryState: "",
             zip: "",
             zipState: "",
-            // billingCO: "",
-            // billingCOState: "",
-            // billing: "",
-            // billingState: "",
-            // billingCity: "",
-            // billingCityState: "",
-            // billingCountry: "",
-            // billingCountryState: "",
             billingEmail: "",
             billingEmailState: "",
             accountNo: "",
@@ -288,10 +280,7 @@ class CompanyInformasjon extends React.Component {
     }
 
     canSubmit() {
-        if(this.state.memberIdState === "success" &&
-            this.state.nameState === "success" &&
-            this.state.orgNoState === "success" &&
-            this.state.emailState === "success" &&
+        if(this.state.emailState === "success" &&
             this.state.phoneState === "success" &&
             this.state.addressCOState === "success" &&
             this.state.addressState === "success" &&
@@ -366,7 +355,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    disabled: !this.state.isEdit,
+                                    disabled: true,
                                     onChange: event =>
                                         this.change(event, "memberId", "memberId", 1),
                                     value: this.state.memberId,
@@ -392,7 +381,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    disabled: !this.state.isEdit,
+                                    disabled: true,
                                     onChange: event =>
                                         this.change(event, "name", "name", 1),
                                     value: this.state.name,
@@ -418,7 +407,7 @@ class CompanyInformasjon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    disabled: !this.state.isEdit,
+                                    disabled: true,
                                     onChange: event =>
                                         this.change(event, "orgNo", "orgNo", 1),
                                     value: this.state.orgNo,
@@ -730,10 +719,7 @@ class CompanyInformasjon extends React.Component {
                             />
                         </GridItem>
                     </GridContainer>
-                    <GridContainer justify="flex-end" alignItems="flex-end">
-                        {/* <GridItem xs={12} sm={12} md={6}>                    
-                            <Button color="info" className={classes.submit} >LAGRE</Button>
-                        </GridItem> */}                   
+                    <GridContainer justify="flex-end" alignItems="flex-end">                 
                         {
                             this.state.isEdit? (                      
                                 <GridItem xs={12} sm={12} md={6}>                    

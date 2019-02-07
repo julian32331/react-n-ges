@@ -157,7 +157,7 @@ class Profile extends React.Component {
 
   canSubmit() {
     if(this.state.nameState === "success" 
-      && this.state.orgNoState === "success" 
+      // && this.state.orgNoState === "success" 
       && this.state.emailState === "success" 
       && this.state.professionState === "success" 
       && this.state.descriptionState === "success") {
@@ -269,7 +269,7 @@ class Profile extends React.Component {
                           ) : (
                             undefined
                         ),
-                        disabled: !this.state.isEdit,
+                        disabled: true,
                         onChange: event =>
                             this.change(event, "orgNo", "orgNo", 1),
                         value: this.state.orgNo,
