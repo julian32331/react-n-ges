@@ -36,6 +36,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Table from "components/Table/Table.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
+import Pagination from "components/Pagination/Pagination.jsx";
 
 import {CSVLink} from 'react-csv';
 
@@ -59,11 +60,12 @@ class CheckInOut extends React.Component {
       editModal: false,
       modalData: null,
       alert: false,
-      message: ""
+      message: "",
+      pageNo: 1,
+      activedPageNo: 1,
     }
     this.list = [];
     this.getCheckList = this.getCheckList.bind(this);
-    // this.getEmployees = this.getEmployees.bind(this);
   }
 
   componentWillMount() {
@@ -199,6 +201,16 @@ class CheckInOut extends React.Component {
 
   downloadCSV() {
     this.csvLink.link.click()
+  }
+
+  // Pagination actions
+  changePagination() {
+    this.setState(prevState => ({
+      pageNo: prevState.pageNo + 5
+    }));
+  }
+  skipOne(param) {
+    console.log('focus: ', param);
   }
 
   render() {
@@ -400,6 +412,26 @@ class CheckInOut extends React.Component {
             ]}
             customHeadClassesForCells={[0, 1, 2, 3, 4, 5]}
           />
+
+          {/* <GridContainer>
+            <GridItem xs={12} sm={6}>
+            </GridItem>
+            <GridItem xs={12} sm={6} className={classes.right}>
+              <Pagination
+                pages={[
+                  { text: "PREV", onClick: () => this.skipOne(-1) },
+                  { text: this.state.pageNo, active: this.state.activedPageNo == this.state.pageNo },
+                  { text: this.state.pageNo + 1, active: this.state.activedPageNo == this.state.pageNo + 1 },
+                  { text: this.state.pageNo + 2, active: this.state.activedPageNo == this.state.pageNo + 2 },
+                  { text: this.state.pageNo + 3, active: this.state.activedPageNo == this.state.pageNo + 3 },
+                  { text: this.state.pageNo + 4, active: this.state.activedPageNo == this.state.pageNo + 4 },
+                  { text: "...", onClick: () => this.changePagination() },
+                  { text: "NEXT", onClick: () => this.skipOne(1) }
+                ]}
+                color="info"
+              />
+            </GridItem>
+          </GridContainer> */}
 
           <CSVLink
             data={csvData}

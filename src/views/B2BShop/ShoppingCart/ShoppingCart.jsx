@@ -13,6 +13,7 @@ import Check from "@material-ui/icons/Check";
 import Remove from "@material-ui/icons/Remove";
 import Add from "@material-ui/icons/Add";
 import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -110,6 +111,7 @@ class ShoppingCart extends React.Component {
                   "PRODUCT",
                   "PRICE",
                   "QTY",
+                  "AMOUNT",
                   ""
                 ]}
                 tableData={[
@@ -150,24 +152,18 @@ class ShoppingCart extends React.Component {
                         </Button>
                       </div>
                     </span>,
-                    <div>
-                      <Button
-                        justIcon
-                        round
-                        color="danger"
-                        className={classes.marginRight}
-                      >
-                        <Close className={classes.icons} />
-                      </Button>
-                      <Button
-                        justIcon
-                        round
-                        color="info"
-                        className={classes.marginRight}
-                      >
-                        <AddShoppingCart className={classes.icons} />
-                      </Button>
-                    </div>
+                    <span>
+                      <small className={classes.tdNumberSmall}>€</small> 549
+                    </span>,
+                    <Button
+                      justIcon
+                      round
+                      color="danger"
+                      size="sm"
+                      className={classes.marginRight}
+                    >
+                      <Close className={classes.icons} />
+                    </Button>
                   ],
                   [
                     <div className={classes.imgContainer}>
@@ -204,24 +200,18 @@ class ShoppingCart extends React.Component {
                         </Button>
                       </div>
                     </span>,
-                    <div>
-                      <Button
-                        justIcon
-                        round
-                        color="danger"
-                        className={classes.marginRight}
-                      >
-                        <Close className={classes.icons} />
-                      </Button>
-                      <Button
-                        justIcon
-                        round
-                        color="info"
-                        className={classes.marginRight}
-                      >
-                        <AddShoppingCart className={classes.icons} />
-                      </Button>
-                    </div>
+                    <span>
+                      <small className={classes.tdNumberSmall}>€</small> 549
+                    </span>,
+                    <Button
+                      justIcon
+                      round
+                      color="danger"
+                      size="sm"
+                      className={classes.marginRight}
+                    >
+                      <Close className={classes.icons} />
+                    </Button>
                   ],
                   [
                     <div className={classes.imgContainer}>
@@ -260,25 +250,41 @@ class ShoppingCart extends React.Component {
                         </Button>
                       </div>
                     </span>,
-                    <div>
-                      <Button
-                        justIcon
-                        round
-                        color="danger"
-                        className={classes.marginRight}
-                      >
-                        <Close className={classes.icons} />
-                      </Button>
-                      <Button
-                        justIcon
-                        round
-                        color="info"
-                        className={classes.marginRight}
-                      >
-                        <AddShoppingCart className={classes.icons} />
-                      </Button>
-                    </div>
+                    <span>
+                      <small className={classes.tdNumberSmall}>€</small> 549
+                    </span>,
+                    <Button
+                      justIcon
+                      round
+                      color="danger"
+                      size="sm"
+                      className={classes.marginRight}
+                    >
+                      <Close className={classes.icons} />
+                    </Button>
                   ],
+                  {
+                    total: true,
+                    colspan: "3",
+                    amount: (
+                      <span>
+                        <small>€</small>2,346
+                      </span>
+                    )
+                  },
+                  {
+                    purchase: true,
+                    colspan: "3",
+                    col: {
+                      colspan: 3,
+                      text: (
+                        <Button color="info" round>
+                          Complete Purchase{" "}
+                          <KeyboardArrowRight className={classes.icon} />
+                        </Button>
+                      )
+                    }
+                  }
                 ]}
                 tableShopping
                 customHeadCellClasses={[
@@ -287,12 +293,12 @@ class ShoppingCart extends React.Component {
                   classes.center,
                   classes.right
                 ]}
-                customHeadClassesForCells={[0, 2, 3, 4]}
+                customHeadClassesForCells={[0, 2, 3, 4, 5]}
                 customCellClasses={[
                   classes.tdName,
                   classes.tdNumber + " " + classes.center,
                   classes.tdNumber + " " + classes.tdNumberAndButtonGroup + " " + classes.center,
-                  classes.tdNumber
+                  classes.tdNumber + " " + classes.right,
                 ]}
                 customClassesForCells={[1, 2, 3, 4]}
               />

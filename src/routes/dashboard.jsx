@@ -14,6 +14,7 @@ import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
 import Products from "views/B2BShop/Products/Products.jsx";
 import ShoppingCart from "views/B2BShop/ShoppingCart/ShoppingCart.jsx";
+import Orders from "views/B2BShop/Orders/Orders.jsx";
 
 import Profile from "views/Profile/Profile.jsx";
 import CompanyInformasjon from "views/CompanyInformasjon.jsx";
@@ -96,32 +97,33 @@ export var dashRoutes1 = [
       }
     ]
   },
-  {
-    collapse: true,
-    path: "/b2bshop",
-    name: "B2B Shop",
-    state: "b2bshop",
-    icon: Shop,
-    views: [
-      {
-        path: "/b2bshop/products",
-        name: "Products",
-        mini: "P",
-        component: Products
-      },
-      {
-        path: "/b2bshop/cart",
-        name: "Shopping Cart",
-        mini: "SC",
-        component: ShoppingCart
-      },
-      {
-        path: "/b2bshop/orders",
-        name: "Orders",
-        mini: "O",
-      }
-    ]
-  },
+  // {
+  //   collapse: true,
+  //   path: "/b2bshop",
+  //   name: "B2B Shop",
+  //   state: "b2bshop",
+  //   icon: Shop,
+  //   views: [
+  //     {
+  //       path: "/b2bshop/products",
+  //       name: "Products",
+  //       mini: "P",
+  //       component: Products
+  //     },
+  //     {
+  //       path: "/b2bshop/cart",
+  //       name: "Shopping Cart",
+  //       mini: "SC",
+  //       component: ShoppingCart
+  //     },
+  //     {
+  //       path: "/b2bshop/orders",
+  //       name: "Orders",
+  //       mini: "O",
+  //       component: Orders
+  //     }
+  //   ]
+  // },
   // {
   //   collapse: true,
   //   path: "/intranett",
