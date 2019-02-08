@@ -27,7 +27,7 @@ const wizardStyle = {
   },
   wizardHeader: {
     textAlign: "center",
-    padding: "25px 0 35px"
+    padding: "25px 0 15px"
   },
   title: {
     margin: "0"
@@ -92,7 +92,7 @@ const wizardStyle = {
     position: "absolute",
     textAlign: "center",
     padding: "12px",
-    fontSize: "12px",
+    fontSize: "14px",
     textTransform: "uppercase",
     WebkitFontSmoothing: "subpixel-antialiased",
     top: "-4px",

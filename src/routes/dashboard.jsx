@@ -10,6 +10,7 @@ import SalongService from "views/MinSalong/SalongService/SalongService.jsx";
 import OpeningHours from "views/MinSalong/OpeningHours/OpeningHours.jsx";
 import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
+import Booking from "views/Booking/Booking.jsx";
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
 import Products from "views/B2BShop/Products/Products.jsx";
@@ -26,6 +27,7 @@ import Home from "@material-ui/icons/Home";
 import AlarmOn from "@material-ui/icons/AlarmOn";
 import NewReleases from "@material-ui/icons/NewReleases";
 import Shop from "@material-ui/icons/Shop";
+import DateRange from "@material-ui/icons/DateRange";
 
 export var dashRoutes1 = [ 
   {
@@ -96,6 +98,12 @@ export var dashRoutes1 = [
         component: MyEmployees
       }
     ]
+  },
+  {
+    path: "/booking",
+    name: "Booking",
+    icon: DateRange,
+    component: Booking
   },
   // {
   //   collapse: true,
