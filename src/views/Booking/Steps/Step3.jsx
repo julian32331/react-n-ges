@@ -12,16 +12,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
-import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
-
-const style = {
-  infoText: {
-    fontWeight: "300",
-    margin: "10px 0 30px",
-    textAlign: "center"
-  },
-  ...customSelectStyle
-};
+import stepStyle from "assets/jss/material-dashboard-pro-react/views/booking/stepStyle";
 
 class Step3 extends React.Component {
   constructor(props) {
@@ -47,7 +38,9 @@ class Step3 extends React.Component {
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12}>
-          <h4 className={classes.infoText}>Are you living in a nice area?</h4>
+          <h4 className={classes.infoText}>
+            Please select date and time.
+          </h4>
         </GridItem>
         <GridItem xs={12} sm={7}>
           <CustomInput
@@ -129,4 +122,4 @@ class Step3 extends React.Component {
   }
 }
 
-export default withStyles(style)(Step3);
+export default withStyles(stepStyle)(Step3);

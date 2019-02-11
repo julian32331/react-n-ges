@@ -5,9 +5,9 @@ import Wizard from "components/Wizard/Wizard.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
-import Step1 from "./WizardSteps/Step1.jsx";
-import Step2 from "./WizardSteps/Step2.jsx";
-import Step3 from "./WizardSteps/Step3.jsx";
+import Step1 from "./Steps/Step1.jsx";
+import Step2 from "./Steps/Step2.jsx";
+import Step3 from "./Steps/Step3.jsx";
 
 class Booking extends React.Component {
   render() {
