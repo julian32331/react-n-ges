@@ -11,6 +11,13 @@ const productsStyle = theme => ({
   ...extendedTablesStyle,
   imgContainer: {
     width: '60px'
+  },
+  qty: {
+    width: '50px',
+    float: 'right'
+  },
+  pr_20: {
+    paddingRight: '20px !important',
   }
 });
 

@@ -1,5 +1,9 @@
 import React from "react";
 
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import connect from 'react-redux/es/connect/connect';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Select from "@material-ui/core/Select";
@@ -22,308 +26,93 @@ class Step2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      simpleSelect: "",
-      desgin: false,
-      code: false,
-      develop: false
+      hairdresser: "",
+      hairdresserState: ""
     };
   }
   sendState() {
     return this.state;
   }
-  handleSimple = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
-  };
-  isValidated() {
-    return true;
+
+  setService(id) {
+    if(this.state.hairdresser == id) {
+      this.setState({
+        hairdresser: "",
+        hairdresserState: "error"
+      })
+    } else {
+      this.setState({
+        hairdresser: id,
+        hairdresserState: "success"
+      })
+    }    
   }
+
+  isValidated() {
+    if (this.state.hairdresserState == "success") {
+      return true;
+    }         
+    return false;
+  }
+
   render() {
     const { classes } = this.props;
     return (
-      <GridContainer justify="center">
-        <GridItem xs={12} sm={12}>
-          <h4 className={classes.infoText}>
+      <div>
+        <GridContainer justify="center">
+          <GridItem xs={12} sm={12}>
+            <h4 className={classes.infoText}>
             Please select the services what you want.
-          </h4>
-        </GridItem>
-        <GridContainer justify="center">
-          <GridItem xs={9} sm={3}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  tabIndex={-1}
-                  //onClick={() => this.handleToggle(3)}
-                  checkedIcon={
-                    <Check className={classes.checkedIcon} />
-                  }
-                  icon={<Check className={classes.uncheckedIcon} />}
-                  classes={{
-                    checked: classes.checked,
-                    root: classes.checkRoot
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="Service1"
-            />           
-          </GridItem>
-          <GridItem xs={9} sm={3}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  tabIndex={-1}
-                  //onClick={() => this.handleToggle(3)}
-                  checkedIcon={
-                    <Check className={classes.checkedIcon} />
-                  }
-                  icon={<Check className={classes.uncheckedIcon} />}
-                  classes={{
-                    checked: classes.checked,
-                    root: classes.checkRoot
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="Service11"
-            />           
-          </GridItem>
-          <GridItem xs={9} sm={3}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  tabIndex={-1}
-                  //onClick={() => this.handleToggle(3)}
-                  checkedIcon={
-                    <Check className={classes.checkedIcon} />
-                  }
-                  icon={<Check className={classes.uncheckedIcon} />}
-                  classes={{
-                    checked: classes.checked,
-                    root: classes.checkRoot
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="Service111"
-            />           
+            </h4>
           </GridItem>
         </GridContainer>
         <GridContainer justify="center">
-          <GridItem xs={9} sm={3}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  tabIndex={-1}
-                  //onClick={() => this.handleToggle(3)}
-                  checkedIcon={
-                    <Check className={classes.checkedIcon} />
-                  }
-                  icon={<Check className={classes.uncheckedIcon} />}
-                  classes={{
-                    checked: classes.checked,
-                    root: classes.checkRoot
-                  }}
-                />
+          <GridItem xs={9}>
+            <GridContainer>
+              {
+                this.props.hairdressers.map((member, key) => {
+                  return (
+                    <GridItem key={key} xs={12} sm={4}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            tabIndex={-1}
+                            onClick={() => this.setService(member.id)}
+                            checkedIcon={
+                              <Check className={classes.checkedIcon} />
+                            }
+                            icon={<Check className={classes.uncheckedIcon} />}
+                            classes={{
+                              checked: classes.checked,
+                              root: classes.checkRoot
+                            }}
+                            checked={member.id == this.state.hairdresser}
+                          />
+                        }
+                        classes={{
+                          label: classes.label
+                        }}
+                        label={member.name}
+                      />           
+                    </GridItem>
+                  )
+                })
               }
-              classes={{
-                label: classes.label
-              }}
-              label="Service2"
-            />           
-          </GridItem>
-          <GridItem xs={9} sm={3}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  tabIndex={-1}
-                  //onClick={() => this.handleToggle(3)}
-                  checkedIcon={
-                    <Check className={classes.checkedIcon} />
-                  }
-                  icon={<Check className={classes.uncheckedIcon} />}
-                  classes={{
-                    checked: classes.checked,
-                    root: classes.checkRoot
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="Service22"
-            />           
-          </GridItem>
-          <GridItem xs={9} sm={3}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  tabIndex={-1}
-                  //onClick={() => this.handleToggle(3)}
-                  checkedIcon={
-                    <Check className={classes.checkedIcon} />
-                  }
-                  icon={<Check className={classes.uncheckedIcon} />}
-                  classes={{
-                    checked: classes.checked,
-                    root: classes.checkRoot
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="Service222"
-            />           
+            </GridContainer>
           </GridItem>
         </GridContainer>
-        <GridContainer justify="center">
-          <GridItem xs={9} sm={3}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  tabIndex={-1}
-                  //onClick={() => this.handleToggle(3)}
-                  checkedIcon={
-                    <Check className={classes.checkedIcon} />
-                  }
-                  icon={<Check className={classes.uncheckedIcon} />}
-                  classes={{
-                    checked: classes.checked,
-                    root: classes.checkRoot
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="Service3"
-            />           
-          </GridItem>
-          <GridItem xs={9} sm={3}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  tabIndex={-1}
-                  //onClick={() => this.handleToggle(3)}
-                  checkedIcon={
-                    <Check className={classes.checkedIcon} />
-                  }
-                  icon={<Check className={classes.uncheckedIcon} />}
-                  classes={{
-                    checked: classes.checked,
-                    root: classes.checkRoot
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="Service33"
-            />           
-          </GridItem>
-          <GridItem xs={9} sm={3}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  tabIndex={-1}
-                  //onClick={() => this.handleToggle(3)}
-                  checkedIcon={
-                    <Check className={classes.checkedIcon} />
-                  }
-                  icon={<Check className={classes.uncheckedIcon} />}
-                  classes={{
-                    checked: classes.checked,
-                    root: classes.checkRoot
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="Service333"
-            />           
-          </GridItem>
-        </GridContainer>
-        <GridContainer justify="center">
-          <GridItem xs={9} sm={3}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  tabIndex={-1}
-                  //onClick={() => this.handleToggle(3)}
-                  checkedIcon={
-                    <Check className={classes.checkedIcon} />
-                  }
-                  icon={<Check className={classes.uncheckedIcon} />}
-                  classes={{
-                    checked: classes.checked,
-                    root: classes.checkRoot
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="Service4"
-            />           
-          </GridItem>
-          <GridItem xs={9} sm={3}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  tabIndex={-1}
-                  //onClick={() => this.handleToggle(3)}
-                  checkedIcon={
-                    <Check className={classes.checkedIcon} />
-                  }
-                  icon={<Check className={classes.uncheckedIcon} />}
-                  classes={{
-                    checked: classes.checked,
-                    root: classes.checkRoot
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="Service44"
-            />           
-          </GridItem>
-          <GridItem xs={9} sm={3}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  tabIndex={-1}
-                  //onClick={() => this.handleToggle(3)}
-                  checkedIcon={
-                    <Check className={classes.checkedIcon} />
-                  }
-                  icon={<Check className={classes.uncheckedIcon} />}
-                  classes={{
-                    checked: classes.checked,
-                    root: classes.checkRoot
-                  }}
-                />
-              }
-              classes={{
-                label: classes.label
-              }}
-              label="Service444"
-            />           
-          </GridItem>
-        </GridContainer>
-      </GridContainer>
+      </div>
     );
   }
 }
 
-export default withStyles(stepStyle)(Step2);
+function mapStateToProps(state) {
+  return {
+    hairdressers: state.booking.hairdressers
+  }
+}
+
+Step2 = withStyles(stepStyle)(Step2);
+Step2 = connect(mapStateToProps)(Step2);
+
+export default Step2;

@@ -207,15 +207,6 @@ class Orders extends React.Component {
                 <GridItem xs={12} sm={6}>
                     <h3 className={classes.cardTitle}>Orders</h3>
                 </GridItem>
-                <GridItem xs={12} sm={6} className={classes.text_right}>
-                    {/* <Button 
-                        color="info" 
-                        size="sm"
-                        onClick={() => this.onOpenNewModal('New Employee')}
-                    >                            
-                        <Add /> Add Employee
-                    </Button> */}
-                </GridItem>
             </GridContainer>
           </div>
         </CardHeader>

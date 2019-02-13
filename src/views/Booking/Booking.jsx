@@ -15,11 +15,11 @@ class Booking extends React.Component {
       <GridContainer justify="center">
         <GridItem xs={12} sm={8}>
           <Wizard
-            // validate
+            validate
             steps={[
-              { stepName: "Salon", stepComponent: Step1, stepId: "salon" },
-              { stepName: "Services", stepComponent: Step2, stepId: "services" },
-              { stepName: "Date/Time", stepComponent: Step3, stepId: "date-time" }
+              { stepName: "Service", stepComponent: Step1, stepId: "service" },
+              { stepName: "Haidresser", stepComponent: Step2, stepId: "haidresser" },
+              { stepName: "Calender/Time", stepComponent: Step3, stepId: "calendar-time" }
             ]}
             title="Booking"
             subtitle="Please complete all steps"

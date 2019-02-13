@@ -142,7 +142,7 @@ class OpeningHours extends React.Component {
                     Saturday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
                 });
             }
-            if (day.dayId === 7) {
+            if (day.dayId === 0) {
                 this.setState({
                     Sunday_id: day.id,
                     Sunday_dayId: day.dayId,

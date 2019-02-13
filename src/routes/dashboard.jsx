@@ -11,6 +11,7 @@ import OpeningHours from "views/MinSalong/OpeningHours/OpeningHours.jsx";
 import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
 import Booking from "views/Booking/Booking.jsx";
+import Admin from "views/Admin/Admin.jsx";
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
 import Products from "views/B2BShop/Products/Products.jsx";
@@ -105,33 +106,39 @@ export var dashRoutes1 = [
     icon: DateRange,
     component: Booking
   },
-  // {
-  //   collapse: true,
-  //   path: "/b2bshop",
-  //   name: "B2B Shop",
-  //   state: "b2bshop",
-  //   icon: Shop,
-  //   views: [
-  //     {
-  //       path: "/b2bshop/products",
-  //       name: "Products",
-  //       mini: "P",
-  //       component: Products
-  //     },
-  //     {
-  //       path: "/b2bshop/cart",
-  //       name: "Shopping Cart",
-  //       mini: "SC",
-  //       component: ShoppingCart
-  //     },
-  //     {
-  //       path: "/b2bshop/orders",
-  //       name: "Orders",
-  //       mini: "O",
-  //       component: Orders
-  //     }
-  //   ]
-  // },
+  {
+    path: "/admin",
+    name: "Admin",
+    icon: DateRange,
+    component: Admin
+  },
+  {
+    collapse: true,
+    path: "/b2bshop",
+    name: "B2B Shop",
+    state: "b2bshop",
+    icon: Shop,
+    views: [
+      {
+        path: "/b2bshop/products",
+        name: "Products",
+        mini: "P",
+        component: Products
+      },
+      {
+        path: "/b2bshop/cart",
+        name: "Shopping Cart",
+        mini: "SC",
+        component: ShoppingCart
+      },
+      {
+        path: "/b2bshop/orders",
+        name: "Orders",
+        mini: "O",
+        component: Orders
+      }
+    ]
+  },
   // {
   //   collapse: true,
   //   path: "/intranett",

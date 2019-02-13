@@ -3,6 +3,7 @@ import React from "react";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Checkbox from "@material-ui/core/Checkbox";
+import FormLabel from "@material-ui/core/FormLabel";
 
 // material-ui icons
 import Assignment from "@material-ui/icons/Assignment";
@@ -23,6 +24,7 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
+import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 import productsStyle from "assets/jss/material-dashboard-pro-react/views/b2bshop/productsStyle.jsx";
 
@@ -102,8 +104,37 @@ class B2BShop extends React.Component {
       <GridContainer>
         <GridItem xs={12}>
           <Card>
-            <CardBody>
-              <h3 className={classes.cardTitle}>B2BShop</h3>
+            <CardHeader className={classes.pb_0}>
+              <div className={classes.cardHeader}>
+                <GridContainer>
+                    <GridItem xs={12} sm={6}>
+                        <h3 className={classes.cardTitle}>Producs</h3>
+                    </GridItem>
+                </GridContainer>
+              </div>
+            </CardHeader>
+            <CardBody>              
+              <GridContainer>
+                <GridItem xs={3} sm={1} md={2} lg={1}>
+                  <FormLabel className={classes.labelHorizontal}>
+                    Search :
+                  </FormLabel>
+                </GridItem>
+                <GridItem xs={9} sm={3} md={3} lg={2}>
+                  <CustomInput
+                    id="search"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "search",
+                      onChange: event =>
+                        this.searchHandler("search", event),
+                      value: this.state.search               
+                    }}
+                  />
+                </GridItem>
+              </GridContainer>
               <Table
                 tableHead={[
                   "",
@@ -134,27 +165,14 @@ class B2BShop extends React.Component {
                     <span>
                       <small className={classes.tdNumberSmall}>€</small> 549
                     </span>,
-                    <span>
-                      1{` `}
-                      <div className={classes.buttonGroup}>
-                        <Button
-                          color="info"
-                          size="sm"
-                          round
-                          className={classes.firstButton}
-                        >
-                          <Remove className={classes.icon} />
-                        </Button>
-                        <Button
-                          color="info"
-                          size="sm"
-                          round
-                          className={classes.lastButton}
-                        >
-                          <Add className={classes.icon} />
-                        </Button>
-                      </div>
-                    </span>,
+                    <div className={classes.qty}>
+                      <CustomInput
+                        id="qty"
+                        inputProps={{
+                          type: "number",
+                        }}
+                      />
+                    </div>,
                     <span>
                       <small className={classes.tdNumberSmall}>€</small> 549
                     </span>,
@@ -178,27 +196,14 @@ class B2BShop extends React.Component {
                     <span>
                       <small className={classes.tdNumberSmall}>€</small> 499
                     </span>,
-                    <span>
-                      2{` `}
-                      <div className={classes.buttonGroup}>
-                        <Button
-                          color="info"
-                          size="sm"
-                          round
-                          className={classes.firstButton}
-                        >
-                          <Remove className={classes.icon} />
-                        </Button>
-                        <Button
-                          color="info"
-                          size="sm"
-                          round
-                          className={classes.lastButton}
-                        >
-                          <Add className={classes.icon} />
-                        </Button>
-                      </div>
-                    </span>,
+                    <div className={classes.qty}>
+                      <CustomInput
+                        id="qty"
+                        inputProps={{
+                          type: "number",
+                        }}
+                      />
+                    </div>,
                     <span>
                       <small className={classes.tdNumberSmall}>€</small> 998
                     </span>,
@@ -224,27 +229,14 @@ class B2BShop extends React.Component {
                     <span>
                       <small className={classes.tdNumberSmall}>€</small> 799
                     </span>,
-                    <span>
-                      1{` `}
-                      <div className={classes.buttonGroup}>
-                        <Button
-                          color="info"
-                          size="sm"
-                          round
-                          className={classes.firstButton}
-                        >
-                          <Remove className={classes.icon} />
-                        </Button>
-                        <Button
-                          color="info"
-                          size="sm"
-                          round
-                          className={classes.lastButton}
-                        >
-                          <Add className={classes.icon} />
-                        </Button>
-                      </div>
-                    </span>,
+                    <div className={classes.qty}>
+                      <CustomInput
+                        id="qty"
+                        inputProps={{
+                          type: "number",
+                        }}
+                      />
+                    </div>,
                     <span>
                       <small className={classes.tdNumberSmall}>€</small> 799
                     </span>,
@@ -252,28 +244,6 @@ class B2BShop extends React.Component {
                       <Close className={classes.icon} />
                     </Button>
                   ],
-                  // {
-                  //   total: true,
-                  //   colspan: "5",
-                  //   amount: (
-                  //     <span>
-                  //       <small>€</small>2,346
-                  //     </span>
-                  //   )
-                  // },
-                  // {
-                  //   purchase: true,
-                  //   colspan: "6",
-                  //   col: {
-                  //     colspan: 2,
-                  //     text: (
-                  //       <Button color="info" round>
-                  //         Complete Purchase{" "}
-                  //         <KeyboardArrowRight className={classes.icon} />
-                  //       </Button>
-                  //     )
-                  //   }
-                  // }
                 ]}
                 tableShopping
                 customHeadCellClasses={[
@@ -281,7 +251,7 @@ class B2BShop extends React.Component {
                   classes.description,
                   classes.description,
                   classes.right,
-                  classes.right,
+                  classes.right + " " + classes.pr_20,
                   classes.right
                 ]}
                 customHeadClassesForCells={[0, 2, 3, 4, 5, 6]}
@@ -290,7 +260,7 @@ class B2BShop extends React.Component {
                   classes.customFont,
                   classes.customFont,
                   classes.tdNumber,
-                  classes.tdNumber + " " + classes.tdNumberAndButtonGroup,
+                  classes.tdNumber,
                   classes.tdNumber
                 ]}
                 customClassesForCells={[1, 2, 3, 4, 5, 6]}

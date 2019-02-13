@@ -586,14 +586,14 @@ function mapStateToProps(state) {
         workingForId: state.user.workingForId,
         info: state.salonInfo.info
     }
-  }
+}
   
-  function mapDispatchToProps(dispatch) {
-      return bindActionCreators({          
-        getUserData : Actions.getUserData,
-        getSalonInfo: Actions.getSalonInfo,
-        updateSalonInfo: Actions.updateSalonInfo
-      }, dispatch);
-  }
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({          
+    getUserData : Actions.getUserData,
+    getSalonInfo: Actions.getSalonInfo,
+    updateSalonInfo: Actions.updateSalonInfo
+    }, dispatch);
+}
   
   export default withStyles(salongInformasjonStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SalongInformasjon)));

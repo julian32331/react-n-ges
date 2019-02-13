@@ -2,6 +2,13 @@ import React from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
 
+import moment from 'moment';
+
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
@@ -50,7 +57,11 @@ class Wizard extends React.Component {
     this.finishButtonClick = this.finishButtonClick.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
   }
-  componentDidMount() {
+  componentDidMount() { 
+    this.props.getBookingServices({
+      salonId: 4
+    })
+
     this.refreshAnimation(0);
     window.addEventListener("resize", this.updateWidth);
   }
@@ -132,6 +143,21 @@ class Wizard extends React.Component {
         finishButton: this.props.steps.length === key + 1 ? true : false
       });
       this.refreshAnimation(key);
+
+      if(this.props.steps[this.state.currentStep].stepId === 'service') {
+        console.log('state focus: ', this[this.props.steps[this.state.currentStep].stepId].sendState().service);
+        let serviceId = this[this.props.steps[this.state.currentStep].stepId].sendState().service;
+        this.props.getBookingHairdressers({ serviceId: serviceId})
+      }
+      if(this.props.steps[this.state.currentStep].stepId === 'haidresser') {
+        let hairdresserId = this[this.props.steps[this.state.currentStep].stepId].sendState().hairdresser;
+        this.props.getBookingDaysOff({
+          salonId: 4,
+          hairdresserId: hairdresserId,
+          year: moment().format('YYYY'),
+          month: moment().format('MM')
+        })
+      }
     }
   }
   previousButtonClick() {
@@ -349,4 +375,12 @@ Wizard.propTypes = {
   validate: PropTypes.bool
 };
 
-export default withStyles(wizardStyle)(Wizard);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getBookingServices : Actions.getBookingServices,
+    getBookingHairdressers : Actions.getBookingHairdressers,
+    getBookingDaysOff: Actions.getBookingDaysOff
+  }, dispatch);
+}
+// export default withStyles(wizardStyle)(Wizard);
+export default withStyles(wizardStyle)(withRouter(connect(null, mapDispatchToProps)(Wizard)));
