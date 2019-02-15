@@ -1,4 +1,4 @@
-import { render } from 'react-dom';
+
 import './index.css';
 import * as React from 'react';
 import { ScheduleComponent, ResourcesDirective, ResourceDirective, ViewsDirective, ViewDirective, Inject, TimelineViews, Resize, DragAndDrop, TimelineMonth } from '@syncfusion/ej2-react-schedule';
@@ -112,44 +112,51 @@ export default class Admin extends SampleBase {
         }
     }
     render() {
-        return (<div className='schedule-control-section'>
-        <div className='col-lg-12 control-section'>
-          <div className='control-wrapper drag-sample-wrapper'>
-            <div className="schedule-container">
-              <div className="title-container">
-                <h1 className="title-text">Doctor's Appointments</h1>
-              </div>
-              <ScheduleComponent ref={schedule => this.scheduleObj = schedule} cssClass='schedule-drag-drop' width='100%' height='650px' selectedDate={new Date(2018, 7, 1)} currentView='TimelineDay' resourceHeaderTemplate={this.resourceHeaderTemplate.bind(this)} eventSettings={{
-            dataSource: this.data,
-            fields: {
-                subject: { title: 'Patient Name', name: 'Name' },
-                startTime: { title: "From", name: "StartTime" },
-                endTime: { title: "To", name: "EndTime" },
-                description: { title: 'Reason', name: 'Description' }
-            }
-        }} group={{ enableCompactView: false, resources: ['Departments', 'Consultants'] }} actionBegin={this.onActionBegin.bind(this)} drag={this.onItemDrag.bind(this)}>
-                <ResourcesDirective>
-                  <ResourceDirective field='DepartmentID' title='Department' name='Departments' allowMultiple={false} dataSource={this.departmentData} textField='Text' idField='Id' colorField='Color'>
-                  </ResourceDirective>
-                  <ResourceDirective field='ConsultantID' title='Consultant' name='Consultants' allowMultiple={false} dataSource={this.consultantData} textField='Text' idField='Id' groupIDField="GroupId" colorField='Color'>
-                  </ResourceDirective>
-                </ResourcesDirective>
-                <ViewsDirective>
-                  <ViewDirective option='TimelineDay'/>
-                  <ViewDirective option='TimelineMonth'/>
-                </ViewsDirective>
-                <Inject services={[TimelineViews, TimelineMonth, Resize, DragAndDrop]}/>
-              </ScheduleComponent>
+        return (
+            <div className='schedule-control-section'>
+                <div className='col-lg-12 control-section'>
+                    <div className='control-wrapper drag-sample-wrapper'>
+                        <div className="schedule-container">
+                            <div className="title-container">
+                                <h1 className="title-text">Doctor's Appointments</h1>
+                            </div>
+                            <ScheduleComponent 
+                                ref={schedule => this.scheduleObj = schedule} 
+                                cssClass='schedule-drag-drop' width='100%' height='650px' selectedDate={new Date(2018, 7, 1)} 
+                                currentView='TimelineDay' 
+                                resourceHeaderTemplate={this.resourceHeaderTemplate.bind(this)} 
+                                eventSettings={{
+                                    dataSource: this.data,
+                                    fields: {
+                                        subject: { title: 'Patient Name', name: 'Name' },
+                                        startTime: { title: "From", name: "StartTime" },
+                                        endTime: { title: "To", name: "EndTime" },
+                                        description: { title: 'Reason', name: 'Description' }
+                                    }
+                                }} 
+                                group={{ enableCompactView: false, resources: ['Departments', 'Consultants'] }} 
+                                actionBegin={this.onActionBegin.bind(this)} drag={this.onItemDrag.bind(this)} >
+                                <ResourcesDirective>
+                                    <ResourceDirective field='DepartmentID' title='Department' name='Departments' allowMultiple={false} dataSource={this.departmentData} textField='Text' idField='Id' colorField='Color' />
+                                    <ResourceDirective field='ConsultantID' title='Consultant' name='Consultants' allowMultiple={false} dataSource={this.consultantData} textField='Text' idField='Id' groupIDField="GroupId" colorField='Color' />
+                                </ResourcesDirective>
+                                <ViewsDirective>
+                                    <ViewDirective option='TimelineDay'/>
+                                    <ViewDirective option='TimelineMonth'/>
+                                </ViewsDirective>
+                                <Inject services={[TimelineViews, TimelineMonth, Resize, DragAndDrop]}/>
+                            </ScheduleComponent>
+                        </div>
+                        <div className="treeview-container">
+                            <div className="title-container">
+                                <h1 className="title-text">Waiting List</h1>
+                            </div>
+                            <TreeViewComponent ref={tree => this.treeObj = tree} cssClass='treeview-external-drag' nodeTemplate={this.treeTemplate.bind(this)} fields={this.fields} nodeDragStop={this.onTreeDragStop.bind(this)} nodeDragging={this.onItemDrag.bind(this)} allowDragAndDrop={this.allowDragAndDrops}/>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="treeview-container">
-              <div className="title-container">
-                <h1 className="title-text">Waiting List</h1>
-              </div>
-              <TreeViewComponent ref={tree => this.treeObj = tree} cssClass='treeview-external-drag' nodeTemplate={this.treeTemplate.bind(this)} fields={this.fields} nodeDragStop={this.onTreeDragStop.bind(this)} nodeDragging={this.onItemDrag.bind(this)} allowDragAndDrop={this.allowDragAndDrops}/>
-            </div>
-          </div>
-        </div>
-      </div>);
+        );
     }
 }
 

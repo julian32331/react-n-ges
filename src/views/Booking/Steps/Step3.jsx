@@ -30,18 +30,15 @@ class Step3 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      simpleSelect: "",
-      desgin: false,
-      code: false,
-      develop: false
+      date: "",
+      dateState: "",
+      time: "",
+      timeState: ""
     };
   }
   sendState() {
     return this.state;
   }
-  handleSimple = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
   isValidated() {
     return true;
   }
@@ -53,7 +50,25 @@ class Step3 extends React.Component {
       hairdresserId: this.props.hairdresserId,
       date: date
     })
+    this.setState({
+      date: date
+    })
   }
+
+  setTime(time) {
+    if(this.state.time == time) {
+      this.setState({
+        time: "",
+        timeState: "error"
+      })
+    } else {
+      this.setState({
+        time: time,
+        timeState: "success"
+      })
+    }    
+  }
+
   render() {
     const { classes } = this.props;
     let isOpened = (current) => {
@@ -70,6 +85,7 @@ class Step3 extends React.Component {
             </h4>
           </GridItem>
         </GridContainer>
+
         <GridContainer justify="center">
           <GridItem xs={12} sm={4}>
             <FormControl fullWidth>
@@ -82,37 +98,40 @@ class Step3 extends React.Component {
               />
             </FormControl>
           </GridItem>
-          <GridItem xs={12} sm={1}></GridItem>
-          <GridItem xs={12} sm={4}>
+        </GridContainer>
+        <GridContainer justify="center">
+          <GridItem xs={9}>
             <GridContainer>
-            {
-              this.props.hairdresserSchedule.map((item, key) => {
-                return (
-                  <GridItem xs={12}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          tabIndex={-1}
-                          //onClick={() => this.handleToggle(3)}
-                          checkedIcon={
-                            <Check className={classes.checkedIcon} />
-                          }
-                          icon={<Check className={classes.uncheckedIcon} />}
-                          classes={{
-                            checked: classes.checked,
-                            root: classes.checkRoot
-                          }}
-                        />
-                      }
-                      classes={{
-                        label: classes.label
-                      }}
-                      label={moment(item.plannedStartTime).format("HH:mm")}
-                    />
-                  </GridItem>
-                )
-              })
-            }              
+              {
+                this.props.hairdresserSchedule.map((item, key) => {
+                  return (
+                    <GridItem key={key} xs={12} sm={3} className={classes.center}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            tabIndex={-1}
+                            onClick={() => this.setTime(item)}
+                            checkedIcon={
+                              <Check className={classes.checkedIcon} />
+                            }
+                            icon={<Check className={classes.uncheckedIcon} />}
+                            classes={{
+                              checked: classes.checked,
+                              root: classes.checkRoot
+                            }}
+                            checked={item == this.state.time}
+                          />
+                        }
+                        classes={{
+                          label: classes.label
+                        }}
+                        // label={moment(item.plannedStartTime).format("HH:mm")}
+                        label={item}
+                      />
+                    </GridItem>
+                  )
+                })
+              }
             </GridContainer>
           </GridItem>
         </GridContainer>

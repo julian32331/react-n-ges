@@ -145,11 +145,10 @@ class Wizard extends React.Component {
       this.refreshAnimation(key);
 
       if(this.props.steps[this.state.currentStep].stepId === 'service') {
-        console.log('state focus: ', this[this.props.steps[this.state.currentStep].stepId].sendState().service);
         let serviceId = this[this.props.steps[this.state.currentStep].stepId].sendState().service;
         this.props.getBookingHairdressers({ serviceId: serviceId})
       }
-      if(this.props.steps[this.state.currentStep].stepId === 'haidresser') {
+      if(this.props.steps[this.state.currentStep].stepId === 'hairdresser') {
         let hairdresserId = this[this.props.steps[this.state.currentStep].stepId].sendState().hairdresser;
         this.props.getBookingDaysOff({
           salonId: 4,
@@ -194,10 +193,21 @@ class Wizard extends React.Component {
         undefined &&
         this[this.props.steps[this.state.currentStep].stepId].isValidated()) ||
         this[this.props.steps[this.state.currentStep].stepId].isValidated ===
-          undefined) &&
-      this.props.finishButtonClick !== undefined
+          undefined) 
+      //     &&
+      // this.props.finishButtonClick !== undefined
     ) {
-      this.props.finishButtonClick();
+      // this.props.finishButtonClick();
+      let date = this[this.props.steps[this.state.currentStep].stepId].sendState().date
+      let time = this[this.props.steps[this.state.currentStep].stepId].sendState().time
+      this.props.completeBooking({
+        salonId: 4,
+        serviceId: this['service'].sendState().service,
+        hairdresserId: this['hairdresser'].sendState().hairdresser,
+        consumerId: 1,
+        bookingOrigin: "WEB",
+        plannedStartTime: date + " " + time + ":00"
+      })
     }
   }
   refreshAnimation(index) {
@@ -379,7 +389,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getBookingServices : Actions.getBookingServices,
     getBookingHairdressers : Actions.getBookingHairdressers,
-    getBookingDaysOff: Actions.getBookingDaysOff
+    getBookingDaysOff: Actions.getBookingDaysOff,
+    completeBooking: Actions.completeBooking
   }, dispatch);
 }
 // export default withStyles(wizardStyle)(Wizard);

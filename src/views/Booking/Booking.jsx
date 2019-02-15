@@ -18,7 +18,7 @@ class Booking extends React.Component {
             validate
             steps={[
               { stepName: "Service", stepComponent: Step1, stepId: "service" },
-              { stepName: "Haidresser", stepComponent: Step2, stepId: "haidresser" },
+              { stepName: "Hairdresser", stepComponent: Step2, stepId: "hairdresser" },
               { stepName: "Calender/Time", stepComponent: Step3, stepId: "calendar-time" }
             ]}
             title="Booking"

@@ -12,6 +12,9 @@ const stepStyle = theme => ({
       fontWeight: "300",
       margin: "10px 0 30px",
       textAlign: "center"
+    },
+    center: {
+      textAlign: 'center'
     }
 });
 

@@ -12,6 +12,7 @@ const initialState = {
     salonClosingDays: [],
     hairdresserSchedule: [],
     salonId: "",
+    serviceId: "",
     hairdresserId: ""
 }
 
@@ -31,6 +32,7 @@ const booking = function (state = initialState, action) {
             return {
                 ...state,
                 hairdressers: action.hairdressers,
+                serviceId: action.serviceId
             };
         }
         case Actions.GET_BOOKING_DAYS:

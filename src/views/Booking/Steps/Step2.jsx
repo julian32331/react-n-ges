@@ -72,7 +72,7 @@ class Step2 extends React.Component {
               {
                 this.props.hairdressers.map((member, key) => {
                   return (
-                    <GridItem key={key} xs={12} sm={4}>
+                    <GridItem key={key} xs={12} sm={4} className={classes.center}>
                       <FormControlLabel
                         control={
                           <Checkbox

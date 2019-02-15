@@ -74,7 +74,7 @@ class Step1 extends React.Component {
               {
                 this.props.services.map((service, key) => {
                   return (
-                    <GridItem key={key} xs={12} sm={4}>
+                    <GridItem key={key} xs={12} sm={4} className={classes.center}>
                       <FormControlLabel
                         control={
                           <Checkbox
