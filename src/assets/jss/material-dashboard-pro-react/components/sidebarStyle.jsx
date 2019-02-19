@@ -518,6 +518,12 @@ const sidebarStyle = theme => ({
     "&:hover,&:focus": {
       color: "#000"
     }
+  },
+
+  // Class for the disabled item
+  disabledItem: {
+    pointerEvents: 'none',
+    opacity: 0.6
   }
 });
 

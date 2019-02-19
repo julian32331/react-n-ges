@@ -246,6 +246,7 @@ class Sidebar extends React.Component {
           if(prop.name === 'Profile' || prop.name === 'Company Information' || prop.name === 'My Salon') {
             return null;
           }
+          const customItem = prop.isDev? classes.item + " " + classes.disabledItem : classes.item;
           if (prop.collapse) {
             const navLinkClasses =
               classes.itemLink +
@@ -286,7 +287,7 @@ class Sidebar extends React.Component {
                 [classes.caretRTL]: rtlActive
               });
             return (
-              <ListItem key={key} className={classes.item}>
+              <ListItem key={key} className={customItem}>
                 <NavLink
                   to={"#"}
                   className={navLinkClasses}
@@ -375,7 +376,7 @@ class Sidebar extends React.Component {
               [classes.itemIconRTL]: rtlActive
             });
           return (
-            <ListItem key={key} className={classes.item}>
+            <ListItem key={key} className={customItem}>
               <NavLink to={prop.path} className={navLinkClasses}>
                 <ListItemIcon className={itemIcon}>
                   {typeof prop.icon === "string" ? (

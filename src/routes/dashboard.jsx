@@ -104,13 +104,15 @@ export var dashRoutes1 = [
     path: "/booking/:salonId?/:consumerId?",
     name: "Booking",
     icon: DateRange,
-    component: Booking
+    component: Booking,
+    isDev: true
   },
   {
     path: "/admin",
     name: "Admin",
     icon: DateRange,
-    component: Admin
+    component: Admin,
+    isDev: true
   },
   {
     collapse: true,
@@ -118,6 +120,7 @@ export var dashRoutes1 = [
     name: "B2B Shop",
     state: "b2bshop",
     icon: Shop,
+    isDev: true,
     views: [
       {
         path: "/b2bshop/products",
@@ -139,37 +142,38 @@ export var dashRoutes1 = [
       }
     ]
   },
-  // {
-  //   collapse: true,
-  //   path: "/intranett",
-  //   name: "Intranett",
-  //   state: "intranett",
-  //   icon: NewReleases,
-  //   views: [
-  //     {
-  //       path: "/intranett/news",
-  //       name: "News",
-  //       mini: "N",
-  //       component: News
-  //     },
-  //     {
-  //       path: "/intranett/faq",
-  //       name: "FAQ",
-  //       mini: "F",
-  //     },
-  //     {
-  //       path: "/intranett/marketing",
-  //       name: "Marketing",
-  //       mini: "M",
-  //     },
-  //     {
-  //       path: "/intranett/contacts",
-  //       name: "Contacts",
-  //       mini: "C",
-  //       component: Contacts
-  //     }
-  //   ]
-  // },
+  {
+    collapse: true,
+    path: "/intranett",
+    name: "Intranett",
+    state: "intranett",
+    icon: NewReleases,
+    isDev: true,
+    views: [
+      {
+        path: "/intranett/news",
+        name: "News",
+        mini: "N",
+        component: News
+      },
+      {
+        path: "/intranett/faq",
+        name: "FAQ",
+        mini: "F",
+      },
+      {
+        path: "/intranett/marketing",
+        name: "Marketing",
+        mini: "M",
+      },
+      {
+        path: "/intranett/contacts",
+        name: "Contacts",
+        mini: "C",
+        component: Contacts
+      }
+    ]
+  },
   { redirect: true, path: "/", pathTo: "/dashboard", name: "Dashboard" }
 ];
 
