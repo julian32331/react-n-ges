@@ -185,7 +185,7 @@ class Sidebar extends React.Component {
                     </span>
                     <ListItemText
                       // primary={rtlActive ? "ملفي" : "My Profile"}
-                      primary={"My Profile"}
+                      primary={"Min Profil"}
                       disableTypography={true}
                       className={collapseItemText}
                     />
@@ -200,12 +200,12 @@ class Sidebar extends React.Component {
                   >
                     <span className={collapseItemMini}>
                       {/* {rtlActive ? "هوع" : "CI"} */}
-                      {"CI"}
+                      {"F"}
                     </span>
                     <ListItemText
                       primary={
                         // rtlActive ? "تعديل الملف الشخصي" : "Company Information"
-                        "Company Information"
+                        "Företagsinformation"
                       }
                       disableTypography={true}
                       className={collapseItemText}
@@ -225,7 +225,7 @@ class Sidebar extends React.Component {
                     </span>
                     <ListItemText
                       // primary={rtlActive ? "إعدادات" : "My Salons"}
-                      primary={"My Salons"}
+                      primary={"Mina Salonger"}
                       disableTypography={true}
                       className={collapseItemText}
                     />

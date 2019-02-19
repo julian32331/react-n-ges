@@ -251,7 +251,7 @@ class OpeningHours extends React.Component {
                         <div className={classes.cardHeader}>
                             <GridContainer>
                                 <GridItem  xs={12} sm={6}>
-                                    <h3 className={classes.cardTitle}>Opening Hours</h3>
+                                    <h3 className={classes.cardTitle}>Öppettider</h3>
                                 </GridItem>
                             </GridContainer>
                         </div>
@@ -351,7 +351,7 @@ class OpeningHours extends React.Component {
                                         size="sm"
                                         onClick={() => this.setState({ isEdit: true })}
                                     >                            
-                                        Edit
+                                        Redigera
                                     </Button>
                                 </GridItem>
                             )
@@ -364,7 +364,7 @@ class OpeningHours extends React.Component {
                         <div className={classes.cardHeader}>
                             <GridContainer>
                                 <GridItem xs={12} sm={6}>
-                                    <h3 className={classes.cardTitle}>Special Days</h3>
+                                    <h3 className={classes.cardTitle}>Specialdagar</h3>
                                 </GridItem>
                                 <GridItem xs={12} sm={6} className={classes.text_right}>
                                     <Button 
@@ -372,7 +372,7 @@ class OpeningHours extends React.Component {
                                         size="sm"
                                         onClick={() => this.onOpenNewOrUpdateModal("New Special Day")}
                                     >                            
-                                        <Add /> Add Special Day
+                                        <Add /> Lägg till avvikande öppettider
                                     </Button>
                                 </GridItem>
                             </GridContainer>
@@ -383,11 +383,11 @@ class OpeningHours extends React.Component {
                             <GridItem sm={12} md={10}>
                                 <Table
                                     tableHead={[
-                                        "Name",
+                                        "Namn",
                                         "Date",
-                                        "From",
-                                        "To",
-                                        "Actions"
+                                        "Från",
+                                        "Till",
+                                        "Åtgärder"
                                     ]}
                                     tableData={specialDays}
                                     customCellClasses={[

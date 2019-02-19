@@ -319,7 +319,7 @@ class RegisterPage extends React.Component {
                               undefined
                           ),
                           type: "text",
-                          placeholder: "Org Number *",
+                          placeholder: "Org.nr. *",
                           onChange: event =>
                             this.change(event, "orgNo", "orgNo"),
                           onKeyDown: this.onKeyDown,
@@ -351,7 +351,7 @@ class RegisterPage extends React.Component {
                               undefined
                           ),
                           type: "text",
-                          placeholder: "Phone Number *",
+                          placeholder: "Mobil *",
                           onChange: event =>
                             this.change(event, "phone", "phone"),
                           value: this.state.phone,
@@ -382,7 +382,7 @@ class RegisterPage extends React.Component {
                               undefined
                           ),
                           type: "email",
-                          placeholder: "Email *",
+                          placeholder: "E-post *",
                           onChange: event =>
                             this.change(event, "email", "email"),
                           value: this.state.email,
@@ -415,7 +415,7 @@ class RegisterPage extends React.Component {
                                   undefined
                               ),
                               type: "email",
-                              placeholder: "Email for Sales Person",
+                              placeholder: "E-post för säljare",
                               onChange: event =>
                                 this.change(event, "emailPerson", "emailPerson"),
                               value: this.state.emailPerson
@@ -605,7 +605,7 @@ class RegisterPage extends React.Component {
                               Next
                             </Button>
                             <div className={classes.pt_15}>Already have an account?</div>
-                            <Link className={classes.link} to="/login">Sign In</Link>
+                            <Link className={classes.link} to="/login">Logga in</Link>
                           </div>
                         )
                       }

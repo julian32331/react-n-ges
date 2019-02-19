@@ -199,7 +199,7 @@ class MyEmployees extends React.Component {
           <div className={classes.cardHeader}>
             <GridContainer>
                 <GridItem xs={12} sm={6}>
-                    <h3 className={classes.cardTitle}>My Employees</h3>
+                    <h3 className={classes.cardTitle}>Mina anställda</h3>
                 </GridItem>
                 <GridItem xs={12} sm={6} className={classes.text_right}>
                     <Button 
@@ -217,7 +217,7 @@ class MyEmployees extends React.Component {
           <GridContainer>
             <GridItem xs={3} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
-                Search :
+                Sök :
               </FormLabel>
             </GridItem>
             <GridItem xs={9} sm={3} md={3} lg={2}>
@@ -238,12 +238,12 @@ class MyEmployees extends React.Component {
 
           <Table
             tableHead={[
-              "Name",
-              "Phone Number",
+              "Namn",
+              "Telefonnummer",
               "Personalnr",
               "Avatar",
               "Verified",
-              "Actions"
+              "Åtgärder"
             ]}
             tableData={employees}
             customCellClasses={[

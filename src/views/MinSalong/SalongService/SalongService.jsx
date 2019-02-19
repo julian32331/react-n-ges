@@ -98,7 +98,7 @@ class SalongService extends React.Component {
                     <div className={classes.cardHeader}>
                         <GridContainer>
                             <GridItem xs={12} sm={6}>
-                                <h3 className={classes.cardTitle}>Saloon Service</h3>
+                                <h3 className={classes.cardTitle}>Salongstjänster</h3>
                             </GridItem>
                             <GridItem xs={12} sm={6} className={classes.text_right}>
                                 <Button 

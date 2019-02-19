@@ -229,7 +229,7 @@ class Profile extends React.Component {
                     <CustomInput
                       success={this.state.nameState === "success"}
                       error={this.state.nameState === "error"}
-                      labelText="Name *"
+                      labelText="Namn *"
                       id="legal-name"
                       formControlProps={{
                           fullWidth: true
@@ -283,7 +283,7 @@ class Profile extends React.Component {
                     <CustomInput
                       success={this.state.emailState === "success"}
                       error={this.state.emailState === "error"}
-                      labelText="Email"
+                      labelText="E-post"
                       id="email"
                       formControlProps={{
                         fullWidth: true
@@ -309,7 +309,7 @@ class Profile extends React.Component {
                     <CustomInput
                       success={this.state.phoneState === "success"}
                       error={this.state.phoneState === "error"}
-                      labelText="Phone"
+                      labelText="Telefonnummer *"
                       id="phone"
                       formControlProps={{
                         fullWidth: true
@@ -391,7 +391,7 @@ class Profile extends React.Component {
                     <CustomInput
                       success={this.state.descriptionState === "success"}
                       error={this.state.descriptionState === "error"}
-                      labelText="About Me"
+                      labelText="Om mig"
                       id="about-me"
                       formControlProps={{
                         fullWidth: true

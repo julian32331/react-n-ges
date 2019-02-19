@@ -128,7 +128,7 @@ class MySalon extends React.Component {
                     size="sm"
                     onClick={() => this.onOpenAddSalonModal()}
                 >                            
-                    <Add /> Add Salon
+                    <Add /> Lägg till salong
                 </Button>
               </GridItem>
               <GridItem xs={12}>
@@ -163,7 +163,7 @@ class MySalon extends React.Component {
                 <div className={classes.cardHeader}>
                   <GridContainer>
                       <GridItem xs={12} sm={6}>
-                          <h3 className={classes.cardTitle}>Companies / Salons</h3>
+                          <h3 className={classes.cardTitle}>Företag/salonger</h3>
                       </GridItem>
                       <GridItem xs={12} sm={6} className={classes.text_right}>
                           <Button 
@@ -171,7 +171,7 @@ class MySalon extends React.Component {
                               size="sm"
                               // onClick={() => this.onOpenAddSalonModal()}
                           >                            
-                              <Add /> Add Company
+                              <Add /> Lägg till företag
                           </Button>
                       </GridItem>
                   </GridContainer>

@@ -163,7 +163,7 @@ class LoginPage extends React.Component {
                           undefined
                       ),
                       type: "email",
-                      placeholder: "Email*",
+                      placeholder: "E-post *",
                       onChange: event =>
                         this.change(event, "email", "email"),
                       value: this.state.email
@@ -193,22 +193,22 @@ class LoginPage extends React.Component {
                           undefined
                       ),
                       type: "password",
-                      placeholder: "Password*",
+                      placeholder: "Lösen *",
                       onChange: event =>
                         this.change(event, "password", "password"),
                       value: this.state.password
                     }}
                   />
                   <div className={classes.right + " " + classes.pb_15}>
-                    <Link className={classes.link} to="/forgotpassword">Forgot Password?</Link>
+                    <Link className={classes.link} to="/forgotpassword">Glömt lösen?</Link>
                   </div>
                   <div className={classes.center}>
                     <Button color="info" className={classes.w_100_p} disabled={this.canLogin()} ref="login" type="submit">
                     {/* onClick={this.login} */}
-                      Sign In
+                      Logga in
                     </Button>   
-                    <div className={classes.pt_15}>Don't you have account?</div>
-                    <Link className={classes.link} to="/register">Sign Up</Link>
+                    <div className={classes.pt_15}>Har du inget konto?</div>
+                    <Link className={classes.link} to="/register">Skaffa konto</Link>
                   </div>
                 </form>
                 {

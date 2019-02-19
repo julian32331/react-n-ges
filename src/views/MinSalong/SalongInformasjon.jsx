@@ -293,7 +293,7 @@ class SalongInformasjon extends React.Component {
         <Card>
             <CardHeader>            
                 <div className={classes.cardHeader}>
-                    <h3 className={classes.cardTitle}>Salong Informasjon</h3>
+                    <h3 className={classes.cardTitle}>Salongsinformation</h3>
                 </div>
             </CardHeader>
             <CardBody>
@@ -303,7 +303,7 @@ class SalongInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.nameState === "success"}
                                 error={this.state.nameState === "error"}
-                                labelText="Salongens navn *"
+                                labelText="Salongens namn *"
                                 id="name"
                                 formControlProps={{
                                     fullWidth: true
@@ -329,7 +329,7 @@ class SalongInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.addressState === "success"}
                                 error={this.state.addressState === "error"}
-                                labelText="Addresse *"
+                                labelText="Adress *"
                                 id="address"
                                 formControlProps={{
                                     fullWidth: true
@@ -383,7 +383,7 @@ class SalongInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.cityState === "success"}
                                 error={this.state.cityState === "error"}
-                                labelText="By *"
+                                labelText="Postort *"
                                 id="city"
                                 formControlProps={{
                                     fullWidth: true
@@ -411,7 +411,7 @@ class SalongInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.phoneState === "success"}
                                 error={this.state.phoneState === "error"}
-                                labelText="Telefonummer *"
+                                labelText="Telefonnummer *"
                                 id="phone"
                                 formControlProps={{
                                     fullWidth: true
@@ -437,7 +437,7 @@ class SalongInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.emailState === "success"}
                                 error={this.state.emailState === "error"}
-                                labelText="Epost *"
+                                labelText="E-post *"
                                 id="email"
                                 formControlProps={{
                                     fullWidth: true
@@ -465,7 +465,7 @@ class SalongInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.networkState === "success"}
                                 error={this.state.networkState === "error"}
-                                labelText="Nettadresse *"
+                                labelText="Hemsida *"
                                 id="network"
                                 formControlProps={{
                                     fullWidth: true
@@ -508,7 +508,7 @@ class SalongInformasjon extends React.Component {
                                     classes={{
                                         label: classes.label
                                     }}
-                                    label="Har salongen parkering"
+                                    label="Har salongen Parkering"
                                 />
                             </div>
                         </GridItem>
@@ -533,7 +533,7 @@ class SalongInformasjon extends React.Component {
                                     classes={{
                                         label: classes.label
                                     }}
-                                    label="Tilganglighetsanpassat"
+                                    label="Tillgänglighetsanpassat"
                                 />
                             </div>
                         </GridItem>
@@ -541,7 +541,7 @@ class SalongInformasjon extends React.Component {
                     <GridContainer justify="flex-end" alignItems="flex-end">
                         <GridItem xs={12} sm={12} md={6}>
                             <CustomInput
-                                labelText="Salong beskrivelse"
+                                labelText="Salongsbeskrivning"
                                 id="description"
                                 formControlProps={{
                                     fullWidth: true
@@ -565,7 +565,7 @@ class SalongInformasjon extends React.Component {
                                 </GridItem>                                
                             ) : (
                                 <GridItem xs={12} sm={12} md={6}>                    
-                                    <Button color="info" size="sm" className={classes.submit} onClick={this.enableEdit.bind(this)}>Edit</Button>
+                                    <Button color="info" size="sm" className={classes.submit} onClick={this.enableEdit.bind(this)}>Redigera</Button>
                                 </GridItem> 
                             )
                         } 

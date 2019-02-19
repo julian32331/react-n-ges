@@ -156,7 +156,7 @@ class ForgotPasswordPage extends React.Component {
                           undefined
                       ),
                       type: "email",
-                      placeholder: "Email*",
+                      placeholder: "E-post*",
                       onChange: event =>
                         this.change(event, "email", "email"),
                       value: this.state.email
@@ -164,10 +164,10 @@ class ForgotPasswordPage extends React.Component {
                   />
                   <div className={classes.center}>
                     <Button color="info" className={classes.w_100_p} onClick={this.submit} disabled={this.canSubmit()}>
-                      Send
+                      Skicka
                     </Button>   
                     <div className={classes.pt_15}>
-                      <Link className={classes.link} to="/login">Sign In</Link>
+                      <Link className={classes.link} to="/login">Logga in</Link>
                     </div>
                   </div>
                 </form>

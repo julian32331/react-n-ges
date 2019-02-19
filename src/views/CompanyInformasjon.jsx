@@ -331,7 +331,7 @@ class CompanyInformasjon extends React.Component {
         <Card>
             <CardHeader>            
                 <div className={classes.cardHeader}>
-                    <h3 className={classes.cardTitle}>Company Informasjon</h3>
+                    <h3 className={classes.cardTitle}>Företagsinformation</h3>
                 </div>
             </CardHeader>
             <CardBody>
@@ -367,7 +367,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.nameState === "success"}
                                 error={this.state.nameState === "error"}
-                                labelText="Legal Name *"
+                                labelText="Legalt namn *"
                                 id="name"
                                 formControlProps={{
                                     fullWidth: true
@@ -393,7 +393,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.orgNoState === "success"}
                                 error={this.state.addressState === "error"}
-                                labelText="Org No *"
+                                labelText="Org.nr. *"
                                 id="org-no"
                                 formControlProps={{
                                     fullWidth: true
@@ -421,7 +421,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.emailState === "success"}
                                 error={this.state.emailState === "error"}
-                                labelText="Email *"
+                                labelText="E-post *"
                                 id="email"
                                 formControlProps={{
                                     fullWidth: true
@@ -447,7 +447,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.phoneState === "success"}
                                 error={this.state.phoneState === "error"}
-                                labelText="Phone *"
+                                labelText="Telefonnummer *"
                                 id="phone"
                                 formControlProps={{
                                     fullWidth: true
@@ -475,7 +475,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.addressCOState === "success"}
                                 error={this.state.addressCOState === "error"}
-                                labelText="AddressCO *"
+                                labelText="C/O *"
                                 id="addressCO"
                                 formControlProps={{
                                     fullWidth: true
@@ -501,7 +501,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.addressState === "success"}
                                 error={this.state.addressState === "error"}
-                                labelText="Address *"
+                                labelText="Adress *"
                                 id="address"
                                 formControlProps={{
                                     fullWidth: true
@@ -529,7 +529,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.cityState === "success"}
                                 error={this.state.cityState === "error"}
-                                labelText="City *"
+                                labelText="Postort *"
                                 id="city"
                                 formControlProps={{
                                     fullWidth: true
@@ -555,7 +555,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.countryState === "success"}
                                 error={this.state.countryState === "error"}
-                                labelText="Country *"
+                                labelText="Land *"
                                 id="country"
                                 formControlProps={{
                                     fullWidth: true
@@ -581,7 +581,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.zipState === "success"}
                                 error={this.state.zipState === "error"}
-                                labelText="Post Nummer *"
+                                labelText="Postnummer *"
                                 id="zip"
                                 formControlProps={{
                                     fullWidth: true
@@ -607,7 +607,7 @@ class CompanyInformasjon extends React.Component {
                     <GridContainer>
                         <GridItem xs={12}>
                             <div className={classes.cardHeader}>
-                                <h3 className={classes.cardTitle}>Company Economy</h3>
+                                <h3 className={classes.cardTitle}>Ekonomi</h3>
                             </div>
                         </GridItem>
                     </GridContainer>
@@ -616,7 +616,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.billingEmailState === "success"}
                                 error={this.state.billingEmailState === "error"}
-                                labelText="Billing Email *"
+                                labelText="E-post för fakturor *"
                                 id="billing-email"
                                 formControlProps={{
                                     fullWidth: true
@@ -642,7 +642,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.accountNoState === "success"}
                                 error={this.state.accountNoState === "error"}
-                                labelText="Account No *"
+                                labelText="Kontonummer *"
                                 id="account-no"
                                 formControlProps={{
                                     fullWidth: true
@@ -670,7 +670,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.bankgiroNoState === "success"}
                                 error={this.state.bankgiroNoState === "error"}
-                                labelText="Bankgiro No *"
+                                labelText="Bankgiro *"
                                 id="bankgiro-no"
                                 formControlProps={{
                                     fullWidth: true
@@ -696,7 +696,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.plusgiroNo === "success"}
                                 error={this.state.plusgiroNo === "error"}
-                                labelText="Plusgiro No *"
+                                labelText="Plusgiro *"
                                 id="plusgiro-no"
                                 formControlProps={{
                                     fullWidth: true

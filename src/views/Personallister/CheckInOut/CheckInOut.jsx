@@ -366,7 +366,7 @@ class CheckInOut extends React.Component {
           <div className={classes.cardHeader}>
             <GridContainer>
                 <GridItem xs={12} sm={6}>
-                  <h3 className={classes.cardTitle}>Check In/Out</h3>
+                  <h3 className={classes.cardTitle}>Checka in/ut</h3>
                 </GridItem>
                 <GridItem xs={12} sm={6} className={classes.text_right}>
                   <Button 
@@ -399,7 +399,7 @@ class CheckInOut extends React.Component {
           <GridContainer>
             <GridItem xs={4} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
-                Search :
+                Sök :
               </FormLabel>
             </GridItem>
             <GridItem xs={8} sm={3} md={3} lg={2}>
@@ -418,7 +418,7 @@ class CheckInOut extends React.Component {
             </GridItem>
             <GridItem xs={4} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
-                From :
+                Från :
               </FormLabel>
             </GridItem>
             <GridItem xs={8} sm={2}>
@@ -433,7 +433,7 @@ class CheckInOut extends React.Component {
             </GridItem>
             <GridItem xs={4} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
-                To :
+                Till :
               </FormLabel>
             </GridItem>
             <GridItem xs={8} sm={2}>
@@ -470,11 +470,11 @@ class CheckInOut extends React.Component {
           <Table
             tableHead={[
               "",
-              "Name",
+              "Namn",
               "Employee number",
               "Checked In",
               "Checked Out",
-              "Action"
+              "Åtgärder"
             ]}
             tableData={
               list

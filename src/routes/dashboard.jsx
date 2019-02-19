@@ -48,33 +48,33 @@ export var dashRoutes1 = [
   },
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "Översikt",
     icon: DashboardIcon,
     component: Dashboard
   },
   {
     collapse: true,
     path: "/minsalong",
-    name: "Min salong",
+    name: "Min Salong",
     state: "openMinSalong",
     icon: Home,
     views: [
       {
         path: "/minsalong/salongInformasjon",
-        name: "Salong Informasjon",
+        name: "Salongsinformation",
         mini: "SI",
         component: SalongInformasjon
       },
       {
         path: "/minsalong/salongService",
-        name: "Salong Service",
+        name: "Salongstjänster",
         mini: "SS",
         component: SalongService
       },
       {
         path: "/minsalong/openingHours",
-        name: "Opening Hours",
-        mini: "OH",
+        name: "Öppettider",
+        mini: "O",
         component: OpeningHours
       }
     ]
@@ -82,20 +82,20 @@ export var dashRoutes1 = [
   {
     collapse: true,
     path: "/personallister",
-    name: "Personallister",
+    name: "Personalliggare",
     state: "personallister",
     icon: AlarmOn,
     views: [
       {
         path: "/personallister/checkInOut",
-        name: "Check In/Out",
-        mini: "CIO",
+        name: "Checka in/ut",
+        mini: "CIU",
         component: CheckInOut
       },
       {
         path: "/personallister/myEmployees",
-        name: "My Employees",
-        mini: "ME",
+        name: "Mina anställda",
+        mini: "MA",
         component: MyEmployees
       }
     ]
