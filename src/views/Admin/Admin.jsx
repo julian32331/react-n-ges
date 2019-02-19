@@ -1,16 +1,19 @@
+/**
+ * Description: Booking admin
+ * Date: 2/19/2019
+ */
 
-import './index.css';
+import './../../assets/scss/syncfusion.css';
 import * as React from 'react';
 import { ScheduleComponent, ResourcesDirective, ResourceDirective, ViewsDirective, ViewDirective, Inject, TimelineViews, Resize, DragAndDrop, TimelineMonth } from '@syncfusion/ej2-react-schedule';
 
 import { extend, closest, remove, addClass } from '@syncfusion/ej2-base';
-import { SampleBase } from './SampleBase';
 import { TreeViewComponent } from '@syncfusion/ej2-react-navigations';
 import * as dataSource from './datasource.json';
 /**
  * schedule resources group-editing sample
  */
-export default class Admin extends SampleBase {
+export default class Admin extends React.PureComponent {
     constructor() {
         super(...arguments);
         this.isTreeItemDropped = false;

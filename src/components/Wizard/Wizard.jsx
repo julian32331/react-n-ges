@@ -58,8 +58,9 @@ class Wizard extends React.Component {
     this.updateWidth = this.updateWidth.bind(this);
   }
   componentDidMount() { 
+    console.log('salonId: ', this.props.match.params.salonId);
     this.props.getBookingServices({
-      salonId: 4
+      salonId: 4 // TODO: Will change this with router param - salonId
     })
 
     this.refreshAnimation(0);

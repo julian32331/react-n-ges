@@ -101,7 +101,7 @@ export var dashRoutes1 = [
     ]
   },
   {
-    path: "/booking",
+    path: "/booking/:salonId?/:consumerId?",
     name: "Booking",
     icon: DateRange,
     component: Booking

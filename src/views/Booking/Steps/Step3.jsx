@@ -5,6 +5,7 @@ import moment from "moment";
 
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
@@ -36,6 +37,7 @@ class Step3 extends React.Component {
       timeState: ""
     };
   }
+
   sendState() {
     return this.state;
   }
@@ -76,6 +78,8 @@ class Step3 extends React.Component {
         return item.dayId !== current.day()
       })
     }
+    const consumerId = this.props.match.params.consumerId;
+    console.log('consumerId: ', consumerId);
     return (
       <div>
         <GridContainer justify="center">
@@ -157,5 +161,6 @@ function mapDispatchToProps(dispatch) {
 
 Step3 = withStyles(stepStyle)(Step3);
 Step3 = connect(mapStateToProps, mapDispatchToProps)(Step3);
+Step3 = withRouter(Step3);
 
 export default Step3;
