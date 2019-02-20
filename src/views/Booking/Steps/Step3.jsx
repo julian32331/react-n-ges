@@ -16,6 +16,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 // core components
 import CustomInput from "components/CustomInput/CustomInput.jsx";
@@ -24,13 +25,19 @@ import GridItem from "components/Grid/GridItem.jsx";
 
 // @material-ui/icons
 import Check from "@material-ui/icons/Check";
+import Warning from "@material-ui/icons/Warning";
 
 import stepStyle from "assets/jss/material-dashboard-pro-react/views/booking/stepStyle";
+import * as Validator from "./../../../validator";
 
 class Step3 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: "",
+      nameState: "",
+      mobile: "",
+      mobileState: "",
       date: "",
       dateState: "",
       time: "",
@@ -42,9 +49,29 @@ class Step3 extends React.Component {
     return this.state;
   }
   isValidated() {
-    return true;
+    if(this.props.match.params.consumerId && this.state.dateState == "success" && this.state.time == "success") {
+      return true;
+    }
+    if(!this.props.match.params.consumerId && this.state.nameState == "success" && this.state.mobileState == "success" && this.state.dateState == "success" && this.state.timeState == "success") {
+      return true;
+    }
+    return false;
   }
 
+  change(event, stateName, type, stateNameEqualTo) {
+    switch (type) {               
+        case "name":                   
+        case "mobile":        
+            this.setState({ 
+                [stateName]: event.target.value,
+                [stateName + "State"]: Validator.verifyLength(event.target.value, stateNameEqualTo)? "success" : "error"
+            });
+            break;      
+        default:
+            break;
+    }
+  
+  }
   changeDate(value) {
     var date = moment(value._d).format("YYYY-MM-DD");
     this.props.getHairdresserSchedule({
@@ -53,7 +80,8 @@ class Step3 extends React.Component {
       date: date
     })
     this.setState({
-      date: date
+      date: date,
+      dateState: "success"
     })
   }
 
@@ -79,7 +107,7 @@ class Step3 extends React.Component {
       })
     }
     const consumerId = this.props.match.params.consumerId;
-    console.log('consumerId: ', consumerId);
+    
     return (
       <div>
         <GridContainer justify="center">
@@ -90,8 +118,65 @@ class Step3 extends React.Component {
           </GridItem>
         </GridContainer>
 
+        {
+          !consumerId? (
+            <GridContainer justify="center">
+              <GridItem xs={12} sm={3}>
+                <CustomInput
+                  success={this.state.nameState === "success"}
+                  error={this.state.nameState === "error"}
+                  labelText="Namn *"
+                  id="name"
+                  formControlProps={{
+                      fullWidth: true
+                  }}
+                  inputProps={{
+                    endAdornment:
+                      this.state.nameState === "error" ? (
+                        <InputAdornment position="end">
+                          <Warning className={classes.danger} />
+                        </InputAdornment>
+                      ) : (
+                        undefined
+                    ),
+                    onChange: event =>
+                        this.change(event, "name", "name", 1),
+                    value: this.state.name,
+                    type: "text"
+                  }}
+                />
+              </GridItem>
+              <GridItem xs={12} sm={3}>
+                <CustomInput
+                  success={this.state.mobileState === "success"}
+                  error={this.state.mobileState === "error"}
+                  labelText="Mobil *"
+                  id="mobile"
+                  formControlProps={{
+                      fullWidth: true
+                  }}
+                  inputProps={{
+                    endAdornment:
+                      this.state.mobileState === "error" ? (
+                        <InputAdornment position="end">
+                          <Warning className={classes.danger} />
+                        </InputAdornment>
+                      ) : (
+                        undefined
+                    ),
+                    onChange: event =>
+                        this.change(event, "mobile", "mobile", 1),
+                    value: this.state.mobile,
+                    type: "number"
+                  }}
+                />
+              </GridItem>
+            </GridContainer>
+          ) : undefined
+        }
+        
         <GridContainer justify="center">
-          <GridItem xs={12} sm={4}>
+          <GridItem xs={12} sm={6}>
             <FormControl fullWidth>
               <Datetime
                 dateFormat={"YYYY-MM-DD"}

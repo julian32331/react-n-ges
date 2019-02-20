@@ -199,15 +199,29 @@ class Wizard extends React.Component {
       // this.props.finishButtonClick !== undefined
     ) {
       // this.props.finishButtonClick();
-      let date = this[this.props.steps[this.state.currentStep].stepId].sendState().date
-      let time = this[this.props.steps[this.state.currentStep].stepId].sendState().time
+      let date = this[this.props.steps[this.state.currentStep].stepId].sendState().date;
+      let time = this[this.props.steps[this.state.currentStep].stepId].sendState().time;
+      let consumerName = this[this.props.steps[this.state.currentStep].stepId].sendState().name;
+      let consumerMobile = this[this.props.steps[this.state.currentStep].stepId].sendState().mobile;
+      console.log('focus: ', {
+        salonId: 4,
+        serviceId: this['service'].sendState().service,
+        hairdresserId: this['hairdresser'].sendState().hairdresser,
+        consumerId: this.props.match.params.consumerId,
+        bookingOrigin: "WEB",
+        plannedStartTime: date + " " + time + ":00",
+        consumerName: consumerName,
+        consumerMobile: consumerMobile
+      })
       this.props.completeBooking({
         salonId: 4,
         serviceId: this['service'].sendState().service,
         hairdresserId: this['hairdresser'].sendState().hairdresser,
-        consumerId: 1,
+        consumerId: this.props.match.params.consumerId,
         bookingOrigin: "WEB",
-        plannedStartTime: date + " " + time + ":00"
+        plannedStartTime: date + " " + time + ":00",
+        consumerName: consumerName,
+        consumerMobile: consumerMobile
       })
     }
   }
