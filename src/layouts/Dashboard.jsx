@@ -83,7 +83,7 @@ class Dashboard extends React.Component {
     this.setState({ miniActive: !this.state.miniActive });
   }
   resizeFunction() {
-    if (window.innerWidth >= 960) {
+    if (window.innerWidth >= 960) { // TODO :  && this.props.location.pathname != "/admin"
       this.setState({ mobileOpen: false });
     }
   }

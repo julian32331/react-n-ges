@@ -7,13 +7,19 @@ import './../../assets/scss/syncfusion.css';
 import * as React from 'react';
 import { ScheduleComponent, ResourcesDirective, ResourceDirective, ViewsDirective, ViewDirective, Inject, TimelineViews, Resize, DragAndDrop, TimelineMonth } from '@syncfusion/ej2-react-schedule';
 
-import { extend, closest, remove, addClass } from '@syncfusion/ej2-base';
+import { extend, closest, remove, addClass, enableRipple } from '@syncfusion/ej2-base';
 import { TreeViewComponent } from '@syncfusion/ej2-react-navigations';
 import * as dataSource from './datasource.json';
-/**
- * schedule resources group-editing sample
- */
-export default class Admin extends React.PureComponent {
+
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
+import moment from 'moment';
+
+enableRipple(true);
+class Admin extends React.PureComponent {
     constructor() {
         super(...arguments);
         this.isTreeItemDropped = false;
@@ -34,6 +40,14 @@ export default class Admin extends React.PureComponent {
             { Text: 'Margaret', Id: 6, GroupId: 2, Color: '#9e5fff', Designation: 'Endodontist' }
         ];
     }
+
+    componentDidMount() {
+        this.props.getAppointments({
+            workingForId: this.props.workingForId,
+            date: moment().format('YYYY-MM-DD')
+        })
+    }
+
     getConsultantName(value) {
         return value.resourceData[value.resource.textField];
     }
@@ -49,8 +63,14 @@ export default class Admin extends React.PureComponent {
       {this.getConsultantName(props)}</div><div className="specialist-designation">{this.getConsultantDesignation(props)}</div></div></div>);
     }
     treeTemplate(props) {
-        return (<div id="waiting"><div id="waitdetails"><div id="waitlist">{props.Name}</div>
-      <div id="waitcategory">{props.DepartmentName} - {props.Description}</div></div></div>);
+        return (
+            <div id="waiting">
+                <div id="waitdetails">
+                    <div id="waitlist">{props.Name}</div>
+                    <div id="waitcategory">{props.DepartmentName} - {props.Description}</div>
+                </div>
+            </div>
+        );
     }
     onItemDrag(event) {
         if (this.scheduleObj.isAdaptive) {
@@ -121,7 +141,7 @@ export default class Admin extends React.PureComponent {
                     <div className='control-wrapper drag-sample-wrapper'>
                         <div className="schedule-container">
                             <div className="title-container">
-                                <h1 className="title-text">Doctor's Appointments</h1>
+                                <h1 className="title-text">Booking Appointments</h1>
                             </div>
                             <ScheduleComponent 
                                 ref={schedule => this.scheduleObj = schedule} 
@@ -140,12 +160,12 @@ export default class Admin extends React.PureComponent {
                                 group={{ enableCompactView: false, resources: ['Departments', 'Consultants'] }} 
                                 actionBegin={this.onActionBegin.bind(this)} drag={this.onItemDrag.bind(this)} >
                                 <ResourcesDirective>
-                                    <ResourceDirective field='DepartmentID' title='Department' name='Departments' allowMultiple={false} dataSource={this.departmentData} textField='Text' idField='Id' colorField='Color' />
+                                    {/* <ResourceDirective field='DepartmentID' title='Department' name='Departments' allowMultiple={false} dataSource={this.departmentData} textField='Text' idField='Id' colorField='Color' /> */}
                                     <ResourceDirective field='ConsultantID' title='Consultant' name='Consultants' allowMultiple={false} dataSource={this.consultantData} textField='Text' idField='Id' groupIDField="GroupId" colorField='Color' />
                                 </ResourcesDirective>
                                 <ViewsDirective>
                                     <ViewDirective option='TimelineDay'/>
-                                    <ViewDirective option='TimelineMonth'/>
+                                    {/* <ViewDirective option='TimelineMonth'/> */}
                                 </ViewsDirective>
                                 <Inject services={[TimelineViews, TimelineMonth, Resize, DragAndDrop]}/>
                             </ScheduleComponent>
@@ -163,4 +183,15 @@ export default class Admin extends React.PureComponent {
     }
 }
 
-// render(<Admin />, document.getElementById('sample'));
+function mapStateToProps(state) {
+    return {
+        workingForId    : state.user.workingForId,
+    }
+}
+  
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getAppointments: Actions.getAppointments
+    }, dispatch);
+}
+export default (withRouter(connect(mapStateToProps, mapDispatchToProps)(Admin)));
