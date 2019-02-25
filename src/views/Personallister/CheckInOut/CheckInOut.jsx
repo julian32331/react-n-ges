@@ -355,7 +355,7 @@ class CheckInOut extends React.Component {
         { text: this.state.pageOffset * 5 + 3, active: this.state.activedPageNo == this.state.pageOffset * 5 + 3, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 3) },
         { text: this.state.pageOffset * 5 + 4, active: this.state.activedPageNo == this.state.pageOffset * 5 + 4, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 4) },
         { text: this.state.pageOffset * 5 + 5, active: this.state.activedPageNo == this.state.pageOffset * 5 + 5, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 5) },
-        { text: "...", onClick: () => this.changePagination(1) },
+        { text: ">>", onClick: () => this.changePagination(1) },
         { text: "NEXT", onClick: () => this.skipOne(1) }
       ]
     }
