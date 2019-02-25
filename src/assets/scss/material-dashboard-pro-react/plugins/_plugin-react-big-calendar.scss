@@ -597,7 +597,28 @@ button.rbc-input::-moz-focus-inner {
   border-top: 2px solid #DDD;
   overflow-y: auto;
   position: relative;
+  height: 70vh;
 }
+.rbc-time-content::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.rbc-time-content::-webkit-scrollbar
+{
+	width: 18px;
+	background-color: #fff;
+}
+
+.rbc-time-content::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #ddd;
+}
+
 .rbc-time-content > .rbc-time-gutter {
   -webkit-flex: none;
       -ms-flex: none;
@@ -675,6 +696,17 @@ button.rbc-input::-moz-focus-inner {
 }
 .rbc-day-slot .rbc-event {
      display: block !important;
-     height: unset !important;
+    //  height: unset !important;
      max-height: unset !important;
+}
+
+.rbc-allday-cell {
+  display: none;
+}
+.rbc-time-view .rbc-header {
+  border-bottom: none;
+  font-size: 16px;
+  text-align: center;
+  border-top: 1px solid #DDD;
+  padding: 5px 0px;
 }

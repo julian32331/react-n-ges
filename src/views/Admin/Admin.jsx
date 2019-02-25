@@ -1,197 +1,244 @@
-/**
- * Description: Booking admin
- * Date: 2/19/2019
- */
+import React from "react";
+// react component used to create a calendar with events on it
+import BigCalendar from "react-big-calendar";
+// dependency plugin for react-big-calendar
+import moment from "moment";
+// react component used to create alerts
+import SweetAlert from "react-bootstrap-sweetalert";
 
-import './../../assets/scss/syncfusion.css';
-import * as React from 'react';
-import { ScheduleComponent, ResourcesDirective, ResourceDirective, ViewsDirective, ViewDirective, Inject, TimelineViews, Resize, DragAndDrop, TimelineMonth } from '@syncfusion/ej2-react-schedule';
+// @material-ui/core components
+import withStyles from "@material-ui/core/styles/withStyles";
 
-import { extend, closest, remove, addClass, enableRipple } from '@syncfusion/ej2-base';
-import { TreeViewComponent } from '@syncfusion/ej2-react-navigations';
-import * as dataSource from './datasource.json';
+// material-ui icons
+import Person from "@material-ui/icons/Person";
+import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
+import NavigateNext from "@material-ui/icons/NavigateNext";
+import Done from "@material-ui/icons/Done";
 
-import {bindActionCreators} from 'redux';
-import * as Actions from 'store/actions';
-import {withRouter} from 'react-router-dom';
-import connect from 'react-redux/es/connect/connect';
+// core components
+import Heading from "components/Heading/Heading.jsx";
+import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
+import Card from "components/Card/Card.jsx";
+import CardBody from "components/Card/CardBody.jsx";
+import Table from "components/Table/Table.jsx";
+import Button from "components/CustomButtons/Button.jsx";
 
-import moment from 'moment';
+import adminStyle from "assets/jss/material-dashboard-pro-react/views/adminStyle.jsx";
+import { events, resourceMap } from "./general.jsx";
+import AssignModal from "./AssignModal";
 
-enableRipple(true);
-class Admin extends React.PureComponent {
-    constructor() {
-        super(...arguments);
-        this.isTreeItemDropped = false;
-        this.draggedItemId = '';
-        this.allowDragAndDrops = true;
-        this.fields = { dataSource: dataSource.waitingList, id: 'Id', text: 'Name' };
-        this.data = extend([], dataSource.hospitalData, null, true);
-        this.departmentData = [
-            { Text: 'GENERAL', Id: 1, Color: '#bbdc00' },
-            { Text: 'DENTAL', Id: 2, Color: '#9e5fff' }
-        ];
-        this.consultantData = [
-            { Text: 'Alice', Id: 1, GroupId: 1, Color: '#bbdc00', Designation: 'Cardiologist' },
-            { Text: 'Nancy', Id: 2, GroupId: 2, Color: '#9e5fff', Designation: 'Orthodontist' },
-            { Text: 'Robert', Id: 3, GroupId: 1, Color: '#bbdc00', Designation: 'Optometrist' },
-            { Text: 'Robson', Id: 4, GroupId: 2, Color: '#9e5fff', Designation: 'Periodontist' },
-            { Text: 'Laura', Id: 5, GroupId: 1, Color: '#bbdc00', Designation: 'Orthopedic' },
-            { Text: 'Margaret', Id: 6, GroupId: 2, Color: '#9e5fff', Designation: 'Endodontist' }
-        ];
-    }
+const localizer = BigCalendar.momentLocalizer(moment);
 
-    componentDidMount() {
-        this.props.getAppointments({
-            workingForId: this.props.workingForId,
-            date: moment().format('YYYY-MM-DD')
-        })
-    }
+class Admin extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      events: events,
+      resourceMap: resourceMap,
+      alert: null,
 
-    getConsultantName(value) {
-        return value.resourceData[value.resource.textField];
-    }
-    getConsultantImage(value) {
-        let resourceName = this.getConsultantName(value);
-        return resourceName.toLowerCase();
-    }
-    getConsultantDesignation(value) {
-        return value.resourceData.Designation;
-    }
-    resourceHeaderTemplate(props) {
-        return (<div className="template-wrap"><div className="specialist-category"><div className={"specialist-image " + this.getConsultantImage(props)}></div><div className="specialist-name">
-      {this.getConsultantName(props)}</div><div className="specialist-designation">{this.getConsultantDesignation(props)}</div></div></div>);
-    }
-    treeTemplate(props) {
-        return (
-            <div id="waiting">
-                <div id="waitdetails">
-                    <div id="waitlist">{props.Name}</div>
-                    <div id="waitcategory">{props.DepartmentName} - {props.Description}</div>
-                </div>
-            </div>
-        );
-    }
-    onItemDrag(event) {
-        if (this.scheduleObj.isAdaptive) {
-            let classElement = this.scheduleObj.element.querySelector('.e-device-hover');
-            if (classElement) {
-                classElement.classList.remove('e-device-hover');
-            }
-            if (event.target.classList.contains('e-work-cells')) {
-                addClass([event.target], 'e-device-hover');
-            }
-        }
-        if (document.body.style.cursor === 'not-allowed') {
-            document.body.style.cursor = '';
-        }
-        if (event.name === 'nodeDragging') {
-            let dragElementIcon = document.querySelectorAll('.e-drag-item.treeview-external-drag .e-icon-expandable');
-            for (let i = 0; i < dragElementIcon.length; i++) {
-                dragElementIcon[i].style.display = 'none';
-            }
-        }
-    }
-    onActionBegin(event) {
-        if (event.requestType === 'eventCreate' && this.isTreeItemDropped) {
-            let treeViewdata = this.treeObj.fields.dataSource;
-            const filteredPeople = treeViewdata.filter((item) => item.Id !== parseInt(this.draggedItemId, 10));
-            this.treeObj.fields.dataSource = filteredPeople;
-            let elements = document.querySelectorAll('.e-drag-item.treeview-external-drag');
-            for (let i = 0; i < elements.length; i++) {
-                remove(elements[i]);
-            }
-        }
-    }
-    onTreeDragStop(event) {
-        let treeElement = closest(event.target, '.e-treeview');
-        let classElement = this.scheduleObj.element.querySelector('.e-device-hover');
-        if (classElement) {
-            classElement.classList.remove('e-device-hover');
-        }
-        if (!treeElement) {
-            event.cancel = true;
-            let scheduleElement = closest(event.target, '.e-content-wrap');
-            if (scheduleElement) {
-                let treeviewData = this.treeObj.fields.dataSource;
-                if (event.target.classList.contains('e-work-cells')) {
-                    const filteredData = treeviewData.filter((item) => item.Id === parseInt(event.draggedNodeData.id, 10));
-                    let cellData = this.scheduleObj.getCellDetails(event.target);
-                    let resourceDetails = this.scheduleObj.getResourcesByIndex(cellData.groupIndex);
-                    let eventData = {
-                        Name: filteredData[0].Name,
-                        StartTime: cellData.startTime,
-                        EndTime: cellData.endTime,
-                        IsAllDay: cellData.isAllDay,
-                        Description: filteredData[0].Description,
-                        DepartmentID: resourceDetails.resourceData.GroupId,
-                        ConsultantID: resourceDetails.resourceData.Id
-                    };
-                    this.scheduleObj.openEditor(eventData, 'Add', true);
-                    this.isTreeItemDropped = true;
-                    this.draggedItemId = event.draggedNodeData.id;
-                }
-            }
-        }
-    }
-    render() {
-        return (
-            <div className='schedule-control-section'>
-                <div className='col-lg-12 control-section'>
-                    <div className='control-wrapper drag-sample-wrapper'>
-                        <div className="schedule-container">
-                            <div className="title-container">
-                                <h1 className="title-text">Booking Appointments</h1>
-                            </div>
-                            <ScheduleComponent 
-                                ref={schedule => this.scheduleObj = schedule} 
-                                cssClass='schedule-drag-drop' width='100%' height='650px' selectedDate={new Date(2018, 7, 1)} 
-                                currentView='TimelineDay' 
-                                resourceHeaderTemplate={this.resourceHeaderTemplate.bind(this)} 
-                                eventSettings={{
-                                    dataSource: this.data,
-                                    fields: {
-                                        subject: { title: 'Patient Name', name: 'Name' },
-                                        startTime: { title: "From", name: "StartTime" },
-                                        endTime: { title: "To", name: "EndTime" },
-                                        description: { title: 'Reason', name: 'Description' }
-                                    }
-                                }} 
-                                group={{ enableCompactView: false, resources: ['Departments', 'Consultants'] }} 
-                                actionBegin={this.onActionBegin.bind(this)} drag={this.onItemDrag.bind(this)} >
-                                <ResourcesDirective>
-                                    {/* <ResourceDirective field='DepartmentID' title='Department' name='Departments' allowMultiple={false} dataSource={this.departmentData} textField='Text' idField='Id' colorField='Color' /> */}
-                                    <ResourceDirective field='ConsultantID' title='Consultant' name='Consultants' allowMultiple={false} dataSource={this.consultantData} textField='Text' idField='Id' groupIDField="GroupId" colorField='Color' />
-                                </ResourcesDirective>
-                                <ViewsDirective>
-                                    <ViewDirective option='TimelineDay'/>
-                                    {/* <ViewDirective option='TimelineMonth'/> */}
-                                </ViewsDirective>
-                                <Inject services={[TimelineViews, TimelineMonth, Resize, DragAndDrop]}/>
-                            </ScheduleComponent>
-                        </div>
-                        <div className="treeview-container">
-                            <div className="title-container">
-                                <h1 className="title-text">Waiting List</h1>
-                            </div>
-                            <TreeViewComponent ref={tree => this.treeObj = tree} cssClass='treeview-external-drag' nodeTemplate={this.treeTemplate.bind(this)} fields={this.fields} nodeDragStop={this.onTreeDragStop.bind(this)} nodeDragging={this.onItemDrag.bind(this)} allowDragAndDrop={this.allowDragAndDrops}/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-}
-
-function mapStateToProps(state) {
+      assignModal: false,
+      bookingData: null,
+    };
+    this.hideAlert = this.hideAlert.bind(this);
+  }
+  selectedEvent(event) {
+    alert(event.title);
+  }
+  addNewEventAlert(slotInfo) {
+    this.setState({
+      alert: (
+        <SweetAlert
+          input
+          showCancel
+          style={{ display: "block", marginTop: "-100px" }}
+          title="Input something"
+          onConfirm={e => this.addNewEvent(e, slotInfo)}
+          onCancel={() => this.hideAlert()}
+          confirmBtnCssClass={
+            this.props.classes.button + " " + this.props.classes.success
+          }
+          cancelBtnCssClass={
+            this.props.classes.button + " " + this.props.classes.danger
+          }
+        />
+      )
+    });
+  }
+  addNewEvent(e, slotInfo) {
+    var newEvents = this.state.events;
+    newEvents.push({
+      title: e,
+      start: slotInfo.start,
+      end: slotInfo.end,
+      resourceId: 2
+    });
+    this.setState({
+      alert: null,
+      events: newEvents
+    });
+  }
+  hideAlert() {
+    this.setState({
+      alert: null
+    });
+  }
+  eventColors(event, start, end, isSelected) {
+    var backgroundColor = "event-";
+    event.color
+      ? (backgroundColor = backgroundColor + event.color)
+      : (backgroundColor = backgroundColor + "default");
     return {
-        workingForId    : state.user.workingForId,
+      className: backgroundColor
+    };
+  }
+
+  onCloseAssignModal() {
+    this.setState({
+      assignModal: false
+    })
+  }
+  onOpenAssignModal() {
+    this.setState({
+      assignModal: true,
+    })
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    // Calendar options
+    const formats = {
+      timeGutterFormat: "HH:mm"
     }
+
+    // const appointButton = () => {
+    //   return (  
+    //     <Button
+    //       simple
+    //       color="info"
+    //       className={classes.actionButton + " " + classes.actionButtonRound}
+    //       // onClick={() => this.onOpenEditModal()}
+    //     >
+    //       <ArrowForwardIos className={classes.icon} />
+    //     </Button>     
+    //   )
+    // }
+    const appointButton = [
+      { color: "info", icon: ArrowForwardIos },
+    ].map((prop, key) => {
+      return (
+        <Button
+          simple
+          color={prop.color}
+          className={classes.actionButton + " " + classes.actionButtonRound}
+          onClick={() => this.onOpenAssignModal()}
+          key={key}
+        >
+          <prop.icon className={classes.icon} />
+        </Button>
+      );
+    });
+
+    const watingList = [
+      [
+        "1",
+        "Andrew Mike",
+        "09:30 - 10:15",
+        appointButton
+      ],
+      ["2", "John Doe", "09:30 - 10:15", appointButton],
+      [
+        "3",
+        "Alex Mike",
+        "09:30 - 10:15",
+        appointButton
+      ],
+      [
+        "4",
+        "Mike Monday",
+        "09:30 - 10:15",
+        appointButton
+      ],
+      [
+        "5",
+        "Paul Dickens",
+        "09:30 - 10:15",
+        appointButton
+      ]
+    ]
+
+    return (
+      <div>
+        <GridContainer>
+          <GridItem xs={12} sm={9}>
+            <Heading
+              textAlign="center"
+              title="Booking Appointment"
+            />
+            {/* {this.state.alert} */}
+            <Card>
+              <CardBody calendar>
+                <BigCalendar   
+                  formats={formats}
+                  // selectable
+                  localizer={localizer}
+                  events={this.state.events}
+                  defaultView="day"
+                  scrollToTime={new Date(1970, 1, 1, 6)}
+                  defaultDate={new Date()}
+                  onSelectEvent={event => this.selectedEvent(event)}
+                  // onSelectSlot={slotInfo => this.addNewEventAlert(slotInfo)}
+                  eventPropGetter={this.eventColors}
+                  step={15} // Time per grid
+                  // timeslots={4}
+                  views={['day']}
+                  resources={this.state.resourceMap}
+                  resourceIdAccessor="resourceId"
+                  resourceTitleAccessor="resourceTitle"
+                  // min={new Date(2019, 1, 0, 8, 0, 0)}
+                  // max={new Date(2019, 1, 0, 18, 0, 0)}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem xs={12} sm={3}>
+            <h3 className={classes.center} style={{marginTop: '10px'}}>Wating List</h3>
+            <Card>
+              <CardBody>
+                <Table
+                  tableHead={[
+                    "#",
+                    "Name",
+                    "Time",
+                    "Actions"
+                  ]}
+                  tableData={watingList}
+                  customCellClasses={[
+                    classes.center,
+                    classes.center,
+                    classes.right
+                  ]}
+                  customClassesForCells={[0, 2, 3]}
+                  customHeadCellClasses={[
+                    classes.center,
+                    classes.center,
+                    classes.right
+                  ]}
+                  customHeadClassesForCells={[0, 2, 3]}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
+        <AssignModal 
+          onOpen={this.state.assignModal}
+          onClose={this.onCloseAssignModal.bind(this)} 
+        />
+      </div>
+    );
+  }
 }
-  
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-        getAppointments: Actions.getAppointments
-    }, dispatch);
-}
-export default (withRouter(connect(mapStateToProps, mapDispatchToProps)(Admin)));
+
+export default withStyles(adminStyle)(Admin);
