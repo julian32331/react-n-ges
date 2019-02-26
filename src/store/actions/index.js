@@ -12,4 +12,4 @@ export * from './profile.actions';
 
 // Customer section
 export * from './booking.actions';
-export * from './appointment.actions';
+export * from './admin.actions';

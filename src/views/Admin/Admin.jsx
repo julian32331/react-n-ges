@@ -1,4 +1,10 @@
 import React from "react";
+
+import {bindActionCreators} from 'redux';
+import * as Actions from 'store/actions';
+import {withRouter} from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
 // react component used to create a calendar with events on it
 import BigCalendar from "react-big-calendar";
 // dependency plugin for react-big-calendar
@@ -25,7 +31,6 @@ import Table from "components/Table/Table.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import adminStyle from "assets/jss/material-dashboard-pro-react/views/admin/adminStyle.jsx";
-import { events, resourceMap } from "./general.jsx";
 import CustomToolbar from "./CutomToolbar";
 
 const localizer = BigCalendar.momentLocalizer(moment);
@@ -34,86 +39,105 @@ class Admin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: events,
-      resourceMap: resourceMap,
-      alert: null,
-
-      assignModal: false,
-      bookingData: null,
-
       initDate: moment().toDate()
     };
-    this.hideAlert = this.hideAlert.bind(this);
-  }
-  selectedEvent(event) {
-    alert(event.title);
-  }
-  addNewEventAlert(slotInfo) {
-    this.setState({
-      alert: (
-        <SweetAlert
-          input
-          showCancel
-          style={{ display: "block", marginTop: "-100px" }}
-          title="Input something"
-          onConfirm={e => this.addNewEvent(e, slotInfo)}
-          onCancel={() => this.hideAlert()}
-          confirmBtnCssClass={
-            this.props.classes.button + " " + this.props.classes.success
-          }
-          cancelBtnCssClass={
-            this.props.classes.button + " " + this.props.classes.danger
-          }
-        />
-      )
-    });
-  }
-  addNewEvent(e, slotInfo) {
-    var newEvents = this.state.events;
-    newEvents.push({
-      title: e,
-      start: slotInfo.start,
-      end: slotInfo.end,
-      resourceId: 2
-    });
-    this.setState({
-      alert: null,
-      events: newEvents
-    });
-  }
-  hideAlert() {
-    this.setState({
-      alert: null
-    });
-  }
-  eventColors(event, start, end, isSelected) {
-    var backgroundColor = "event-";
-    event.color
-      ? (backgroundColor = backgroundColor + event.color)
-      : (backgroundColor = backgroundColor + "default");
-    return {
-      className: backgroundColor
-    };
+    this.onChangeDate = this.onChangeDate.bind(this);
+    // this.hideAlert = this.hideAlert.bind(this);
   }
 
-  onCloseAssignModal() {
-    this.setState({
-      assignModal: false
+  componentDidMount() {
+    this.props.getUserData();
+    setTimeout(() => {
+      this.getBookingList(this.state.initDate);
+    }, 100);
+  }
+
+  getBookingList(date) {
+    this.props.getBookingList({
+      workingForId: this.props.workingForId,
+      date: moment(date).format("YYYY-MM-DD")
     })
   }
-  onOpenAssignModal() {
-    this.setState({
-      assignModal: true,
-    })
+
+  onChangeDate(date) {
+    this.setState({ initDate: date });
+    this.getBookingList(date)
   }
+
+  // selectedEvent(event) {
+  //   alert(event.title);
+  // }
+  // addNewEventAlert(slotInfo) {
+  //   this.setState({
+  //     alert: (
+  //       <SweetAlert
+  //         input
+  //         showCancel
+  //         style={{ display: "block", marginTop: "-100px" }}
+  //         title="Input something"
+  //         onConfirm={e => this.addNewEvent(e, slotInfo)}
+  //         onCancel={() => this.hideAlert()}
+  //         confirmBtnCssClass={
+  //           this.props.classes.button + " " + this.props.classes.success
+  //         }
+  //         cancelBtnCssClass={
+  //           this.props.classes.button + " " + this.props.classes.danger
+  //         }
+  //       />
+  //     )
+  //   });
+  // }
+  // addNewEvent(e, slotInfo) {
+  //   var newEvents = this.state.events;
+  //   newEvents.push({
+  //     title: e,
+  //     start: slotInfo.start,
+  //     end: slotInfo.end,
+  //     resourceId: 2
+  //   });
+  //   this.setState({
+  //     alert: null,
+  //     events: newEvents
+  //   });
+  // }
+  // hideAlert() {
+  //   this.setState({
+  //     alert: null
+  //   });
+  // }
+  // eventColors(event, start, end, isSelected) {
+  //   var backgroundColor = "event-";
+  //   event.color
+  //     ? (backgroundColor = backgroundColor + event.color)
+  //     : (backgroundColor = backgroundColor + "default");
+  //   return {
+  //     className: backgroundColor
+  //   };
+  // }
 
   render() {
-    const { classes } = this.props;
+    console.log('state event: ', this.state.events)
 
     // Calendar options
     const formats = {
-      timeGutterFormat: "HH:mm"
+      timeGutterFormat: "HH:mm",
+      dayHeaderFormat: "YYYY-MM-DD"
     }
+
+    const bookingData = [];
+    this.props.bookingData.map(data => {
+      let temp = {};
+      temp.comment = data.comment;
+      temp.consumerName = data.consumerName;
+      temp.resourceId = data.hairdresser_id;
+      temp.id = data.id;
+      temp.plannedEndTime = moment(data.plannedEndTime).toDate();
+      temp.plannedStartTime = moment(data.plannedStartTime).toDate();
+
+      bookingData.push(temp);
+    });
+    console.log('bookingData: ', bookingData);
+
 
     return (
       <div>
@@ -123,32 +147,36 @@ class Admin extends React.Component {
               textAlign="center"
               title="Booking Appointment"
             />
-            <Card>
-              <CardBody calendar>
-                <BigCalendar   
-                  formats={formats}
-                  localizer={localizer}
-                  events={this.state.events}
-                  defaultView="day"
-                  scrollToTime={new Date(1970, 1, 1, 6)}
-                  defaultDate={new Date()}
-                  onSelectEvent={event => this.selectedEvent(event)}
-                  eventPropGetter={this.eventColors}
-                  step={15}
-                  views={['day']}
-                  resources={this.state.resourceMap}
-                  resourceIdAccessor="resourceId"
-                  resourceTitleAccessor="resourceTitle"
-                  components={
-                    {
-                      toolbar: CustomToolbar
-                    }
-                  }
-                  date={this.state.initDate}
-                  onNavigate={(date) => this.setState({ initDate: date })}
-                />
-              </CardBody>
-            </Card>
+            {
+              this.props.hairdressers.length > 0? (
+                <Card>
+                  <CardBody calendar>
+                    <BigCalendar   
+                      formats={formats}
+                      localizer={localizer}
+                      date={this.state.initDate}
+                      step={15}
+                      defaultView="day"
+                      views={['day']}
+                      components={
+                        {
+                          toolbar: CustomToolbar
+                        }
+                      }
+                      resources={this.props.hairdressers}
+                      resourceIdAccessor="hairdresser_id"
+                      resourceTitleAccessor="name"
+                      events={bookingData}
+                      titleAccessor="consumerName"
+                      startAccessor="plannedStartTime"
+                      endAccessor="plannedEndTime"
+                      onNavigate={(date) => this.onChangeDate(date)}
+                      // onSelectEvent={event => this.selectedEvent(event)}
+                    />
+                  </CardBody>
+                </Card>
+              ) : undefined
+            }
           </GridItem>
         </GridContainer>
       </div>
@@ -156,4 +184,19 @@ class Admin extends React.Component {
   }
 }
 
-export default withStyles(adminStyle)(Admin);
+function mapStateToProps(state) {
+  return {
+    workingForId: state.user.workingForId,
+    bookingData: state.admin.bookingData,
+    hairdressers: state.admin.hairdressers
+  }
+}
+  
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({          
+    getUserData : Actions.getUserData,
+    getBookingList: Actions.getBookingList
+  }, dispatch);
+}
+  
+  export default withStyles(adminStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(Admin)));

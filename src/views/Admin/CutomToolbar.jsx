@@ -58,8 +58,7 @@ class CalendarToolBar extends React.PureComponent {
                         <Datetime
                             dateFormat={"YYYY-MM-DD"}
                             timeFormat={false}
-                            // value={moment(this.state.date).format("MM-DD")}
-                            value={moment(this.props.label).format("MM-DD")}
+                            value={this.props.label}
                             onChange={event => this.handleChange(event)}
                             inputProps={{
                                 style: {
