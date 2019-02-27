@@ -384,7 +384,7 @@ class OpeningHours extends React.Component {
                                 <Table
                                     tableHead={[
                                         "Namn",
-                                        "Date",
+                                        "Datum",
                                         "Från",
                                         "Till",
                                         "Åtgärder"

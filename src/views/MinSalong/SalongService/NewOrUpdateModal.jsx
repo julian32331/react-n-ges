@@ -219,7 +219,7 @@ class NewOrUpdateModal extends React.Component {
                         <CustomInput
                             success={this.state.titleState === "success"}
                             error={this.state.titleState === "error"}
-                            labelText="Title *"
+                            labelText="Tjänstens namn *"
                             id="title"
                             formControlProps={{
                                 fullWidth: true
@@ -244,7 +244,7 @@ class NewOrUpdateModal extends React.Component {
                                 <CustomInput
                                     success={this.state.timeState === "success"}
                                     error={this.state.timeState === "error"}
-                                    labelText="Time(Mins) *"
+                                    labelText="Tid (min) *"
                                     id="time"
                                     formControlProps={{
                                         fullWidth: true
@@ -269,7 +269,7 @@ class NewOrUpdateModal extends React.Component {
                                 <CustomInput
                                     success={this.state.priceState === "success"}
                                     error={this.state.priceState === "error"}
-                                    labelText="Price($) *"
+                                    labelText="Pris (kr) *"
                                     id="price"
                                     formControlProps={{
                                         fullWidth: true
@@ -294,7 +294,7 @@ class NewOrUpdateModal extends React.Component {
                         <CustomInput
                             success={this.state.descriptionState === "success"}
                             error={this.state.descriptionState === "error"}
-                            labelText="Description *"
+                            labelText="Beskrivning *"
                             id="description"
                             formControlProps={{
                                 fullWidth: true

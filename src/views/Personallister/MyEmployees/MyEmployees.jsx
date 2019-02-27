@@ -205,9 +205,9 @@ class MyEmployees extends React.Component {
                     <Button 
                         color="info" 
                         size="sm"
-                        onClick={() => this.onOpenNewModal('New Employee')}
+                        onClick={() => this.onOpenNewModal('Ny person')}
                     >                            
-                        <Add /> Add Employee
+                        <Add /> Lägg till
                     </Button>
                 </GridItem>
             </GridContainer>
@@ -240,9 +240,9 @@ class MyEmployees extends React.Component {
             tableHead={[
               "Namn",
               "Telefonnummer",
-              "Personalnr",
+              "Personnummer",
               "Avatar",
-              "Verified",
+              "Verifierad",
               "Åtgärder"
             ]}
             tableData={employees}

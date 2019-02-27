@@ -331,7 +331,7 @@ class NewModal extends React.Component {
                                 <CustomInput
                                     success={this.state.emailState === "success"}
                                     error={this.state.emailState === "error"}
-                                    labelText="Email *"
+                                    labelText="E-post *"
                                     id="email"
                                     formControlProps={{
                                         fullWidth: true
@@ -364,7 +364,7 @@ class NewModal extends React.Component {
                                         this.props.employee? (
                                             <h4>Rent-a-chair own consumer ?</h4>
                                         ) : (
-                                            <h4>Is employee you are inviting have company ?</h4>
+                                            <h4>Är personen anställd av ett annat företag ?</h4>
                                         )
                                     }                                    
                                 </Danger>
@@ -386,7 +386,7 @@ class NewModal extends React.Component {
                                 <CustomInput
                                     success={this.props.employee !== null || this.state.nameState === "success"}
                                     error={this.state.nameState === "error"}
-                                    labelText="Name *"
+                                    labelText="Namn *"
                                     id="name"
                                     formControlProps={{
                                         fullWidth: true
@@ -401,7 +401,7 @@ class NewModal extends React.Component {
                                 />
                                 <CustomInput
                                     success={this.props.employee? true : false}
-                                    labelText="Email *"
+                                    labelText="E-post *"
                                     id="email"
                                     formControlProps={{
                                         fullWidth: true
@@ -416,7 +416,7 @@ class NewModal extends React.Component {
                                         <CustomInput
                                             success={this.props.employee !== null || this.state.ssnState === "success"}
                                             error={this.state.ssnState === "error"}
-                                            labelText="SSNumber *"
+                                            labelText="Personnummer *"
                                             id="ssn"
                                             formControlProps={{
                                                 fullWidth: true
@@ -434,7 +434,7 @@ class NewModal extends React.Component {
                                         <CustomInput
                                             success={this.props.employee !== null || this.state.phoneState === "success"}
                                             error={this.state.phoneState === "error"}
-                                            labelText="Phone *"
+                                            labelText="Mobil *"
                                             id="phone"
                                             formControlProps={{
                                                 fullWidth: true
@@ -452,7 +452,7 @@ class NewModal extends React.Component {
                                 <CustomInput
                                     success={this.props.employee !== null || this.state.professionState === "success"}
                                     error={this.state.professionState === "error"}
-                                    labelText="Profession *"
+                                    labelText="Yrke *"
                                     id="profession"
                                     formControlProps={{
                                         fullWidth: true
@@ -468,7 +468,7 @@ class NewModal extends React.Component {
                                 <CustomInput
                                     success={this.props.employee !== null || this.state.descriptionState === "success"}
                                     error={this.state.descriptionState === "error"}
-                                    labelText="Description *"
+                                    labelText="Presentation *"
                                     id="description"
                                     formControlProps={{
                                         fullWidth: true
@@ -549,7 +549,7 @@ class NewModal extends React.Component {
                                         htmlFor="companyAuthLevel-select"
                                         className={this.state.companyAuthLevel? classes.selectLabel + " " + classes.success : classes.selectLabel}
                                     >
-                                        Choose CompanyAuthLevel *
+                                        Välj behörighet för företaget *
                                     </InputLabel>
                                     <Select
                                         MenuProps={{
@@ -572,7 +572,7 @@ class NewModal extends React.Component {
                                                 root: classes.selectMenuItem
                                             }}
                                             >
-                                            Choose CompanyAuthLevel
+                                            Välj behörighet för företaget
                                         </MenuItem>
                                         <MenuItem
                                             classes={{
@@ -602,7 +602,7 @@ class NewModal extends React.Component {
                                         htmlFor="salonAuthLevel-select"
                                         className={this.state.salonAuthLevel? classes.selectLabel + " " + classes.success : classes.selectLabel}
                                     >
-                                        Choose SalonAuthLevel *
+                                        Välj behörighet för salongen *
                                     </InputLabel>
                                     <Select
                                         MenuProps={{
@@ -625,7 +625,7 @@ class NewModal extends React.Component {
                                                 root: classes.selectMenuItem
                                             }}
                                             >
-                                            Choose SalonAuthLevel
+                                            Välj behörighet för salongen
                                         </MenuItem>
                                         <MenuItem
                                             classes={{
@@ -793,14 +793,14 @@ class NewModal extends React.Component {
                                     color="danger"
                                     style={{width: '100%'}}
                                 >
-                                    No
+                                    Nej
                                 </Button>
                                 <Button
                                     onClick={() => this.selectConsumerOwner(true)}
                                     color="info"
                                     style={{width: '100%'}}
                                 >
-                                    Yes
+                                    Ja
                                 </Button>
                             </DialogActions>  
                         ) : (
@@ -810,14 +810,14 @@ class NewModal extends React.Component {
                                     color="danger"
                                     style={{width: '100%'}}
                                 >
-                                    No
+                                    Nej
                                 </Button>
                                 <Button
                                     onClick={() => this.isInviteOrAdd(true)}
                                     color="info"
                                     style={{width: '100%'}}
                                 >
-                                    Yes
+                                    Ja
                                 </Button>
                             </DialogActions>  
                         )                        

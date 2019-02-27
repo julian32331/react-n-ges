@@ -142,7 +142,7 @@ class Admin extends React.Component {
     return (
       <div>
         <GridContainer justify="center">
-          <GridItem xs={12} sm={9}>
+          <GridItem xs={12}>
             <Heading
               textAlign="center"
               title="Booking Appointment"

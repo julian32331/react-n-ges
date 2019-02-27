@@ -210,7 +210,7 @@ class AddSalonModal extends React.Component {
                     disableTypography
                     className={classes.modalHeader}
                 >
-                    <h3 className={classes.modalTitle}>Add Salon</h3>
+                    <h3 className={classes.modalTitle}>Lägg till Salong</h3>
                 </DialogTitle>
                 <DialogContent
                     id="add-salon-modal-description"
@@ -220,7 +220,7 @@ class AddSalonModal extends React.Component {
                         <CustomInput
                             success={this.state.nameState === "success"}
                             error={this.state.nameState === "error"}
-                            labelText="Name *"
+                            labelText="Namn *"
                             id="name"
                             formControlProps={{
                                 fullWidth: true
@@ -243,7 +243,7 @@ class AddSalonModal extends React.Component {
                         <CustomInput
                             success={this.state.emailState === "success"}
                             error={this.state.emailState === "error"}
-                            labelText="Email *"
+                            labelText="E-post *"
                             id="email"
                             formControlProps={{
                                 fullWidth: true
@@ -266,7 +266,7 @@ class AddSalonModal extends React.Component {
                         <CustomInput
                             success={this.state.telephoneState === "success"}
                             error={this.state.telephoneState === "error"}
-                            labelText="Telephone *"
+                            labelText="Telefon *"
                             id="telephone"
                             formControlProps={{
                                 fullWidth: true
@@ -289,7 +289,7 @@ class AddSalonModal extends React.Component {
                         <CustomInput
                             success={this.state.websiteState === "success"}
                             error={this.state.websiteState === "error"}
-                            labelText="Website *"
+                            labelText="Hemsida *"
                             id="web-site"
                             formControlProps={{
                                 fullWidth: true
@@ -312,7 +312,7 @@ class AddSalonModal extends React.Component {
                         <CustomInput
                             success={this.state.descriptionState === "success"}
                             error={this.state.descriptionState === "error"}
-                            labelText="Description *"
+                            labelText="Beskrivning *"
                             id="description"
                             formControlProps={{
                                 fullWidth: true
@@ -339,7 +339,7 @@ class AddSalonModal extends React.Component {
                                 <CustomInput
                                     success={this.state.addressState === "success"}
                                     error={this.state.addressState === "error"}
-                                    labelText="Address *"
+                                    labelText="Adress *"
                                     id="address"
                                     formControlProps={{
                                         fullWidth: true
@@ -364,7 +364,7 @@ class AddSalonModal extends React.Component {
                                 <CustomInput
                                     success={this.state.zipState === "success"}
                                     error={this.state.zipState === "error"}
-                                    labelText="Zip *"
+                                    labelText="Postnr *"
                                     id="zip"
                                     formControlProps={{
                                         fullWidth: true
@@ -389,7 +389,7 @@ class AddSalonModal extends React.Component {
                         <CustomInput
                             success={this.state.cityState === "success"}
                             error={this.state.cityState === "error"}
-                            labelText="City *"
+                            labelText="Postort *"
                             id="city"
                             formControlProps={{
                                 fullWidth: true
@@ -417,7 +417,7 @@ class AddSalonModal extends React.Component {
                                 htmlFor="country-select"
                                 className={this.state.country? classes.selectLabel + " " + classes.success : classes.selectLabel}
                             >
-                                Select Country *
+                                Välj Land *
                             </InputLabel>
                             <Select
                                 MenuProps={{
@@ -440,7 +440,7 @@ class AddSalonModal extends React.Component {
                                         root: classes.selectMenuItem
                                     }}
                                 >
-                                    Select Country
+                                    Välj Land
                                 </MenuItem>
                                 <MenuItem
                                     classes={{
@@ -482,7 +482,7 @@ class AddSalonModal extends React.Component {
                                 classes={{
                                     label: classes.label
                                 }}
-                                label="Has Parking?"
+                                label="Har parkering?"
                             />
                         </GridItem>
                     </GridContainer>

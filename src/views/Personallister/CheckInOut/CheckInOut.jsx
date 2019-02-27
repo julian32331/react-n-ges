@@ -303,7 +303,7 @@ class CheckInOut extends React.Component {
     });
 
     let csvData = [
-      ["Name", "Employee Number", "CheckIn", "CheckOut", "CheckInEditable", "CheckOutEditable", "EditComment"]
+      ["Namn", "Personnummer", "Incheckad", "Utcheckad", "CheckInEditable", "CheckOutEditable", "EditComment"]
     ];
     this.list.map(item => {
       let temp = [];
@@ -471,9 +471,9 @@ class CheckInOut extends React.Component {
             tableHead={[
               "",
               "Namn",
-              "Employee number",
-              "Checked In",
-              "Checked Out",
+              "Personnummer",
+              "Incheckad",
+              "Utcheckad",
               "Åtgärder"
             ]}
             tableData={

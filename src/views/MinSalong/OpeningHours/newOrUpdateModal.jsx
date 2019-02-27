@@ -226,7 +226,7 @@ class NewOrUpdateModal extends React.Component {
                         <CustomInput
                             success={this.state.nameState === "success"}
                             error={this.state.nameState === "error"}
-                            labelText="Name *"
+                            labelText="Namn *"
                             id="name"
                             formControlProps={{
                                 fullWidth: true
@@ -269,7 +269,7 @@ class NewOrUpdateModal extends React.Component {
                             <Datetime
                                 timeFormat={false}
                                 dateFormat={"DD/MM/YYYY"}
-                                inputProps={{ placeholder: "Date *" }}
+                                inputProps={{ placeholder: "Datum *" }}
                                 value={this.state.date}
                                 onChange={event => this.change(event, "date", "date")}
                             />
@@ -282,7 +282,7 @@ class NewOrUpdateModal extends React.Component {
                                             <Datetime
                                                 dateFormat={false}
                                                 timeFormat={"HH:mm"}
-                                                inputProps={{ placeholder: "From *" }}
+                                                inputProps={{ placeholder: "Från *" }}
                                                 value={this.state.from}
                                                 onChange={event => this.change(event, "from", "from")}
                                             />
@@ -293,7 +293,7 @@ class NewOrUpdateModal extends React.Component {
                                             <Datetime
                                                 dateFormat={false}
                                                 timeFormat={"HH:mm"}
-                                                inputProps={{ placeholder: "To *" }}
+                                                inputProps={{ placeholder: "Till *" }}
                                                 value={this.state.to}
                                                 onChange={event => this.change(event, "to", "to")}
                                             />

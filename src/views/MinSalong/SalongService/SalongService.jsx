@@ -104,9 +104,9 @@ class SalongService extends React.Component {
                                 <Button 
                                     color="info" 
                                     size="sm"
-                                    onClick={() => this.onOpenNewOrUpdateModal("New Service")}
+                                    onClick={() => this.onOpenNewOrUpdateModal("Ny tjänst")}
                                 >                            
-                                    <Add /> ADD Service
+                                    <Add /> Lägg till tjänst
                                 </Button>
                             </GridItem>
                         </GridContainer>
