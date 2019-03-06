@@ -10,11 +10,22 @@ const productsStyle = theme => ({
   ...commonStyle,
   ...extendedTablesStyle,
   imgContainer: {
-    width: '60px'
+    width: '75px'
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    marginTop: '0px !important',
+    marginBottom: '0px !important',
   },
   qty: {
-    width: '50px',
-    float: 'right'
+    width: '40px',
+    textAlign: 'center',
+    padding: '10px !important',
+  },
+  price: {
+    marginTop: '0px',
+    marginBottom: '0px',
   },
   pr_20: {
     paddingRight: '20px !important',

@@ -2305,7 +2305,8 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 
 legend {
   margin-bottom: 20px;
-  font-size: 21px; }
+  font-size: 21px;
+  width: 0px !important; }
 
 output {
   padding-top: 8px;
