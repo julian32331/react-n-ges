@@ -11,6 +11,7 @@ import mySalons from "./mySalons.reducer";
 import profile from "./profile.reducer";
 import booking from "./booking.reducer";
 import admin from "./admin.reducer";
+import b2bshop from "./b2bshop.reducer";
 
 const createReducer = (asyncReducers) =>
     combineReducers({
@@ -26,6 +27,7 @@ const createReducer = (asyncReducers) =>
         profile,
         booking,
         admin,
+        b2bshop,
         ...asyncReducers
     });
 
