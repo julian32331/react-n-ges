@@ -2,14 +2,15 @@ import topLeft from "assets/img/top_left.png";
 import topRight from "assets/img/top_right.png";
 import bottomLeft from "assets/img/bottom_left.png";
 import bottomRight from "assets/img/bottom_right.png";
-import bgImage from "assets/img/register.jpg";
+import bg from "assets/img/bg.png";
 
 const pagesStyle = theme => ({
   wrapper: {
     height: "auto",
     minHeight: "100vh",
     position: "relative",
-    top: "0"
+    top: "0",
+    backgroundImage: 'url(' + bg + ')'
   },
   fullPage: {
     // padding: "120px 0",
@@ -46,7 +47,7 @@ const pagesStyle = theme => ({
       zIndex: "2"
     },
     
-    backgroundImage: "url(" + topLeft + "), url(" + topRight + "), url(" + bottomRight + "), url(" + bottomLeft + "), url(" + bgImage + ")",
+    backgroundImage: "url(" + topLeft + "), url(" + topRight + "), url(" + bottomRight + "), url(" + bottomLeft + ")",
     backgroundPosition: "left top, right top, right bottom, left bottom", 
     backgroundSize: '20% auto',
     backgroundRepeat: "no-repeat"

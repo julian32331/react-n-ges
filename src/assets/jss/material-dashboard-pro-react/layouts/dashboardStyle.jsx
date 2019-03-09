@@ -8,6 +8,7 @@ import {
   transition,
   containerFluid
 } from "assets/jss/material-dashboard-pro-react.jsx";
+import bg from "assets/img/bg.png";
 
 const appStyle = theme => ({
   wrapper: {
@@ -18,7 +19,8 @@ const appStyle = theme => ({
       display: "table",
       clear: "both",
       content: '" "'
-    }
+    },
+    backgroundImage: 'url(' + bg + ')'
   },
   mainPanel: {
     transitionProperty: "top, bottom, width",
