@@ -106,7 +106,7 @@ export var dashRoutes1 = [
     name: "Booking",
     icon: DateRange,
     component: Booking,
-    isDev: true
+    // isDev: true
   },
   {
     path: "/admin",

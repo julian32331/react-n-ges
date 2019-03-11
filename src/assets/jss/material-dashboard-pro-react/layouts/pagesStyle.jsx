@@ -10,7 +10,7 @@ const pagesStyle = theme => ({
     minHeight: "100vh",
     position: "relative",
     top: "0",
-    backgroundImage: 'url(' + bg + ')'
+    backgroundImage: 'url(' + bg + ')',
   },
   fullPage: {
     // padding: "120px 0",
