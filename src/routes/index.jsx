@@ -8,7 +8,7 @@ import Pages from "layouts/Pages.jsx";
 import Dashboard from "layouts/Dashboard.jsx";
 
 var indexRoutes = [
-  { path: "/test", name: "Booking", component: Booking },
+  { path: "/booking/:salonId?/:consumerId?", name: "Booking", component: Booking },
   
   // { path: "/pages", name: "Pages", component: Pages },
   { path: "/login", name: "Pages", component: Pages },

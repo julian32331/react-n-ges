@@ -1,3 +1,11 @@
+/**
+ * Description: Root Actions
+ * Date: 3/19/2019
+ */
+
+//  Booking actions
+export * from './booking';
+
 // Admin section
 export * from './auth.actions';
 export * from './user.actions';
@@ -12,5 +20,5 @@ export * from './profile.actions';
 export * from './b2bshop.actions';
 
 // Customer section
-export * from './booking.actions';
+// export * from './booking.actions';
 export * from './admin.actions';

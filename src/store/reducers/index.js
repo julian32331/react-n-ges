@@ -1,4 +1,9 @@
 import {combineReducers} from 'redux';
+
+// Booking reducers
+import booking from './booking';
+
+
 import auth from "./auth.reducer";
 import user from "./user.reducer";
 import salonInfo from "./salonInfo.reducer";
@@ -9,12 +14,14 @@ import checkInOut from "./checkinout.reducer";
 import employees from "./employees.reducer";
 import mySalons from "./mySalons.reducer";
 import profile from "./profile.reducer";
-import booking from "./booking.reducer";
+// import booking from "./booking.reducer";
 import admin from "./admin.reducer";
 import b2bshop from "./b2bshop.reducer";
 
 const createReducer = (asyncReducers) =>
     combineReducers({
+        booking,
+
         auth,
         user,
         salonInfo,
@@ -25,7 +32,7 @@ const createReducer = (asyncReducers) =>
         employees,
         mySalons,
         profile,
-        booking,
+        // booking,
         admin,
         b2bshop,
         ...asyncReducers

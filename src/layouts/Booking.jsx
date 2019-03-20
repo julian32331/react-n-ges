@@ -5,7 +5,11 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
+
+import { bindActionCreators } from 'redux';
+import * as Actions from 'store/actions';
+import { withRouter } from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -16,6 +20,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
+import { StepIcon } from "@material-ui/core";
 
 // @material-ui/icons
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
@@ -34,22 +39,37 @@ import CardBody from "components/Card/CardBody.jsx";
 import InfiniteCalendar from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
 
+import Loader from 'react-loader-spinner';
+
 import bookingStyle from "assets/jss/material-dashboard-pro-react/layouts/bookingStyle.jsx";
-import { StepIcon } from "@material-ui/core";
 
 class Booking extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             activeStep: 0,
-            selectedValue: null
+            serviceId: null
         };
         this.handleChange = this.handleChange.bind(this);
     }
     componentDidMount() {
-        document.body.style.overflow = "unset";
+        this.props.getBookingServices({
+            salonId: this.props.match.params.salonId
+        })
     }
+    
+    handleChange(event, name) {
+        this.setState({ [name]: event.target.value });
+    }
+
     handleNext = () => {
+        if(this.state.activeStep === 0 && this.state.serviceId) {
+            this.props.getBookingEmployees({
+                serviceId: this.state.serviceId
+            })
+        } else {
+            return;
+        }
         this.setState(state => ({
             activeStep: state.activeStep + 1,
         }));
@@ -66,10 +86,7 @@ class Booking extends React.Component {
             activeStep: 0,
         });
     };
-    
-    handleChange(event) {
-        this.setState({ selectedValue: event.target.value });
-    }
+
     render() {
         const { classes } = this.props;
         const { activeStep } = this.state;
@@ -80,132 +97,59 @@ class Booking extends React.Component {
                 lineHorizontal: classes.lineHorizontal,
             }} />
         )
+        
+        const step1 = [];
+        this.props.services.map((service, key) => {
+            let temp = {
+                    title: (
+                        <div>
+                            <FormControlLabel
+                                control={
+                                    <Radio
+                                        checked={this.state.serviceId === String(service.id)}
+                                        onChange={(event) => this.handleChange(event, 'serviceId')}
+                                        value={String(service.id)}
+                                        icon={
+                                            <FiberManualRecord
+                                                className={classes.radioUnchecked}
+                                            />
+                                        }
+                                        checkedIcon={
+                                            <FiberManualRecord
+                                                className={classes.radioChecked}
+                                            />
+                                        }
+                                        classes={{
+                                            checked: classes.radio,
+                                            root: classes.radioRoot
+                                        }}
+                                    />
+                                }
+                                classes={{
+                                    root: classes.mr_0,
+                                    label: classes.label
+                                }}
+                            />
+                            {service.name}
+                        </div>
+                    ),
+                    content: (
+                        <GridContainer className={classes.pl_30}>
+                            <GridItem xs><span className={classes.contentKey}>Price: </span> kr {service.price}</GridItem>
+                            <GridItem xs><span className={classes.contentKey}>Duration: </span> {service.durationInMinutes} (mins)</GridItem>
+                            <GridItem xs={12}><span className={classes.contentKey}>Description: </span> {service.description} </GridItem>
+                        </GridContainer>
+                    )
+                }
+            step1.push(temp)
+        })
         const getStepContent = (step) => {
             switch (step) {
                 case 0:
                     return (
                         <Accordion
                             active={0}
-                            collapses={[
-                                {
-                                title: (
-                                    <div>
-                                        <FormControlLabel
-                                            control={
-                                                <Radio
-                                                    checked={this.state.selectedValue === "a"}
-                                                    onChange={this.handleChange}
-                                                    value="a"
-                                                    name="radio button demo"
-                                                    aria-label="A"
-                                                    icon={
-                                                    <FiberManualRecord
-                                                        className={classes.radioUnchecked}
-                                                    />
-                                                    }
-                                                    checkedIcon={
-                                                    <FiberManualRecord
-                                                        className={classes.radioChecked}
-                                                    />
-                                                    }
-                                                    classes={{
-                                                        checked: classes.radio,
-                                                        root: classes.radioRoot
-                                                    }}
-                                                />
-                                            }
-                                            classes={{
-                                                root: classes.mr_0,
-                                                label: classes.label
-                                            }}
-                                        />
-                                        Service #1
-                                    </div>
-                                ),
-                                content: (
-                                    <GridContainer className={classes.pl_30}>
-                                        <GridItem xs><span className={classes.contentKey}>Price: </span> kr 65</GridItem>
-                                        <GridItem xs><span className={classes.contentKey}>Duration: </span> 45 (mins)</GridItem>
-                                        <GridItem xs={12}><span className={classes.contentKey}>Description: </span> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.</GridItem>
-                                    </GridContainer>
-                                )},
-                                {
-                                title: (
-                                    <div>
-                                        <FormControlLabel
-                                            control={
-                                                <Radio
-                                                    checked={this.state.selectedValue === "b"}
-                                                    onChange={this.handleChange}
-                                                    value="b"
-                                                    name="radio button demo"
-                                                    aria-label="B"
-                                                    icon={
-                                                    <FiberManualRecord
-                                                        className={classes.radioUnchecked}
-                                                    />
-                                                    }
-                                                    checkedIcon={
-                                                    <FiberManualRecord
-                                                        className={classes.radioChecked}
-                                                    />
-                                                    }
-                                                    classes={{
-                                                        checked: classes.radio,
-                                                        root: classes.radioRoot
-                                                    }}
-                                                />
-                                            }
-                                            classes={{
-                                                root: classes.mr_0,
-                                                label: classes.label
-                                            }}
-                                        />
-                                        Service #2
-                                    </div>
-                                ),
-                                content:
-                                    "Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS."
-                                },
-                                {
-                                title: (
-                                    <div>
-                                        <FormControlLabel
-                                            control={
-                                                <Radio
-                                                    checked={this.state.selectedValue === "c"}
-                                                    onChange={this.handleChange}
-                                                    value="c"
-                                                    name="radio button demo"
-                                                    aria-label="C"
-                                                    icon={
-                                                    <FiberManualRecord
-                                                        className={classes.radioUnchecked}
-                                                    />
-                                                    }
-                                                    checkedIcon={
-                                                    <FiberManualRecord
-                                                        className={classes.radioChecked}
-                                                    />
-                                                    }
-                                                    classes={{
-                                                        checked: classes.radio,
-                                                        root: classes.radioRoot
-                                                    }}
-                                                />
-                                            }
-                                            classes={{
-                                                root: classes.mr_0,
-                                                label: classes.label
-                                            }}
-                                        />
-                                        Service #3
-                                    </div>
-                                ),
-                                content:
-                                    "Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS."
-                                }
-                            ]}
+                            collapses={step1}
                         />
                     )
                 case 1:
@@ -364,8 +308,19 @@ class Booking extends React.Component {
                                         {/* )} */}
                                     </div>
                                 </CardHeader>
-                                <CardBody>
-                                    {getStepContent(activeStep)}
+                                <CardBody className={classes.pt_0}>
+                                    {
+                                        this.props.loading? (
+                                            <div className={classes.loading_container}>
+                                                <Loader 
+                                                    type="Oval"
+                                                    color="#7da8ae"
+                                                    height="40"	
+                                                    width="40"
+                                                />
+                                            </div>
+                                        ) : getStepContent(activeStep)
+                                    }
                                 </CardBody>
                             </Card>
                         </GridItem>
@@ -381,4 +336,21 @@ Booking.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(bookingStyle)(Booking);
+function mapDispatchToProps(dispatch)
+{
+    return bindActionCreators({
+        getBookingServices  : Actions.getBookingServices,
+        getBookingEmployees : Actions.getBookingEmployees
+    }, dispatch);
+}
+
+function mapStateToProps(state)
+{
+    return {
+        loading     : state.booking.loading,
+        services    : state.booking.services,
+        employees   : state.booking.employees
+    }
+}
+
+export default withStyles(bookingStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(Booking)));

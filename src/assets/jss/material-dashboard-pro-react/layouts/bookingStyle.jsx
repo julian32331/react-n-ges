@@ -88,6 +88,14 @@ const pagesStyle = theme => ({
   },
   connectorLine: {
     transition: theme.transitions.create('border-color'),
+  },
+
+  loading_container: {
+    padding: '80px 0',
+    textAlign: 'center'
+  },
+  pt_0: {
+    paddingTop: '0px'
   }
 });
 
