@@ -113,7 +113,7 @@ export var dashRoutes1 = [
     name: "Admin",
     icon: DateRange,
     component: Admin,
-    isDev: true
+    // isDev: true
   },
   {
     collapse: true,
