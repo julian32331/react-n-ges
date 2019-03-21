@@ -1,8 +1,10 @@
 import customCheckboxRadioSwitch from "assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.jsx";
+import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
 import banner from "assets/img/booking3.jpg";
 
 const pagesStyle = theme => ({
   ...customCheckboxRadioSwitch,
+  ...extendedTablesStyle,
   wrapper: {
     height: "auto",
     minHeight: "100vh",
@@ -96,7 +98,8 @@ const pagesStyle = theme => ({
   },
   pt_0: {
     paddingTop: '0px'
-  }
+  },
+  
 });
 
 export default pagesStyle;

@@ -10,6 +10,8 @@ const initialState = {
     error: '',
     services: [],
     employees: [],
+    daysOff: null,
+    timeSlots: [],
 };
 
 const booking = function (state = initialState, action) {
@@ -49,6 +51,47 @@ const booking = function (state = initialState, action) {
                 employees: action.payload
             };
         case Actions.EMPLOYEES_FAILED:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            };
+
+        case Actions.DAYSOFF_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: '',
+                daysOff: null,
+                timeSlots: []
+            };
+        case Actions.DAYSOFF_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                daysOff: action.payload
+            };
+        case Actions.DAYSOFF_FAILED:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            };
+
+        case Actions.TIMESLOTS_REQUEST:
+            return {
+                ...state,
+                loading: false,
+                error: '',
+                timeSlots: []
+            };
+        case Actions.TIMESLOTS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                timeSlots: action.payload
+            };
+        case Actions.TIMESLOTS_FAILED:
             return {
                 ...state,
                 loading: false,

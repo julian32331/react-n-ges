@@ -21,11 +21,13 @@ import Typography from '@material-ui/core/Typography';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
 import { StepIcon } from "@material-ui/core";
+import Checkbox from "@material-ui/core/Checkbox";
 
 // @material-ui/icons
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
+import Check from "@material-ui/icons/Check";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -35,10 +37,12 @@ import Accordion from "components/Accordion/Accordion.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Table from "components/Table/Table.jsx";
 
 import InfiniteCalendar from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
 
+import moment from 'moment';
 import Loader from 'react-loader-spinner';
 
 import bookingStyle from "assets/jss/material-dashboard-pro-react/layouts/bookingStyle.jsx";
@@ -48,7 +52,9 @@ class Booking extends React.Component {
         super(props);
         this.state = {
             activeStep: 0,
-            serviceId: null
+            serviceId: null,
+            hairdresserId: null,
+
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -58,14 +64,21 @@ class Booking extends React.Component {
         })
     }
     
-    handleChange(event, name) {
-        this.setState({ [name]: event.target.value });
+    handleChange(value, name) {
+        this.setState({ [name]: value });
     }
 
     handleNext = () => {
         if(this.state.activeStep === 0 && this.state.serviceId) {
             this.props.getBookingEmployees({
                 serviceId: this.state.serviceId
+            })
+        } else if(this.state.activeStep === 1 && this.state.hairdresserId) {
+            this.props.getBookingDaysOff({
+                salonId: this.props.match.params.salonId,
+                hairdresserId: this.state.hairdresserId,
+                year: moment().format('YYYY'),
+                month: moment().format('MM')
             })
         } else {
             return;
@@ -87,10 +100,19 @@ class Booking extends React.Component {
         });
     };
 
+    getBookingTimeslots(date) {
+        this.props.getBookingTimeslots({
+            salonId: this.props.match.params.salonId,
+            hairdresserId: this.state.hairdresserId,
+            date: moment(date).format("YYYY-MM-DD")
+        })
+    }
+
     render() {
         const { classes } = this.props;
         const { activeStep } = this.state;
-        const steps = ['Service', 'Hairdresser', 'Date/Time'];
+        const consumerId = this.props.match.params.consumerId;
+        const steps = consumerId? ['Service', 'Hairdresser', 'Date/Time'] : ['Service', 'Hairdresser', 'Date/Time', 'My Information'];
         const connector = (
             <StepConnector classes={{
                 root: classes.connectorRoot,
@@ -107,7 +129,7 @@ class Booking extends React.Component {
                                 control={
                                     <Radio
                                         checked={this.state.serviceId === String(service.id)}
-                                        onChange={(event) => this.handleChange(event, 'serviceId')}
+                                        onChange={() => this.handleChange(String(service.id), 'serviceId')}
                                         value={String(service.id)}
                                         icon={
                                             <FiberManualRecord
@@ -143,6 +165,34 @@ class Booking extends React.Component {
                 }
             step1.push(temp)
         })
+
+        const step2 = [];
+        this.props.employees.map((employee, key) => {
+            let temp = [
+                <Checkbox
+                    className={classes.positionAbsolute}
+                    tabIndex={-1}
+                    onClick={() => this.handleChange(employee.id, 'hairdresserId')}
+                    checkedIcon={<Check className={classes.checkedIcon} />}
+                    icon={<Check className={classes.uncheckedIcon} />}
+                    classes={{
+                        checked: classes.checked,
+                        root: classes.checkRoot
+                    }}
+                    checked={this.state.hairdresserId === employee.id}
+                />,
+                employee.name
+            ];
+            step2.push(temp);
+        })
+
+        let closingDays = [];
+        if(this.props.daysOff) 
+            this.props.daysOff.salonClosingDays.map((day, key) => {
+                closingDays.push(day.dayId)
+            })
+        closingDays = [...new Set(closingDays)]
+
         const getStepContent = (step) => {
             switch (step) {
                 case 0:
@@ -153,81 +203,61 @@ class Booking extends React.Component {
                         />
                     )
                 case 1:
-                    return 'What is an ad group anyways?';
-                case 2:                    
-                    let today = new Date();
-                    let lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+                    return (
+                        <Table
+                            striped
+                            tableData={step2}
+                            customCellClasses={[
+                                classes.right
+                            ]}
+                            customClassesForCells={[1]}
+                            customHeadCellClasses={[
+                                classes.right
+                            ]}
+                            customHeadClassesForCells={[1]}
+                        />
+                    )
+                case 2:
                     return (
                         <GridContainer>
                             <GridItem xs={12} sm={6}>
                                 <InfiniteCalendar
                                     width='100%'
                                     height={340}
-                                    selected={today}
-                                    disabledDays={[0]}
-                                    minDate={lastWeek}
+                                    disabledDays={closingDays}
+                                    minDate={moment().toDate()}
+                                    onSelect={(date)=>this.getBookingTimeslots(date)}
                                 />
                             </GridItem>
                             <GridItem xs={12} sm={6}>
                                 <h3 className={classes.title}>Please select time</h3>
-                                <FormControlLabel
-                                    control={
-                                    <Radio
-                                        checked={this.state.selectedValue === "a"}
-                                        onChange={this.handleChange}
-                                        value="a"
-                                        name="radio button demo"
-                                        aria-label="A"
-                                        icon={
-                                        <FiberManualRecord
-                                            className={classes.radioUnchecked}
-                                        />
-                                        }
-                                        checkedIcon={
-                                        <FiberManualRecord
-                                            className={classes.radioChecked}
-                                        />
-                                        }
-                                        classes={{
-                                        checked: classes.radio,
-                                        root: classes.radioRoot
-                                        }}
-                                    />
-                                    }
-                                    classes={{
-                                    label: classes.label
-                                    }}
-                                    label="08:00"
-                                />
-                                <FormControlLabel
-                                    control={
-                                    <Radio
-                                        checked={this.state.selectedValue === "b"}
-                                        onChange={this.handleChange}
-                                        value="b"
-                                        name="radio button demo"
-                                        aria-label="B"
-                                        icon={
-                                        <FiberManualRecord
-                                            className={classes.radioUnchecked}
-                                        />
-                                        }
-                                        checkedIcon={
-                                        <FiberManualRecord
-                                            className={classes.radioChecked}
-                                        />
-                                        }
-                                        classes={{
-                                        checked: classes.radio,
-                                        root: classes.radioRoot
-                                        }}
-                                    />
-                                    }
-                                    classes={{
-                                    label: classes.label
-                                    }}
-                                    label="13:30"
-                                />
+                                {
+                                    this.props.timeSlots.length > 0? (
+                                        this.props.timeSlots.map((slot, key) => {
+                                            return (
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            tabIndex={-1}
+                                                            onClick={() => this.handleChange(slot, 'test')}
+                                                            checkedIcon={<Check className={classes.checkedIcon} />}
+                                                            icon={<Check className={classes.uncheckedIcon} />}
+                                                            classes={{
+                                                                checked: classes.checked,
+                                                                root: classes.checkRoot
+                                                            }}
+                                                        />
+                                                    }
+                                                    classes={{
+                                                        label: classes.label
+                                                    }}
+                                                    label={slot}
+                                                />
+                                            )
+                                        })                                        
+                                    ) : null
+                                }
+                                
                             </GridItem>
                         </GridContainer>
                     )
@@ -340,7 +370,9 @@ function mapDispatchToProps(dispatch)
 {
     return bindActionCreators({
         getBookingServices  : Actions.getBookingServices,
-        getBookingEmployees : Actions.getBookingEmployees
+        getBookingEmployees : Actions.getBookingEmployees,
+        getBookingDaysOff   : Actions.getBookingDaysOff,
+        getBookingTimeslots : Actions.getBookingTimeslots
     }, dispatch);
 }
 
@@ -349,7 +381,9 @@ function mapStateToProps(state)
     return {
         loading     : state.booking.loading,
         services    : state.booking.services,
-        employees   : state.booking.employees
+        employees   : state.booking.employees,
+        daysOff     : state.booking.daysOff,
+        timeSlots   : state.booking.timeSlots   
     }
 }
 

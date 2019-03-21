@@ -53,3 +53,53 @@ export function getBookingEmployees(data) {
         });
     }
 }
+
+export const DAYSOFF_REQUEST = '[BOOKING] DAYSOFF REQUEST';
+export const DAYSOFF_SUCCESS = '[BOOKING] DAYSOFF SUCCESS';
+export const DAYSOFF_FAILED = '[BOOKING] DAYSOFF FAILED';
+
+export function getBookingDaysOff(data) {
+    const request = Utils.xapi().post('booking/daysoff', data);
+
+    return (dispatch) => {
+        dispatch({
+            type: DAYSOFF_REQUEST
+        })
+        request.then((response) =>
+            dispatch({
+                type   : DAYSOFF_SUCCESS,
+                payload: response.data
+            })
+        ).catch((error) => {
+            dispatch({
+                type   : DAYSOFF_FAILED,
+                payload: error
+            })
+        });
+    }
+}
+
+export const TIMESLOTS_REQUEST = '[BOOKING] TIMESLOTS REQUEST';
+export const TIMESLOTS_SUCCESS = '[BOOKING] TIMESLOTS SUCCESS';
+export const TIMESLOTS_FAILED = '[BOOKING] TIMESLOTS FAILED';
+
+export function getBookingTimeslots(data) {
+    const request = Utils.xapi().post('booking/timeslots', data);
+
+    return (dispatch) => {
+        dispatch({
+            type: TIMESLOTS_REQUEST
+        })
+        request.then((response) =>
+            dispatch({
+                type   : TIMESLOTS_SUCCESS,
+                payload: response.data
+            })
+        ).catch((error) => {
+            dispatch({
+                type   : TIMESLOTS_FAILED,
+                payload: error
+            })
+        });
+    }
+}
