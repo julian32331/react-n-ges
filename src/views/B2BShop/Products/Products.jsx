@@ -166,22 +166,6 @@ class B2BShop extends React.Component {
     })
   }
 
-  handleClick = () => {
-    this.setState(state => ({ open: !state.open }));
-  };
-
-  onMouse = (value) => {
-    this.setState({open: value})
-  }
-
-  onMouse1 = (value) => {
-    this.setState({open1: value})
-  }
-
-  onMouse2 = (value) => {
-    this.setState({open2: value})
-  }
-
   createCategory = (categories) => {
     const { classes } = this.props;
     return categories.map((category, key) => {
