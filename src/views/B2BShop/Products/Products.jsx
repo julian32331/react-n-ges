@@ -22,6 +22,19 @@ import Remove from "@material-ui/icons/Remove";
 import Add from "@material-ui/icons/Add";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
+import ListSubheader from '@material-ui/core/ListSubheader';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Collapse from '@material-ui/core/Collapse';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import StarBorder from '@material-ui/icons/StarBorder';
+
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
@@ -35,6 +48,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Pagination from "components/Pagination/Pagination.jsx";
 
 import productsStyle from "assets/jss/material-dashboard-pro-react/views/b2bshop/productsStyle.jsx";
+import categories from "./Category";
 
 import product1 from "assets/img/product1.jpg";
 import product2 from "assets/img/product2.jpg";
@@ -150,6 +164,50 @@ class B2BShop extends React.Component {
     this.setState({
       activedPageNo: param
     })
+  }
+
+  handleClick = () => {
+    this.setState(state => ({ open: !state.open }));
+  };
+
+  onMouse = (value) => {
+    this.setState({open: value})
+  }
+
+  onMouse1 = (value) => {
+    this.setState({open1: value})
+  }
+
+  onMouse2 = (value) => {
+    this.setState({open2: value})
+  }
+
+  createCategory = (categories) => {
+    const { classes } = this.props;
+    return categories.map((category, key) => {
+      if(category.collapse) {
+        var st = {};
+        st[category["name"]] = !this.state[category.name];
+        return (
+          <div>
+            <ListItem button onClick={() => this.setState(st)} key={key} divider={true}>
+              <ListItemText primary={category.name} />
+              {this.state[category.name] ? <ExpandLess /> : <ExpandMore />}  
+            </ListItem>
+            <Collapse in={this.state[category.name]} timeout="auto" unmountOnExit>
+              <List component="div">
+                {this.createCategory(category.children)}
+              </List>
+            </Collapse>
+          </div>
+        )
+      }
+      return (
+        <ListItem button key={key}>
+          <ListItemText primary={category.name} />                    
+        </ListItem>
+      )
+    }) 
   }
 
   render() {
@@ -289,7 +347,14 @@ class B2BShop extends React.Component {
                 </GridItem>
               </GridContainer>
               <GridContainer>
-                <GridItem xs={12} sm={4}>
+                <GridItem xs={12} sm={3}>
+                  <List
+                    component="nav"
+                    subheader={<ListSubheader component="div">Filter By : </ListSubheader>}
+                    className={classes.root}
+                  >
+                    {this.createCategory(categories)}
+                  </List>
                 </GridItem>
                 <GridItem xs={12} sm={8}>
                   {products.length === 0 ?
