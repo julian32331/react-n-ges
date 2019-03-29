@@ -135,8 +135,10 @@ class ShoppingCart extends React.Component {
       );
     });
     let orders = [];
+    let total_price = 0
     this.props.orders.map((order, key) => {
       let temp = [];
+      total_price += order.product.price * order.qty;
       temp.push(
         <div className={classes.imgContainer}>
           <img src={order.product.imageURL} alt="..." className={classes.img} />
@@ -194,7 +196,7 @@ class ShoppingCart extends React.Component {
         colspan: "3",
         amount: (
           <span>
-            <small>€</small>2,346
+            <small>kr</small>{total_price}
           </span>
         )
       }
