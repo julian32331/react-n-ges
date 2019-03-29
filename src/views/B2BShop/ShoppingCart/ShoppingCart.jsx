@@ -1,5 +1,10 @@
 import React from "react";
 
+import { bindActionCreators } from 'redux';
+import * as Actions from 'store/actions';
+import { withRouter } from 'react-router-dom';
+import connect from 'react-redux/es/connect/connect';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -15,6 +20,7 @@ import Remove from "@material-ui/icons/Remove";
 import Add from "@material-ui/icons/Add";
 import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import Reply from "@material-ui/icons/Reply";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -28,6 +34,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 import productsStyle from "assets/jss/material-dashboard-pro-react/views/b2bshop/productsStyle.jsx";
+import ConfirmModal from "./ConfirmModal";
 
 import product1 from "assets/img/product1.jpg";
 import product2 from "assets/img/product2.jpg";
@@ -37,10 +44,20 @@ class ShoppingCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: []
+      checked: [],
+      confirmModal: false,
+      isCompleted: false
     };
     this.handleToggle = this.handleToggle.bind(this);
   }
+
+  componentDidMount() {
+    this.props.getUserData();
+    setTimeout(() => {
+      this.props.getOrders();
+    }, 100);
+  }
+
   handleToggle(value) {
     const { checked } = this.state;
     const currentIndex = checked.indexOf(value);
@@ -56,7 +73,23 @@ class ShoppingCart extends React.Component {
       checked: newChecked
     });
   }
+  
+  // Open and close New modal
+  onCloseConfirmModal(isCompleted) {
+    this.setState({
+      isCompleted: isCompleted,
+      confirmModal: false
+    })
+  }
+  onOpenConfirmModal = (title, data=null) => {
+    this.setState({
+      confirmModal: true,
+      modalData: data
+    })
+  }
+
   render() {
+    console.log('orders: ', this.props.orders)
     const { classes } = this.props;
     const fillButtons = [
       { color: "info", icon: Person },
@@ -101,6 +134,87 @@ class ShoppingCart extends React.Component {
         </Button>
       );
     });
+    let orders = [];
+    this.props.orders.map((order, key) => {
+      let temp = [];
+      temp.push(
+        <div className={classes.imgContainer}>
+          <img src={order.product.imageURL} alt="..." className={classes.img} />
+        </div>
+      )
+      temp.push(
+        <span>
+          <a href="" className={classes.tdNameAnchor}>
+            {order.product.name}
+          </a>
+          <br />
+          <small className={classes.tdNameSmall}>
+            {order.product.articleNo}
+          </small>
+        </span>
+      )
+      temp.push(
+        <span>
+          <small className={classes.tdNumberSmall}>kr</small> {order.product.price}
+        </span>
+      )
+      temp.push(
+        <div className={classes.qty}>
+          {order.qty}
+          {/* <CustomInput
+            id="qty"
+            inputProps={{
+              type: "number",
+              value: order.qty
+            }}
+          /> */}
+        </div>
+      )
+      temp.push(
+        <span>
+          <small className={classes.tdNumberSmall}>€</small> {order.product.price * order.qty}
+        </span>
+      )
+      temp.push(
+        <Button
+          justIcon
+          round
+          color="danger"
+          size="sm"
+          className={classes.marginRight}
+        >
+          <Close className={classes.icons} />
+        </Button>
+      )
+      orders.push(temp);
+    })
+    orders.push(
+      {
+        total: true,
+        colspan: "3",
+        amount: (
+          <span>
+            <small>€</small>2,346
+          </span>
+        )
+      }
+    )
+    orders.push(        
+      {
+        purchase: true,
+        colspan: "3",
+        col: {
+          colspan: 3,
+          text: (
+            <Button color="info" round onClick={this.onOpenConfirmModal}>
+              Complete Purchase{" "}
+              <KeyboardArrowRight className={classes.icon} />
+            </Button>
+          )
+        }
+      }
+    )
+    console.log('orders : ', orders)
     return (
       <GridContainer>
         <GridItem xs={12}>
@@ -114,192 +228,93 @@ class ShoppingCart extends React.Component {
                 </GridContainer>
               </div>
             </CardHeader>
-            <CardBody>              
-              <GridContainer>
-                <GridItem xs={3} sm={1} md={2} lg={1}>
-                  <FormLabel className={classes.labelHorizontal}>
-                    Search :
-                  </FormLabel>
-                </GridItem>
-                <GridItem xs={9} sm={3} md={3} lg={2}>
-                  <CustomInput
-                    id="search"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "search",
-                      onChange: event =>
-                        this.searchHandler("search", event),
-                      value: this.state.search               
-                    }}
+            {
+              this.state.isCompleted? (
+                <CardBody className={classes.center}>
+                  <h3>Order is Completed</h3>
+                  <Button
+                    color="success"
+                    onClick={() => this.props.history.push('/b2bshop/products')}
+                  >
+                    <Reply className={classes.icon} /> Go to Products
+                  </Button>
+                </CardBody>
+              ) : (
+                <CardBody>              
+                  <GridContainer>
+                    <GridItem xs={3} sm={1} md={2} lg={1}>
+                      <FormLabel className={classes.labelHorizontal}>
+                        Search :
+                      </FormLabel>
+                    </GridItem>
+                    <GridItem xs={9} sm={3} md={3} lg={2}>
+                      <CustomInput
+                        id="search"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          type: "search",
+                          onChange: event =>
+                            this.searchHandler("search", event),
+                          value: this.state.search               
+                        }}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <Table
+                    tableHead={[
+                      "",
+                      "PRODUCT",
+                      "PRICE",
+                      "QTY",
+                      "AMOUNT",
+                      ""
+                    ]}
+                    tableData={orders}
+                    tableShopping
+                    customHeadCellClasses={[
+                      classes.center,
+                      classes.center,
+                      classes.right,
+                      classes.right
+                    ]}
+                    customHeadClassesForCells={[0, 2, 3, 4, 5]}
+                    customCellClasses={[
+                      classes.tdName,
+                      classes.tdNumber + " " + classes.center,
+                      classes.tdNumber + " " + classes.right,
+                      classes.tdNumber + " " + classes.right,
+                    ]}
+                    customClassesForCells={[1, 2, 3, 4]}
                   />
-                </GridItem>
-              </GridContainer>
-              <Table
-                tableHead={[
-                  "",
-                  "PRODUCT",
-                  "PRICE",
-                  "QTY",
-                  "AMOUNT",
-                  ""
-                ]}
-                tableData={[
-                  [
-                    <div className={classes.imgContainer}>
-                      <img src={product1} alt="..." className={classes.img} />
-                    </div>,
-                    <span>
-                      <a href="#jacket" className={classes.tdNameAnchor}>
-                        Spring Jacket
-                      </a>
-                      <br />
-                      <small className={classes.tdNameSmall}>
-                        by Dolce&amp;Gabbana
-                      </small>
-                    </span>,
-                    <span>
-                      <small className={classes.tdNumberSmall}>€</small> 549
-                    </span>,
-                    <div className={classes.qty}>
-                      <CustomInput
-                        id="qty"
-                        inputProps={{
-                          type: "number",
-                        }}
-                      />
-                    </div>,
-                    <span>
-                      <small className={classes.tdNumberSmall}>€</small> 549
-                    </span>,
-                    <Button
-                      justIcon
-                      round
-                      color="danger"
-                      size="sm"
-                      className={classes.marginRight}
-                    >
-                      <Close className={classes.icons} />
-                    </Button>
-                  ],
-                  [
-                    <div className={classes.imgContainer}>
-                      <img src={product2} alt="..." className={classes.img} />
-                    </div>,
-                    <span>
-                      <a href="#jacket" className={classes.tdNameAnchor}>
-                        Short Pants{" "}
-                      </a>
-                      <br />
-                      <small className={classes.tdNameSmall}>by Pucci</small>
-                    </span>,
-                    <span>
-                      <small className={classes.tdNumberSmall}>€</small> 499
-                    </span>,
-                    <div className={classes.qty}>
-                      <CustomInput
-                        id="qty"
-                        inputProps={{
-                          type: "number",
-                        }}
-                      />
-                    </div>,
-                    <span>
-                      <small className={classes.tdNumberSmall}>€</small> 549
-                    </span>,
-                    <Button
-                      justIcon
-                      round
-                      color="danger"
-                      size="sm"
-                      className={classes.marginRight}
-                    >
-                      <Close className={classes.icons} />
-                    </Button>
-                  ],
-                  [
-                    <div className={classes.imgContainer}>
-                      <img src={product3} alt="..." className={classes.img} />
-                    </div>,
-                    <span>
-                      <a href="#jacket" className={classes.tdNameAnchor}>
-                        Pencil Skirt
-                      </a>
-                      <br />
-                      <small className={classes.tdNameSmall}>
-                        by Valentino
-                      </small>
-                    </span>,
-                    <span>
-                      <small className={classes.tdNumberSmall}>€</small> 799
-                    </span>,
-                    <div className={classes.qty}>
-                      <CustomInput
-                        id="qty"
-                        inputProps={{
-                          type: "number",
-                        }}
-                      />
-                    </div>,
-                    <span>
-                      <small className={classes.tdNumberSmall}>€</small> 549
-                    </span>,
-                    <Button
-                      justIcon
-                      round
-                      color="danger"
-                      size="sm"
-                      className={classes.marginRight}
-                    >
-                      <Close className={classes.icons} />
-                    </Button>
-                  ],
-                  {
-                    total: true,
-                    colspan: "3",
-                    amount: (
-                      <span>
-                        <small>€</small>2,346
-                      </span>
-                    )
-                  },
-                  {
-                    purchase: true,
-                    colspan: "3",
-                    col: {
-                      colspan: 3,
-                      text: (
-                        <Button color="info" round>
-                          Complete Purchase{" "}
-                          <KeyboardArrowRight className={classes.icon} />
-                        </Button>
-                      )
-                    }
-                  }
-                ]}
-                tableShopping
-                customHeadCellClasses={[
-                  classes.center,
-                  classes.center,
-                  classes.right,
-                  classes.right
-                ]}
-                customHeadClassesForCells={[0, 2, 3, 4, 5]}
-                customCellClasses={[
-                  classes.tdName,
-                  classes.tdNumber + " " + classes.center,
-                  classes.tdNumber + " " + classes.tdNumberAndButtonGroup + " " + classes.center,
-                  classes.tdNumber + " " + classes.right,
-                ]}
-                customClassesForCells={[1, 2, 3, 4]}
-              />
-            </CardBody>
+                </CardBody>
+              )
+            }
+            
           </Card>
+          <ConfirmModal 
+            onOpen={this.state.confirmModal}
+            onClose={this.onCloseConfirmModal.bind(this)}
+          />
         </GridItem>
       </GridContainer>
     );
   }
 }
 
-export default withStyles(productsStyle)(ShoppingCart);
+function mapStateToProps(state) {
+  return {
+    workingForId: state.user.workingForId,
+    orders: state.b2bshop.orders
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getUserData: Actions.getUserData,
+    getOrders: Actions.getOrders
+  }, dispatch);
+}
+
+export default withStyles(productsStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(ShoppingCart)));

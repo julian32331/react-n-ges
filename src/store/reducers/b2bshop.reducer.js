@@ -3,7 +3,8 @@ import * as Actions from './../actions/b2bshop.actions';
 const initialState = {
     state: null,
     message: '',
-    products: []
+    products: [],
+    orders: []
 };
 
 const b2bshop = function (state = initialState, action) {
@@ -31,6 +32,20 @@ const b2bshop = function (state = initialState, action) {
                 state: action.state,
                 message: action.message
             };
+        }
+        case Actions.GET_ORDERS:
+        {
+            return {
+                ...state,
+                orders: state.orders
+            }
+        }
+        case Actions.ADD_ORDERS:
+        {
+            return {
+                ...state,
+                orders: action.orders
+            }
         }
         default:
         {

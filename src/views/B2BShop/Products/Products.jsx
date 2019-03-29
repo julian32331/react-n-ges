@@ -33,7 +33,8 @@ import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
+import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
+
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -68,7 +69,9 @@ class B2BShop extends React.Component {
   componentDidMount() {
     this.props.getUserData();
     setTimeout(() => {
-      this.props.getB2BShopProducts();
+      this.props.getB2BShopProducts({
+        workingForId: this.props.workingForId
+      });
     }, 100);
   }
 
@@ -173,8 +176,8 @@ class B2BShop extends React.Component {
         var st = {};
         st[category["name"]] = !this.state[category.name];
         return (
-          <div>
-            <ListItem button onClick={() => this.setState(st)} key={key} divider={true}>
+          <div key={key}>
+            <ListItem button onClick={() => this.setState(st)} divider={true}>
               <ListItemText primary={category.name} />
               {this.state[category.name] ? <ExpandLess /> : <ExpandMore />}  
             </ListItem>
@@ -192,6 +195,11 @@ class B2BShop extends React.Component {
         </ListItem>
       )
     }) 
+  }
+
+  order() {
+    this.props.addOrders(this.state.orders);
+    this.props.history.push('/b2bshop/cart');
   }
 
   render() {
@@ -220,23 +228,35 @@ class B2BShop extends React.Component {
       )
     }
 
-    const product_price_qty = (price, index) => {
-      // let qty = 0
-      const addProduct = (index) => {
-        // qty++;
-        console.log('focus: ', this.props["qty_" + index])
+    const product_price_qty = (product) => {
+      var orders = this.state.orders? this.state.orders:[];
+      const addProduct = (product) => {
+        var index = orders.findIndex(x => x.product.id === product.id);
+        if(index === -1){
+          orders.push({
+            product: product,
+            qty: 1
+          })
+        } else {
+          orders[index] = {
+            product: product,
+            qty: this.state["qty_" + product.id] + 1
+          };
+        }
+        
         this.setState(prevState => ({
-          ["qty_" + index]: prevState["qty_" + index] + 1
+          ["qty_" + product.id]: prevState["qty_" + product.id]? prevState["qty_" + product.id] + 1 : 1,
+          orders: orders
         }))
       }
       return (
         <span>
-          <h4 className={classes.price}><small className={classes.tdNumberSmall}>kr</small> {price}</h4>
+          <h4 className={classes.price}><small className={classes.tdNumberSmall}>kr</small> {product.price}</h4>
           <div>
             <TextField
               id="outlined-bare"
               className={classes.textField}
-              value={this.state["qty_" + index] ? this.state["qty_" + index] : 0}
+              value={this.state["qty_" + product.id] ? this.state["qty_" + product.id] : 0}
               margin="normal"
               variant="outlined"
               type="number"
@@ -244,7 +264,7 @@ class B2BShop extends React.Component {
                 className: classes.qty
               }}
             />
-            <Button color="info" round size="sm" className={classes.marginRight} onClick={() => addProduct(index)}>
+            <Button color="info" round size="sm" className={classes.marginRight} onClick={() => addProduct(product)}>
               Add
             </Button>
           </div>
@@ -259,7 +279,7 @@ class B2BShop extends React.Component {
       if (index >= (activedPageNo - 1) * 10 && index < activedPageNo * 10) {
         temp.push(product_image(product.imageURL));
         temp.push(product_name(product.name, product.articleNo));
-        temp.push(product_price_qty(product.price, index));
+        temp.push(product_price_qty(product));
 
         products.push(temp);
       }
@@ -267,7 +287,6 @@ class B2BShop extends React.Component {
 
     let pageNations = [];
     let totalPages = this.products.length % 10 > 0 ? Math.floor(this.products.length / 10 + 1) : this.products.length / 10;
-    console.log('totalPages: ', totalPages)
 
     let temp = [];
     if (this.state.pageOffset !== 0) temp.push({ text: "<<", onClick: () => this.changePagination(-1) });
@@ -305,6 +324,17 @@ class B2BShop extends React.Component {
                   <GridItem xs={12} sm={6}>
                     <h3 className={classes.cardTitle}>Products</h3>
                   </GridItem>
+                  <GridItem xs={12} sm={6} className={classes.text_right}>
+                    <Button
+                      justIcon
+                      round
+                      color="info"
+                      className={classes.marginRight}
+                      onClick={this.order.bind(this)}
+                    >
+                      <AddShoppingCart className={classes.icons} />
+                    </Button>
+                  </GridItem>
                 </GridContainer>
               </div>
             </CardHeader>
@@ -340,7 +370,7 @@ class B2BShop extends React.Component {
                     {this.createCategory(categories)}
                   </List>
                 </GridItem>
-                <GridItem xs={12} sm={8}>
+                <GridItem xs={12} sm={9}>
                   {products.length === 0 ?
                     <CircularProgress className={classes.progress} />
                     :
@@ -384,7 +414,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getUserData: Actions.getUserData,
-    getB2BShopProducts: Actions.getB2BShopProducts
+    getB2BShopProducts: Actions.getB2BShopProducts,
+    addOrders: Actions.addOrders
   }, dispatch);
 }
 

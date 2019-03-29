@@ -29,6 +29,9 @@ const productsStyle = theme => ({
   },
   pr_20: {
     paddingRight: '20px !important',
+  },
+  text_right: {
+    textAlign: 'right'
   }
 });
 
