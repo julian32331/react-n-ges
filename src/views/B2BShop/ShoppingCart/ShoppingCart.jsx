@@ -174,7 +174,7 @@ class ShoppingCart extends React.Component {
       )
       temp.push(
         <span>
-          <small className={classes.tdNumberSmall}>€</small> {order.product.price * order.qty}
+          <small className={classes.tdNumberSmall}>kr</small> {order.product.price * order.qty}
         </span>
       )
       temp.push(

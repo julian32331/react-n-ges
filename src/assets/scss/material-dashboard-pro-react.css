@@ -2216,7 +2216,6 @@ html * {
   -moz-osx-font-smoothing: grayscale; }
 
 body {
-  background-color: #EEEEEE;
   color: #3C4858;
   margin: 0;
   font-family: "Source Sans Pro", "Roboto", Helvetica, Arial, sans-serif;
@@ -2267,7 +2266,6 @@ p {
   margin: 0 0 10px; }
 
 body {
-  background-color: #EEEEEE;
   color: #3C4858;
   font-size: 14px; }
 
