@@ -218,6 +218,106 @@ const categories = [
                 deep: 1
             },
         ]
+    },
+    {
+        collapse: true,
+        name: "Professional only",
+        deep: 0,
+        children: [
+            {
+                collapse: true,
+                name: "Hårfärg",
+                deep: 1,
+                children: [
+                    {
+                        name: "Permanent Färg",
+                        deep: 2
+                    },
+                    {
+                        name: "Demi Permanent",
+                        deep: 2
+                    },
+                    {
+                        name: "Semi Permanent",
+                        deep: 2
+                    },
+                    {
+                        name: "Crazy Colors",
+                        deep: 2
+                    },
+                    {
+                        name: "High Lift Colors",
+                        deep: 2
+                    },
+                    {
+                        name: "Color Mousse",
+                        deep: 2
+                    },
+                    {
+                        name: "Färgkartor",
+                        deep: 2
+                    },
+                ]
+            },
+            {
+                name: "Blekning",
+                deep: 1
+            },
+            {
+                name: "Avfärgning",
+                deep: 1
+            },
+            {
+                name: "Väteperoxid",
+                deep: 1
+            },
+            {
+                collapse: true,
+                name: "Permanent",
+                deep: 1,
+                children: [
+                    {
+                        name: "Rak",
+                        deep: 2
+                    },
+                    {
+                        name: "Lockar",
+                        deep: 2
+                    }
+                ]
+            },
+            {
+                collapse: true,
+                name: "Bonding System",
+                deep: 1,
+                children: [
+                    {
+                        name: "Cureplex",
+                        deep: 2
+                    },
+                    {
+                        name: "Fiberplex",
+                        deep: 2
+                    },
+                    {
+                        name: "Procortexx",
+                        deep: 2
+                    },
+                    {
+                        name: "Wella plex",
+                        deep: 2
+                    }
+                ]
+            },
+            {
+                name: "Hårtillskott",
+                deep: 1
+            },
+            {
+                name: "Tillbehör",
+                deep: 1
+            },
+        ]
     }
 ];
 

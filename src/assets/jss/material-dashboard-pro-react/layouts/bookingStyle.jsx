@@ -32,6 +32,13 @@ const bookingStyle = theme => ({
     borderBottomWidth: '1px',
     borderBottomStyle: 'solid'
   },
+  loading_container: {
+    textAlign: 'center',
+    padding: '30px 0',
+  },
+  loading: {
+    color: '#7da8ae !important'
+  },
   right: {
     textAlign: "right"
   },

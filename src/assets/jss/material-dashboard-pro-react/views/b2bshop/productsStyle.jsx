@@ -21,7 +21,7 @@ const productsStyle = theme => ({
   qty: {
     width: '40px',
     textAlign: 'center',
-    padding: '10px !important',
+    padding: '10px 10px 10px 24px !important',
   },
   price: {
     marginTop: '0px',

@@ -24,6 +24,7 @@ import { StepIcon } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // @material-ui/icons
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
@@ -76,12 +77,61 @@ class Booking extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            step: 1,            
+            step: 1,
+            serviceId: null,            
             booking_date: moment().format('YYYY MM DD'),
             booking_time: "",
             // slideIndex: 0,
             // calendar: []
         }
+    }
+
+    componentDidMount() {
+        this.props.getBookingServices({
+            salonId: this.props.match.params.salonId
+        })
+    }
+
+    makeServices = (services) => {
+        let arr = [], temp;
+        services.map((service, key) => {
+            temp = [];
+
+            temp.push(key + 1);
+            temp.push(this.tbl_check(service.id));
+            temp.push(service.name);
+            temp.push(service.durationInMinutes + ' mins');
+            temp.push('kr ' + service.price);
+
+            arr.push(temp);
+        })
+        return arr
+    }
+    tbl_check = (id) => {
+        const { classes } = this.props;
+        return (
+            <Checkbox
+                className={classes.positionAbsolute}
+                tabIndex={-1}
+                onClick={() => this.selectService(id)}
+                checkedIcon={<Check className={classes.checkedIcon} />}
+                icon={<Check className={classes.uncheckedIcon} />}
+                classes={{
+                    checked: classes.checked,
+                    root: classes.checkRoot
+                }}
+                checked={this.state.serviceId === id}
+            />
+        )
+    }
+    selectService = (id) => {
+        this.setState({serviceId: id})
+    }
+
+    handlerStep = () => {
+        this.props.getBookingEmployees({
+            serviceId: this.state.serviceId
+        })
     }
 
     generateDates = () => {
@@ -219,16 +269,7 @@ class Booking extends React.Component {
     }
 
     selectDate = (data, length) => {
-        if(data.status === 0) { // check is enable
-            // let duration = moment.duration(moment(data.date).diff(moment(this.state.booking_date)));
-            // let days = duration.asDays();
-            // let nextIndex = this.state.slideIndex + days;
-            // console.log('this.state.slideIndex: ', this.state.slideIndex)
-            // console.log('nextIndex: ', nextIndex)
-            // if(this.state.slideIndex < nextIndex && this.state.slideIndex < length - 3)
-            //     this.refs.date_slider.slickGoTo(this.state.slideIndex + days);
-            // else if(this.state.slideIndex > nextIndex && this.state.slideIndex > 3) 
-            //     this.refs.date_slider.slickGoTo(this.state.slideIndex + days);
+        if(data.status === 0) {
             this.setState({booking_date: data.date});
         }
     }
@@ -243,21 +284,7 @@ class Booking extends React.Component {
         const { classes } = this.props;
         const { step, booking_date } = this.state;
 
-        const tbl_check = (id) => {
-            return (
-                <Checkbox
-                    className={classes.positionAbsolute}
-                    tabIndex={-1}
-                    // onClick={() => this.selectService(id)}
-                    checkedIcon={<Check className={classes.checkedIcon} />}
-                    icon={<Check className={classes.uncheckedIcon} />}
-                    classes={{
-                        checked: classes.checked,
-                        root: classes.checkRoot
-                    }}
-                />
-            )
-        }
+        const services = this.makeServices(this.props.services);
 
         const dates = this.generateDates();
         const times = this.generateTimes();
@@ -274,12 +301,6 @@ class Booking extends React.Component {
             slidesToShow: 7,
             slidesToScroll: 7,
             speed: 500,
-            // beforeChange: (current, next) => this.setState({ slideIndex: next }),
-            // afterChange: (index) => {
-            //     console.log(
-            //       `Slider Changed to: ${index + 1}`
-            //     );
-            // }
         };
 
         const time_settings = {
@@ -316,119 +337,93 @@ class Booking extends React.Component {
                     step === 1 &&
                         <Card>
                             <CardBody>
-                                <Table
-                                    striped
-                                    tableHead={[
-                                        "#",
-                                        "",
-                                        "Namn på tjänsten",
-                                        "Varaktighet",
-                                        "Pris"
-                                    ]}
-                                    tableData={[
-                                        [
-                                            "1",
-                                            tbl_check(1),
-                                            "Moleskine Agenda",
-                                            "25",
-                                            "kr 1,225"
-                                        ],
-                                        [
-                                            "2",
-                                            tbl_check(2),
-                                            "Stabilo Pen",
-                                            "30",
-                                            "kr 300"
-                                        ],
-                                        [
-                                            "3",
-                                            tbl_check(1),
-                                            "Moleskine Agenda",
-                                            "25",
-                                            "kr 1,225"
-                                        ],
-                                        [
-                                            "4",
-                                            tbl_check(2),
-                                            "Stabilo Pen",
-                                            "30",
-                                            "kr 300"
-                                        ],
-                                        [
-                                            "5",
-                                            tbl_check(1),
-                                            "Moleskine Agenda",
-                                            "25",
-                                            "kr 1,225"
-                                        ],
-                                        [
-                                            "6",
-                                            tbl_check(2),
-                                            "Stabilo Pen",
-                                            "30",
-                                            "kr 300"
-                                        ],
-                                    ]}
-                                    customCellClasses={[
-                                        classes.center,
-                                        classes.right
-                                    ]}
-                                    customClassesForCells={[0, 4]}
-                                    customHeadCellClasses={[
-                                        classes.center,
-                                        classes.right
-                                    ]}
-                                    customHeadClassesForCells={[0, 4]}
-                                />
+                                {
+                                    this.props.loading? (
+                                        <div className={classes.loading_container}>
+                                          <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                                        </div>
+                                    ) : 
+                                    <Table
+                                        striped
+                                        tableHead={[
+                                            "#",
+                                            "",
+                                            "Namn på tjänsten",
+                                            "Varaktighet",
+                                            "Pris"
+                                        ]}
+                                        tableData={services}
+                                        customCellClasses={[
+                                            classes.center,
+                                            classes.right
+                                        ]}
+                                        customClassesForCells={[0, 4]}
+                                        customHeadCellClasses={[
+                                            classes.center,
+                                            classes.right
+                                        ]}
+                                        customHeadClassesForCells={[0, 4]}
+                                    />
+                                }
                             </CardBody>
                         </Card>
                 }    
                 {                    
                     step === 2 &&
-                        <div className={classes.employee}>
-                            <Slider {...settings} ref="employee_slider">
-                                <div className={classes.slide_container}>
-                                    <img src={priceImage1} className={classes.slide_img} alt="..." />
+                        <div>
+                            {
+                                this.props.loading? (
+                                    <div className={classes.loading_container}>
+                                        <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                                    </div>
+                                ) : 
+                                <div className={classes.employee}>
+                                    <Slider {...settings} ref="employee_slider">
+                                        <div className={classes.slide_container}>
+                                            <img src={priceImage1} className={classes.slide_img} alt="..." />
+                                        </div>
+                                        <div className={classes.slide_container}>
+                                            <img src={priceImage2} className={classes.slide_img} alt="..." />
+                                        </div>
+                                        <div className={classes.slide_container}>
+                                            <img src={priceImage3} className={classes.slide_img} alt="..." />
+                                        </div>
+                                        <div className={classes.slide_container}>
+                                            <img src={priceImage1} className={classes.slide_img} alt="..." />
+                                        </div>
+                                    </Slider>
+                                    <GridContainer alignItems="center">
+                                        <GridItem xs={1}>
+                                            <Button
+                                                justIcon
+                                                simple
+                                                size="lg"
+                                                color="info"
+                                                onClick={()=>this.refs.employee_slider.slickPrev()}
+                                                >
+                                                <ArrowBackIos className={classes.icons} />
+                                            </Button>
+                                        </GridItem>
+                                        <GridItem xs={10}>
+                                            <div className={classes.employeeName}>Anna</div>
+                                            <div className={classes.employeeExpert}>BEAUTY THERAPIST</div>
+                                        </GridItem>
+                                        <GridItem xs={1} className={classes.right}>
+                                            <Button
+                                                justIcon
+                                                simple
+                                                size="lg"
+                                                color="info"
+                                                onClick={()=>this.refs.employee_slider.slickNext()}
+                                                >
+                                                <ArrowForwardIos className={classes.icons} />
+                                            </Button>
+                                        </GridItem>
+                                    </GridContainer>
                                 </div>
-                                <div className={classes.slide_container}>
-                                    <img src={priceImage2} className={classes.slide_img} alt="..." />
-                                </div>
-                                <div className={classes.slide_container}>
-                                    <img src={priceImage3} className={classes.slide_img} alt="..." />
-                                </div>
-                                <div className={classes.slide_container}>
-                                    <img src={priceImage1} className={classes.slide_img} alt="..." />
-                                </div>
-                            </Slider>
-                            <GridContainer alignItems="center">
-                                <GridItem xs={1}>
-                                    <Button
-                                        justIcon
-                                        simple
-                                        size="lg"
-                                        color="info"
-                                        onClick={()=>this.refs.employee_slider.slickPrev()}
-                                        >
-                                        <ArrowBackIos className={classes.icons} />
-                                    </Button>
-                                </GridItem>
-                                <GridItem xs={10}>
-                                    <div className={classes.employeeName}>Anna</div>
-                                    <div className={classes.employeeExpert}>BEAUTY THERAPIST</div>
-                                </GridItem>
-                                <GridItem xs={1} className={classes.right}>
-                                    <Button
-                                        justIcon
-                                        simple
-                                        size="lg"
-                                        color="info"
-                                        onClick={()=>this.refs.employee_slider.slickNext()}
-                                        >
-                                        <ArrowForwardIos className={classes.icons} />
-                                    </Button>
-                                </GridItem>
-                            </GridContainer>
+                            }
                         </div>
+                        
                 }                
                 {
                     step === 3 &&
