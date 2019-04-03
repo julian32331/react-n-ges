@@ -7,35 +7,18 @@ import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import Checkbox from "@material-ui/core/Checkbox";
 import FormLabel from "@material-ui/core/FormLabel";
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import InputAdornment from "@material-ui/core/InputAdornment";
-
-// material-ui icons
-import Search from "@material-ui/icons/Search";
-import Person from "@material-ui/icons/Person";
-import Edit from "@material-ui/icons/Edit";
-import Close from "@material-ui/icons/Close";
-import Check from "@material-ui/icons/Check";
-import Remove from "@material-ui/icons/Remove";
-import Add from "@material-ui/icons/Add";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-
-import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
 
+// material-ui icons
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -44,17 +27,12 @@ import Table from "components/Table/Table.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Pagination from "components/Pagination/Pagination.jsx";
 
 import productsStyle from "assets/jss/material-dashboard-pro-react/views/b2bshop/productsStyle.jsx";
 import categories from "./Category";
-
-import product1 from "assets/img/product1.jpg";
-import product2 from "assets/img/product2.jpg";
-import product3 from "assets/img/product3.jpg";
 
 class B2BShop extends React.Component {
   constructor(props) {
@@ -80,13 +58,13 @@ class B2BShop extends React.Component {
     if (nextProps.products) {
       this.products = nextProps.products;
       for (let i = 0; i < this.products.length; i++) {
-        this.initStateForQty(i);
+        this.initStateForQty(this.products[i].id);
       }
     }
   }
   initStateForQty(index) {
     this.setState({
-      ["qty_" + index]: 0
+      ["qty_" + index]: 3
     })
   }
 
@@ -147,6 +125,59 @@ class B2BShop extends React.Component {
     })
   }
 
+  product_image = src => {    
+    const { classes } = this.props;
+    return (
+      <div className={classes.imgContainer}>
+        <img src={src} alt="..." className={classes.img} />
+      </div>
+    )
+  }
+
+  product_name = (name, sku) => {
+    const { classes } = this.props;
+    return (
+      <span>
+        <a className={classes.tdNameAnchor}>
+          {name}
+        </a>
+        <br />
+        <small className={classes.tdNameSmall}>
+          {sku}
+        </small>
+      </span>
+    )
+  }
+
+  product_price_qty = (product) => {
+    const { classes } = this.props;
+    return (
+      <span>
+        <h4 className={classes.price}><small className={classes.tdNumberSmall}>kr</small> {product.price}</h4>
+        <div>
+          <TextField
+            id="outlined-bare"
+            className={classes.textField}
+            defaultValue={3}
+            margin="normal"
+            variant="outlined"
+            type="number"
+            inputProps={{
+              className: classes.qty,
+              onChange: (event)=> this.setState({["qty_" + product.id]: event.target.value})
+            }}
+          />
+          <Button color="info" round size="sm" className={classes.marginRight} onClick={() => console.log('focus: ', this.state["qty_" + product.id])}>
+            Add
+          </Button>
+        </div>
+      </span>
+    )
+  }
+  addCart = () => {
+
+  }
+
   // Pagination actions
   changePagination(param) {
     let totalPages = this.products.length % 10 > 0 ? Math.floor(this.products.length / 10 + 1) : this.products.length / 10;
@@ -201,89 +232,18 @@ class B2BShop extends React.Component {
     })
   }
 
-  order() {
-    this.props.addOrders(this.state.orders);
-    this.props.history.push('/b2bshop/cart');
-  }
-
   render() {
     const { classes } = this.props;
     const { activedPageNo } = this.state;
-
-    const product_image = src => {
-      return (
-        <div className={classes.imgContainer}>
-          <img src={src} alt="..." className={classes.img} />
-        </div>
-      )
-    }
-
-    const product_name = (name, sku) => {
-      return (
-        <span>
-          <a className={classes.tdNameAnchor}>
-            {name}
-          </a>
-          <br />
-          <small className={classes.tdNameSmall}>
-            {sku}
-          </small>
-        </span>
-      )
-    }
-
-    const product_price_qty = (product) => {
-      var orders = this.state.orders? this.state.orders:[];
-      const addProduct = (product) => {
-        var index = orders.findIndex(x => x.product.id === product.id);
-        if(index === -1){
-          orders.push({
-            product: product,
-            qty: 1
-          })
-        } else {
-          orders[index] = {
-            product: product,
-            qty: this.state["qty_" + product.id] + 1
-          };
-        }
-        
-        this.setState(prevState => ({
-          ["qty_" + product.id]: prevState["qty_" + product.id]? prevState["qty_" + product.id] + 1 : 1,
-          orders: orders
-        }))
-      }
-      return (
-        <span>
-          <h4 className={classes.price}><small className={classes.tdNumberSmall}>kr</small> {product.price}</h4>
-          <div>
-            <TextField
-              id="outlined-bare"
-              className={classes.textField}
-              value={this.state["qty_" + product.id] ? this.state["qty_" + product.id] : 0}
-              margin="normal"
-              variant="outlined"
-              type="number"
-              inputProps={{
-                className: classes.qty
-              }}
-            />
-            <Button color="info" round size="sm" className={classes.marginRight} onClick={() => addProduct(product)}>
-              Add
-            </Button>
-          </div>
-        </span>
-      )
-    }
 
     let products = [];
     this.products.map((product, index) => {
       let temp = [];
 
       if (index >= (activedPageNo - 1) * 10 && index < activedPageNo * 10) {
-        temp.push(product_image(product.imageURL));
-        temp.push(product_name(product.name, product.articleNo));
-        temp.push(product_price_qty(product));
+        temp.push(this.product_image(product.imageURL));
+        temp.push(this.product_name(product.name, product.articleNo));
+        temp.push(this.product_price_qty(product));
 
         products.push(temp);
       }
@@ -334,7 +294,6 @@ class B2BShop extends React.Component {
                       round
                       color="info"
                       className={classes.marginRight}
-                      onClick={this.order.bind(this)}
                     >
                       <AddShoppingCart className={classes.icons} />
                     </Button>
@@ -430,8 +389,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getUserData: Actions.getUserData,
-    // addOrders: Actions.addOrders,
-
     featuredProduct : Actions.featuredProduct,
     searchProduct   : Actions.searchProduct,
     categoryProduct : Actions.categoryProduct
