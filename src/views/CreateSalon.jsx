@@ -54,7 +54,20 @@ class CreateSalon extends React.Component {
             networkState: "",
             parkCheck: false,
             accessCheck: false,
-            description: ""
+            description: "",
+
+            s_co: "",
+            s_coState: "",
+            s_address1: "",
+            s_address1State: "",
+            s_address2: "",
+            s_address2State: "",
+            s_city: "",
+            s_cityState: "",
+            s_zip: "",
+            s_zipState: "",
+            s_country: "",
+            s_countryState: "",
         }
     }
 
@@ -70,6 +83,12 @@ class CreateSalon extends React.Component {
             case "city":
             case "phone":
             case "description":
+            case "s_co":
+            case "s_address1":
+            case "s_address2":
+            case "s_zip":
+            case "s_city":
+            case "s_country":
                 this.setState({
                     [stateName]: event.target.value
                 })
@@ -117,7 +136,13 @@ class CreateSalon extends React.Component {
             this.state.cityState === "success" &&
             this.state.phoneState === "success" &&
             this.state.emailState === "success" &&
-            this.state.networkState === "success") {
+            this.state.networkState === "success" &&
+            this.state.s_coState === "success" &&
+            this.state.s_address1State === "success" &&
+            this.state.s_address2State === "success" &&
+            this.state.s_cityState === "success" &&
+            this.state.s_zipState === "success" &&
+            this.state.s_countryState === "success") {
             return false;
         } else {
             return true
@@ -136,7 +161,15 @@ class CreateSalon extends React.Component {
             address: this.state.address,
             post: this.state.zip,
             city: this.state.city,
-            country: "Sweden"
+            country: "Sweden",
+            shippingAddress: {
+                street1: this.state.s_address1,
+                street2: this.state.s_address2,
+                postalCode: this.state.s_zip,
+                city: this.state.s_city,
+                country: this.state.s_country,
+                co: this.state.s_co
+            }
         });
     }
 
@@ -152,11 +185,11 @@ class CreateSalon extends React.Component {
             <CardBody>
                 <form>
                     <GridContainer>
-                        <GridItem xs={12} sm={12} md={6}>
+                        <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
                                 success={this.state.nameState === "success"}
                                 error={this.state.nameState === "error"}
-                                labelText="Salongens navn *"
+                                labelText="Salongens namn *"
                                 id="name"
                                 formControlProps={{
                                     fullWidth: true
@@ -170,7 +203,6 @@ class CreateSalon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    
                                     onChange: event =>
                                         this.change(event, "name", "name", 0),
                                     value: this.state.name,
@@ -178,11 +210,11 @@ class CreateSalon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                        <GridItem xs={12} sm={12} md={6}>
+                        <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
                                 success={this.state.addressState === "success"}
                                 error={this.state.addressState === "error"}
-                                labelText="Addresse *"
+                                labelText="Adress *"
                                 id="address"
                                 formControlProps={{
                                     fullWidth: true
@@ -196,7 +228,6 @@ class CreateSalon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    
                                     onChange: event =>
                                         this.change(event, "address", "address", 0),
                                     value: this.state.address,
@@ -204,9 +235,32 @@ class CreateSalon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                    </GridContainer>
-                    <GridContainer>
-                        <GridItem xs={12} sm={12} md={6}>
+                        <GridItem xs={12} sm={6} md={3}>
+                            <CustomInput
+                                success={this.state.cityState === "success"}
+                                error={this.state.cityState === "error"}
+                                labelText="Postort *"
+                                id="city"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                      this.state.cityState === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    onChange: event =>
+                                        this.change(event, "city", "city", 0),
+                                    value: this.state.city,
+                                    type: "text"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
                                 success={this.state.zipState === "success"}
                                 error={this.state.zipState === "error"}
@@ -224,7 +278,6 @@ class CreateSalon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    
                                     onChange: event =>
                                         this.change(event, "zip", "zip", 0),
                                     value: this.state.zip,
@@ -232,39 +285,11 @@ class CreateSalon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                        <GridItem xs={12} sm={12} md={6}>
-                            <CustomInput
-                                success={this.state.cityState === "success"}
-                                error={this.state.cityState === "error"}
-                                labelText="By *"
-                                id="city"
-                                formControlProps={{
-                                    fullWidth: true
-                                }}
-                                inputProps={{
-                                    endAdornment:
-                                      this.state.cityState === "error" ? (
-                                        <InputAdornment position="end">
-                                          <Warning className={classes.danger} />
-                                        </InputAdornment>
-                                      ) : (
-                                        undefined
-                                    ),
-                                    
-                                    onChange: event =>
-                                        this.change(event, "city", "city", 0),
-                                    value: this.state.city,
-                                    type: "text"
-                                }}
-                            />
-                        </GridItem>
-                    </GridContainer>
-                    <GridContainer>
-                        <GridItem xs={12} sm={12} md={6}>
+                        <GridItem xs={12} sm={6} md={4}>
                             <CustomInput
                                 success={this.state.phoneState === "success"}
                                 error={this.state.phoneState === "error"}
-                                labelText="Telefonummer *"
+                                labelText="Telefonnummer *"
                                 id="phone"
                                 formControlProps={{
                                     fullWidth: true
@@ -278,7 +303,6 @@ class CreateSalon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    
                                     onChange: event =>
                                         this.change(event, "phone", "phone", 1),
                                     value: this.state.phone,
@@ -286,11 +310,11 @@ class CreateSalon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                        <GridItem xs={12} sm={12} md={6}>
+                        <GridItem xs={12} sm={6} md={4}>
                             <CustomInput
                                 success={this.state.emailState === "success"}
                                 error={this.state.emailState === "error"}
-                                labelText="Epost *"
+                                labelText="E-post *"
                                 id="email"
                                 formControlProps={{
                                     fullWidth: true
@@ -304,7 +328,6 @@ class CreateSalon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    
                                     onChange: event =>
                                         this.change(event, "email", "email", 0),
                                     value: this.state.email,
@@ -312,13 +335,11 @@ class CreateSalon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                    </GridContainer>
-                    <GridContainer>
-                        <GridItem xs={12} sm={12} md={6}>
+                        <GridItem xs={12} sm={12} md={4}>
                             <CustomInput
                                 success={this.state.networkState === "success"}
                                 error={this.state.networkState === "error"}
-                                labelText="Nettadresse *"
+                                labelText="Hemsida *"
                                 id="network"
                                 formControlProps={{
                                     fullWidth: true
@@ -332,11 +353,27 @@ class CreateSalon extends React.Component {
                                       ) : (
                                         undefined
                                     ),
-                                    
                                     onChange: event =>
                                         this.change(event, "network", "network", 0),
                                     value: this.state.network,
                                     type: "url"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={12} md={6}>
+                            <CustomInput
+                                labelText="Salongsbeskrivning"
+                                id="description"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    multiline: true,
+                                    rows: 4,   
+                                    onChange: event =>
+                                        this.change(event, "description", "description", 0),
+                                    value: this.state.description,
+                                    type: "text"
                                 }}
                             />
                         </GridItem>
@@ -360,7 +397,7 @@ class CreateSalon extends React.Component {
                                     classes={{
                                         label: classes.label
                                     }}
-                                    label="Har salongen parkering"
+                                    label="Har salongen Parkering"
                                 />
                             </div>
                         </GridItem>
@@ -384,30 +421,167 @@ class CreateSalon extends React.Component {
                                     classes={{
                                         label: classes.label
                                     }}
-                                    label="Tilganglighetsanpassat"
+                                    label="Tillgänglighetsanpassat"
                                 />
                             </div>
                         </GridItem>
-                    </GridContainer>
-                    <GridContainer justify="flex-end" alignItems="flex-end">
-                        <GridItem xs={12} sm={12} md={6}>
+                    </GridContainer>            
+                    <div className={classes.cardHeader}>
+                        <h3 className={classes.cardTitle}>ShippingAddress</h3>
+                    </div>
+                    <GridContainer>
+                        <GridItem xs={12} sm={6} md={4}>
                             <CustomInput
-                                labelText="Salong beskrivelse"
-                                id="description"
+                                success={this.state.s_coState === "success"}
+                                error={this.state.s_coState === "error"}
+                                labelText="Co *"
+                                id="city"
                                 formControlProps={{
                                     fullWidth: true
                                 }}
                                 inputProps={{
-                                    multiline: true,
-                                    rows: 10,   
-                                                                     
+                                    endAdornment:
+                                      this.state.s_coState === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
                                     onChange: event =>
-                                        this.change(event, "description", "description", 0),
-                                    value: this.state.description,
+                                        this.change(event, "s_co", "s_co", 0),
+                                    value: this.state.s_co,
                                     type: "text"
                                 }}
                             />
-                        </GridItem>                    
+                        </GridItem>
+                        <GridItem xs={12} sm={6} md={4}>
+                            <CustomInput
+                                success={this.state.s_address1State === "success"}
+                                error={this.state.s_address1State === "error"}
+                                labelText="Adress1 *"
+                                id="address"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                      this.state.s_address1State === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    onChange: event =>
+                                        this.change(event, "s_address1", "s_address1", 0),
+                                    value: this.state.s_address1,
+                                    type: "text"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={6} md={4}>
+                            <CustomInput
+                                success={this.state.s_address2State === "success"}
+                                error={this.state.s_address2State === "error"}
+                                labelText="Adress2 *"
+                                id="address"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                      this.state.s_address2State === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    onChange: event =>
+                                        this.change(event, "s_address2", "s_address2", 0),
+                                    value: this.state.s_address2,
+                                    type: "text"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={6} md={4}>
+                            <CustomInput
+                                success={this.state.s_cityState === "success"}
+                                error={this.state.s_cityState === "error"}
+                                labelText="Postort *"
+                                id="city"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                      this.state.s_cityState === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    onChange: event =>
+                                        this.change(event, "s_city", "s_city", 0),
+                                    value: this.state.s_city,
+                                    type: "text"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={6} md={4}>
+                            <CustomInput
+                                success={this.state.s_zipState === "success"}
+                                error={this.state.s_zipState === "error"}
+                                labelText="Postnummer *"
+                                id="zip"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                      this.state.s_zipState === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    onChange: event =>
+                                        this.change(event, "s_zip", "s_zip", 0),
+                                    value: this.state.s_zip,
+                                    type: "number"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={6} md={4}>
+                            <CustomInput
+                                success={this.state.s_countryState === "success"}
+                                error={this.state.s_countryState === "error"}
+                                labelText="Country *"
+                                id="s_country"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                      this.state.s_countryState === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    onChange: event =>
+                                        this.change(event, "s_country", "s_country", 0),
+                                    value: this.state.s_country,
+                                    type: "text"
+                                }}
+                            />
+                        </GridItem>
+                    </GridContainer>
+                    <GridContainer justify="flex-end" alignItems="flex-end">                   
                         <GridItem xs={12} sm={12} md={6}>                    
                             <Button color="info" size="sm" className={classes.submit} disabled={this.canSubmit()} onClick={this.addSalonInfo.bind(this)}>LAGRE</Button>
                         </GridItem>  

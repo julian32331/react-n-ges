@@ -55,6 +55,19 @@ class SalongInformasjon extends React.Component {
             parkCheck: false,
             accessCheck: false,
             description: "",
+
+            s_co: "",
+            s_coState: "",
+            s_address1: "",
+            s_address1State: "",
+            s_address2: "",
+            s_address2State: "",
+            s_city: "",
+            s_cityState: "",
+            s_zip: "",
+            s_zipState: "",
+            s_country: "",
+            s_countryState: "",
             isEdit: false
         }
     }
@@ -78,6 +91,7 @@ class SalongInformasjon extends React.Component {
         }
 
         if(nextProps.info) {
+            console.log('info: ', nextProps.info)
             this.setState({
                 name: nextProps.info.name? nextProps.info.name : "",
                 nameState: nextProps.info.name? "success" : "error",
@@ -97,6 +111,19 @@ class SalongInformasjon extends React.Component {
                 descriptionState: nextProps.info.description? "success" : "error",
                 parkCheck: nextProps.info.parking,
                 // accessCheck: nextProps.info.description
+
+                s_co: nextProps.info.ShippingAddress.co? nextProps.info.ShippingAddress.co : "",
+                s_coState: nextProps.info.ShippingAddress.co? "success" : "error",
+                s_address1: nextProps.info.ShippingAddress.street1? nextProps.info.ShippingAddress.street1 : "",
+                s_address1State: nextProps.info.ShippingAddress.street1? "success" : "error",
+                s_address2: nextProps.info.ShippingAddress.street2? nextProps.info.ShippingAddress.street2 : "",
+                s_address2State: nextProps.info.ShippingAddress.street2? "success" : "error",
+                s_city: nextProps.info.ShippingAddress.city? nextProps.info.ShippingAddress.city : "",
+                s_cityState: nextProps.info.ShippingAddress.city? "success" : "error",
+                s_zip: nextProps.info.ShippingAddress.postalCode? nextProps.info.ShippingAddress.postalCode : "",
+                s_zipState: nextProps.info.ShippingAddress.postalCode? "success" : "error",
+                s_country: nextProps.info.ShippingAddress.country? nextProps.info.ShippingAddress.country : "",
+                s_countryState: nextProps.info.ShippingAddress.country? "success" : "error"
             })
         }
     }
@@ -104,62 +131,25 @@ class SalongInformasjon extends React.Component {
     change(event, stateName, type, stateNameEqualTo, maxValue) {
         switch (type) {
             case "name":
-                this.setState({
-                    name: event.target.value
-                })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
             case "address":
-                this.setState({
-                    address: event.target.value
-                })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
             case "zip":
-                this.setState({
-                    zip: event.target.value
-                })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
             case "city":
+            case "phone":
+            case "s_co":
+            case "s_address1":
+            case "s_address2":
+            case "s_zip":
+            case "s_city":
+            case "s_country":
                 this.setState({
-                    city: event.target.value
+                    [stateName]: event.target.value
                 })
                 if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
                     this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
                 }
                 break;
-            case "phone":
-                this.setState({
-                    phone: event.target.value
-                })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
                 // if(this.state.phone.length === 0) {
                 //     this.setState({
                 //         phone: "+46" + event.target.value
@@ -221,15 +211,13 @@ class SalongInformasjon extends React.Component {
             this.state.cityState === "success" &&
             this.state.phoneState === "success" &&
             this.state.emailState === "success" &&
-            this.state.networkState === "success") {
-          return false;
-        } else if(this.state.name !== "" &&
-            this.state.address !== "" &&
-            this.state.zip !== "" &&
-            this.state.city !== "" &&
-            this.state.phone !== "" &&
-            this.state.email !== "" &&
-            this.state.network !== "") {
+            this.state.networkState === "success" &&
+            this.state.s_coState === "success" &&
+            this.state.s_address1State === "success" &&
+            this.state.s_address2State === "success" &&
+            this.state.s_cityState === "success" &&
+            this.state.s_zipState === "success" &&
+            this.state.s_countryState === "success") {
             return false;
         } else {
           return true
@@ -260,6 +248,20 @@ class SalongInformasjon extends React.Component {
             networkState: this.props.info.website? "success" : "error",
             description: this.props.info.description? this.props.info.description : "",
             descriptionState: this.props.info.description? "success" : "error",
+
+            s_co: this.props.info.ShippingAddress.co? this.props.info.ShippingAddress.co : "",
+            s_coState: this.props.info.ShippingAddress.co? "success" : "error",
+            s_address1: this.props.info.ShippingAddress.street1? this.props.info.ShippingAddress.street1 : "",
+            s_address1State: this.props.info.ShippingAddress.street1? "success" : "error",
+            s_address2: this.props.info.ShippingAddress.street2? this.props.info.ShippingAddress.street2 : "",
+            s_address2State: this.props.info.ShippingAddress.street2? "success" : "error",
+            s_city: this.props.info.ShippingAddress.city? this.props.info.ShippingAddress.city : "",
+            s_cityState: this.props.info.ShippingAddress.city? "success" : "error",
+            s_zip: this.props.info.ShippingAddress.postalCode? this.props.info.ShippingAddress.postalCode : "",
+            s_zipState: this.props.info.ShippingAddress.postalCode? "success" : "error",
+            s_country: this.props.info.ShippingAddress.country? this.props.info.ShippingAddress.country : "",
+            s_countryState: this.props.info.ShippingAddress.country? "success" : "error",
+
             isEdit: false
         });
     }
@@ -279,6 +281,14 @@ class SalongInformasjon extends React.Component {
                 post: this.state.zip,
                 city: this.state.city,
                 country: "Sweden"
+            },
+            shippingAddress: {
+                street1: this.state.s_address1,
+                street2: this.state.s_address2,
+                postalCode: this.state.s_zip,
+                city: this.state.s_city,
+                country: this.state.s_country,
+                co: this.state.s_co
             }
         });
         // this.cancelEdit();
@@ -299,7 +309,7 @@ class SalongInformasjon extends React.Component {
             <CardBody>
                 <form>
                     <GridContainer>
-                        <GridItem xs={12} sm={12} md={6}>
+                        <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
                                 success={this.state.nameState === "success"}
                                 error={this.state.nameState === "error"}
@@ -325,7 +335,7 @@ class SalongInformasjon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                        <GridItem xs={12} sm={12} md={6}>
+                        <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
                                 success={this.state.addressState === "success"}
                                 error={this.state.addressState === "error"}
@@ -351,35 +361,7 @@ class SalongInformasjon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                    </GridContainer>
-                    <GridContainer>
-                        <GridItem xs={12} sm={12} md={6}>
-                            <CustomInput
-                                success={this.state.zipState === "success"}
-                                error={this.state.zipState === "error"}
-                                labelText="Postnummer *"
-                                id="zip"
-                                formControlProps={{
-                                    fullWidth: true
-                                }}
-                                inputProps={{
-                                    endAdornment:
-                                      this.state.zipState === "error" ? (
-                                        <InputAdornment position="end">
-                                          <Warning className={classes.danger} />
-                                        </InputAdornment>
-                                      ) : (
-                                        undefined
-                                    ),
-                                    disabled: !this.state.isEdit,
-                                    onChange: event =>
-                                        this.change(event, "zip", "zip", 0),
-                                    value: this.state.zip,
-                                    type: "number"
-                                }}
-                            />
-                        </GridItem>
-                        <GridItem xs={12} sm={12} md={6}>
+                        <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
                                 success={this.state.cityState === "success"}
                                 error={this.state.cityState === "error"}
@@ -405,9 +387,33 @@ class SalongInformasjon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                    </GridContainer>
-                    <GridContainer>
-                        <GridItem xs={12} sm={12} md={6}>
+                        <GridItem xs={12} sm={6} md={3}>
+                            <CustomInput
+                                success={this.state.zipState === "success"}
+                                error={this.state.zipState === "error"}
+                                labelText="Postnummer *"
+                                id="zip"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                      this.state.zipState === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    disabled: !this.state.isEdit,
+                                    onChange: event =>
+                                        this.change(event, "zip", "zip", 0),
+                                    value: this.state.zip,
+                                    type: "number"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={6} md={4}>
                             <CustomInput
                                 success={this.state.phoneState === "success"}
                                 error={this.state.phoneState === "error"}
@@ -433,7 +439,7 @@ class SalongInformasjon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                        <GridItem xs={12} sm={12} md={6}>
+                        <GridItem xs={12} sm={6} md={4}>
                             <CustomInput
                                 success={this.state.emailState === "success"}
                                 error={this.state.emailState === "error"}
@@ -459,9 +465,7 @@ class SalongInformasjon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                    </GridContainer>
-                    <GridContainer>
-                        <GridItem xs={12} sm={12} md={6}>
+                        <GridItem xs={12} sm={12} md={4}>
                             <CustomInput
                                 success={this.state.networkState === "success"}
                                 error={this.state.networkState === "error"}
@@ -484,6 +488,24 @@ class SalongInformasjon extends React.Component {
                                         this.change(event, "network", "network", 0),
                                     value: this.state.network,
                                     type: "url"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={12} md={6}>
+                            <CustomInput
+                                labelText="Salongsbeskrivning"
+                                id="description"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    multiline: true,
+                                    rows: 4,   
+                                    disabled: !this.state.isEdit,                                 
+                                    onChange: event =>
+                                        this.change(event, "description", "description", 0),
+                                    value: this.state.description,
+                                    type: "text"
                                 }}
                             />
                         </GridItem>
@@ -537,26 +559,169 @@ class SalongInformasjon extends React.Component {
                                 />
                             </div>
                         </GridItem>
-                    </GridContainer>
-                    <GridContainer justify="flex-end" alignItems="flex-end">
-                        <GridItem xs={12} sm={12} md={6}>
+                    </GridContainer>            
+                    <div className={classes.cardHeader}>
+                        <h3 className={classes.cardTitle}>ShippingAddress</h3>
+                    </div>
+                    <GridContainer>
+                        <GridItem xs={12} sm={6} md={4}>
                             <CustomInput
-                                labelText="Salongsbeskrivning"
-                                id="description"
+                                success={this.state.s_coState === "success"}
+                                error={this.state.s_coState === "error"}
+                                labelText="Co *"
+                                id="city"
                                 formControlProps={{
                                     fullWidth: true
                                 }}
                                 inputProps={{
-                                    multiline: true,
-                                    rows: 10,   
-                                    disabled: !this.state.isEdit,                                 
+                                    endAdornment:
+                                      this.state.s_coState === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    disabled: !this.state.isEdit,
                                     onChange: event =>
-                                        this.change(event, "description", "description", 0),
-                                    value: this.state.description,
+                                        this.change(event, "s_co", "s_co", 0),
+                                    value: this.state.s_co,
                                     type: "text"
                                 }}
                             />
                         </GridItem>
+                        <GridItem xs={12} sm={6} md={4}>
+                            <CustomInput
+                                success={this.state.s_address1State === "success"}
+                                error={this.state.s_address1State === "error"}
+                                labelText="Adress1 *"
+                                id="address"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                      this.state.s_address1State === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    disabled: !this.state.isEdit,
+                                    onChange: event =>
+                                        this.change(event, "s_address1", "s_address1", 0),
+                                    value: this.state.s_address1,
+                                    type: "text"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={6} md={4}>
+                            <CustomInput
+                                success={this.state.s_address2State === "success"}
+                                error={this.state.s_address2State === "error"}
+                                labelText="Adress2 *"
+                                id="address"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                      this.state.s_address2State === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    disabled: !this.state.isEdit,
+                                    onChange: event =>
+                                        this.change(event, "s_address2", "s_address2", 0),
+                                    value: this.state.s_address2,
+                                    type: "text"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={6} md={4}>
+                            <CustomInput
+                                success={this.state.s_cityState === "success"}
+                                error={this.state.s_cityState === "error"}
+                                labelText="Postort *"
+                                id="city"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                      this.state.s_cityState === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    disabled: !this.state.isEdit,
+                                    onChange: event =>
+                                        this.change(event, "s_city", "s_city", 0),
+                                    value: this.state.s_city,
+                                    type: "text"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={6} md={4}>
+                            <CustomInput
+                                success={this.state.s_zipState === "success"}
+                                error={this.state.s_zipState === "error"}
+                                labelText="Postnummer *"
+                                id="zip"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                      this.state.s_zipState === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    disabled: !this.state.isEdit,
+                                    onChange: event =>
+                                        this.change(event, "s_zip", "s_zip", 0),
+                                    value: this.state.s_zip,
+                                    type: "number"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={6} md={4}>
+                            <CustomInput
+                                success={this.state.s_countryState === "success"}
+                                error={this.state.s_countryState === "error"}
+                                labelText="Country *"
+                                id="s_country"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                      this.state.s_countryState === "error" ? (
+                                        <InputAdornment position="end">
+                                          <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                      ) : (
+                                        undefined
+                                    ),
+                                    disabled: !this.state.isEdit,
+                                    onChange: event =>
+                                        this.change(event, "s_country", "s_country", 0),
+                                    value: this.state.s_country,
+                                    type: "text"
+                                }}
+                            />
+                        </GridItem>
+                    </GridContainer>
+                    <GridContainer justify="flex-end" alignItems="flex-end">
                         {
                             this.state.isEdit? (                      
                                 <GridItem xs={12} sm={12} md={6}>                    

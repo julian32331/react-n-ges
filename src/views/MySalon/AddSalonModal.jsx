@@ -66,7 +66,18 @@ class AddSalonModal extends React.Component {
             cityState: "",
             country: "",
             countryState: "",
-            hasPark: false
+            hasPark: false,
+
+            s_co: "",
+            s_coState: "",
+            s_address1: "",
+            s_address1State: "",
+            s_address2: "",
+            s_address2State: "",
+            s_city: "",
+            s_cityState: "",
+            s_zip: "",
+            s_zipState: "",
         }
         this.save = this.save.bind(this);
     }
@@ -91,7 +102,18 @@ class AddSalonModal extends React.Component {
             cityState: "",
             country: "",
             countryState: "",
-            hasPark: false
+            hasPark: false,
+            
+            s_co: "",
+            s_coState: "",
+            s_address1: "",
+            s_address1State: "",
+            s_address2: "",
+            s_address2State: "",
+            s_city: "",
+            s_cityState: "",
+            s_zip: "",
+            s_zipState: "",
         })
     }
 
@@ -112,7 +134,15 @@ class AddSalonModal extends React.Component {
             address: this.state.address,
             post: this.state.zip,
             city: this.state.city,
-            country: this.state.country
+            country: this.state.country,
+            shippingAddress: {
+                street1: this.state.s_address1,
+                street2: this.state.s_address2,
+                postalCode: this.state.s_zip,
+                city: this.state.s_city,
+                country: this.state.country,
+                co: this.state.s_co
+            }
         })
         this.initState();
         this.props.onClose();
@@ -126,6 +156,11 @@ class AddSalonModal extends React.Component {
             case "city":
             case "zip":
             case "country":
+            case "s_co":
+            case "s_address1":
+            case "s_address2":
+            case "s_zip":
+            case "s_city":
                 this.setState({
                     [stateName]: event.target.value
                 })
@@ -180,8 +215,20 @@ class AddSalonModal extends React.Component {
     }
 
     canSave() {
-        if(this.state.nameState === "success" && this.state.emailState === "success" && this.state.telephoneState === "success" && this.state.websiteState === "success"
-            && this.state.descriptionState === "success" && this.state.addressState === "success" && this.state.zipState === "success" && this.state.cityState === "success" && this.state.countryState === "success") {
+        if(this.state.nameState === "success" && 
+            this.state.emailState === "success" && 
+            this.state.telephoneState === "success" && 
+            this.state.websiteState === "success" && 
+            this.state.descriptionState === "success" && 
+            this.state.addressState === "success" && 
+            this.state.zipState === "success" && 
+            this.state.cityState === "success" && 
+            this.state.countryState === "success" && 
+            this.state.s_coState === "success" &&
+            this.state.s_address1State === "success" &&
+            this.state.s_address2State === "success" &&
+            this.state.s_cityState === "success" &&
+            this.state.s_zipState === "success") {
             return false;
         } else {
             return true;
@@ -486,7 +533,126 @@ class AddSalonModal extends React.Component {
                             />
                         </GridItem>
                     </GridContainer>
-                    
+                    <CustomInput
+                        success={this.state.s_coState === "success"}
+                        error={this.state.s_coState === "error"}
+                        labelText="Co *"
+                        id="city"
+                        formControlProps={{
+                            fullWidth: true
+                        }}
+                        inputProps={{
+                            endAdornment:
+                                this.state.s_coState === "error" ? (
+                                <InputAdornment position="end">
+                                    <Warning className={classes.danger} />
+                                </InputAdornment>
+                                ) : (
+                                undefined
+                            ),
+                            disabled: !this.state.isEdit,
+                            onChange: event =>
+                                this.change(event, "s_co", "s_co", 0),
+                            value: this.state.s_co,
+                            type: "text"
+                        }}
+                    />
+                    <CustomInput
+                        success={this.state.s_address1State === "success"}
+                        error={this.state.s_address1State === "error"}
+                        labelText="Adress1 *"
+                        id="address"
+                        formControlProps={{
+                            fullWidth: true
+                        }}
+                        inputProps={{
+                            endAdornment:
+                                this.state.s_address1State === "error" ? (
+                                <InputAdornment position="end">
+                                    <Warning className={classes.danger} />
+                                </InputAdornment>
+                                ) : (
+                                undefined
+                            ),
+                            disabled: !this.state.isEdit,
+                            onChange: event =>
+                                this.change(event, "s_address1", "s_address1", 0),
+                            value: this.state.s_address1,
+                            type: "text"
+                        }}
+                    />
+                    <CustomInput
+                        success={this.state.s_address2State === "success"}
+                        error={this.state.s_address2State === "error"}
+                        labelText="Adress2 *"
+                        id="address"
+                        formControlProps={{
+                            fullWidth: true
+                        }}
+                        inputProps={{
+                            endAdornment:
+                                this.state.s_address2State === "error" ? (
+                                <InputAdornment position="end">
+                                    <Warning className={classes.danger} />
+                                </InputAdornment>
+                                ) : (
+                                undefined
+                            ),
+                            disabled: !this.state.isEdit,
+                            onChange: event =>
+                                this.change(event, "s_address2", "s_address2", 0),
+                            value: this.state.s_address2,
+                            type: "text"
+                        }}
+                    />
+                    <CustomInput
+                        success={this.state.s_cityState === "success"}
+                        error={this.state.s_cityState === "error"}
+                        labelText="Postort *"
+                        id="city"
+                        formControlProps={{
+                            fullWidth: true
+                        }}
+                        inputProps={{
+                            endAdornment:
+                                this.state.s_cityState === "error" ? (
+                                <InputAdornment position="end">
+                                    <Warning className={classes.danger} />
+                                </InputAdornment>
+                                ) : (
+                                undefined
+                            ),
+                            disabled: !this.state.isEdit,
+                            onChange: event =>
+                                this.change(event, "s_city", "s_city", 0),
+                            value: this.state.s_city,
+                            type: "text"
+                        }}
+                    />
+                    <CustomInput
+                        success={this.state.s_zipState === "success"}
+                        error={this.state.s_zipState === "error"}
+                        labelText="Postnummer *"
+                        id="zip"
+                        formControlProps={{
+                            fullWidth: true
+                        }}
+                        inputProps={{
+                            endAdornment:
+                                this.state.s_zipState === "error" ? (
+                                <InputAdornment position="end">
+                                    <Warning className={classes.danger} />
+                                </InputAdornment>
+                                ) : (
+                                undefined
+                            ),
+                            disabled: !this.state.isEdit,
+                            onChange: event =>
+                                this.change(event, "s_zip", "s_zip", 0),
+                            value: this.state.s_zip,
+                            type: "number"
+                        }}
+                    />
                 </form>
                 </DialogContent>
                 <DialogActions className={classes.modalFooter}>
