@@ -2,6 +2,7 @@ import {combineReducers} from 'redux';
 
 // Booking reducers
 import booking from './booking';
+import b2b_shop from './b2b_shop';
 
 
 import auth from "./auth.reducer";
@@ -21,6 +22,7 @@ import b2bshop from "./b2bshop.reducer";
 const createReducer = (asyncReducers) =>
     combineReducers({
         booking,
+        b2b_shop,
 
         auth,
         user,

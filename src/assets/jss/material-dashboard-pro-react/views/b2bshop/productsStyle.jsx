@@ -32,6 +32,35 @@ const productsStyle = theme => ({
   },
   text_right: {
     textAlign: 'right'
+  },
+
+  cat_container: {
+    minHeight: '60vh',
+    padding: '8px',
+    borderColor: '#ddd',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderRadius: '8px'
+  },
+  child_1: {
+    marginLeft: '12px',
+    paddingRight: '36px',
+  },
+  child_2: {
+    marginLeft: '24px',
+    paddingRight: '36px',
+  },
+  child_3: {
+    marginLeft: '36px',
+    paddingRight: '36px',
+  },
+  actived_cat: {
+    borderBottomColor: '#7da8ae',
+    borderBottomWidth: '2px',
+    borderBottomStyle: 'solid'
+  },
+  loading: {
+    color: '#7da8ae !important'
   }
 });
 

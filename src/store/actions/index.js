@@ -5,6 +5,7 @@
 
 //  Booking actions
 export * from './booking';
+export * from './b2b_shop';
 
 // Admin section
 export * from './auth.actions';

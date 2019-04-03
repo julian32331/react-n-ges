@@ -11,9 +11,10 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormLabel from "@material-ui/core/FormLabel";
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 // material-ui icons
-import Assignment from "@material-ui/icons/Assignment";
+import Search from "@material-ui/icons/Search";
 import Person from "@material-ui/icons/Person";
 import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
@@ -69,20 +70,10 @@ class B2BShop extends React.Component {
   componentDidMount() {
     this.props.getUserData();
     setTimeout(() => {
-      this.props.getB2BShopProducts({
+      this.props.featuredProduct({
         workingForId: this.props.workingForId
       });
     }, 100);
-  }
-
-  getB2BShopProducts() {
-    this.props.getB2BShopProducts();
-  }
-
-  initStateForQty(index) {
-    this.setState({
-      ["qty_" + index]: 0
-    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -93,26 +84,67 @@ class B2BShop extends React.Component {
       }
     }
   }
+  initStateForQty(index) {
+    this.setState({
+      ["qty_" + index]: 0
+    })
+  }
 
-  searchHandler(name, event) {
-    this.setState({ [name]: event.target.value });
-    const values = event.target.value.toLowerCase().split(' ');
-    values.map(value => this.search(value));
-    // this.search(event.target.value.toLowerCase());
+  searchHandler = (event) => {
+    event.preventDefault();
+    if(this.state.search)
+      this.props.searchProduct({
+        workingForId: this.props.workingForId,
+        searchTerm: this.state.search
+      })    
+    else
+      this.props.featuredProduct({
+        workingForId: this.props.workingForId
+      });
   };
 
-  search(value) {
-    if (!value) {
-      this.products = this.props.products;
-    }
-    let temp = this.products.filter(product => {
-      return product.name.toLowerCase().indexOf(value) !== -1
-    });
-    this.setState({
-      activedPageNo: 1
-    })
+  createCategory = (categories) => {
+    const { classes } = this.props;
+    return categories.map((category, key) => {
+      var child;
+      if(category.deep === 1) {
+        child = classes.child_1;
+      } else if(category.deep === 2) {
+        child = classes.child_2;
+      } else if(category.deep === 3) {
+        child = classes.child_3;
+      }
+      if(category.collapse) {
+        var st = {};
+        st[category["name"]] = !this.state[category.name];
+        return (
+          <div key={key}>
+            <ListItem divider={true} classes={{gutters: child}} className={this.state.actived_cat === category.name? classes.actived_cat : ''}>
+              <ListItemText primary={category.name} onClick={() => this.categoryHandler(category.name)} />
+              {this.state[category.name] ? <ExpandLess onClick={() => this.setState(st)} /> : <ExpandMore onClick={() => this.setState(st)} />}  
+            </ListItem>
+            <Collapse in={this.state[category.name]} timeout="auto" unmountOnExit>
+              <List component="div">
+                {this.createCategory(category.children)}
+              </List>
+            </Collapse>
+          </div>
+        )
+      }
+      return (
+        <ListItem button key={key} classes={{gutters: child}} className={this.state.actived_cat === category.name? classes.actived_cat : ''}>
+          <ListItemText primary={category.name} onClick={() => this.categoryHandler(category.name)} />                    
+        </ListItem>
+      )
+    }) 
+  }
 
-    this.products = temp;
+  categoryHandler = (cat) => {
+    this.setState({actived_cat: cat});
+    this.props.categoryProduct({
+      workingForId: this.props.workingForId,
+      categoryName: cat
+    })
   }
 
   // Pagination actions
@@ -167,34 +199,6 @@ class B2BShop extends React.Component {
     this.setState({
       activedPageNo: param
     })
-  }
-
-  createCategory = (categories) => {
-    const { classes } = this.props;
-    return categories.map((category, key) => {
-      if(category.collapse) {
-        var st = {};
-        st[category["name"]] = !this.state[category.name];
-        return (
-          <div key={key}>
-            <ListItem button onClick={() => this.setState(st)} divider={true}>
-              <ListItemText primary={category.name} />
-              {this.state[category.name] ? <ExpandLess /> : <ExpandMore />}  
-            </ListItem>
-            <Collapse in={this.state[category.name]} timeout="auto" unmountOnExit>
-              <List component="div">
-                {this.createCategory(category.children)}
-              </List>
-            </Collapse>
-          </div>
-        )
-      }
-      return (
-        <ListItem button key={key}>
-          <ListItemText primary={category.name} />                    
-        </ListItem>
-      )
-    }) 
   }
 
   order() {
@@ -346,43 +350,53 @@ class B2BShop extends React.Component {
                   </FormLabel>
                 </GridItem>
                 <GridItem xs={9} sm={3} md={3} lg={2}>
-                  <CustomInput
-                    id="search"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "search",
-                      onChange: event =>
-                        this.searchHandler("search", event),
-                      value: this.state.search
-                    }}
-                  />
+                  <form onSubmit={this.searchHandler}>
+                    <CustomInput
+                      id="search"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        type: "search",
+                        onChange: event =>
+                          this.setState({ search: event.target.value }),
+                        value: this.state.search
+                      }}
+                    />
+                  </form>
                 </GridItem>
               </GridContainer>
               <GridContainer>
                 <GridItem xs={12} sm={3}>
                   <List
                     component="nav"
-                    subheader={<ListSubheader component="div">Filter By : </ListSubheader>}
                     className={classes.root}
                   >
-                    {this.createCategory(categories)}
+                    <div className={classes.cat_container}>
+                      {this.createCategory(categories)}
+                    </div>
                   </List>
                 </GridItem>
                 <GridItem xs={12} sm={9}>
-                  {products.length === 0 ?
-                    <CircularProgress className={classes.progress} />
-                    :
-                    <Table
-                      tableData={products}
-                      tableShopping
-                      customCellClasses={[
-                        classes.tdName,
-                        classes.tdNumber
-                      ]}
-                      customClassesForCells={[1, 2]}
-                    />
+                  {
+                    this.props.loading? (
+                      <div className={classes.center}>
+                        <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                      </div>
+                    ):
+                      this.props.products.length > 0? (
+                        <Table
+                          tableData={products}
+                          tableShopping
+                          customCellClasses={[
+                            classes.tdName,
+                            classes.tdNumber
+                          ]}
+                          customClassesForCells={[1, 2]}
+                        />
+                      ) : (
+                        <h3 className={classes.center}>No products</h3>
+                      )
                   }
                 </GridItem>
               </GridContainer>
@@ -407,16 +421,21 @@ class B2BShop extends React.Component {
 function mapStateToProps(state) {
   return {
     workingForId: state.user.workingForId,
-    products: state.b2bshop.products
+    loading     : state.b2b_shop.product.loading,
+    error       : state.b2b_shop.product.error,
+    products    : state.b2b_shop.product.products
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getUserData: Actions.getUserData,
-    getB2BShopProducts: Actions.getB2BShopProducts,
-    addOrders: Actions.addOrders
-  }, dispatch);
+    // addOrders: Actions.addOrders,
+
+    featuredProduct : Actions.featuredProduct,
+    searchProduct   : Actions.searchProduct,
+    categoryProduct : Actions.categoryProduct
+}, dispatch);
 }
 
 export default withStyles(productsStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(B2BShop)));

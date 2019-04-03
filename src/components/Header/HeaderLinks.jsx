@@ -35,7 +35,7 @@ class HeaderLinks extends React.Component {
   state = {
     openNotification: false,
     openUser: false,
-    saloonSelect: "",
+    saloonSelect: Number(this.props.workingForId),
   };
 
   componentWillReceiveProps(nextProps) {
