@@ -1,6 +1,5 @@
 import {combineReducers} from 'redux';
 
-// Booking reducers
 import booking from './booking';
 import b2b_shop from './b2b_shop';
 
@@ -15,7 +14,6 @@ import checkInOut from "./checkinout.reducer";
 import employees from "./employees.reducer";
 import mySalons from "./mySalons.reducer";
 import profile from "./profile.reducer";
-// import booking from "./booking.reducer";
 import admin from "./admin.reducer";
 import b2bshop from "./b2bshop.reducer";
 
@@ -34,7 +32,6 @@ const createReducer = (asyncReducers) =>
         employees,
         mySalons,
         profile,
-        // booking,
         admin,
         b2bshop,
         ...asyncReducers
