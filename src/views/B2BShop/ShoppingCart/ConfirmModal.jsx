@@ -121,10 +121,11 @@ class ConfirmModal extends React.Component {
     }
 
     saveOrder = () => {
+        console.log('shippingAddress: ', this.props.address)
         let data = {
             workingForId: this.props.workingForId,
             shippingAddress: {
-                shippingAddressId: this.props.shippingAddressId,
+                shippingAddressId: this.props.address.shippingAddressId,
                 street1: this.state.s_address1,
                 street2: this.state.s_address2,
                 postalCode: this.state.s_zip,
@@ -149,7 +150,7 @@ class ConfirmModal extends React.Component {
                 open={this.props.onOpen}
                 TransitionComponent={Transition}
                 keepMounted
-                onClose={() => this.handleClose()}
+                onClose={() => this.cancelOrder()}
                 aria-labelledby="checkin-modal-title"
                 aria-describedby="checkin-modal-description"
                 >
