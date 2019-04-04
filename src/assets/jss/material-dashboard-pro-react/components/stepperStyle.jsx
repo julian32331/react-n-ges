@@ -76,7 +76,7 @@ const stepperStyle = theme => ({
         fontWeight: 700
     },
     title_container: {
-        width: 'calc(75% - 8px)',
+        width: 'calc(75% - 20px)',
         marginLeft: '8px'
     },
     title: {

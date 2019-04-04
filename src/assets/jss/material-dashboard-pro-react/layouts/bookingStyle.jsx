@@ -13,7 +13,10 @@ const bookingStyle = theme => ({
     backgroundImage: "url(" + tl + "), url(" + tr + "), url(" + bl + ")",
     backgroundPosition: "left top, right top, left bottom", 
     backgroundSize: '12% auto, 9% auto, 24% auto',
-    backgroundRepeat: "no-repeat"
+    backgroundRepeat: "no-repeat",
+    [theme.breakpoints.down("sm")]: {      
+      padding: '0 16px',
+    }
   },
   title: {
     color: '#485155',
@@ -30,7 +33,10 @@ const bookingStyle = theme => ({
     marginTop: '24px',
     borderBottomColor: '#80A0AB',
     borderBottomWidth: '1px',
-    borderBottomStyle: 'solid'
+    borderBottomStyle: 'solid',
+    [theme.breakpoints.down("sm")]: {     
+      borderBottomColor: 'transparent',
+    }
   },
   loading_container: {
     textAlign: 'center',
@@ -38,6 +44,9 @@ const bookingStyle = theme => ({
   },
   loading: {
     color: '#7da8ae !important'
+  },
+  nowrap: {
+    whiteSpace: 'nowrap'
   },
   right: {
     textAlign: "right"
@@ -93,7 +102,10 @@ const bookingStyle = theme => ({
     fontFamily: 'Merriweather',
     textAlign: 'center',
     paddingTop: '24px',
-    paddingBottom: '16px'
+    paddingBottom: '16px',
+    [theme.breakpoints.down("sm")]: {     
+      fontSize: '20px',
+    }
   },
   employeeExpert: {
     fontSize: '20px',

@@ -60,6 +60,7 @@ import priceImage3 from "assets/img/card-1.jpeg";
 import moment from 'moment';
 import Loader from 'react-loader-spinner';
 
+import * as Utils from 'utils';
 import bookingStyle from "assets/jss/material-dashboard-pro-react/layouts/bookingStyle.jsx";
 import { arch } from "os";
 
@@ -77,12 +78,11 @@ class Booking extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            step: 1,
-            serviceId: null,            
-            booking_date: moment().format('YYYY MM DD'),
-            booking_time: "",
-            // slideIndex: 0,
-            // calendar: []
+            step            : 1,
+            serviceId       : null,            
+            hairdresserId   : null,
+            booking_date    : "",
+            booking_time    : "",
         }
     }
 
@@ -128,179 +128,123 @@ class Booking extends React.Component {
         this.setState({serviceId: id})
     }
 
-    handlerStep = () => {
-        this.props.getBookingEmployees({
-            serviceId: this.state.serviceId
+    selectEmployee = (employee) => {
+        this.setState({
+            hairdresserId   : employee.id,
+            hairdresserName : employee.name
         })
+    }
+
+    handlerStep = () => {
+        if(this.state.step === 1 && this.state.serviceId) {
+            this.props.getBookingEmployees({
+                serviceId: this.state.serviceId
+            })
+        } else if(this.state.step === 2 && this.state.hairdresserId) {
+            this.props.getBookingDaysOff({
+                salonId: this.props.match.params.salonId,
+                hairdresserId: this.state.hairdresserId,
+                year: moment().format('YYYY'),
+                month: moment().format('MM')
+            })
+        }
+
+        this.setState(prev=>({step: prev.step + 1}))
+    }
+
+    canNext = () => {
+        if(this.state.step === 1) {
+            if(this.state.serviceId) return true;
+            else return false
+        } else if(this.state.step === 2) {
+            if(this.state.hairdresserId) return true;
+            else return false
+        }
     }
 
     generateDates = () => {
         let arr = [];
 
-        let today = moment();
-        let start = moment().subtract(3, 'days');
-        let end = moment().endOf('month').add(3, 'days');
-        while(start < end){
-            let temp = {};
-            temp.date = moment(start).format('YYYY MM DD');
-            temp.day = days[moment(start).day()];
-            if(moment(start).isBefore(today) || moment(start).month() > today.month()) {
-                temp.status = 1; // passed and next month
-            } else if(moment(start.format('YYYY MM DD')).isSame(this.state.booking_date)) {
-                temp.status = 2; // actived
-            } else if(start.day() === 0) {
-                temp.status = 3; // disabled
-            } else {
-                temp.status = 0; // enable
+        if(this.props.daysOff) {
+            let today = moment();
+            let start = moment().subtract(3, 'days');
+            let end = moment().endOf('month').add(3, 'days');
+            while(start < end){
+                let temp = {};
+                temp.date = moment(start).format('YYYY MM DD');
+                temp.day = days[moment(start).day()];
+                if(moment(start).isBefore(today) || moment(start).month() > today.month()) {
+                    temp.status = 1; // passed and next month
+                } else if(moment(start.format('YYYY MM DD')).isSame(this.state.booking_date)) {
+                    temp.status = 2; // actived
+                } else if(this.isDisabledDay(this.props.daysOff.salonClosingDays, start.day())) {
+                    temp.status = 3; // disabled
+                } else {
+                    temp.status = 0; // enable
+                }
+                
+                arr.push(temp);
+                start = moment(start).add(1, 'days')  
             }
-            
-            arr.push(temp);
-            start = moment(start).add(1, 'days')  
         }
 
         return arr;
     }
+    isDisabledDay = (arr, value) => {
+        let isDisabled = arr.find(item => {
+            return item.dayId === value
+        })
 
-    generateTimes = () => {
-        let arr = [
-            {
-                time: "08:00",
-                status: 1,
-            },
-            {
-                time: "08:30",
-                status: 1,
-            },
-            {
-                time: "09:00",
-                status: 1,
-            },
-            {
-                time: "09:30",
-                status: 1,
-            },
-            {
-                time: "10:00",
-                status: 1,
-            },
-            {
-                time: "10:30",
-                status: 1,
-            },
-            {
-                time: "11:00",
-                status: 1,
-            },
-            {
-                time: "11:30",
-                status: 1,
-            },
-            {
-                time: "12:00",
-                status: 1,
-            },
-            {
-                time: "12:30",
-                status: 1,
-            },
-            {
-                time: "13:00",
-                status: 1,
-            },
-            {
-                time: "13:30",
-                status: 1,
-            },
-            {
-                time: "14:00",
-                status: 1,
-            },
-            {
-                time: "14:30",
-                status: 1,
-            },
-            {
-                time: "15:00",
-                status: 1,
-            },
-            {
-                time: "15:30",
-                status: 1,
-            },
-            {
-                time: "16:00",
-                status: 1,
-            },
-            {
-                time: "16:30",
-                status: 3,
-            },
-            {
-                time: "17:00",
-                status: 1,
-            },
-            {
-                time: "17:30",
-                status: 0,
-            },
-            {
-                time: "18:00",
-                status: 3,
-            },
-            {
-                time: "18:30",
-                status: 2,
-            },
-            {
-                time: "19:00",
-                status: 0,
-            },
-            {
-                time: "19:30",
-                status: 0,
-            },
-            {
-                time: "20:00",
-                status: 0,
-            }
-        ];        
-
-        return arr;
+        return isDisabled;
     }
 
-    selectDate = (data, length) => {
+    selectDate = (data) => {
         if(data.status === 0) {
             this.setState({booking_date: data.date});
+            this.props.getBookingTimeslots({
+                salonId: this.props.match.params.salonId,
+                hairdresserId: this.state.hairdresserId,
+                date: moment(data.date).format("YYYY-MM-DD")
+            })
         }
     }
 
     selectTime = (data) => {
-        if(data.status === 0) {
+        if(data.status !== 1 && data.status !==3) {
             this.setState({booking_time: data.time});
         }
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, loading, employees, timeSlots } = this.props;
         const { step, booking_date } = this.state;
 
         const services = this.makeServices(this.props.services);
 
-        const dates = this.generateDates();
-        const times = this.generateTimes();
-
         const settings = {
             arrows: false,
+            lazyLoad: true,
             infinite: true,
             slidesToShow: 3,
             speed: 500
         };
+
+        const dates = this.generateDates();
         const date_settings = {
             arrows: false,
             infinite: false,
             slidesToShow: 7,
             slidesToScroll: 7,
             speed: 500,
+            responsive: [
+                {
+                  breakpoint: 480,
+                  settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3
+                  }
+                }
+            ]
         };
 
         const time_settings = {
@@ -309,6 +253,15 @@ class Booking extends React.Component {
             slidesToShow: 13,
             slidesToScroll: 13,
             speed: 500,
+            responsive: [
+                {
+                  breakpoint: 480,
+                  settings: {
+                    slidesToShow: 5,
+                    slidesToScroll: 5
+                  }
+                }
+            ]
         };
 
         return (
@@ -338,7 +291,7 @@ class Booking extends React.Component {
                         <Card>
                             <CardBody>
                                 {
-                                    this.props.loading? (
+                                    loading? (
                                         <div className={classes.loading_container}>
                                           <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
                                         </div>
@@ -355,14 +308,16 @@ class Booking extends React.Component {
                                         tableData={services}
                                         customCellClasses={[
                                             classes.center,
-                                            classes.right
+                                            classes.nowrap,
+                                            classes.right + " " + classes.nowrap
                                         ]}
-                                        customClassesForCells={[0, 4]}
+                                        customClassesForCells={[0, 1, 4]}
                                         customHeadCellClasses={[
                                             classes.center,
-                                            classes.right
+                                            classes.nowrap,
+                                            classes.right + " " + classes.nowrap
                                         ]}
-                                        customHeadClassesForCells={[0, 4]}
+                                        customHeadClassesForCells={[0, 1, 4]}
                                     />
                                 }
                             </CardBody>
@@ -372,139 +327,149 @@ class Booking extends React.Component {
                     step === 2 &&
                         <div>
                             {
-                                this.props.loading? (
+                                loading? (
                                     <div className={classes.loading_container}>
                                         <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
                                     </div>
-                                ) : 
-                                <div className={classes.employee}>
-                                    <Slider {...settings} ref="employee_slider">
-                                        <div className={classes.slide_container}>
-                                            <img src={priceImage1} className={classes.slide_img} alt="..." />
+                                ) : (
+                                    employees.length > 0 && 
+                                        <div className={classes.employee}>
+                                            <Slider {...settings} ref="employee_slider">
+                                                {
+                                                    employees.map((employee, key) => {
+                                                        return (
+                                                            <div className={classes.slide_container} key={key} onClick={() => this.selectEmployee(employee)}>
+                                                                <img src={Utils.root + employee.EmployeeInformation.picturePath} className={classes.slide_img} alt="..." />
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                            </Slider>                                   
+                                            <GridContainer alignItems="center">
+                                                <GridItem xs={3}>
+                                                    <Button
+                                                        justIcon
+                                                        simple
+                                                        size="lg"
+                                                        color="info"
+                                                        onClick={()=>this.refs.employee_slider.slickPrev()}
+                                                        >
+                                                        <ArrowBackIos className={classes.icons} />
+                                                    </Button>
+                                                </GridItem>
+                                                <GridItem xs={6}>
+                                                    <div className={classes.employeeName}>{this.state.hairdresserName}</div>
+                                                    {/* <div className={classes.employeeExpert}>BEAUTY THERAPIST</div> */}
+                                                </GridItem>
+                                                <GridItem xs={3} className={classes.right}>
+                                                    <Button
+                                                        justIcon
+                                                        simple
+                                                        size="lg"
+                                                        color="info"
+                                                        onClick={()=>this.refs.employee_slider.slickNext()}
+                                                        >
+                                                        <ArrowForwardIos className={classes.icons} />
+                                                    </Button>
+                                                </GridItem>
+                                            </GridContainer>
                                         </div>
-                                        <div className={classes.slide_container}>
-                                            <img src={priceImage2} className={classes.slide_img} alt="..." />
-                                        </div>
-                                        <div className={classes.slide_container}>
-                                            <img src={priceImage3} className={classes.slide_img} alt="..." />
-                                        </div>
-                                        <div className={classes.slide_container}>
-                                            <img src={priceImage1} className={classes.slide_img} alt="..." />
-                                        </div>
-                                    </Slider>
-                                    <GridContainer alignItems="center">
-                                        <GridItem xs={1}>
-                                            <Button
-                                                justIcon
-                                                simple
-                                                size="lg"
-                                                color="info"
-                                                onClick={()=>this.refs.employee_slider.slickPrev()}
-                                                >
-                                                <ArrowBackIos className={classes.icons} />
-                                            </Button>
-                                        </GridItem>
-                                        <GridItem xs={10}>
-                                            <div className={classes.employeeName}>Anna</div>
-                                            <div className={classes.employeeExpert}>BEAUTY THERAPIST</div>
-                                        </GridItem>
-                                        <GridItem xs={1} className={classes.right}>
-                                            <Button
-                                                justIcon
-                                                simple
-                                                size="lg"
-                                                color="info"
-                                                onClick={()=>this.refs.employee_slider.slickNext()}
-                                                >
-                                                <ArrowForwardIos className={classes.icons} />
-                                            </Button>
-                                        </GridItem>
-                                    </GridContainer>
-                                </div>
+                                )                                
                             }
                         </div>
                         
                 }                
                 {
                     step === 3 &&
-                        <div className={classes.date_time}>
-                            <div className={classes.month_container}>{moment(booking_date).format('MMMM')}</div>
-                            <Slider {...date_settings} ref="date_slider">
-                                {
-                                    dates.map((item, key) => {
-                                        let date, day;
-                                        if(item.status == 1) {
-                                            date = classes.date + " " + classes.date_dayPassed;
-                                            day = classes.day + " " + classes.date_dayPassed;
-                                        } else if(item.status == 2) {
-                                            date = classes.date + " " + classes.dateActived;
-                                            day = classes.day + " " + classes.dayActived;
-                                        } else if(item.status == 3) {
-                                            date = classes.date + " " + classes.date_dayDisabled;
-                                            day = classes.day + " " + classes.date_dayDisabled;
-                                        } else {
-                                            date = classes.date;
-                                            day = classes.day;
-                                        }
-                                        return (
-                                            <div key={key} className={classes.date_container} onClick={() => this.selectDate(item, dates.length)}>
-                                                <div className={date}>{moment(item.date).format('D')}</div>
-                                                <div className={day}>{item.day}</div>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </Slider>
+                        <div>
+                            {
+                                loading? (
+                                    <div className={classes.loading_container}>
+                                        <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                                    </div>
+                                ) : (
+                                    <div className={classes.date_time}>
+                                        <div className={classes.month_container}>{booking_date? moment(booking_date).format('MMMM') : moment().format('MMMM')}</div>
+                                        <Slider {...date_settings} ref="date_slider">
+                                            {
+                                                dates.map((item, key) => {
+                                                    let date, day;
+                                                    if(item.status == 1) {
+                                                        date = classes.date + " " + classes.date_dayPassed;
+                                                        day = classes.day + " " + classes.date_dayPassed;
+                                                    } else if(item.status == 2) {
+                                                        date = classes.date + " " + classes.dateActived;
+                                                        day = classes.day + " " + classes.dayActived;
+                                                    } else if(item.status == 3) {
+                                                        date = classes.date + " " + classes.date_dayDisabled;
+                                                        day = classes.day + " " + classes.date_dayDisabled;
+                                                    } else {
+                                                        date = classes.date;
+                                                        day = classes.day;
+                                                    }
+                                                    return (
+                                                        <div key={key} className={classes.date_container} onClick={() => this.selectDate(item, dates.length)}>
+                                                            <div className={date}>{moment(item.date).format('D')}</div>
+                                                            <div className={day}>{item.day}</div>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </Slider>
 
-                            <Slider {...time_settings} ref="time_slider">
-                                {
-                                    times.map((item, key) => {
-                                        let time;
-                                        if(item.status == 1) {
-                                            time = classes.time + " " + classes.timePassed;
-                                        } else if(item.status == 2) {
-                                            time = classes.time + " " + classes.timeActived;
-                                        } else if(item.status == 3) {
-                                            time = classes.time + " " + classes.timeDisabled;
-                                        } else {
-                                            time = classes.time;
-                                        }
-                                        return (
-                                            <div key={key} className={classes.time_container}>
-                                                <div className={time} onClick={() => this.selectTime(item)}>{item.time}</div>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </Slider>
+                                        <Slider {...time_settings} ref="time_slider">
+                                            {
+                                                timeSlots.map((item, key) => {
+                                                    let time;
+                                                    if(item.status == 1) {
+                                                        time = classes.time + " " + classes.timePassed;
+                                                    } else if(item.status == 2) {
+                                                        time = classes.time
+                                                    } else if(item.status == 3) {
+                                                        time = classes.time + " " + classes.timeDisabled;
+                                                    } 
+                                                    if(item.time === this.state.booking_time) {
+                                                        time = classes.time + " " + classes.timeActived;
+                                                    }
+                                                    return (
+                                                        <div key={key} className={classes.time_container}>
+                                                            <div className={time} onClick={() => this.selectTime(item)}>{item.time}</div>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </Slider>
 
-                            <GridContainer alignItems="center">
-                                <GridItem xs={1}>
-                                    <Button
-                                        justIcon
-                                        simple
-                                        size="lg"
-                                        color="info"
-                                        onClick={()=>this.refs.date_slider.slickPrev()}
-                                        >
-                                        <ArrowBackIos className={classes.icons} />
-                                    </Button>
-                                </GridItem>
-                                <GridItem xs={10}>
-                                    <div className={classes.employeeName}>{moment(this.state.booking_date).format('DD MMMM YYYY')} {this.state.booking_time} </div>
-                                </GridItem>
-                                <GridItem xs={1} className={classes.right}>
-                                    <Button
-                                        justIcon
-                                        simple
-                                        size="lg"
-                                        color="info"
-                                        onClick={()=>this.refs.date_slider.slickNext()}
-                                        >
-                                        <ArrowForwardIos className={classes.icons} />
-                                    </Button>
-                                </GridItem>
-                            </GridContainer>
+                                        <GridContainer alignItems="center">
+                                            <GridItem xs={3}>
+                                                <Button
+                                                    justIcon
+                                                    simple
+                                                    size="lg"
+                                                    color="info"
+                                                    onClick={()=>this.refs.date_slider.slickPrev()}
+                                                    >
+                                                    <ArrowBackIos className={classes.icons} />
+                                                </Button>
+                                            </GridItem>
+                                            <GridItem xs={6}>
+                                                <div className={classes.employeeName}>{this.state.booking_date !=="" && moment(this.state.booking_date).format('DD MMMM YYYY')} {this.state.booking_time} </div>
+                                            </GridItem>
+                                            <GridItem xs={3} className={classes.right}>
+                                                <Button
+                                                    justIcon
+                                                    simple
+                                                    size="lg"
+                                                    color="info"
+                                                    onClick={()=>this.refs.date_slider.slickNext()}
+                                                    >
+                                                    <ArrowForwardIos className={classes.icons} />
+                                                </Button>
+                                            </GridItem>
+                                        </GridContainer>
+                                    </div>
+                                )
+                            }
                         </div>
                 }
                 {
@@ -608,7 +573,7 @@ class Booking extends React.Component {
                     <GridItem>
                     </GridItem>
                     <GridItem>
-                        <Button color="info" onClick={() => this.setState(prev=>({step: prev.step + 1}))}>Next</Button>
+                        <Button color="info" disabled={!this.canNext()} onClick={() => this.handlerStep()}>Next</Button>
                     </GridItem>
                 </GridContainer>
                 <div className={classes.divider}></div>
