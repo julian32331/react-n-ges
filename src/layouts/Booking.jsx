@@ -61,6 +61,7 @@ import moment from 'moment';
 import Loader from 'react-loader-spinner';
 
 import * as Utils from 'utils';
+import * as Validator from "./../validator";
 import bookingStyle from "assets/jss/material-dashboard-pro-react/layouts/bookingStyle.jsx";
 import { arch } from "os";
 
@@ -78,11 +79,18 @@ class Booking extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            step            : 1,
-            serviceId       : null,            
-            hairdresserId   : null,
-            booking_date    : "",
-            booking_time    : "",
+            step                : 5,
+            serviceId           : null,            
+            hairdresserId       : null,
+            booking_date        : "",
+            booking_time        : "",
+            consumerName        : "",
+            consumerNameState   : "",
+            consumerEmail       : "",
+            consumerEmailState  : "",
+            consumerMobile      : "",
+            consumerMobileState : "",
+            comment             : ""
         }
     }
 
@@ -136,20 +144,52 @@ class Booking extends React.Component {
     }
 
     handlerStep = () => {
-        if(this.state.step === 1 && this.state.serviceId) {
+        if(this.state.step === 1) {
             this.props.getBookingEmployees({
                 serviceId: this.state.serviceId
             })
-        } else if(this.state.step === 2 && this.state.hairdresserId) {
+            this.setState(prev=>({step: prev.step + 1}))
+        } else if(this.state.step === 2) {
             this.props.getBookingDaysOff({
                 salonId: this.props.match.params.salonId,
                 hairdresserId: this.state.hairdresserId,
                 year: moment().format('YYYY'),
                 month: moment().format('MM')
             })
+            this.setState(prev=>({step: prev.step + 1}))
+        } else if(this.state.step === 3) {
+            this.setState(prev=>({step: prev.step + 1}))
+        } else if(this.state.step === 4) {
+            let data = {
+                salonId: this.props.match.params.salonId,
+                serviceId: this.state.serviceId,
+                hairdresserId: this.state.hairdresserId,
+                consumerId: this.props.match.params.consumerId,
+                bookingOrigin: "WEB",
+                plannedStartTime: moment(this.state.booking_date).format('YYYY-MM-DD') + " " + this.state.booking_time + ":00",
+                consumerName: this.state.consumerName,
+                consumerEmail: this.state.consumerEmail,
+                consumerMobile: this.state.consumerMobile,
+                comment: this.state.comment
+            };
+            Utils.xapi().post('booking/makeappointment', data)
+            this.setState(prev=>({step: prev.step + 1}))
+        } else if(this.state.step === 5) {
+            this.setState({
+                step                : 1,
+                serviceId           : null,            
+                hairdresserId       : null,
+                booking_date        : "",
+                booking_time        : "",
+                consumerName        : "",
+                consumerNameState   : "",
+                consumerEmail       : "",
+                consumerEmailState  : "",
+                consumerMobile      : "",
+                consumerMobileState : "",
+                comment             : ""
+            })
         }
-
-        this.setState(prev=>({step: prev.step + 1}))
     }
 
     canNext = () => {
@@ -159,6 +199,11 @@ class Booking extends React.Component {
         } else if(this.state.step === 2) {
             if(this.state.hairdresserId) return true;
             else return false
+        } else if(this.state.step === 3) {
+            if(this.state.booking_date && this.state.booking_time) return true;
+            else return false
+        } else {
+            return true;
         }
     }
 
@@ -215,9 +260,42 @@ class Booking extends React.Component {
         }
     }
 
+    change(event, stateName, type, stateNameEqualTo) {
+        switch (type) {
+            case "consumerName":
+            case "consumerMobile":
+            case "comment":
+                this.setState({
+                    [stateName]: event.target.value
+                })
+                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "error" });
+                }
+                break;
+            case "consumerEmail":
+                this.setState({
+                    consumerEmail: event.target.value
+                })
+                if (Validator.verifyEmail(event.target.value)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "error" });
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     render() {
         const { classes, loading, employees, timeSlots } = this.props;
         const { step, booking_date } = this.state;
+
+        let button_name = "Next";
+        if(step === 4) button_name = "Finish";
+        if(step === 5) button_name = "Go Back";
 
         const services = this.makeServices(this.props.services);
 
@@ -257,8 +335,8 @@ class Booking extends React.Component {
                 {
                   breakpoint: 480,
                   settings: {
-                    slidesToShow: 5,
-                    slidesToScroll: 5
+                    slidesToShow: 4,
+                    slidesToScroll: 4
                   }
                 }
             ]
@@ -288,14 +366,15 @@ class Booking extends React.Component {
                 <div className={classes.content}>
                 {
                     step === 1 &&
-                        <Card>
-                            <CardBody>
-                                {
-                                    loading? (
-                                        <div className={classes.loading_container}>
-                                          <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
-                                        </div>
-                                    ) : 
+                        <div>
+                        {
+                            loading? (
+                                <div className={classes.loading_container}>
+                                    <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                                </div>
+                            ) : 
+                            <Card>
+                                <CardBody>
                                     <Table
                                         striped
                                         tableHead={[
@@ -319,9 +398,10 @@ class Booking extends React.Component {
                                         ]}
                                         customHeadClassesForCells={[0, 1, 4]}
                                     />
-                                }
-                            </CardBody>
-                        </Card>
+                                </CardBody>
+                            </Card>
+                        }
+                        </div>
                 }    
                 {                    
                     step === 2 &&
@@ -476,60 +556,72 @@ class Booking extends React.Component {
                     step === 4 &&
                         <GridContainer justify="center">
                             <GridItem xs={12} sm={4}>
-                                <CustomInput
-                                    // success={this.state.firstnameState === "success"}
-                                    // error={this.state.firstnameState === "error"}
-                                    id="fullname"
-                                    formControlProps={{
-                                        fullWidth: true
-                                    }}
-                                    inputProps={{
-                                        placeholder: "Full Name",
-                                        // onChange: event => this.change(event, "firstname", "length", 3),
-                                        startAdornment: (
-                                            <InputAdornment
-                                                position="start"
-                                                className={classes.inputAdornment}
-                                            >
-                                                <Face classes={{root: classes.iconRoot}} className={classes.inputAdornmentIcon} />
-                                            </InputAdornment>
-                                        )
-                                    }}
-                                />
-                                <CustomInput
-                                    id="email"
-                                    formControlProps={{
-                                        fullWidth: true
-                                    }}
-                                    inputProps={{
-                                        placeholder: "Email",
-                                        startAdornment: (
-                                            <InputAdornment
-                                                position="start"
-                                                className={classes.inputAdornment}
-                                            >
-                                                <Email classes={{root: classes.iconRoot}} className={classes.inputAdornmentIcon} />
-                                            </InputAdornment>
-                                        )
-                                    }}
-                                />
-                                <CustomInput
-                                    id="phone"
-                                    formControlProps={{
-                                        fullWidth: true
-                                    }}
-                                    inputProps={{
-                                        placeholder: "Phone",
-                                        startAdornment: (
-                                            <InputAdornment
-                                                position="start"
-                                                className={classes.inputAdornment}
-                                            >
-                                                <Phone classes={{root: classes.iconRoot}} className={classes.inputAdornmentIcon} />
-                                            </InputAdornment>
-                                        )
-                                    }}
-                                />
+                            {
+                                !this.props.match.params.consumerId &&
+                                    <div>
+                                        <CustomInput
+                                            success={this.state.consumerNameState === "success"}
+                                            error={this.state.consumerNameState === "error"}
+                                            id="fullname"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                placeholder: "Full Name",
+                                                onChange: event => this.change(event, "consumerName", "consumerName", 1),
+                                                startAdornment: (
+                                                    <InputAdornment
+                                                        position="start"
+                                                        className={classes.inputAdornment}
+                                                    >
+                                                        <Face classes={{root: classes.iconRoot}} className={classes.inputAdornmentIcon} />
+                                                    </InputAdornment>
+                                                )
+                                            }}
+                                        />
+                                        <CustomInput
+                                            success={this.state.consumerEmailState === "success"}
+                                            error={this.state.consumerEmailState === "error"}
+                                            id="email"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                placeholder: "Email",
+                                                onChange: event => this.change(event, "consumerEmail", "consumerEmail", 1),
+                                                startAdornment: (
+                                                    <InputAdornment
+                                                        position="start"
+                                                        className={classes.inputAdornment}
+                                                    >
+                                                        <Email classes={{root: classes.iconRoot}} className={classes.inputAdornmentIcon} />
+                                                    </InputAdornment>
+                                                )
+                                            }}
+                                        />
+                                        <CustomInput
+                                            success={this.state.consumerMobileState === "success"}
+                                            error={this.state.consumerMobileState === "error"}
+                                            id="phone"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                placeholder: "Phone",
+                                                onChange: event => this.change(event, "consumerMobile", "consumerMobile", 1),
+                                                startAdornment: (
+                                                    <InputAdornment
+                                                        position="start"
+                                                        className={classes.inputAdornment}
+                                                    >
+                                                        <Phone classes={{root: classes.iconRoot}} className={classes.inputAdornmentIcon} />
+                                                    </InputAdornment>
+                                                )
+                                            }}
+                                        />
+                                    </div>
+                            }
+                                
                                 <TextField
                                     id="outlined-bare"
                                     className={classes.textArea}
@@ -537,7 +629,8 @@ class Booking extends React.Component {
                                         classes: {
                                             multiline: classes.multiline,
                                             inputMultiline: classes.inputMultiline
-                                        }
+                                        },
+                                        onChange: event => this.change(event, "comment", "comment", 1),
                                     }}
                                     multiline
                                     rows="4"
@@ -546,34 +639,24 @@ class Booking extends React.Component {
                                     margin="none"
                                     variant="outlined"
                                 />
-                                <FormControlLabel
-                                    control={
-                                    <Checkbox
-                                        tabIndex={-1}
-                                        // onClick={() => this.handleToggle(2)}
-                                        checkedIcon={<Check className={classes.checkedIcon} />}
-                                        icon={<Check className={classes.uncheckedIcon} />}
-                                        classes={{
-                                            checked: classes.checked,
-                                            root: classes.checkRoot
-                                        }}
-                                    />
-                                    }
-                                    classes={{
-                                        label: classes.label
-                                    }}
-                                    label="I ACCEPT PRIVACY AND TERMS OF USE"
-                                />
                             </GridItem>
                         </GridContainer>
                         
+                }
+                {
+                    step === 5 &&
+                        <Card>
+                            <CardBody>
+                                <div>booking complete</div>                                
+                            </CardBody>
+                        </Card>
                 }
                 </div>
                 <GridContainer justify="space-between" alignItems="center">
                     <GridItem>
                     </GridItem>
                     <GridItem>
-                        <Button color="info" disabled={!this.canNext()} onClick={() => this.handlerStep()}>Next</Button>
+                        <Button color="info" disabled={!this.canNext()} onClick={() => this.handlerStep()}>{button_name}</Button>
                     </GridItem>
                 </GridContainer>
                 <div className={classes.divider}></div>

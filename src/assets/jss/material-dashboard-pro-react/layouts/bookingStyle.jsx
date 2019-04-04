@@ -27,7 +27,10 @@ const bookingStyle = theme => ({
     borderBottomStyle: 'solid'
   },
   content: {
-    maxHeight: 'calc(100vh - 370px)'
+    [theme.breakpoints.up("sm")]: {    
+      minHeight: 'calc(100vh - 370px)',
+      padding: '30px 0',
+    }
   },
   divider: {
     marginTop: '24px',
