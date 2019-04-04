@@ -32,6 +32,7 @@ import Warning from "@material-ui/icons/Warning";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
+import * as Validator from "../../../validator";
 import checkInModalStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInModalStyle.jsx";
 
 function Transition(props) {
@@ -41,32 +42,104 @@ function Transition(props) {
 class ConfirmModal extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {            
-            employeeSelect: "",
+        this.state = {
+            s_co: "",
+            s_coState: "",
+            s_address1: "",
+            s_address1State: "",
+            s_address2: "",
+            s_address2State: "",
+            s_city: "",
+            s_cityState: "",
+            s_zip: "",
+            s_zipState: "",
+            isNewShippingAddress: false
         }
     }
 
-    handleClose() {
-        this.props.onClose();
-        this.setState({
-            employeeSelect: ""
-        })
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.address) {
+            this.setState({
+                s_co: nextProps.address.co? nextProps.address.co : "",
+                s_coState: nextProps.address.co? "success" : "error",
+                s_address1: nextProps.address.street1? nextProps.address.street1 : "",
+                s_address1State: nextProps.address.street1? "success" : "error",
+                s_address2: nextProps.address.street2? nextProps.address.street2 : "",
+                s_address2State: nextProps.address.street2? "success" : "error",
+                s_city: nextProps.address.city? nextProps.address.city : "",
+                s_cityState: nextProps.address.city? "success" : "error",
+                s_zip: nextProps.address.postalCode? nextProps.address.postalCode : "",
+                s_zipState: nextProps.address.postalCode? "success" : "error"
+            })
+        }
     }
 
-    handleEmployee = event => {
-      this.setState({ [event.target.name]: event.target.value });
-    };
+    change(event, stateName, type, stateNameEqualTo, maxValue) {
+        switch (type) {
+            case "s_co":
+            case "s_address1":
+            case "s_address2":
+            case "s_zip":
+            case "s_city":
+                this.setState({
+                    [stateName]: event.target.value,                    
+                    isNewShippingAddress: true
+                })
+                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "error" });
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
-    checkIn() {        
+    canSubmit() {
+        if(this.state.s_coState === "success" &&
+            this.state.s_address1State === "success" &&
+            this.state.s_address2State === "success" &&
+            this.state.s_cityState === "success" &&
+            this.state.s_zipState === "success") {
+            return true;
+        } else {
+            return false
+        }
+    }
+
+    cancelOrder = () => {
         this.setState({
-            employeeSelect: ""
-        })
+            s_co: this.props.address.co? this.props.address.co : "",
+            s_address1: this.props.address.street1? this.props.address.street1 : "",
+            s_address2: this.props.address.street2? this.props.address.street2 : "",
+            s_city: this.props.address.city? this.props.address.city : "",
+            s_zip: this.props.address.postalCode? this.props.address.postalCode : "",
+            isNewShippingAddress: false
+        });
+        this.props.onClose(false);
+    }
+
+    saveOrder = () => {
+        let data = {
+            workingForId: this.props.workingForId,
+            shippingAddress: {
+                shippingAddressId: this.props.shippingAddressId,
+                street1: this.state.s_address1,
+                street2: this.state.s_address2,
+                postalCode: this.state.s_zip,
+                city: this.state.s_city,
+                co: this.state.s_co
+            },
+            isNewShippingAddress: this.state.isNewShippingAddress,
+            cart: this.props.cart
+        }
+        this.props.makeOrder(data);
         this.props.onClose(true);
     }
 
     render() {
         const { classes } = this.props;
-        const checkInTime = moment().format("HH:mm");
         return (
             <Dialog
                 classes={{
@@ -91,67 +164,17 @@ class ConfirmModal extends React.Component {
                     id="checkin-modal-description"
                     className={classes.modalBody}
                 >
-                    <FormControl
-                        fullWidth
-                        className={classes.selectFormControl}
-                    >
-                        <InputLabel
-                            htmlFor="simple-select"
-                            className={classes.selectLabel}
-                        >
-                            Select Salon
-                        </InputLabel>
-                        <Select
-                            MenuProps={{
-                                className: classes.selectMenu
-                            }}
-                            classes={{
-                                select: classes.select + " " + classes.text_left
-                            }}
-                            value={this.state.employeeSelect}
-                            onChange={this.handleEmployee}
-                            inputProps={{
-                                name: "employeeSelect",
-                                id: "simple-select"
-                            }}
-                        >
-                            <MenuItem
-                                disabled
-                                classes={{
-                                root: classes.selectMenuItem
-                                }}
-                            >
-                                Select Employee
-                            </MenuItem>
-                            {
-                                this.props.employees.map((employee, index) => {
-                                    return (
-                                        <MenuItem
-                                            classes={{
-                                                root: classes.selectMenuItem,
-                                                selected: classes.selectMenuItemSelected
-                                            }}
-                                            value={employee.employeeId}
-                                            key={index}
-                                        >
-                                            {employee.name}
-                                        </MenuItem>
-                                    )
-                                })
-                            }   
-                        </Select>
-                    </FormControl>
                     <CustomInput
-                        success={this.state.titleState === "success"}
-                        error={this.state.titleState === "error"}
-                        labelText="Tjänstens namn *"
-                        id="title"
+                        success={this.state.s_coState === "success"}
+                        error={this.state.s_coState === "error"}
+                        labelText="Co *"
+                        id="co"
                         formControlProps={{
                             fullWidth: true
                         }}
                         inputProps={{
                             endAdornment:
-                                this.state.titleState === "error" ? (
+                                this.state.s_coState === "error" ? (
                                 <InputAdornment position="end">
                                     <Warning className={classes.danger} />
                                 </InputAdornment>
@@ -159,9 +182,116 @@ class ConfirmModal extends React.Component {
                                 undefined
                             ),
                             onChange: event =>
-                                this.change(event, "title", "title", 0),
-                            type: "text",
-                            value: this.state.title
+                                this.change(event, "s_co", "s_co", 0),
+                            value: this.state.s_co,
+                            type: "text"
+                        }}
+                    />
+                    <CustomInput
+                        success={this.state.s_address1State === "success"}
+                        error={this.state.s_address1State === "error"}
+                        labelText="Adress1 *"
+                        id="address"
+                        formControlProps={{
+                            fullWidth: true
+                        }}
+                        inputProps={{
+                            endAdornment:
+                                this.state.s_address1State === "error" ? (
+                                <InputAdornment position="end">
+                                    <Warning className={classes.danger} />
+                                </InputAdornment>
+                                ) : (
+                                undefined
+                            ),
+                            onChange: event =>
+                                this.change(event, "s_address1", "s_address1", 0),
+                            value: this.state.s_address1,
+                            type: "text"
+                        }}
+                    />
+                    <CustomInput
+                        success={this.state.s_address2State === "success"}
+                        error={this.state.s_address2State === "error"}
+                        labelText="Adress2 *"
+                        id="address"
+                        formControlProps={{
+                            fullWidth: true
+                        }}
+                        inputProps={{
+                            endAdornment:
+                                this.state.s_address2State === "error" ? (
+                                <InputAdornment position="end">
+                                    <Warning className={classes.danger} />
+                                </InputAdornment>
+                                ) : (
+                                undefined
+                            ),
+                            onChange: event =>
+                                this.change(event, "s_address2", "s_address2", 0),
+                            value: this.state.s_address2,
+                            type: "text"
+                        }}
+                    />
+                    <CustomInput
+                        success={this.state.s_cityState === "success"}
+                        error={this.state.s_cityState === "error"}
+                        labelText="Postort *"
+                        id="city"
+                        formControlProps={{
+                            fullWidth: true
+                        }}
+                        inputProps={{
+                            endAdornment:
+                                this.state.s_cityState === "error" ? (
+                                <InputAdornment position="end">
+                                    <Warning className={classes.danger} />
+                                </InputAdornment>
+                                ) : (
+                                undefined
+                            ),
+                            onChange: event =>
+                                this.change(event, "s_city", "s_city", 0),
+                            value: this.state.s_city,
+                            type: "text"
+                        }}
+                    />
+                    <CustomInput
+                        success={this.state.s_zipState === "success"}
+                        error={this.state.s_zipState === "error"}
+                        labelText="Postnummer *"
+                        id="zip"
+                        formControlProps={{
+                            fullWidth: true
+                        }}
+                        inputProps={{
+                            endAdornment:
+                                this.state.s_zipState === "error" ? (
+                                <InputAdornment position="end">
+                                    <Warning className={classes.danger} />
+                                </InputAdornment>
+                                ) : (
+                                undefined
+                            ),
+                            onChange: event =>
+                                this.change(event, "s_zip", "s_zip", 0),
+                            value: this.state.s_zip,
+                            type: "number"
+                        }}
+                    />
+                    <CustomInput
+                        labelText="Salongsbeskrivning"
+                        id="comment"
+                        formControlProps={{
+                            fullWidth: true
+                        }}
+                        inputProps={{
+                            multiline: true,
+                            rows: 4,                              
+                            onChange: event =>
+                                this.change(event, "comment", "comment", 0),
+                            value: this.state.description,
+                            type: "text"
                         }}
                     />
                 </DialogContent>
@@ -169,14 +299,15 @@ class ConfirmModal extends React.Component {
                     <Button 
                         color="danger"
                         size="sm"
-                        onClick={() => this.handleClose()}
+                        onClick={() => this.cancelOrder()}
                     >
                         Cancel
                     </Button>
                     <Button
-                        onClick={() => this.checkIn()}
+                        onClick={() => this.saveOrder()}
                         color="info"
                         size="sm"
+                        disabled={!this.canSubmit()}
                     >
                         Save
                     </Button>
@@ -193,14 +324,12 @@ ConfirmModal.propTypes = {
 function mapStateToProps(state) {
   return {
     workingForId: state.user.workingForId,
-    employees: state.employees.employees,
-    errorMsg    : state.checkInOut.errorMsg
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    checkIn: Actions.checkIn
+    makeOrder: Actions.makeOrder
   }, dispatch);
 }
 

@@ -61,6 +61,7 @@ class B2BShop extends React.Component {
         this.initStateForQty(this.products[i].id);
       }
     }
+    if(nextProps.cart) this.setState({cart: nextProps.cart})
   }
   initStateForQty(index) {
     this.setState({
@@ -167,15 +168,32 @@ class B2BShop extends React.Component {
               onChange: (event)=> this.setState({["qty_" + product.id]: event.target.value})
             }}
           />
-          <Button color="info" round size="sm" className={classes.marginRight} onClick={() => console.log('focus: ', this.state["qty_" + product.id])}>
+          <Button color="info" round size="sm" className={classes.marginRight} onClick={() => this.addCart(product)}>
             Add
           </Button>
         </div>
       </span>
     )
   }
-  addCart = () => {
+  addCart = (product) => {
+    let cart = this.state.cart? this.state.cart : [];
+    cart.map((item, key) => {
+      if(item.product.id === product.id)
+        cart.splice(key, 1)
+    })
 
+    let temp = {};
+    temp['product'] = product;
+    temp['quantityOrdered'] = this.state["qty_" + product.id];
+
+    cart.push(temp);
+    this.setState({
+      cart: cart
+    });
+  }
+  goCart = () => {
+    this.props.setCart(this.state.cart);
+    this.props.history.push('/b2bshop/cart');
   }
 
   // Pagination actions
@@ -294,6 +312,7 @@ class B2BShop extends React.Component {
                       round
                       color="info"
                       className={classes.marginRight}
+                      onClick={() => this.goCart()}
                     >
                       <AddShoppingCart className={classes.icons} />
                     </Button>
@@ -382,16 +401,18 @@ function mapStateToProps(state) {
     workingForId: state.user.workingForId,
     loading     : state.b2b_shop.product.loading,
     error       : state.b2b_shop.product.error,
-    products    : state.b2b_shop.product.products
+    products    : state.b2b_shop.product.products,
+    cart        : state.b2b_shop.cart.cart
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getUserData: Actions.getUserData,
+    getUserData     : Actions.getUserData,
     featuredProduct : Actions.featuredProduct,
     searchProduct   : Actions.searchProduct,
-    categoryProduct : Actions.categoryProduct
+    categoryProduct : Actions.categoryProduct,
+    setCart         : Actions.setCart
 }, dispatch);
 }
 

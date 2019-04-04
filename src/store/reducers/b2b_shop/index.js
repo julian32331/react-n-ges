@@ -6,9 +6,11 @@
 import {combineReducers} from 'redux';
 
 import product from './product.reducer';
+import cart from './cart.reducer';
 
 const b2b_shop = combineReducers({
-    product
+    product,
+    cart
 })
 
 export default b2b_shop;

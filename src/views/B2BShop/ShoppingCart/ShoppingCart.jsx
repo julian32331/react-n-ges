@@ -9,6 +9,8 @@ import connect from 'react-redux/es/connect/connect';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormLabel from "@material-ui/core/FormLabel";
+import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // material-ui icons
 import Assignment from "@material-ui/icons/Assignment";
@@ -44,137 +46,113 @@ class ShoppingCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: [],
+      cart: this.props.cart,
       confirmModal: false,
       isCompleted: false
     };
-    this.handleToggle = this.handleToggle.bind(this);
   }
 
   componentDidMount() {
     this.props.getUserData();
     setTimeout(() => {
-      this.props.getOrders();
+      this.props.getShippingAddress({
+        workingForId: this.props.workingForId
+      });
+      this.props.getCart();
     }, 100);
   }
 
-  handleToggle(value) {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
+  remove = (id) => {
+    let cart = this.state.cart? this.state.cart : [];
+    cart.map((item, key) => {
+      if(item.product.id === id)
+        cart.splice(key, 1)
+    })
 
     this.setState({
-      checked: newChecked
+      cart: cart
     });
+  }
+  changeQTY = (event, key) => {
+    let cart = this.state.cart? this.state.cart : [];
+    cart[key]['quantityOrdered'] = event.target.value;
+
+    this.setState({
+      cart: cart
+    });
+  }
+
+  makeCart = () => {
+    let cart = [];
+    this.state.cart.map(item => {
+      let temp = {};
+
+      temp.articleNo = item.product.articleNo;
+      temp.quantityOrdered = item.quantityOrdered;
+      
+      cart.push(temp);
+    })
+
+    return cart;
   }
   
   // Open and close New modal
-  onCloseConfirmModal(isCompleted) {
+  onCloseConfirmModal = (isCompleted) => {
+    console.log('isCompleted: ', isCompleted)
     this.setState({
       isCompleted: isCompleted,
       confirmModal: false
     })
   }
-  onOpenConfirmModal = (title, data=null) => {
-    this.setState({
-      confirmModal: true,
-      modalData: data
-    })
-  }
 
   render() {
-    console.log('orders: ', this.props.orders)
     const { classes } = this.props;
-    const fillButtons = [
-      { color: "info", icon: Person },
-      { color: "success", icon: Edit },
-      { color: "danger", icon: Close }
-    ].map((prop, key) => {
-      return (
-        <Button color={prop.color} className={classes.actionButton} key={key}>
-          <prop.icon className={classes.icon} />
-        </Button>
-      );
-    });
-    const simpleButtons = [
-      { color: "info", icon: Person },
-      { color: "success", icon: Edit },
-      { color: "danger", icon: Close }
-    ].map((prop, key) => {
-      return (
-        <Button
-          color={prop.color}
-          simple
-          className={classes.actionButton}
-          key={key}
-        >
-          <prop.icon className={classes.icon} />
-        </Button>
-      );
-    });
-    const roundButtons = [
-      { color: "info", icon: Person },
-      { color: "success", icon: Edit },
-      { color: "danger", icon: Close }
-    ].map((prop, key) => {
-      return (
-        <Button
-          round
-          color={prop.color}
-          className={classes.actionButton + " " + classes.actionButtonRound}
-          key={key}
-        >
-          <prop.icon className={classes.icon} />
-        </Button>
-      );
-    });
-    let orders = [];
+
+    let booked = [];
     let total_price = 0
-    this.props.orders.map((order, key) => {
+    this.state.cart.map((item, key) => {
       let temp = [];
-      total_price += order.product.price * order.qty;
+      total_price += Number(item.product.price) * item.quantityOrdered;
       temp.push(
         <div className={classes.imgContainer}>
-          <img src={order.product.imageURL} alt="..." className={classes.img} />
+          <img src={item.product.imageURL} alt="..." className={classes.img} />
         </div>
       )
       temp.push(
         <span>
           <a href="" className={classes.tdNameAnchor}>
-            {order.product.name}
+            {item.product.name}
           </a>
           <br />
           <small className={classes.tdNameSmall}>
-            {order.product.articleNo}
+            {item.product.articleNo}
           </small>
         </span>
       )
       temp.push(
         <span>
-          <small className={classes.tdNumberSmall}>kr</small> {order.product.price}
+          <small className={classes.tdNumberSmall}>kr</small> {item.product.price}
         </span>
       )
       temp.push(
         <div className={classes.qty}>
-          {order.qty}
-          {/* <CustomInput
-            id="qty"
+          <TextField
+            id="outlined-bare"
+            className={classes.textField}
+            defaultValue={item.quantityOrdered}
+            margin="normal"
+            variant="outlined"
+            type="number"
             inputProps={{
-              type: "number",
-              value: order.qty
+              className: classes.qty,
+              onChange: (event)=> this.changeQTY(event, key)
             }}
-          /> */}
+          />
         </div>
       )
       temp.push(
         <span>
-          <small className={classes.tdNumberSmall}>kr</small> {order.product.price * order.qty}
+          <small className={classes.tdNumberSmall}>kr</small> {Number(item.product.price) * item.quantityOrdered}
         </span>
       )
       temp.push(
@@ -184,31 +162,32 @@ class ShoppingCart extends React.Component {
           color="danger"
           size="sm"
           className={classes.marginRight}
+          onClick={() => this.remove(item.product.id)}
         >
           <Close className={classes.icons} />
         </Button>
       )
-      orders.push(temp);
+      booked.push(temp);
     })
-    orders.push(
+    booked.push(
       {
         total: true,
         colspan: "3",
         amount: (
           <span>
-            <small>kr</small>{total_price}
+            <small>kr</small> {total_price}
           </span>
         )
       }
     )
-    orders.push(        
+    booked.push(        
       {
         purchase: true,
         colspan: "3",
         col: {
           colspan: 3,
           text: (
-            <Button color="info" round onClick={this.onOpenConfirmModal}>
+            <Button color="info" round onClick={() => this.setState({confirmModal: true})}>
               Complete Purchase{" "}
               <KeyboardArrowRight className={classes.icon} />
             </Button>
@@ -216,7 +195,7 @@ class ShoppingCart extends React.Component {
         }
       }
     )
-    console.log('orders : ', orders)
+    
     return (
       <GridContainer>
         <GridItem xs={12}>
@@ -242,54 +221,70 @@ class ShoppingCart extends React.Component {
                   </Button>
                 </CardBody>
               ) : (
-                <CardBody>              
-                  <GridContainer>
-                    <GridItem xs={3} sm={1} md={2} lg={1}>
-                      <FormLabel className={classes.labelHorizontal}>
-                        Search :
-                      </FormLabel>
-                    </GridItem>
-                    <GridItem xs={9} sm={3} md={3} lg={2}>
-                      <CustomInput
-                        id="search"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          type: "search",
-                          onChange: event =>
-                            this.searchHandler("search", event),
-                          value: this.state.search               
-                        }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <Table
-                    tableHead={[
-                      "",
-                      "PRODUCT",
-                      "PRICE",
-                      "QTY",
-                      "AMOUNT",
-                      ""
-                    ]}
-                    tableData={orders}
-                    tableShopping
-                    customHeadCellClasses={[
-                      classes.center,
-                      classes.center,
-                      classes.right,
-                      classes.right
-                    ]}
-                    customHeadClassesForCells={[0, 2, 3, 4, 5]}
-                    customCellClasses={[
-                      classes.tdName,
-                      classes.tdNumber + " " + classes.center,
-                      classes.tdNumber + " " + classes.right,
-                      classes.tdNumber + " " + classes.right,
-                    ]}
-                    customClassesForCells={[1, 2, 3, 4]}
-                  />
+                <CardBody>       
+                  {
+                    this.props.loading? (
+                      <div className={classes.center}>
+                        <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                      </div>
+                    ) : (
+                      this.props.cart.length > 0? (
+                        <div>
+                          <GridContainer>
+                            <GridItem xs={3} sm={1} md={2} lg={1}>
+                              <FormLabel className={classes.labelHorizontal}>
+                                Search :
+                              </FormLabel>
+                            </GridItem>
+                            <GridItem xs={9} sm={3} md={3} lg={2}>
+                              <CustomInput
+                                id="search"
+                                formControlProps={{
+                                  fullWidth: true
+                                }}
+                                inputProps={{
+                                  type: "search",
+                                  onChange: event =>
+                                    this.searchHandler("search", event),
+                                  value: this.state.search               
+                                }}
+                              />
+                            </GridItem>
+                          </GridContainer>
+                          <Table
+                            tableHead={[
+                              "",
+                              "PRODUCT",
+                              "PRICE",
+                              "QTY",
+                              "AMOUNT",
+                              ""
+                            ]}
+                            tableData={booked}
+                            tableShopping
+                            customHeadCellClasses={[
+                              classes.center,
+                              classes.center,
+                              classes.center,
+                              classes.right
+                            ]}
+                            customHeadClassesForCells={[0, 2, 3, 4, 5]}
+                            customCellClasses={[
+                              classes.tdName,
+                              classes.tdNumber + " " + classes.center,
+                              classes.center,
+                              classes.tdNumber + " " + classes.right,
+                            ]}
+                            customClassesForCells={[1, 2, 3, 4]}
+                          />
+                        </div>
+                      ) : (
+                        <h3 className={classes.center}>No data</h3>
+                      )
+                      
+                    )
+                  }       
+                  
                 </CardBody>
               )
             }
@@ -297,7 +292,9 @@ class ShoppingCart extends React.Component {
           </Card>
           <ConfirmModal 
             onOpen={this.state.confirmModal}
-            onClose={this.onCloseConfirmModal.bind(this)}
+            onClose={(status) => this.onCloseConfirmModal(status)}
+            address={this.props.shipping_address}
+            cart={this.makeCart()}
           />
         </GridItem>
       </GridContainer>
@@ -307,15 +304,18 @@ class ShoppingCart extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    workingForId: state.user.workingForId,
-    orders: state.b2bshop.orders
+    workingForId    : state.user.workingForId,
+    cart            : state.b2b_shop.cart.cart,
+    shipping_address: state.b2b_shop.cart.shipping_address,
+    loading         : state.b2b_shop.cart.loading
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getUserData: Actions.getUserData,
-    getOrders: Actions.getOrders
+    getUserData         : Actions.getUserData,
+    getCart             : Actions.getCart,
+    getShippingAddress  : Actions.getShippingAddress
   }, dispatch);
 }
 
