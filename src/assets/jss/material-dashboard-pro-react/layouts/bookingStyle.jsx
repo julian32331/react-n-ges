@@ -30,7 +30,8 @@ const bookingStyle = theme => ({
     [theme.breakpoints.up("sm")]: {    
       minHeight: 'calc(100vh - 370px)',
       padding: '30px 0',
-    }
+    },
+    padding: '10px 0'
   },
   divider: {
     marginTop: '24px',

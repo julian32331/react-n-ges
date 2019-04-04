@@ -79,7 +79,7 @@ class Booking extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            step                : 5,
+            step                : 1,
             serviceId           : null,            
             hairdresserId       : null,
             booking_date        : "",
