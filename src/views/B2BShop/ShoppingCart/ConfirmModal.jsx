@@ -90,6 +90,15 @@ class ConfirmModal extends React.Component {
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
                 }
+            case "comment":
+                this.setState({
+                    [stateName]: event.target.value
+                })
+                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "error" });
+                }
                 break;
             default:
                 break;
@@ -121,7 +130,7 @@ class ConfirmModal extends React.Component {
     }
 
     saveOrder = () => {
-        console.log('shippingAddress: ', this.props.address)
+        console.log('this.state.comment: ', this.state.comment)
         let data = {
             workingForId: this.props.workingForId,
             shippingAddress: {
@@ -133,6 +142,7 @@ class ConfirmModal extends React.Component {
                 co: this.state.s_co
             },
             isNewShippingAddress: this.state.isNewShippingAddress,
+            orderNote: this.state.comment,
             cart: this.props.cart
         }
         this.props.makeOrder(data);
