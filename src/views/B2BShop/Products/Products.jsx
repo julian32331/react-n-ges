@@ -58,7 +58,7 @@ class B2BShop extends React.Component {
     if (nextProps.products) {
       this.products = nextProps.products;
       for (let i = 0; i < this.products.length; i++) {
-        this.initStateForQty(this.products[i].id);
+        this.initStateForQty(this.products[i].articleNo);
       }
     }
     if(nextProps.cart) this.setState({cart: nextProps.cart})
@@ -165,7 +165,7 @@ class B2BShop extends React.Component {
             type="number"
             inputProps={{
               className: classes.qty,
-              onChange: (event)=> this.setState({["qty_" + product.id]: event.target.value})
+              onChange: (event)=> this.setState({["qty_" + product.articleNo]: event.target.value})
             }}
           />
           <Button color="info" round size="sm" className={classes.marginRight} onClick={() => this.addCart(product)}>
@@ -177,14 +177,16 @@ class B2BShop extends React.Component {
   }
   addCart = (product) => {
     let cart = this.state.cart? this.state.cart : [];
+    console.log('cart: ', cart);
+    console.log('product: ', product);
     cart.map((item, key) => {
-      if(item.product.id === product.id)
+      if(item.product.articleNo === product.articleNo)
         cart.splice(key, 1)
     })
 
     let temp = {};
     temp['product'] = product;
-    temp['quantityOrdered'] = this.state["qty_" + product.id];
+    temp['quantityOrdered'] = this.state["qty_" + product.articleNo];
 
     cart.push(temp);
     this.setState({
