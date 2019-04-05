@@ -6,6 +6,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import moment from 'moment';
+
 import { bindActionCreators } from 'redux';
 import * as Actions from 'store/actions';
 import { withRouter } from 'react-router-dom';
@@ -13,14 +15,6 @@ import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import StepConnector from '@material-ui/core/StepConnector';
-// import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Typography from '@material-ui/core/Typography';
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
-import { StepIcon } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from '@material-ui/core/TextField';
@@ -29,9 +23,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // @material-ui/icons
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
-import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 import Check from "@material-ui/icons/Check";
-import Assignment from "@material-ui/icons/Assignment";
 import Face from "@material-ui/icons/Face";
 import Email from "@material-ui/icons/Email";
 import Phone from "@material-ui/icons/Phone";
@@ -40,30 +32,18 @@ import Phone from "@material-ui/icons/Phone";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-import Accordion from "components/Accordion/Accordion.jsx";
 import Card from "components/Card/Card.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Table from "components/Table/Table.jsx";
 import Stepper from "components/Stepper/Stepper.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
-import InfiniteCalendar from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
-
 import Slider from "react-slick";
-import priceImage1 from "assets/img/card-2.jpeg";
-import priceImage2 from "assets/img/card-3.jpeg";
-import priceImage3 from "assets/img/card-1.jpeg";
-
-import moment from 'moment';
-import Loader from 'react-loader-spinner';
 
 import * as Utils from 'utils';
 import * as Validator from "./../validator";
 import bookingStyle from "assets/jss/material-dashboard-pro-react/layouts/bookingStyle.jsx";
-import { arch } from "os";
 
 const days = [    
     "Sunday",

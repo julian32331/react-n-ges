@@ -28,7 +28,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 import * as Validator from "./../../../validator";
-import checkInModalStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInModalStyle.jsx";
+import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
@@ -241,4 +241,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default withStyles(checkInModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SetBreakModal)));
+export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SetBreakModal)));

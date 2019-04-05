@@ -472,7 +472,7 @@ button.rbc-input::-moz-focus-inner {
   -webkit-flex: none;
       -ms-flex: none;
           flex: none;
-  padding-right: 5px;
+  padding-left: 5px;
   width: auto;
   font-weight: bold;
   -webkit-box-sizing: content-box;
@@ -665,7 +665,7 @@ button.rbc-input::-moz-focus-inner {
   background-color: $brand-success; /* default BACKGROUND color */
   // @include shadow-big-color($brand-success);
   font-weight: normal; /* undo jqui's ui-widget-header bold */
-  text-align: right;
+  // text-align: right;
   border: none;
   padding-bottom: 1px;
   line-height: 1.2;
