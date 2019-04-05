@@ -13,12 +13,50 @@ const dashboardStyle = theme => ({
   ...commonStyle,
   cardContent: {
     position: "relative",
-    minHeight: "70vh",
     backgroundImage: "url(" + topLeft + "), url(" + topRight + "), url(" + bottomRight + "), url(" + bottomLeft + ")",
     backgroundPosition: "left top, right top, right bottom, left bottom", 
     backgroundSize: '20% auto',
     backgroundRepeat: "no-repeat"
   },
+  container: {
+    width: 'calc(60% + 30px)',
+    textAlign: 'center',
+    margin: 'auto',
+    [theme.breakpoints.down("md")]: {
+      width: '85%',
+      padding: '40px 0'
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: '85%',
+      padding: '30px 0'
+    }
+  },
+  title: {
+    padding: '60px 0',
+    lineHeight: '48px',
+    fontSize: '40px',
+    [theme.breakpoints.down("md")]: {
+      padding: '50px 0 10px',
+    },
+    [theme.breakpoints.down("xs")]: {
+      padding: '36px 0 0',
+      fontSize: '20px',
+      lineHeight: '24px',
+      fontWeight: '600'
+    }
+  },
+  content: {
+    fontSize: '24px',
+    fontWeight: '500',
+    lineHeight: '40px',
+    margin: '24px 0',
+    [theme.breakpoints.down("xs")]: {
+      fontSize: '16px',
+      lineHeight: '20px',
+      margin: '16px 0'
+    }
+  },
+  
   text_center: {
     textAlign: 'center'
   },

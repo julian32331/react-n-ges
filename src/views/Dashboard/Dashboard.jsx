@@ -90,21 +90,23 @@ class Dashboard extends React.Component {
             />
           </div>
         ) : (
-          <Card>
+          <Card classes={{card: classes.card}}>
             <CardBody className={classes.cardContent}>
-              <h2 className={classes.text_center}>VARMT VÄLKOMMEN TILL GESELLE</h2>
-              <p style={{width: '60%', textAlign: 'center', margin: '10px auto 0', fontSize: '20px', lineHeight: '25px'}}>
-                Nordeuropas största frisörkedja för frisörer och salonger med frisörlicens & gesäll brev.
-              </p>
-              <p style={{width: '60%', textAlign: 'center', margin: '10px auto 0', fontSize: '20px', lineHeight: '25px'}}>
-                Vi ser fram emot att ta väl hand om dig, och att vi tillsammans skapar förutsättningarna för att återta kraften online och offline till alla våra medlemmar.
-              </p>
-              <p style={{width: '60%', textAlign: 'center', margin: '10px auto 0', fontSize: '20px', lineHeight: '25px'}}>
-                Geselle One är världens modernaste IT plattform för frisörer & salonger, och vår grundfilosofi är att det ska vara enkelt att driva salong och att lönsamheten till våra medlemmar är vårt fokus.
-              </p>
-              <p style={{width: '60%', textAlign: 'center', margin: '10px auto 0', fontSize: '20px', lineHeight: '25px'}}>
-                På Geselle One intranät kommer vi löpande gå ut med nyheter i världklass.
-              </p>
+              <div className={classes.container}>
+                <div className={classes.title}>VARMT VÄLKOMMEN TILL GESELLE</div>
+                <p className={classes.content}>
+                  Nordeuropas största frisörkedja för frisörer och salonger med frisörlicens & gesäll brev.
+                </p>
+                <p className={classes.content}>
+                  Vi ser fram emot att ta väl hand om dig, och att vi tillsammans skapar förutsättningarna för att återta kraften online och offline till alla våra medlemmar.
+                </p>
+                <p className={classes.content}>
+                  Geselle One är världens modernaste IT plattform för frisörer & salonger, och vår grundfilosofi är att det ska vara enkelt att driva salong och att lönsamheten till våra medlemmar är vårt fokus.
+                </p>
+                <p className={classes.content}>
+                  På Geselle One intranät kommer vi löpande gå ut med nyheter i världklass.
+                </p>
+              </div>
             </CardBody>
 
             <SelectModal

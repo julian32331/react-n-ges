@@ -7,6 +7,10 @@ import {
 } from "assets/jss/material-dashboard-pro-react.jsx";
 
 const commonStyle = {
+    card: {
+      minHeight: '75vh',
+      margin: '0',
+    },
     cardTitle: {
       marginTop: "0",
       // marginBottom: "3px",
