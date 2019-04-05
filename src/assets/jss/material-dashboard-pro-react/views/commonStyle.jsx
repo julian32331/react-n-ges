@@ -27,6 +27,18 @@ const commonStyle = {
       position: "relative",
       minHeight: "20vh",
     },
+
+    // loading styles
+    loading_container: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+    },
+    loading: {
+      color: '#7da8ae'
+    },
+
     danger: {
       color: dangerColor + "!important"
     },

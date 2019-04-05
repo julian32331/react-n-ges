@@ -5,6 +5,7 @@
 
 //  Booking actions
 export * from './booking';
+export * from './booking_appointment';
 export * from './b2b_shop';
 
 // Admin section
@@ -19,6 +20,3 @@ export * from './employees.actions';
 export * from './mySalons.actions';
 export * from './profile.actions';
 export * from './b2bshop.actions';
-
-// Customer section
-export * from './admin.actions';

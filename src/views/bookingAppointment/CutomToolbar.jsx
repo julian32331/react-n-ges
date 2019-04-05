@@ -105,15 +105,14 @@ class CalendarToolBar extends React.PureComponent {
                         Set DayOff
                     </Button>
                 </GridItem>
-            </GridContainer>
-            
+            </GridContainer>            
         );
     }
 }
 
 CalendarToolBar.propTypes = {  
-    onNavigate: PropTypes.func,
-    label: PropTypes.string
+    onNavigate  : PropTypes.func,
+    label       : PropTypes.string
 };
 
 export default withStyles(customToolbarStyle)(CalendarToolBar);

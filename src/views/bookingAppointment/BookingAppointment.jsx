@@ -14,6 +14,7 @@ import SweetAlert from "react-bootstrap-sweetalert";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // material-ui icons
 import Person from "@material-ui/icons/Person";
@@ -50,12 +51,12 @@ class BookingAppointment extends React.Component {
   componentDidMount() {
     this.props.getUserData();
     setTimeout(() => {
-      this.getBookingList(this.state.initDate);
+      this.getAppointment(this.state.initDate)
     }, 100);
   }
 
-  getBookingList(date) {
-    this.props.getBookingList({
+  getAppointment(date) {
+    this.props.getAppointment({
       workingForId: this.props.workingForId,
       date: moment(date).format("YYYY-MM-DD")
     })
@@ -63,7 +64,7 @@ class BookingAppointment extends React.Component {
 
   onChangeDate(date) {
     this.setState({ initDate: date });
-    this.getBookingList(date)
+    this.getAppointment(date)
   }
 
   // selectedEvent(event) {
@@ -118,70 +119,71 @@ class BookingAppointment extends React.Component {
   // }
 
   render() {
-    const { classes } = this.props;
+    const { classes, loading } = this.props;
 
-    // Calendar options
     const formats = {
       timeGutterFormat: "HH:mm",
       dayHeaderFormat: "YYYY-MM-DD"
     }
 
-    const bookingData = [];
-    this.props.bookingData.map(data => {
+    const data = [];
+    this.props.data.map(list => {
       let temp = {};
-      temp.comment = data.comment;
-      temp.consumerName = data.consumerName;
-      temp.resourceId = data.hairdresser_id;
-      temp.id = data.id;
-      temp.plannedEndTime = moment(data.plannedEndTime).toDate();
-      temp.plannedStartTime = moment(data.plannedStartTime).toDate();
+      temp.comment = list.comment;
+      temp.consumerName = list.consumerName;
+      temp.resourceId = list.hairdresser_id;
+      temp.id = list.id;
+      temp.plannedEndTime = moment(list.plannedEndTime).toDate();
+      temp.plannedStartTime = moment(list.plannedStartTime).toDate();
 
-      bookingData.push(temp);
+      data.push(temp);
     });
-    console.log('bookingData: ', bookingData);
 
 
     return (
       <div>
         <GridContainer justify="center">
           <GridItem xs={12}>
-            {
-              this.props.hairdressers.length > 0? (
-                <Card classes={{card: classes.card}}>
-                  <CardHeader>            
-                    <div className={classes.cardHeader}>
-                        <h3 className={classes.cardTitle}>Booking Appointment</h3>
-                    </div>
-                  </CardHeader>
+              <Card classes={{card: classes.card}}>
+                <CardHeader>            
+                  <div className={classes.cardHeader}>
+                      <h3 className={classes.cardTitle}>Booking Appointment</h3>
+                  </div>
+                </CardHeader>
                   <CardBody calendar>
-                    <BigCalendar   
-                      formats={formats}
-                      localizer={localizer}
-                      date={this.state.initDate}
-                      step={15}
-                      timeslots={4}
-                      defaultView="day"
-                      views={['day']}
-                      components={
-                        {
-                          toolbar: CustomToolbar
-                        }
-                      }
-                      resources={this.props.hairdressers}
-                      resourceIdAccessor="hairdresser_id"
-                      resourceTitleAccessor="name"
-                      events={bookingData}
-                      titleAccessor="consumerName"
-                      startAccessor="plannedStartTime"
-                      endAccessor="plannedEndTime"
-                      onNavigate={(date) => this.onChangeDate(date)}
-                      // onSelectEvent={event => this.selectedEvent(event)}
-                      min={new Date(2019, 1, 0, 8, 0, 0)}
-                    />
-                  </CardBody>
-                </Card>
-              ) : undefined
-            }
+                    {
+                      loading? (
+                        <div className={classes.loading_container}>
+                          <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                        </div>
+                      ) : 
+                        <BigCalendar   
+                          formats={formats}
+                          localizer={localizer}
+                          date={this.state.initDate}
+                          step={15}
+                          timeslots={4}
+                          defaultView="day"
+                          views={['day']}
+                          components={
+                            {
+                              toolbar: CustomToolbar
+                            }
+                          }
+                          resources={this.props.employees}
+                          resourceIdAccessor="hairdresser_id"
+                          resourceTitleAccessor="name"
+                          events={data}
+                          titleAccessor="consumerName"
+                          startAccessor="plannedStartTime"
+                          endAccessor="plannedEndTime"
+                          onNavigate={(date) => this.onChangeDate(date)}
+                          // onSelectEvent={event => this.selectedEvent(event)}
+                          min={new Date(2019, 1, 0, 8, 0, 0)}
+                        />
+                    }
+                  </CardBody>                
+              </Card>
           </GridItem>
         </GridContainer>
       </div>
@@ -192,15 +194,16 @@ class BookingAppointment extends React.Component {
 function mapStateToProps(state) {
   return {
     workingForId: state.user.workingForId,
-    bookingData: state.admin.bookingData,
-    hairdressers: state.admin.hairdressers
+    loading     : state.booking_appointment.loading,
+    data        : state.booking_appointment.data,
+    employees   : state.booking_appointment.employees
   }
 }
   
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({          
-    getUserData : Actions.getUserData,
-    getBookingList: Actions.getBookingList
+    getUserData     : Actions.getUserData,
+    getAppointment  : Actions.getAppointment
   }, dispatch);
 }
   
