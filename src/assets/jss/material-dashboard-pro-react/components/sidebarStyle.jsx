@@ -155,7 +155,6 @@ const sidebarStyle = theme => ({
     transform: "translate3d(0px, 0, 0)",
     textTransform: "uppercase",
     padding: "5px 0px",
-    fontSize: "18px",
     whiteSpace: "nowrap",
     fontWeight: "400",
     lineHeight: "30px",
@@ -164,7 +163,8 @@ const sidebarStyle = theme => ({
       color: "inherit"
     },
     textAlign: "center",
-    fontSize:"24px",
+    fontSize:"32px",
+    fontWeight: '600',
   },
   logoSpan: {
     color: infoColor
@@ -485,8 +485,8 @@ const sidebarStyle = theme => ({
     transition: "all 300ms linear",
     // width: "34px",
     // height: "34px",
-    width: "80px",
-    height: "80px",
+    width: "72px",
+    height: "72px",
     overflow: "hidden",
     // float: "left",
     zIndex: "5",
@@ -494,7 +494,9 @@ const sidebarStyle = theme => ({
     borderRadius: "50%",
     // marginLeft: "23px",
     margin: 'auto',
-    ...boxShadow
+    ...boxShadow,
+    border: 'solid 2px #7da8ae',
+    background: '#ddd'
   },
   photoRTL: {
     float: "right",
