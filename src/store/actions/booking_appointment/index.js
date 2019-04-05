@@ -30,25 +30,21 @@ export function getAppointment(data) {
     }
 }
 
-export const BREAK_TIME_REQUEST = '[BOOKING APPOINTMENT] BREAK TIME REQUEST';
-export const BREAK_TIME_SUCCESS = '[BOOKING APPOINTMENT] BREAK TIME SUCCESS';
-export const BREAK_TIME_FAILED  = '[BOOKING APPOINTMENT] BREAK TIME FAILED';
+export const BREAK_SUCCESS = '[BOOKING APPOINTMENT] BREAK SUCCESS';
+export const BREAK_FAILED  = '[BOOKING APPOINTMENT] BREAK FAILED';
 
-export function setBreakTime(data) {
-    const request = Utils.xapi().post('booking/dashboard/break', data);
+export function setBreak(data, root) {
+    const request = root === 'time'? Utils.xapi().post('booking/dashboard/break', data) : Utils.xapi().post('booking/dashboard/dayoff', data);
 
     return (dispatch) => {
-        dispatch({
-            type: BREAK_TIME_REQUEST
-        })
         request.then((response) =>
             dispatch({
-                type    : BREAK_TIME_SUCCESS,
+                type    : BREAK_SUCCESS,
                 payload : response.data
             })
         ).catch((error) => {
             dispatch({
-                type    : BREAK_TIME_FAILED,
+                type    : BREAK_FAILED,
                 payload : error
             })
         });

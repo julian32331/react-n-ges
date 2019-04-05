@@ -109,7 +109,7 @@ export var dashRoutes1 = [
   //   isDev: true
   // },
   {
-    path: "/bookingAppointment",
+    path: "/bookingappointment",
     name: "Booking Appointment",
     icon: DateRange,
     component: BookingAppointment,

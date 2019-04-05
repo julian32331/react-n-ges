@@ -14,20 +14,22 @@ import moment from "moment";
 import withStyles from "@material-ui/core/styles/withStyles";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-// material-ui icons
-
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Button from "components/CustomButtons/Button.jsx";
 
 import bookingAppointmentStyle from "assets/jss/material-dashboard-pro-react/views/bookingAppointment/bookingAppointmentStyle.jsx";
 import CustomToolbar from "./CutomToolbar";
 import SetBreakModal from './modals/SetBreakModal';
 
 const localizer = BigCalendar.momentLocalizer(moment);
+const colors = [
+  "green", "azure", "orange", "rose"
+]
 
 class BookingAppointment extends React.Component {
   constructor(props) {
@@ -40,7 +42,6 @@ class BookingAppointment extends React.Component {
       end           : ""
     };
     this.onChangeDate = this.onChangeDate.bind(this);
-    // this.hideAlert = this.hideAlert.bind(this);
   }
 
   componentDidMount() {
@@ -61,77 +62,48 @@ class BookingAppointment extends React.Component {
     this.setState({ initDate: date });
     this.getAppointment(date)
   }
+
+  eventColors(event) {
+    let color_id = event.resourceId % 4;
+
+    let backgroundColor = "event-" + colors[color_id];    
+    if(event.bookingType === "BREAK")
+      backgroundColor = "event-red";
+
+    return {
+      className: backgroundColor
+    };
+  }
   
   // Setting break time
   onOpenSetBreakModal = ({resourceId, start, end}) => {
-    let user = this.props.employees.find((employee) => {
-      return employee.hairdresser_id == resourceId
-    })
-    if(user.name === this.props.username) {
+    // let user = this.props.employees.find((employee) => {
+    //   return employee.hairdresser_id == resourceId
+    // })
+    // if(user.name === this.props.username) {
       this.setState({
         setBreakModal : true,
         hairdresserId : resourceId,
         start         : moment(start).format('YYYY-MM-DD HH:mm'),
         end           : moment(end).format('HH:mm')
       })
-    }
+    // }
+  }
+  onOpenSetBreakModalWithoutId = () => {
+    this.setState({
+      setBreakModal : true,
+      start         : moment().format('YYYY-MM-DD'),
+      end           : ""
+    })
   }
   onCloseSetBreakModal = () => {
     this.setState({
-      setBreakModal: false
+      setBreakModal: false,
+      hairdresserId : "",
+      start         : "",
+      end           : ""
     })
   }
-
-  // selectedEvent(event) {
-  //   alert(event.title);
-  // }
-  // addNewEventAlert(slotInfo) {
-  //   this.setState({
-  //     alert: (
-  //       <SweetAlert
-  //         input
-  //         showCancel
-  //         style={{ display: "block", marginTop: "-100px" }}
-  //         title="Input something"
-  //         onConfirm={e => this.addNewEvent(e, slotInfo)}
-  //         onCancel={() => this.hideAlert()}
-  //         confirmBtnCssClass={
-  //           this.props.classes.button + " " + this.props.classes.success
-  //         }
-  //         cancelBtnCssClass={
-  //           this.props.classes.button + " " + this.props.classes.danger
-  //         }
-  //       />
-  //     )
-  //   });
-  // }
-  // addNewEvent(e, slotInfo) {
-  //   var newEvents = this.state.events;
-  //   newEvents.push({
-  //     title: e,
-  //     start: slotInfo.start,
-  //     end: slotInfo.end,
-  //     resourceId: 2
-  //   });
-  //   this.setState({
-  //     alert: null,
-  //     events: newEvents
-  //   });
-  // }
-  // hideAlert() {
-  //   this.setState({
-  //     alert: null
-  //   });
-  // }
-  // eventColors(event, start, end, isSelected) {
-  //   var backgroundColor = "event-";
-  //   event.color
-  //     ? (backgroundColor = backgroundColor + event.color)
-  //     : (backgroundColor = backgroundColor + "default");
-  //   return {
-  //     className: backgroundColor
-  //   };
-  // }
 
   render() {
     const { classes, loading } = this.props;
@@ -145,11 +117,12 @@ class BookingAppointment extends React.Component {
     this.props.data.map(list => {
       let temp = {};
       temp.comment = list.comment;
-      temp.consumerName = list.consumerName;
+      temp.consumerName = list.consumerName? list.consumerName : 'test';
       temp.resourceId = list.hairdresser_id;
       temp.id = list.id;
       temp.plannedEndTime = moment(list.plannedEndTime).toDate();
       temp.plannedStartTime = moment(list.plannedStartTime).toDate();
+      temp.bookingType = list.bookingType;
 
       data.push(temp);
     });
@@ -160,9 +133,22 @@ class BookingAppointment extends React.Component {
         <GridContainer justify="center">
           <GridItem xs={12}>
             <Card classes={{card: classes.card}}>            
-              <CardHeader>            
+              <CardHeader>   
                 <div className={classes.cardHeader}>
-                    <h3 className={classes.cardTitle}>Booking Appointment</h3>
+                  <GridContainer>
+                    <GridItem xs={12} sm={6}>
+                      <h3 className={classes.cardTitle}>Booking Appointment</h3>
+                    </GridItem>
+                    <GridItem xs={12} sm={6} className={classes.right}>
+                      <Button 
+                        color="info" 
+                        size="sm"
+                        onClick={() => this.onOpenSetBreakModalWithoutId()}
+                      >                         
+                        Set DayOff
+                      </Button>
+                    </GridItem>
+                  </GridContainer>
                 </div>
               </CardHeader>
               <CardBody calendar>
@@ -186,6 +172,7 @@ class BookingAppointment extends React.Component {
                           toolbar: CustomToolbar
                         }
                       }
+                      eventPropGetter={this.eventColors}
                       resources={this.props.employees}
                       resourceIdAccessor="hairdresser_id"
                       resourceTitleAccessor="name"
@@ -194,7 +181,6 @@ class BookingAppointment extends React.Component {
                       startAccessor="plannedStartTime"
                       endAccessor="plannedEndTime"
                       onNavigate={(date) => this.onChangeDate(date)}
-                      // onSelectEvent={event => this.selectedEvent(event)}
                       selectable
                       onSelectSlot={this.onOpenSetBreakModal}
                     />

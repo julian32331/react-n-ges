@@ -28,10 +28,17 @@ const booking_appointment = function (state = initialState, action) {
                 employees   : action.payload.hairdressers
             };
         case Actions.APPOINTMENT_FAILED:
+        case Actions.BREAK_FAILED:
             return {
                 ...state,
                 loading     : false,
                 error       : action.payload
+            };
+
+        case Actions.BREAK_SUCCESS:
+            return {
+                ...state,
+                data        : state.data.concat(action.payload),
             };
         default:
             return state

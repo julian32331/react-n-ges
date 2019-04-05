@@ -18,6 +18,10 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 // core components
 import Button from "components/CustomButtons/Button.jsx";
@@ -34,8 +38,9 @@ class SetBreakModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            comment     : "",            
-            commentState: ""
+            comment         : "",            
+            commentState    : "", 
+            hairdresserId   : ""
         }
     }
 
@@ -56,6 +61,10 @@ class SetBreakModal extends React.Component {
         }
     }
 
+    handleEmployee = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
+
     handleClose() {
         this.props.onClose();
         this.setState({
@@ -65,15 +74,26 @@ class SetBreakModal extends React.Component {
     }
 
     canSubmit = () => {
-        if(this.state.commentState === "success")
+        if((this.state.commentState === "success" && this.state.hairdresserId) || (this.state.commentState === "success" && this.props.hairdresserId))
             return true;
         else
             return false;
     }
 
+    save = () => {
+        const { workingForId, data } = this.props;
+        let root = data.hairdresserId? 'time' : 'day';
+        this.props.setBreak({
+            workingForId    : workingForId,
+            hairdresserId   : data.hairdresserId || this.state.hairdresserId,
+            breakStartAt    : data.start,
+            comment         : this.state.comment
+        }, root)
+        this.handleClose();
+    }
+
     render() {
-        const { classes, data } = this.props;
-        console.log('data: ', data)
+        const { classes, data, employees } = this.props;
 
         return (
             <Dialog
@@ -107,10 +127,63 @@ class SetBreakModal extends React.Component {
                         }}
                         inputProps={{
                             disabled: true,
-                            value: data.start + " - " + data.end,
+                            value: data.end? data.start + " - " + data.end : data.start,
                             type: "text"
                         }}
                     />
+                    {
+                        !data.hairdresserId &&
+                            <FormControl
+                                fullWidth
+                                className={classes.selectFormControl}
+                            >
+                                <InputLabel
+                                    htmlFor="simple-select"
+                                    className={classes.selectLabel}
+                                >
+                                    Select Employee *
+                                </InputLabel>
+                                <Select
+                                    MenuProps={{
+                                        className: classes.selectMenu
+                                    }}
+                                    classes={{
+                                        select: classes.select + " " + classes.text_left
+                                    }}
+                                    value={this.state.hairdresserId}
+                                    onChange={this.handleEmployee}
+                                    inputProps={{
+                                        name: "hairdresserId",
+                                        id: "simple-select"
+                                    }}
+                                >
+                                    <MenuItem
+                                        disabled
+                                        classes={{
+                                            root: classes.selectMenuItem
+                                        }}
+                                    >
+                                        Select Employee
+                                    </MenuItem>
+                                    {
+                                        employees.map((employee, index) => {
+                                            return (
+                                                <MenuItem
+                                                    classes={{
+                                                        root: classes.selectMenuItem,
+                                                        selected: classes.selectMenuItemSelected
+                                                    }}
+                                                    value={employee.hairdresser_id}
+                                                    key={index}
+                                                >
+                                                    {employee.name}
+                                                </MenuItem>
+                                            )
+                                        })
+                                    }   
+                                </Select>
+                            </FormControl>
+                    }                    
                     <CustomInput
                         success={this.state.commentState === "success"}
                         error={this.state.commentState === "error"}
@@ -138,7 +211,7 @@ class SetBreakModal extends React.Component {
                         Cancel
                     </Button>
                     <Button
-                        onClick={() => this.handleClose()}
+                        onClick={() => this.save()}
                         color="info"
                         size="sm"
                         disabled={!this.canSubmit()}
@@ -158,14 +231,13 @@ SetBreakModal.propTypes = {
 function mapStateToProps(state) {
   return {
     workingForId: state.user.workingForId,
-    employees: state.employees.employees,
-    errorMsg    : state.checkInOut.errorMsg
+    employees   : state.booking_appointment.employees
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    checkIn: Actions.checkIn
+    setBreak: Actions.setBreak
   }, dispatch);
 }
 
