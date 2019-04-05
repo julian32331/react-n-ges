@@ -9,32 +9,23 @@ import connect from 'react-redux/es/connect/connect';
 import BigCalendar from "react-big-calendar";
 // dependency plugin for react-big-calendar
 import moment from "moment";
-// react component used to create alerts
-import SweetAlert from "react-bootstrap-sweetalert";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 // material-ui icons
-import Person from "@material-ui/icons/Person";
-import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
-import NavigateNext from "@material-ui/icons/NavigateNext";
-import Done from "@material-ui/icons/Done";
 
 // core components
-import Heading from "components/Heading/Heading.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import CardText from "components/Card/CardText.jsx";
-import Table from "components/Table/Table.jsx";
-import Button from "components/CustomButtons/Button.jsx";
 
 import bookingAppointmentStyle from "assets/jss/material-dashboard-pro-react/views/bookingAppointment/bookingAppointmentStyle.jsx";
 import CustomToolbar from "./CutomToolbar";
+import SetBreakModal from './modals/SetBreakModal';
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
@@ -42,7 +33,11 @@ class BookingAppointment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      initDate: moment().toDate()
+      initDate      : moment().toDate(),
+      setBreakModal : false,
+      hairdresserId : "",
+      start         : "",
+      end           : ""
     };
     this.onChangeDate = this.onChangeDate.bind(this);
     // this.hideAlert = this.hideAlert.bind(this);
@@ -65,6 +60,26 @@ class BookingAppointment extends React.Component {
   onChangeDate(date) {
     this.setState({ initDate: date });
     this.getAppointment(date)
+  }
+  
+  // Setting break time
+  onOpenSetBreakModal = ({resourceId, start, end}) => {
+    let user = this.props.employees.find((employee) => {
+      return employee.hairdresser_id == resourceId
+    })
+    if(user.name === this.props.username) {
+      this.setState({
+        setBreakModal : true,
+        hairdresserId : resourceId,
+        start         : moment(start).format('YYYY-MM-DD HH:mm'),
+        end           : moment(end).format('HH:mm')
+      })
+    }
+  }
+  onCloseSetBreakModal = () => {
+    this.setState({
+      setBreakModal: false
+    })
   }
 
   // selectedEvent(event) {
@@ -144,46 +159,58 @@ class BookingAppointment extends React.Component {
       <div>
         <GridContainer justify="center">
           <GridItem xs={12}>
-              <Card classes={{card: classes.card}}>
-                <CardHeader>            
-                  <div className={classes.cardHeader}>
-                      <h3 className={classes.cardTitle}>Booking Appointment</h3>
-                  </div>
-                </CardHeader>
-                  <CardBody calendar>
-                    {
-                      loading? (
-                        <div className={classes.loading_container}>
-                          <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
-                        </div>
-                      ) : 
-                        <BigCalendar   
-                          formats={formats}
-                          localizer={localizer}
-                          date={this.state.initDate}
-                          step={15}
-                          timeslots={4}
-                          defaultView="day"
-                          views={['day']}
-                          components={
-                            {
-                              toolbar: CustomToolbar
-                            }
-                          }
-                          resources={this.props.employees}
-                          resourceIdAccessor="hairdresser_id"
-                          resourceTitleAccessor="name"
-                          events={data}
-                          titleAccessor="consumerName"
-                          startAccessor="plannedStartTime"
-                          endAccessor="plannedEndTime"
-                          onNavigate={(date) => this.onChangeDate(date)}
-                          // onSelectEvent={event => this.selectedEvent(event)}
-                          min={new Date(2019, 1, 0, 8, 0, 0)}
-                        />
-                    }
-                  </CardBody>                
-              </Card>
+            <Card classes={{card: classes.card}}>            
+              <CardHeader>            
+                <div className={classes.cardHeader}>
+                    <h3 className={classes.cardTitle}>Booking Appointment</h3>
+                </div>
+              </CardHeader>
+              <CardBody calendar>
+                {
+                  loading? (
+                    <div className={classes.loading_container}>
+                      <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                    </div>
+                  ) : 
+                    <BigCalendar
+                      formats={formats}
+                      localizer={localizer}
+                      date={this.state.initDate}
+                      step={30}
+                      timeslots={4}
+                      min={new Date(2019, 1, 0, 8, 0, 0)}
+                      defaultView="day"
+                      views={['day']}
+                      components={
+                        {
+                          toolbar: CustomToolbar
+                        }
+                      }
+                      resources={this.props.employees}
+                      resourceIdAccessor="hairdresser_id"
+                      resourceTitleAccessor="name"
+                      events={data}
+                      titleAccessor="consumerName"
+                      startAccessor="plannedStartTime"
+                      endAccessor="plannedEndTime"
+                      onNavigate={(date) => this.onChangeDate(date)}
+                      // onSelectEvent={event => this.selectedEvent(event)}
+                      selectable
+                      onSelectSlot={this.onOpenSetBreakModal}
+                    />
+                }              
+              </CardBody>                
+            </Card>
+                        
+            <SetBreakModal 
+              onOpen={this.state.setBreakModal}
+              onClose={this.onCloseSetBreakModal}
+              data={{
+                hairdresserId : this.state.hairdresserId,
+                start         : this.state.start,
+                end           : this.state.end
+              }}
+            />
           </GridItem>
         </GridContainer>
       </div>
@@ -194,6 +221,7 @@ class BookingAppointment extends React.Component {
 function mapStateToProps(state) {
   return {
     workingForId: state.user.workingForId,
+    username    : state.user.username,
     loading     : state.booking_appointment.loading,
     data        : state.booking_appointment.data,
     employees   : state.booking_appointment.employees

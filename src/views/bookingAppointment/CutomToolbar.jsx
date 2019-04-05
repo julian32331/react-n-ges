@@ -40,7 +40,7 @@ class CalendarToolBar extends React.PureComponent {
     };
 
     render() {
-        const { onNavigate, label, classes } = this.props;
+        const { onNavigate, classes } = this.props;
         
         return (
             <GridContainer alignItems="center" className={classes.pb_15}>
@@ -101,7 +101,7 @@ class CalendarToolBar extends React.PureComponent {
                     </GridContainer>
                 </GridItem>
                 <GridItem xs={12} sm={4} className={classes.right}>
-                    <Button color="info" size="sm" className={classes.marginRight}>
+                    <Button color="info" size="sm" className={classes.marginRight} onClick={() => console.log('focus')}>
                         Set DayOff
                     </Button>
                 </GridItem>

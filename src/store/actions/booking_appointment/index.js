@@ -29,3 +29,28 @@ export function getAppointment(data) {
         });
     }
 }
+
+export const BREAK_TIME_REQUEST = '[BOOKING APPOINTMENT] BREAK TIME REQUEST';
+export const BREAK_TIME_SUCCESS = '[BOOKING APPOINTMENT] BREAK TIME SUCCESS';
+export const BREAK_TIME_FAILED  = '[BOOKING APPOINTMENT] BREAK TIME FAILED';
+
+export function setBreakTime(data) {
+    const request = Utils.xapi().post('booking/dashboard/break', data);
+
+    return (dispatch) => {
+        dispatch({
+            type: BREAK_TIME_REQUEST
+        })
+        request.then((response) =>
+            dispatch({
+                type    : BREAK_TIME_SUCCESS,
+                payload : response.data
+            })
+        ).catch((error) => {
+            dispatch({
+                type    : BREAK_TIME_FAILED,
+                payload : error
+            })
+        });
+    }
+}
