@@ -8,6 +8,7 @@ import moment from "moment";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import FormControl from "@material-ui/core/FormControl";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 // @material-ui/icons
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
@@ -73,14 +74,16 @@ class CalendarToolBar extends React.PureComponent {
                     </FormControl>
                 </GridItem>
                 <GridItem className={classes.pl_0}>
-                    <Button
-                        simple
-                        color="info"
-                        className={classes.actionButton + " " + classes.actionButtonRound}
-                        onClick={() => this.changeDate()}
-                    >
-                        <Today />
-                    </Button>
+                    <ClickAwayListener onClickAway={() => this.setState({showDatePicker: false})}>
+                        <Button
+                            simple
+                            color="info"
+                            className={classes.actionButton + " " + classes.actionButtonRound}
+                            onClick={() => this.changeDate()}
+                        >
+                            <Today />
+                        </Button>
+                    </ClickAwayListener>
                 </GridItem>
                 <GridItem>
                     <Button
