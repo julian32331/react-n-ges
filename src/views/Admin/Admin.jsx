@@ -156,6 +156,7 @@ class Admin extends React.Component {
                       localizer={localizer}
                       date={this.state.initDate}
                       step={15}
+                      timeslots={4}
                       defaultView="day"
                       views={['day']}
                       components={
@@ -172,6 +173,7 @@ class Admin extends React.Component {
                       endAccessor="plannedEndTime"
                       onNavigate={(date) => this.onChangeDate(date)}
                       // onSelectEvent={event => this.selectedEvent(event)}
+                      min={new Date(2019, 1, 0, 8, 0, 0)}
                     />
                   </CardBody>
                 </Card>

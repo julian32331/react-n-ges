@@ -28,6 +28,7 @@ button.rbc-input::-moz-focus-inner {
   -webkit-align-items: stretch;
       -ms-flex-align: stretch;
           align-items: stretch;
+  padding: 16px
 }
 .rbc-calendar *,
 .rbc-calendar *:before,
@@ -417,7 +418,7 @@ button.rbc-input::-moz-focus-inner {
 }
 .rbc-timeslot-group {
   border-bottom: 1px solid #DDD;
-  min-height: 40px;
+  min-height: 100px;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -432,7 +433,11 @@ button.rbc-input::-moz-focus-inner {
           flex: none;
 }
 .rbc-label {
-  padding: 0 5px;
+  padding: 0 8px;
+  font-size: 18px;
+  font-family: "Source Sans Pro";
+  font-weight: 500;
+  color: #999999;
 }
 .rbc-day-slot {
   position: relative;
@@ -441,7 +446,7 @@ button.rbc-input::-moz-focus-inner {
   bottom: 0;
   left: 0;
   position: absolute;
-  right: 10px;
+  right: 20px;
   top: 0;
 }
 .rbc-day-slot .rbc-events-container.rbc-is-rtl {
@@ -474,7 +479,9 @@ button.rbc-input::-moz-focus-inner {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   color: #fff;
-      white-space: nowrap;
+  white-space: nowrap;
+  font-size: 14px;
+  font-family: "Source Sans Pro"
 }
 .rbc-day-slot .rbc-event-content {
   width: 100%;
@@ -523,7 +530,7 @@ button.rbc-input::-moz-focus-inner {
       -ms-flex: 1;
           flex: 1;
   width: 100%;
-  border: 1px solid #DDD;
+  // border: 1px solid #DDD;
   min-height: 0;
   border-left: none;
   border-right: none;
@@ -555,6 +562,8 @@ button.rbc-input::-moz-focus-inner {
   -webkit-flex-direction: row;
       -ms-flex-direction: row;
           flex-direction: row;
+  border-left: 1px solid transparent;
+  border-right: 1px solid #ddd;
 }
 .rbc-time-header.rbc-overflowing {
   border-right: 1px solid #DDD;
@@ -594,7 +603,9 @@ button.rbc-input::-moz-focus-inner {
       -ms-flex-align: start;
           align-items: flex-start;
   width: 100%;
-  border-top: 2px solid #DDD;
+  border-top: 1px solid #DDD;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
   overflow-y: auto;
   position: relative;
 }
