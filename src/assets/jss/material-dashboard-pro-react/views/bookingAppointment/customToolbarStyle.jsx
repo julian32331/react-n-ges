@@ -10,6 +10,15 @@ const adminStyle = {
     left: {
         textAlign: "left"
     },
+    pb_15: {
+        paddingBottom: '15px',
+    },
+    pl_0: {
+        paddingLeft: '0px !important',
+    },
+    pr_0: {
+        paddingRight: '0px !important',
+    }
 };
 
 export default adminStyle;

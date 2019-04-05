@@ -26,16 +26,18 @@ import Heading from "components/Heading/Heading.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Card from "components/Card/Card.jsx";
+import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import CardText from "components/Card/CardText.jsx";
 import Table from "components/Table/Table.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import adminStyle from "assets/jss/material-dashboard-pro-react/views/admin/adminStyle.jsx";
+import bookingAppointmentStyle from "assets/jss/material-dashboard-pro-react/views/bookingAppointment/bookingAppointmentStyle.jsx";
 import CustomToolbar from "./CutomToolbar";
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
-class Admin extends React.Component {
+class BookingAppointment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -116,7 +118,7 @@ class Admin extends React.Component {
   // }
 
   render() {
-    console.log('state event: ', this.state.events)
+    const { classes } = this.props;
 
     // Calendar options
     const formats = {
@@ -143,13 +145,14 @@ class Admin extends React.Component {
       <div>
         <GridContainer justify="center">
           <GridItem xs={12}>
-            <Heading
-              textAlign="center"
-              title="Booking Appointment"
-            />
             {
               this.props.hairdressers.length > 0? (
-                <Card>
+                <Card classes={{card: classes.card}}>
+                  <CardHeader>            
+                    <div className={classes.cardHeader}>
+                        <h3 className={classes.cardTitle}>Booking Appointment</h3>
+                    </div>
+                  </CardHeader>
                   <CardBody calendar>
                     <BigCalendar   
                       formats={formats}
@@ -201,4 +204,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
   
-  export default withStyles(adminStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(Admin)));
+export default withStyles(bookingAppointmentStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(BookingAppointment)));

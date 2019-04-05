@@ -1,8 +1,10 @@
 import buttonStyle from "assets/jss/material-dashboard-pro-react/components/buttonStyle.jsx";
 import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
+import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
 
-const adminStyle = {
-    ...buttonStyle,
+const bookingAppointmentStyle = {
+    ...commonStyle,
+    // ...buttonStyle,
     ...extendedTablesStyle,
     center: {
         textAlign: "center"
@@ -10,15 +12,6 @@ const adminStyle = {
     left: {
         textAlign: "left"
     },
-    py_15: {
-        padding: "15px 0",
-    },
-    pl_0: {
-        paddingLeft: '0px !important',
-    },
-    pr_0: {
-        paddingRight: '0px !important',
-    }
 };
 
-export default adminStyle;
+export default bookingAppointmentStyle;

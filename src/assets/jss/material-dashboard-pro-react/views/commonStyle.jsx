@@ -29,7 +29,13 @@ const commonStyle = {
     },
     danger: {
       color: dangerColor + "!important"
-    }
+    },
+    center: {
+      textAlign: 'center'
+    },
+    right: {
+      textAlign: 'right'
+    },
   };
   
 export default commonStyle;

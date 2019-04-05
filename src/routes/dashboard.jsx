@@ -11,7 +11,7 @@ import OpeningHours from "views/MinSalong/OpeningHours/OpeningHours.jsx";
 import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
 // import Booking from "views/Booking/Booking.jsx";
-import Admin from "views/Admin/Admin.jsx";
+import BookingAppointment from "views/bookingAppointment/BookingAppointment.jsx";
 // import Dnd from "views/Admin/Dnd.jsx";
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
@@ -109,10 +109,10 @@ export var dashRoutes1 = [
   //   isDev: true
   // },
   {
-    path: "/admin",
-    name: "Admin",
+    path: "/bookingAppointment",
+    name: "Booking Appointment",
     icon: DateRange,
-    component: Admin,
+    component: BookingAppointment,
     // isDev: true
   },
   {
