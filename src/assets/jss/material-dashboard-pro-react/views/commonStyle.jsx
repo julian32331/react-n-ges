@@ -8,12 +8,11 @@ import {
 
 const commonStyle = {
     card: {
-      minHeight: '75vh',
+      minHeight: '70vh',
       margin: '0',
     },
     cardTitle: {
       marginTop: "0",
-      // marginBottom: "3px",
       color: "#434343",
       fontSize: '24px',
       fontFamily: 'Source Sans Pro',
@@ -25,7 +24,6 @@ const commonStyle = {
     },
     cardContent: {
       position: "relative",
-      minHeight: "20vh",
     },
 
     // loading styles

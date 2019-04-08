@@ -67,7 +67,7 @@ class BookingAppointment extends React.Component {
     let color_id = event.resourceId % 4;
 
     let backgroundColor = "event-" + colors[color_id];    
-    if(event.bookingType === "BREAK")
+    if(event.bookingType === "BREAK" || event.bookingType === "OFF")
       backgroundColor = "event-red";
 
     return {
@@ -117,7 +117,7 @@ class BookingAppointment extends React.Component {
     this.props.data.map(list => {
       let temp = {};
       temp.comment = list.comment;
-      temp.consumerName = list.consumerName? list.consumerName : 'test';
+      temp.consumerName = list.consumerName + " - " + list.comment;
       temp.resourceId = list.hairdresser_id;
       temp.id = list.id;
       temp.plannedEndTime = moment(list.plannedEndTime).toDate();

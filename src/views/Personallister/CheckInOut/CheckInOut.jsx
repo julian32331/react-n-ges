@@ -201,30 +201,30 @@ class CheckInOut extends React.Component {
 
   downloadCSV() {
     this.csvLink.link.click()
-  }
+  }  
 
   // Pagination actions
   changePagination(param) {
-    if(param == 1) {
-      if((this.state.pageOffset + 1) * 5 < 18)
+    let totalPages = this.list.length % 10 > 0 ? Math.floor(this.list.length / 10 + 1) : this.list.length / 10;
+    if (param === 1) {
+      if ((this.state.pageOffset + 1) * 5 < totalPages)
         this.setState(prevState => ({
           pageOffset: prevState.pageOffset + 1,
           activedPageNo: (prevState.pageOffset + 1) * 5 + 1
         }));
     } else {
-      if(this.state.pageOffset - 1 >= 0)
+      if (this.state.pageOffset - 1 >= 0)
         this.setState(prevState => ({
           pageOffset: prevState.pageOffset - 1,
           activedPageNo: (prevState.pageOffset - 1) * 5 + 5
         }));
     }
-    
   }
   skipOne(param) {
-    console.log('focus: ', param);
-    if(param == 1) {      
-      if(this.state.activedPageNo < 18) {
-        if(this.state.activedPageNo + 1 > this.state.pageOffset * 5 + 5) {
+    let totalPages = this.list.length % 10 > 0 ? Math.floor(this.list.length / 10 + 1) : this.list.length / 10;
+    if (param === 1) {
+      if (this.state.activedPageNo < totalPages) {
+        if (this.state.activedPageNo + 1 > this.state.pageOffset * 5 + 5) {
           this.setState(prevState => ({
             pageOffset: prevState.pageOffset + 1,
             activedPageNo: prevState.activedPageNo + 1
@@ -236,8 +236,8 @@ class CheckInOut extends React.Component {
         }
       }
     } else {
-      if(this.state.activedPageNo - 1 > 0) {
-        if(this.state.activedPageNo - 1 <= this.state.pageOffset * 5) {
+      if (this.state.activedPageNo - 1 > 0) {
+        if (this.state.activedPageNo - 1 <= this.state.pageOffset * 5) {
           this.setState(prevState => ({
             pageOffset: prevState.pageOffset - 1,
             activedPageNo: prevState.activedPageNo - 1
@@ -319,46 +319,33 @@ class CheckInOut extends React.Component {
     });
 
     let pageNations = [];
-    if(this.state.pageOffset > 0) {
-      let temp = [];
-      if(this.state.pageOffset * 5 + 5 > 18) {
-        for(let i = 1; i <= 18 % 5; i++) {
-          temp.push(
-            { text: this.state.pageOffset * 5 + i, active: this.state.activedPageNo == this.state.pageOffset * 5 + i, onClick: () => this.clickNumber(this.state.pageOffset * 5 + i) },
-          )
-        }
-        pageNations = [
-          { text: "PREV", onClick: () => this.skipOne(-1) },
-          { text: "<<", onClick: () => this.changePagination(-1) },
-          ...temp,
-          { text: "NEXT", onClick: () => this.skipOne(1) }
-        ]
-      } else {
-        pageNations = [
-          { text: "PREV", onClick: () => this.skipOne(-1) },
-          { text: "<<", onClick: () => this.changePagination(-1) },
-          { text: this.state.pageOffset * 5 + 1, active: this.state.activedPageNo == this.state.pageOffset * 5 + 1, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 1) },
-          { text: this.state.pageOffset * 5 + 2, active: this.state.activedPageNo == this.state.pageOffset * 5 + 2, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 2) },
-          { text: this.state.pageOffset * 5 + 3, active: this.state.activedPageNo == this.state.pageOffset * 5 + 3, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 3) },
-          { text: this.state.pageOffset * 5 + 4, active: this.state.activedPageNo == this.state.pageOffset * 5 + 4, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 4) },
-          { text: this.state.pageOffset * 5 + 5, active: this.state.activedPageNo == this.state.pageOffset * 5 + 5, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 5) },
-          { text: ">>", onClick: () => this.changePagination(1) },
-          { text: "NEXT", onClick: () => this.skipOne(1) }
-        ]
+    let totalPages = this.list.length % 10 > 0 ? Math.floor(this.list.length / 10 + 1) : this.list.length / 10;
+
+    let temp = [];
+    if (this.state.pageOffset !== 0) temp.push({ text: "<<", onClick: () => this.changePagination(-1) });
+
+    if ((this.state.pageOffset + 1) * 5 < totalPages) {
+      for (let i = 1; i <= 5; i++) {
+        temp.push(
+          { text: this.state.pageOffset * 5 + i, active: this.state.activedPageNo === this.state.pageOffset * 5 + i, onClick: () => this.clickNumber(this.state.pageOffset * 5 + i) },
+        )
       }
-      
     } else {
+      for (let i = 1; i <= totalPages - this.state.pageOffset * 5; i++) {
+        temp.push(
+          { text: this.state.pageOffset * 5 + i, active: this.state.activedPageNo === this.state.pageOffset * 5 + i, onClick: () => this.clickNumber(this.state.pageOffset * 5 + i) },
+        )
+      }
+    }
+
+    if (this.state.pageOffset !== totalPages && totalPages > 5) temp.push({ text: ">>", onClick: () => this.changePagination(1) });
+
+    if (totalPages > 0)
       pageNations = [
         { text: "PREV", onClick: () => this.skipOne(-1) },
-        { text: this.state.pageOffset * 5 + 1, active: this.state.activedPageNo == this.state.pageOffset * 5 + 1, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 1) },
-        { text: this.state.pageOffset * 5 + 2, active: this.state.activedPageNo == this.state.pageOffset * 5 + 2, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 2) },
-        { text: this.state.pageOffset * 5 + 3, active: this.state.activedPageNo == this.state.pageOffset * 5 + 3, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 3) },
-        { text: this.state.pageOffset * 5 + 4, active: this.state.activedPageNo == this.state.pageOffset * 5 + 4, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 4) },
-        { text: this.state.pageOffset * 5 + 5, active: this.state.activedPageNo == this.state.pageOffset * 5 + 5, onClick: () => this.clickNumber(this.state.pageOffset * 5 + 5) },
-        { text: ">>", onClick: () => this.changePagination(1) },
+        ...temp,
         { text: "NEXT", onClick: () => this.skipOne(1) }
       ]
-    }
 
     return (
       <Card>

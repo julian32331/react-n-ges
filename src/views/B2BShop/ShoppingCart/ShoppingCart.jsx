@@ -38,15 +38,12 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import productsStyle from "assets/jss/material-dashboard-pro-react/views/b2bshop/productsStyle.jsx";
 import ConfirmModal from "./ConfirmModal";
 
-import product1 from "assets/img/product1.jpg";
-import product2 from "assets/img/product2.jpg";
-import product3 from "assets/img/product3.jpg";
-
 class ShoppingCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       cart: this.props.cart,
+      search: "",
       confirmModal: false,
       isCompleted: false
     };
@@ -61,6 +58,20 @@ class ShoppingCart extends React.Component {
       this.props.getCart();
     }, 100);
   }
+
+  searchHandler(name, event) {
+    this.setState({ [name]: event.target.value });
+
+    let key = event.target.value.toLowerCase();
+    
+    let temp = this.props.cart.filter( item => {
+      return item.product.name.toLowerCase().indexOf(key) !== -1
+    });
+
+    this.setState({
+      cart: temp
+    })
+  };
 
   remove = (id) => {
     let cart = this.state.cart? this.state.cart : [];
@@ -233,7 +244,7 @@ class ShoppingCart extends React.Component {
                           <GridContainer>
                             <GridItem xs={3} sm={1} md={2} lg={1}>
                               <FormLabel className={classes.labelHorizontal}>
-                                Search :
+                                Sök :
                               </FormLabel>
                             </GridItem>
                             <GridItem xs={9} sm={3} md={3} lg={2}>

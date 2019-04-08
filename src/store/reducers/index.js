@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux';
 
 import booking from './booking';
+import my_salon from './my_salon';
 import booking_appointment from './booking_appointment';
 import b2b_shop from './b2b_shop';
 
@@ -20,12 +21,13 @@ import b2bshop from "./b2bshop.reducer";
 const createReducer = (asyncReducers) =>
     combineReducers({
         booking,
+        my_salon,
         booking_appointment,
         b2b_shop,
 
         auth,
         user,
-        salonInfo,
+        // salonInfo,
         companyInfo,
         service,
         hours,

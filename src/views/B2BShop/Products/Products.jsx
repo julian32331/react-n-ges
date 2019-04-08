@@ -39,6 +39,7 @@ class B2BShop extends React.Component {
     super(props);
     this.state = {
       search: "",
+      cart: [],
       pageOffset: 0,
       activedPageNo: 1,
     };
@@ -315,6 +316,7 @@ class B2BShop extends React.Component {
                       color="info"
                       className={classes.marginRight}
                       onClick={() => this.goCart()}
+                      disabled={this.state.cart.length === 0}
                     >
                       <AddShoppingCart className={classes.icons} />
                     </Button>

@@ -74,7 +74,7 @@ class SetBreakModal extends React.Component {
     }
 
     canSubmit = () => {
-        if((this.state.commentState === "success" && this.state.hairdresserId) || (this.state.commentState === "success" && this.props.hairdresserId))
+        if((this.state.commentState === "success" && this.state.hairdresserId) || (this.state.commentState === "success" && this.props.data.hairdresserId))
             return true;
         else
             return false;
@@ -148,7 +148,7 @@ class SetBreakModal extends React.Component {
                                         className: classes.selectMenu
                                     }}
                                     classes={{
-                                        select: classes.select + " " + classes.text_left
+                                        select: classes.select + " " + classes.left
                                     }}
                                     value={this.state.hairdresserId}
                                     onChange={this.handleEmployee}

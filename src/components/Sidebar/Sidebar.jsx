@@ -238,10 +238,7 @@ class Sidebar extends React.Component {
     var links = (
       <List className={classes.list}>
         {routes.map((prop, key) => {
-          if (prop.redirect) {
-            return null;
-          }
-          if(prop.name === 'Profile' || prop.name === 'Company Information' || prop.name === 'My Salon') {
+          if(prop.redirect || prop.name === 'Profile' || prop.name === 'Company Information' || prop.name === 'My Salon') {
             return null;
           }
           const customItem = prop.isDev? classes.item + " " + classes.disabledItem : classes.item;
@@ -316,7 +313,7 @@ class Sidebar extends React.Component {
                 <Collapse in={this.state[prop.state]} unmountOnExit>
                   <List className={classes.list + " " + classes.collapseList}>
                     {prop.views.map((prop, key) => {
-                      if (prop.redirect) {
+                      if (prop.redirect || prop.name === 'Shopping Cart') {
                         return null;
                       }
                       const navLinkClasses =

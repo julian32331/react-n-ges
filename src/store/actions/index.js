@@ -5,6 +5,7 @@
 
 //  Booking actions
 export * from './booking';
+export * from './my_salon';
 export * from './booking_appointment';
 export * from './b2b_shop';
 
