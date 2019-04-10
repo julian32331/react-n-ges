@@ -40,26 +40,26 @@ export function addSalonInfo(data) {
         })
 }
 
-export function updateSalonInfo(data) {
-    const request = Utils.xapi().post('manager/salon/update', data);
-    return (dispatch) =>
-        request.then(() => {          
-            dispatch({
-                type: UPDATE_SALON_INFO
-            }); 
-            // dispatch(getSalonInfo({
-            //     workingForId: data.workingForId
-            // }));
-            return dispatch({
-                type: UPDATE_SALON_INFO_SUCCESS
-            });
-        }).catch((error) => {     
-            dispatch({
-                type: UPDATE_SALON_INFO
-            });
-            return dispatch({
-                type: UPDATE_SALON_INFO_ERROR,
-                errorMsg: JSON.parse(error.request.response).error
-            });
-        });
-}
+// export function updateSalonInfo(data) {
+//     const request = Utils.xapi().post('manager/salon/update', data);
+//     return (dispatch) =>
+//         request.then(() => {          
+//             dispatch({
+//                 type: UPDATE_SALON_INFO
+//             }); 
+//             // dispatch(getSalonInfo({
+//             //     workingForId: data.workingForId
+//             // }));
+//             return dispatch({
+//                 type: UPDATE_SALON_INFO_SUCCESS
+//             });
+//         }).catch((error) => {     
+//             dispatch({
+//                 type: UPDATE_SALON_INFO
+//             });
+//             return dispatch({
+//                 type: UPDATE_SALON_INFO_ERROR,
+//                 errorMsg: JSON.parse(error.request.response).error
+//             });
+//         });
+// }

@@ -117,7 +117,7 @@ class BookingAppointment extends React.Component {
     this.props.data.map(list => {
       let temp = {};
       temp.comment = list.comment;
-      temp.consumerName = list.consumerName + " - " + list.comment;
+      temp.consumerName = list.consumerName? list.consumerName + " - " + list.comment : list.comment;
       temp.resourceId = list.hairdresser_id;
       temp.id = list.id;
       temp.plannedEndTime = moment(list.plannedEndTime).toDate();

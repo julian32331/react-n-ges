@@ -4,3 +4,4 @@
  */
 
 export * from './info.actions';
+export * from './services.actions';

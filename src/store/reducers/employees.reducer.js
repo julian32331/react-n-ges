@@ -25,7 +25,6 @@ const employees = function (state = initialState, action) {
         case Actions.ADD_NON_EXIST_EMPLOYEE:
         case Actions.INVITE_EMPLOYEE:
         case Actions.UPDATE_EMPLOYEE:
-        case Actions.DELETE_SERVICE:
         {
             return {
                 employees: state.employees

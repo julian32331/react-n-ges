@@ -6,9 +6,11 @@
 import {combineReducers} from 'redux';
 
 import info from './info.reducer';
+import services from './services.reducer';
 
 const my_salon = combineReducers({
-    info
+    info,
+    services
 })
 
 export default my_salon;

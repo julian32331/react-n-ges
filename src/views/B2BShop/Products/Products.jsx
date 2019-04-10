@@ -32,7 +32,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Pagination from "components/Pagination/Pagination.jsx";
 
 import productsStyle from "assets/jss/material-dashboard-pro-react/views/b2bshop/productsStyle.jsx";
-import categories from "./Category";
+// import categories from "./Category";
 
 class B2BShop extends React.Component {
   constructor(props) {
@@ -87,11 +87,11 @@ class B2BShop extends React.Component {
     const { classes } = this.props;
     return categories.map((category, key) => {
       var child;
-      if(category.deep === 1) {
+      if(category.hierarchy_level === 2) {
         child = classes.child_1;
-      } else if(category.deep === 2) {
+      } else if(category.hierarchy_level === 3) {
         child = classes.child_2;
-      } else if(category.deep === 3) {
+      } else if(category.hierarchy_level === 4) {
         child = classes.child_3;
       }
       if(category.collapse) {
@@ -100,7 +100,7 @@ class B2BShop extends React.Component {
         return (
           <div key={key}>
             <ListItem divider={true} classes={{gutters: child}} className={this.state.actived_cat === category.name? classes.actived_cat : ''}>
-              <ListItemText primary={category.name} onClick={() => this.categoryHandler(category.name)} />
+              <ListItemText primary={category.name} onClick={() => this.categoryHandler(category.id)} />
               {this.state[category.name] ? <ExpandLess onClick={() => this.setState(st)} /> : <ExpandMore onClick={() => this.setState(st)} />}  
             </ListItem>
             <Collapse in={this.state[category.name]} timeout="auto" unmountOnExit>
@@ -113,7 +113,7 @@ class B2BShop extends React.Component {
       }
       return (
         <ListItem button key={key} classes={{gutters: child}} className={this.state.actived_cat === category.name? classes.actived_cat : ''}>
-          <ListItemText primary={category.name} onClick={() => this.categoryHandler(category.name)} />                    
+          <ListItemText primary={category.name} onClick={() => this.categoryHandler(category.id)} />                    
         </ListItem>
       )
     }) 
@@ -123,7 +123,7 @@ class B2BShop extends React.Component {
     this.setState({actived_cat: cat});
     this.props.categoryProduct({
       workingForId: this.props.workingForId,
-      categoryName: cat
+      categoryId: cat
     })
   }
 
@@ -254,7 +254,7 @@ class B2BShop extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, categories } = this.props;
     const { activedPageNo } = this.state;
 
     let products = [];
@@ -405,6 +405,7 @@ function mapStateToProps(state) {
     workingForId: state.user.workingForId,
     loading     : state.b2b_shop.product.loading,
     error       : state.b2b_shop.product.error,
+    categories  : state.b2b_shop.product.categories,
     products    : state.b2b_shop.product.products,
     cart        : state.b2b_shop.cart.cart
   };

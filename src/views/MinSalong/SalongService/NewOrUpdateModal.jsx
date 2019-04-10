@@ -99,7 +99,7 @@ class NewOrUpdateModal extends React.Component {
 
     save(isNew) {
         if(isNew) {
-            this.props.addService({
+            this.props.addSalonService({
                 workingForId: this.props.workingForId,
                 name: this.state.title,
                 description: this.state.description,
@@ -107,7 +107,7 @@ class NewOrUpdateModal extends React.Component {
                 durationInMinutes: this.state.time
             })
         } else {            
-            this.props.updateService({
+            this.props.updateSalonService({
                 workingForId: this.props.workingForId,
                 id: this.props.data.id,
                 serviceData: {
@@ -352,8 +352,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        addService      : Actions.addService,
-        updateService   : Actions.updateService
+        addSalonService : Actions.addSalonService,
+        // addService      : Actions.addService,
+        updateSalonService   : Actions.updateSalonService
     }, dispatch);
 }
 

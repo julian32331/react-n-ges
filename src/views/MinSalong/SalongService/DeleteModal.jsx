@@ -41,7 +41,7 @@ class DeleteModal extends React.Component {
     }
 
     delete() {
-        this.props.deleteService({
+        this.props.deleteSalonService({
             workingForId: this.props.workingForId,
             id: this.props.id
         })
@@ -117,7 +117,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        deleteService: Actions.deleteService
+        deleteSalonService: Actions.deleteSalonService
     }, dispatch);
 }
 

@@ -18,7 +18,7 @@ export function featuredProduct(data) {
         request.then((response) =>
             dispatch({
                 type    : FEATURED_PRODUCT_SUCCESS,
-                payload : response.data.articles
+                payload : response.data
             })
         ).catch((error) => {
             dispatch({
@@ -68,7 +68,7 @@ export function categoryProduct(data) {
         request.then((response) =>
             dispatch({
                 type    : CATEGORY_PRODUCT_SUCCESS,
-                payload : response.data.articles
+                payload : response.data
             })
         ).catch((error) => {
             dispatch({

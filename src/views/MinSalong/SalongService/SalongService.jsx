@@ -13,6 +13,7 @@ import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // @material-ui/icons
 import Add from "@material-ui/icons/Add";
@@ -41,26 +42,24 @@ class SalongService extends React.Component {
             modalTitle: '',
             modalData: null
         };
-        this.getServices = this.getServices.bind(this);
     }
 
     componentWillMount() {
         this.props.getUserData();
         setTimeout(() => {
-            this.getServices(this.props.workingForId);
+            this.props.getSalonServices({
+                workingForId: this.props.workingForId
+            })
         }, 100);
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log('called props: ', nextProps.services);
         if(this.props.workingForId !== nextProps.workingForId) {
-            this.getServices(nextProps.workingForId);
+            this.props.getSalonServices({
+                workingForId: nextProps.workingForId
+            })
         }
-    }
-    
-    getServices(id) {
-        this.props.getServices({
-            workingForId: id
-        })
     }
 
     // Open and close Delete modal
@@ -91,9 +90,10 @@ class SalongService extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, loading } = this.props;
+        console.log('this.props.services: ', this.props.services)
         return (
-            <Card>
+            <Card classes={{card: classes.card}}>
                 <CardHeader>            
                     <div className={classes.cardHeader}>
                         <GridContainer>
@@ -116,54 +116,65 @@ class SalongService extends React.Component {
                     <GridContainer justify="center" className={classes.mb_20}>
                         <GridItem xs={11} sm={10} md={10} lg={9}>
                         {
-                            this.props.services.map((service, key) => {
-                                return (
-                                    <GridContainer key={key} className={classes.mb_20}>
-                                        <GridItem xs={12} md={3} className={classes.bg_title}>
-                                            <div className={classes.title_container}> 
-                                                <GridContainer>
-                                                    <GridItem xs={12}>
-                                                        <div className={classes.title}>{service.name}</div>
-                                                    </GridItem>
-                                                    <GridItem xs={6} md={12}>
-                                                        <div className={classes.time}><span className={classes.title_item}>Tid :&nbsp;&nbsp;</span> {service.durationInMinutes}min</div>
-                                                    </GridItem>
-                                                    <GridItem xs={6} md={12}>
-                                                        <div className={classes.price}><span className={classes.title_item}>Pris kr :&nbsp;&nbsp;</span> {service.price}</div>
-                                                    </GridItem>
-                                                </GridContainer>
-                                            </div>
-                                        </GridItem>
-                                        <GridItem xs={12} md={7} className={classes.bg_content}>
-                                            {service.description}
-                                        </GridItem>
-                                        <GridItem xs={12} md={2} className={classes.btn_container}>
-                                            <div className={classes.py_15}>
-                                                <Button
-                                                    justIcon
-                                                    round
-                                                    color="info"
-                                                    size="sm"
-                                                    className={classes.mx_10}
-                                                    onClick={() => this.onOpenNewOrUpdateModal("Update Service", service)}
-                                                    >
-                                                    <Create />
-                                                </Button>                        
-                                                <Button
-                                                    justIcon
-                                                    round
-                                                    color="danger"
-                                                    size="sm"
-                                                    className={classes.mx_10}
-                                                    onClick={() => this.onOpenDeleteModal(service)}
-                                                    >
-                                                    <Close />
-                                                </Button>
-                                            </div>
-                                        </GridItem>
-                                    </GridContainer>
-                                )                        
-                            })
+                            loading? (
+                                <div className={classes.loading_container}>
+                                    <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                                </div>
+                            ) : (
+                                this.props.services.length > 0? (
+                                    this.props.services.map((service, key) => {
+                                        return (
+                                            <GridContainer key={key} className={classes.mb_20}>
+                                                <GridItem xs={12} md={3} className={classes.bg_title}>
+                                                    <div className={classes.title_container}> 
+                                                        <GridContainer>
+                                                            <GridItem xs={12}>
+                                                                <div className={classes.title}>{service.name}</div>
+                                                            </GridItem>
+                                                            <GridItem xs={6} md={12}>
+                                                                <div className={classes.time}><span className={classes.title_item}>Tid :&nbsp;&nbsp;</span> {service.durationInMinutes}min</div>
+                                                            </GridItem>
+                                                            <GridItem xs={6} md={12}>
+                                                                <div className={classes.price}><span className={classes.title_item}>Pris kr :&nbsp;&nbsp;</span> {service.price}</div>
+                                                            </GridItem>
+                                                        </GridContainer>
+                                                    </div>
+                                                </GridItem>
+                                                <GridItem xs={12} md={7} className={classes.bg_content}>
+                                                    {service.description}
+                                                </GridItem>
+                                                <GridItem xs={12} md={2} className={classes.btn_container}>
+                                                    <div className={classes.py_15}>
+                                                        <Button
+                                                            justIcon
+                                                            round
+                                                            color="info"
+                                                            size="sm"
+                                                            className={classes.mx_10}
+                                                            onClick={() => this.onOpenNewOrUpdateModal("Update Service", service)}
+                                                            >
+                                                            <Create />
+                                                        </Button>                        
+                                                        <Button
+                                                            justIcon
+                                                            round
+                                                            color="danger"
+                                                            size="sm"
+                                                            className={classes.mx_10}
+                                                            onClick={() => this.onOpenDeleteModal(service)}
+                                                            >
+                                                            <Close />
+                                                        </Button>
+                                                    </div>
+                                                </GridItem>
+                                            </GridContainer>
+                                        )                        
+                                    })
+                                ) : (
+                                    <div>No Services</div>
+                                )
+                            )
+                            
                         }                    
                         </GridItem>
                     </GridContainer>
@@ -192,15 +203,16 @@ SalongService.propTypes = {
 function mapStateToProps(state) {
     return {
         workingForId    : state.user.workingForId,
-        services        : state.service.services
+        loading         : state.my_salon.services.loading,
+        error           : state.my_salon.services.error,
+        services        : state.my_salon.services.services
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        getUserData : Actions.getUserData,
-        getServices : Actions.getServices,
-        addService  : Actions.addService
+        getUserData         : Actions.getUserData,
+        getSalonServices    : Actions.getSalonServices,
     }, dispatch);
 }
 
