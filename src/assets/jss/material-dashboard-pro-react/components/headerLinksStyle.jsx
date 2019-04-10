@@ -155,6 +155,12 @@ const headerLinksStyle = theme => ({
     width: "20px !important",
     height: "20px !important"
   },
+  wrapper: {
+    display: 'inline-flex',
+  },
+  my_0: {
+    margin: '4px 0 !important',
+  },
   saloon_select_container: {
     [theme.breakpoints.down("sm")]: {
       padding: '15px 30px',
