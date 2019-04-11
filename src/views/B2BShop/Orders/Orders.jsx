@@ -61,7 +61,7 @@ class Orders extends React.Component {
   componentWillMount() {
       this.props.getUserData();
       setTimeout(() => {
-          this.getEmployees(this.props.workingForId);
+        this.getEmployees(this.props.workingForId);
       }, 100);
   }
 

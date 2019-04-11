@@ -166,8 +166,9 @@ class B2BShop extends React.Component {
             type="number"
             inputProps={{
               className: classes.qty,
-              onChange: (event)=> this.setState({["qty_" + product.articleNo]: event.target.value})
+              onChange: (event)=> event.target.value > 2 && this.setState({["qty_" + product.articleNo]: event.target.value})
             }}
+            value={this.state["qty_" + product.articleNo]? this.state["qty_" + product.articleNo] : 3}
           />
           <Button color="info" round size="sm" className={classes.marginRight} onClick={() => this.addCart(product)}>
             Add
