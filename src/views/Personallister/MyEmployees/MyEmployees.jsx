@@ -36,7 +36,7 @@ import myEmployeesStyle from "assets/jss/material-dashboard-pro-react/views/myEm
 import NewModal from "./NewModal";
 import UpdateModal from "./UpdateModal";
 import DeleteModal from "./DeleteModal";
-import DefaultAvatar from "assets/img/default-avatar.png";
+import defaultAvatar from "assets/img/default-avatar.png";
 import * as Utils from 'utils';
 
 class MyEmployees extends React.Component {
@@ -140,7 +140,6 @@ class MyEmployees extends React.Component {
     })
   }
   onOpenUpdateModal(title, data=null) {
-    console.log('data: ', data);
     this.setState({
       updateModal: true,
       modalTitle: title,
@@ -168,7 +167,7 @@ class MyEmployees extends React.Component {
       return (
         <div className={classes.picture}>
           <img
-            src={Utils.root + src}
+            src={src? Utils.root + src : defaultAvatar}
             className={classes.picture_src}
             alt="..."
           />
@@ -184,7 +183,7 @@ class MyEmployees extends React.Component {
         temp.push(employee.name);
         temp.push(employee.EmployeeInformation.mobile);
         temp.push(employee.SSN);
-        temp.push(avatar(employee.EmployeeInformation.picturePath));
+        temp.push(avatar(employee.EmployeeInformation.picturePath? employee.EmployeeInformation.picturePath : null));
         temp.push(employee.EmployeeInformation.licenseValidated? "Yes" : "No");
         temp.push(buttons(employee));
 

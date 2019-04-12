@@ -38,6 +38,7 @@ import Danger from "components/Typography/Danger.jsx";
 
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 import avatar from "assets/img/faces/marc.jpg";
+import defaultAvatar from "assets/img/default-avatar.png";
 import cert from "assets/img/cert.png";
 
 import * as Validator from "./../../../validator";
@@ -84,8 +85,8 @@ class NewModal extends React.Component {
                 professionState: "success",
                 description: nextProps.data.EmployeeInformation.description,
                 descriptionState: "success",       
-                avatarPreviewUrl: Utils.root + nextProps.data.EmployeeInformation.picturePath,
-                licensePreviewUrl: Utils.root + nextProps.data.EmployeeInformation.licensePath
+                avatarPreviewUrl: nextProps.data.EmployeeInformation.picturePath? Utils.root + nextProps.data.EmployeeInformation.picturePath : defaultAvatar,
+                licensePreviewUrl: nextProps.data.EmployeeInformation.licensePath? Utils.root + nextProps.data.EmployeeInformation.licensePath : cert
             })
         }        
     }
@@ -157,6 +158,7 @@ class NewModal extends React.Component {
         reader.onloadend = () => {
           this.setState({
             license: file,
+            isChangedAvatar: true,
             licensePreviewUrl: reader.result
           });
         };
@@ -233,13 +235,13 @@ class NewModal extends React.Component {
                             <GridItem xs={6}>
                                 <input type="file" hidden onChange={this.handleAvatarChange.bind(this)} ref="avatarInput" />
                                 <a onClick={() => this.handleClick("avatar")}>
-                                    <img src={this.state.avatarPreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%'}} alt="..." />
+                                    <img src={this.state.avatarPreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%', border: 'solid 1px', padding: '4px', overflow: 'hidden'}} alt="..." />
                                 </a>
                             </GridItem>
                             <GridItem xs={6}>
                                 <input type="file" hidden onChange={this.handleLicenseChange.bind(this)} ref="licenseInput" />
                                 <a onClick={() => this.handleClick("license")}>
-                                    <img src={this.state.licensePreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%'}} alt="..." />
+                                    <img src={this.state.licensePreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%', border: 'solid 1px', padding: '4px', overflow: 'hidden'}} alt="..." />
                                 </a>
                             </GridItem>
                         </GridContainer>                             

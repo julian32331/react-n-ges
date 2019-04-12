@@ -37,7 +37,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Danger from "components/Typography/Danger.jsx";
 
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
-import avatar from "assets/img/faces/marc.jpg";
+import defaultAvatar from "assets/img/default-avatar.png";
 
 import * as Validator from "./../../../validator";
 import * as Utils from 'utils';
@@ -61,7 +61,7 @@ class NewModal extends React.Component {
             
             file: null,
             withAvatar: false,
-            imagePreviewUrl: Utils.defaultAvatar,
+            imagePreviewUrl: defaultAvatar,
             firstStep: true,
             secondStep: false,
             thirdStep: false,
@@ -93,7 +93,7 @@ class NewModal extends React.Component {
                     this.setState({
                         firstStep: false,
                         thirdStep: true,
-                        imagePreviewUrl: nextProps.employee.EmployeeInformatio? Utils.root + nextProps.employee.EmployeeInformation.picturePath : Utils.defaultAvatar,
+                        imagePreviewUrl: nextProps.employee.EmployeeInformatio? Utils.root + nextProps.employee.EmployeeInformation.picturePath : defaultAvatar,
                         consumerOwner: "SALON",
                         bookingPaymentFor: nextProps.employee.hasCompany? "COMPANY" : "",
                         productPaymentFor: nextProps.employee.hasCompany? "COMPANY" : ""
@@ -122,7 +122,7 @@ class NewModal extends React.Component {
             
             file: null,
             withAvatar: false,
-            imagePreviewUrl: Utils.defaultAvatar,
+            imagePreviewUrl: defaultAvatar,
             firstStep: true,
             secondStep: false,
             thirdStep: false,
@@ -218,7 +218,7 @@ class NewModal extends React.Component {
             this.setState({
                 secondStep: false,
                 thirdStep: true,
-                imagePreviewUrl: Utils.defaultAvatar,
+                imagePreviewUrl: defaultAvatar,
                 consumerOwner: "SALON",
                 bookingPaymentFor: "COMPANY",
                 productPaymentFor: "COMPANY"
