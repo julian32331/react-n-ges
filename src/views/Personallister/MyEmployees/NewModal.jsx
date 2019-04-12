@@ -247,7 +247,8 @@ class NewModal extends React.Component {
 
     canSave() {
         if(this.props.employee) {
-            if(this.state.consumerOwner && this.state.companyAuthLevel && this.state.salonAuthLevel && this.state.bookingPaymentFor && this.state.productPaymentFor) {
+            console.log('this.state: ', this.state)
+            if(this.state.consumerOwner && this.state.companyAuthLevel && this.state.salonAuthLevel) { // && this.state.bookingPaymentFor && this.state.productPaymentFor
                 return false
             } else {
                 return true

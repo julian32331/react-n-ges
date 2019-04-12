@@ -118,7 +118,7 @@ class SalongInformasjon extends React.Component {
                 description: nextProps.info.description? nextProps.info.description : "",
                 descriptionState: nextProps.info.description? "success" : "error",
                 parkCheck: nextProps.info.parking,
-                // accessCheck: nextProps.info.description
+                accessCheck: nextProps.info.accessibility,
 
                 s_co: nextProps.info.ShippingAddress.co? nextProps.info.ShippingAddress.co : "",
                 s_coState: nextProps.info.ShippingAddress.co? "success" : "error",
@@ -295,6 +295,7 @@ class SalongInformasjon extends React.Component {
                 description: this.state.description,
                 telephone: this.state.phone,
                 // descriptionValidated: false,
+                accessibility: this.state.accessCheck,
                 parking: this.state.parkCheck,
                 website: this.state.network,
                 address: this.state.address,
