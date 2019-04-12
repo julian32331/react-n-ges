@@ -556,6 +556,30 @@ class AddSalonModal extends React.Component {
                             value: this.state.s_co,
                             type: "text"
                         }}
+                    />                    
+                    <CustomInput
+                        success={this.state.phoneState === "success"}
+                        error={this.state.phoneState === "error"}
+                        labelText="Telefonnummer *"
+                        id="phone"
+                        formControlProps={{
+                            fullWidth: true
+                        }}
+                        inputProps={{
+                            endAdornment:
+                            this.state.phoneState === "error" ? (
+                                <InputAdornment position="end">
+                                <Warning className={classes.danger} />
+                                </InputAdornment>
+                            ) : (
+                                undefined
+                            ),
+                            disabled: !this.state.isEdit,
+                            onChange: event =>
+                                this.change(event, "phone", "phone", 1),
+                            value: this.state.phone,
+                            type: "text"
+                        }}
                     />
                     <CustomInput
                         success={this.state.s_address1State === "success"}

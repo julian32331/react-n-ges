@@ -430,7 +430,7 @@ class CreateSalon extends React.Component {
                         <h3 className={classes.cardTitle}>ShippingAddress</h3>
                     </div>
                     <GridContainer>
-                        <GridItem xs={12} sm={6} md={4}>
+                        <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
                                 success={this.state.s_coState === "success"}
                                 error={this.state.s_coState === "error"}
@@ -455,7 +455,33 @@ class CreateSalon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                        <GridItem xs={12} sm={6} md={4}>
+                        <GridItem xs={12} sm={6} md={3}>
+                            <CustomInput
+                                success={this.state.phoneState === "success"}
+                                error={this.state.phoneState === "error"}
+                                labelText="Telefonnummer *"
+                                id="phone"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    endAdornment:
+                                    this.state.phoneState === "error" ? (
+                                        <InputAdornment position="end">
+                                        <Warning className={classes.danger} />
+                                        </InputAdornment>
+                                    ) : (
+                                        undefined
+                                    ),
+                                    disabled: !this.state.isEdit,
+                                    onChange: event =>
+                                        this.change(event, "phone", "phone", 1),
+                                    value: this.state.phone,
+                                    type: "text"
+                                }}
+                            />
+                        </GridItem>
+                        <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
                                 success={this.state.s_address1State === "success"}
                                 error={this.state.s_address1State === "error"}
@@ -480,7 +506,7 @@ class CreateSalon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                        <GridItem xs={12} sm={6} md={4}>
+                        <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
                                 success={this.state.s_address2State === "success"}
                                 error={this.state.s_address2State === "error"}

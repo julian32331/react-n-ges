@@ -8,7 +8,7 @@ import {
 
 const commonStyle = {
     card: {
-      minHeight: '70vh',
+      minHeight: '65vh',
       margin: '0',
     },
     cardTitle: {
