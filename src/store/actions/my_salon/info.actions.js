@@ -29,3 +29,66 @@ export function getSalonInfo(data) {
         });
     }        
 }
+
+export const ADD_SALON_GALLERY_SUCCESS = '[SALON GALLERY] ADD SUCCESS';
+export const ADD_SALON_GALLERY_FAILED  = '[SALON GALLERY] ADD FAILED';
+
+export function addSalonGallery(data) {
+    const request = Utils.xapi().post('salon/gallery/add', data);
+
+    return (dispatch) => {
+        request.then((response) =>
+            dispatch({
+                type    : ADD_SALON_GALLERY_SUCCESS,
+                payload : response.data
+            })
+        ).catch((error) => {
+            dispatch({
+                type    : ADD_SALON_GALLERY_FAILED,
+                payload : error
+            })
+        });
+    }        
+}
+
+export const UPDATE_SALON_GALLERY_SUCCESS = '[SALON GALLERY] UPDATE SUCCESS';
+export const UPDATE_SALON_GALLERY_FAILED  = '[SALON GALLERY] UPDATE FAILED';
+
+export function updateSalonGallery(data) {
+    const request = Utils.xapi().post('salon/gallery/update', data);
+
+    return (dispatch) => {
+        request.then((response) =>
+            dispatch({
+                type    : UPDATE_SALON_GALLERY_SUCCESS,
+                payload : response.data
+            })
+        ).catch((error) => {
+            dispatch({
+                type    : UPDATE_SALON_GALLERY_FAILED,
+                payload : error
+            })
+        });
+    }        
+}
+
+export const DELETE_SALON_GALLERY_SUCCESS = '[SALON GALLERY] DELETE SUCCESS';
+export const DELETE_SALON_GALLERY_FAILED  = '[SALON GALLERY] DELETE FAILED';
+
+export function deleteSalonGallery(data) {
+    const request = Utils.xapi().post('salon/gallery/delete', data);
+
+    return (dispatch) => {
+        request.then(() =>
+            dispatch({
+                type    : DELETE_SALON_GALLERY_SUCCESS,
+                payload : null
+            })
+        ).catch((error) => {
+            dispatch({
+                type    : DELETE_SALON_GALLERY_FAILED,
+                payload : error
+            })
+        });
+    }        
+}
