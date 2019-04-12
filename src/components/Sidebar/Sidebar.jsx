@@ -23,7 +23,7 @@ import Icon from "@material-ui/core/Icon";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 
 import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.jsx";
-
+import defaultAvatar from "assets/img/default-avatar.png";
 import * as Utils from 'utils';
 
 var ps;
@@ -139,7 +139,7 @@ class Sidebar extends React.Component {
     var user = (
       <div className={userWrapperClass}>
         <div className={photo}>
-          <img src={Utils.root + this.props.avatar} className={classes.avatarImg} alt="..." />
+          <img src={this.props.avatar? Utils.root + this.props.avatar : defaultAvatar} className={classes.avatarImg} alt="..." />
         </div>
         <List className={classes.list}>
           <ListItem className={classes.item + " " + classes.userItem}>

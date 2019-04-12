@@ -28,6 +28,7 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardAvatar from "components/Card/CardAvatar.jsx";
 
 import profileStyles from "assets/jss/material-dashboard-pro-react/views/profileStyles.jsx";
+import defaultAvatar from "assets/img/default-avatar.png";
 
 import avatar from "assets/img/faces/marc.jpg";
 import * as Validator from "./../../validator";
@@ -150,7 +151,7 @@ class Profile extends React.Component {
       professionState: this.props.data.EmployeeInformation.profession? "success" : "error",
       description: this.props.data.EmployeeInformation.description,
       descriptionState: this.props.data.EmployeeInformation.description? "success" : "error",
-      imagePreviewUrl: Utils.root + this.props.data.EmployeeInformation.picturePath, 
+      imagePreviewUrl: this.props.data.EmployeeInformation.picturePath? Utils.root + this.props.data.EmployeeInformation.picturePath : defaultAvatar, 
       isEdit: false
     })
   }
