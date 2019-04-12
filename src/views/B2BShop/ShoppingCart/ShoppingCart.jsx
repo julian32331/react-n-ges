@@ -150,7 +150,6 @@ class ShoppingCart extends React.Component {
           <TextField
             id="outlined-bare"
             className={classes.textField}
-            defaultValue={item.quantityOrdered}
             margin="normal"
             variant="outlined"
             type="number"
