@@ -32,6 +32,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Pagination from "components/Pagination/Pagination.jsx";
 
 import productsStyle from "assets/jss/material-dashboard-pro-react/views/b2bshop/productsStyle.jsx";
+import noImage from "assets/img/no_image.jpg";
 // import categories from "./Category";
 
 class B2BShop extends React.Component {
@@ -263,7 +264,7 @@ class B2BShop extends React.Component {
       let temp = [];
 
       if (index >= (activedPageNo - 1) * 10 && index < activedPageNo * 10) {
-        temp.push(this.product_image(product.imageURL));
+        temp.push(this.product_image(product.imageURL !== ""? product.imageURL : noImage));
         temp.push(this.product_name(product.name, product.articleNo));
         temp.push(this.product_price_qty(product));
 
