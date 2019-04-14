@@ -32,8 +32,6 @@ import CardBody from "components/Card/CardBody.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import Swiper from 'react-id-swiper';
-
 import * as Utils from "./../../utils";
 import * as Validator from "../../validator";
 import salongInformasjonStyle from "assets/jss/material-dashboard-pro-react/views/salongInformasjonStyle.jsx";
@@ -120,18 +118,18 @@ class SalongInformasjon extends React.Component {
                 parkCheck: nextProps.info.parking,
                 accessCheck: nextProps.info.accessibility,
 
-                s_co: nextProps.info.ShippingAddress.co? nextProps.info.ShippingAddress.co : "",
-                s_coState: nextProps.info.ShippingAddress.co? "success" : "error",
-                s_address1: nextProps.info.ShippingAddress.street1? nextProps.info.ShippingAddress.street1 : "",
-                s_address1State: nextProps.info.ShippingAddress.street1? "success" : "error",
-                s_address2: nextProps.info.ShippingAddress.street2? nextProps.info.ShippingAddress.street2 : "",
-                s_address2State: nextProps.info.ShippingAddress.street2? "success" : "error",
-                s_city: nextProps.info.ShippingAddress.city? nextProps.info.ShippingAddress.city : "",
-                s_cityState: nextProps.info.ShippingAddress.city? "success" : "error",
-                s_zip: nextProps.info.ShippingAddress.postalCode? nextProps.info.ShippingAddress.postalCode : "",
-                s_zipState: nextProps.info.ShippingAddress.postalCode? "success" : "error",
-                s_country: nextProps.info.ShippingAddress.country? nextProps.info.ShippingAddress.country : "",
-                s_countryState: nextProps.info.ShippingAddress.country? "success" : "error",
+                s_co: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.co? nextProps.info.ShippingAddress.co : "",
+                s_coState: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.co? "success" : "error",
+                s_address1: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.street1? nextProps.info.ShippingAddress.street1 : "",
+                s_address1State: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.street1? "success" : "error",
+                s_address2: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.street2? nextProps.info.ShippingAddress.street2 : "",
+                s_address2State: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.street2? "success" : "error",
+                s_city: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.city? nextProps.info.ShippingAddress.city : "",
+                s_cityState: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.city? "success" : "error",
+                s_zip: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.postalCode? nextProps.info.ShippingAddress.postalCode : "",
+                s_zipState: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.postalCode? "success" : "error",
+                s_country: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.country? nextProps.info.ShippingAddress.country : "",
+                s_countryState: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.country? "success" : "error",
             })
         }
 
@@ -269,18 +267,18 @@ class SalongInformasjon extends React.Component {
             description: this.props.info.description? this.props.info.description : "",
             descriptionState: this.props.info.description? "success" : "error",
 
-            s_co: this.props.info.ShippingAddress.co? this.props.info.ShippingAddress.co : "",
-            s_coState: this.props.info.ShippingAddress.co? "success" : "error",
-            s_address1: this.props.info.ShippingAddress.street1? this.props.info.ShippingAddress.street1 : "",
-            s_address1State: this.props.info.ShippingAddress.street1? "success" : "error",
-            s_address2: this.props.info.ShippingAddress.street2? this.props.info.ShippingAddress.street2 : "",
-            s_address2State: this.props.info.ShippingAddress.street2? "success" : "error",
-            s_city: this.props.info.ShippingAddress.city? this.props.info.ShippingAddress.city : "",
-            s_cityState: this.props.info.ShippingAddress.city? "success" : "error",
-            s_zip: this.props.info.ShippingAddress.postalCode? this.props.info.ShippingAddress.postalCode : "",
-            s_zipState: this.props.info.ShippingAddress.postalCode? "success" : "error",
-            s_country: this.props.info.ShippingAddress.country? this.props.info.ShippingAddress.country : "",
-            s_countryState: this.props.info.ShippingAddress.country? "success" : "error",
+            s_co: this.props.info.ShippingAddress && this.props.info.ShippingAddress.co? this.props.info.ShippingAddress.co : "",
+            s_coState: this.props.info.ShippingAddress && this.props.info.ShippingAddress.co? "success" : "error",
+            s_address1: this.props.info.ShippingAddress && this.props.info.ShippingAddress.street1? this.props.info.ShippingAddress.street1 : "",
+            s_address1State: this.props.info.ShippingAddress && this.props.info.ShippingAddress.street1? "success" : "error",
+            s_address2: this.props.info.ShippingAddress && this.props.info.ShippingAddress.street2? this.props.info.ShippingAddress.street2 : "",
+            s_address2State: this.props.info.ShippingAddress && this.props.info.ShippingAddress.street2? "success" : "error",
+            s_city: this.props.info.ShippingAddress && this.props.info.ShippingAddress.city? this.props.info.ShippingAddress.city : "",
+            s_cityState: this.props.info.ShippingAddress && this.props.info.ShippingAddress.city? "success" : "error",
+            s_zip: this.props.info.ShippingAddress && this.props.info.ShippingAddress.postalCode? this.props.info.ShippingAddress.postalCode : "",
+            s_zipState: this.props.info.ShippingAddress && this.props.info.ShippingAddress.postalCode? "success" : "error",
+            s_country: this.props.info.ShippingAddress && this.props.info.ShippingAddress.country? this.props.info.ShippingAddress.country : "",
+            s_countryState: this.props.info.ShippingAddress && this.props.info.ShippingAddress.country? "success" : "error",
 
             isEdit: false
         });

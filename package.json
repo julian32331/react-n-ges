@@ -22,7 +22,6 @@
     "react-datetime": "2.15.0",
     "react-dom": "^16.8.6",
     "react-google-maps": "9.4.5",
-    "react-id-swiper": "^2.1.1",
     "react-infinite-calendar": "^2.3.1",
     "react-jvectormap": "0.0.3",
     "react-loader-spinner": "^2.3.0",
@@ -34,8 +33,7 @@
     "react-table": "6.8.6",
     "react-tagsinput": "3.19.0",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
-    "swiper": "^4.5.0"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
