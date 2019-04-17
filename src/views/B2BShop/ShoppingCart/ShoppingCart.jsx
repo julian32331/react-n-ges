@@ -63,8 +63,8 @@ class ShoppingCart extends React.Component {
     this.setState({ [name]: event.target.value });
 
     let key = event.target.value.toLowerCase();
-    
-    let temp = this.props.cart.filter( item => {
+
+    let temp = this.props.cart.filter(item => {
       return item.product.name.toLowerCase().indexOf(key) !== -1
     });
 
@@ -74,9 +74,9 @@ class ShoppingCart extends React.Component {
   };
 
   remove = (id) => {
-    let cart = this.state.cart? this.state.cart : [];
+    let cart = this.state.cart ? this.state.cart : [];
     cart.map((item, key) => {
-      if(item.product.id === id)
+      if (item.product.id === id)
         cart.splice(key, 1)
     })
 
@@ -85,7 +85,7 @@ class ShoppingCart extends React.Component {
     });
   }
   changeQTY = (event, key) => {
-    let cart = this.state.cart? this.state.cart : [];
+    let cart = this.state.cart ? this.state.cart : [];
     cart[key]['quantityOrdered'] = event.target.value;
 
     this.setState({
@@ -100,13 +100,13 @@ class ShoppingCart extends React.Component {
 
       temp.articleNo = item.product.articleNo;
       temp.quantityOrdered = item.quantityOrdered;
-      
+
       cart.push(temp);
     })
 
     return cart;
   }
-  
+
   // Open and close New modal
   onCloseConfirmModal = (isCompleted) => {
     console.log('isCompleted: ', isCompleted)
@@ -155,9 +155,9 @@ class ShoppingCart extends React.Component {
             type="number"
             inputProps={{
               className: classes.qty,
-              onChange: (event)=> event.target.value > 2 && this.changeQTY(event, key)
+              onChange: (event) => event.target.value > 2 && this.changeQTY(event, key)
             }}
-            value={this.state.cart[key]['quantityOrdered']? this.state.cart[key]['quantityOrdered'] : 3}
+            value={this.state.cart[key]['quantityOrdered'] ? this.state.cart[key]['quantityOrdered'] : 3}
           />
         </div>
       )
@@ -191,14 +191,14 @@ class ShoppingCart extends React.Component {
         )
       }
     )
-    booked.push(        
+    booked.push(
       {
         purchase: true,
         colspan: "3",
         col: {
           colspan: 3,
           text: (
-            <Button color="info" round onClick={() => this.setState({confirmModal: true})}>
+            <Button color="info" round onClick={() => this.setState({ confirmModal: true })}>
               Complete Purchase{" "}
               <KeyboardArrowRight className={classes.icon} />
             </Button>
@@ -206,22 +206,24 @@ class ShoppingCart extends React.Component {
         }
       }
     )
-    
+
+
+
     return (
       <GridContainer>
         <GridItem xs={12}>
           <Card>
-          <CardHeader className={classes.pb_0}>
+            <CardHeader className={classes.pb_0}>
               <div className={classes.cardHeader}>
                 <GridContainer>
-                    <GridItem xs={12} sm={6}>
-                        <h3 className={classes.cardTitle}>Shopping Cart</h3>
-                    </GridItem>
+                  <GridItem xs={12} sm={6}>
+                    <h3 className={classes.cardTitle}>Shopping Cart</h3>
+                  </GridItem>
                 </GridContainer>
               </div>
             </CardHeader>
             {
-              this.state.isCompleted? (
+              this.state.isCompleted ? (
                 <CardBody className={classes.center}>
                   <h3>Order is Completed</h3>
                   <Button
@@ -232,76 +234,77 @@ class ShoppingCart extends React.Component {
                   </Button>
                 </CardBody>
               ) : (
-                <CardBody>       
-                  {
-                    this.props.loading? (
-                      <div className={classes.center}>
-                        <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
-                      </div>
-                    ) : (
-                      this.props.cart.length > 0? (
-                        <div>
-                          <GridContainer>
-                            <GridItem xs={3} sm={1} md={2} lg={1}>
-                              <FormLabel className={classes.labelHorizontal}>
-                                Sök :
-                              </FormLabel>
-                            </GridItem>
-                            <GridItem xs={9} sm={3} md={3} lg={2}>
-                              <CustomInput
-                                id="search"
-                                formControlProps={{
-                                  fullWidth: true
-                                }}
-                                inputProps={{
-                                  type: "search",
-                                  onChange: event =>
-                                    this.searchHandler("search", event),
-                                  value: this.state.search               
-                                }}
-                              />
-                            </GridItem>
-                          </GridContainer>
-                          <Table
-                            tableHead={[
-                              "",
-                              "PRODUCT",
-                              "PRICE",
-                              "QTY",
-                              "AMOUNT",
-                              ""
-                            ]}
-                            tableData={booked}
-                            tableShopping
-                            customHeadCellClasses={[
-                              classes.center,
-                              classes.center,
-                              classes.center,
-                              classes.right
-                            ]}
-                            customHeadClassesForCells={[0, 2, 3, 4, 5]}
-                            customCellClasses={[
-                              classes.tdName,
-                              classes.tdNumber + " " + classes.center,
-                              classes.center,
-                              classes.tdNumber + " " + classes.right,
-                            ]}
-                            customClassesForCells={[1, 2, 3, 4]}
-                          />
+                  <CardBody>
+                    {
+                      this.props.loading ? (
+                        <div className={classes.center}>
+                          <CircularProgress className={classes.progress} classes={{ colorPrimary: classes.loading }} />
                         </div>
                       ) : (
-                        <h3 className={classes.center}>No data</h3>
-                      )
-                      
-                    )
-                  }       
-                  
-                </CardBody>
-              )
+                          this.props.cart.length > 0 ? (
+                            <div>
+                              <GridContainer>
+                                <GridItem xs={3} sm={1} md={2} lg={1}>
+                                  <FormLabel className={classes.labelHorizontal}>
+                                    Sök :
+                              </FormLabel>
+                                </GridItem>
+                                <GridItem xs={9} sm={3} md={3} lg={2}>
+                                  <CustomInput
+                                    id="search"
+                                    formControlProps={{
+                                      fullWidth: true
+                                    }}
+                                    inputProps={{
+                                      type: "search",
+                                      onChange: event =>
+                                        this.searchHandler("search", event),
+                                      value: this.state.search
+                                    }}
+                                  />
+                                </GridItem>
+                              </GridContainer>
+                              <Table
+                                tableHead={[
+                                  "",
+                                  "PRODUCT",
+                                  "PRICE",
+                                  "QTY",
+                                  "AMOUNT",
+                                  ""
+                                ]}
+                                tableData={booked}
+                                tableShopping
+                                customHeadCellClasses={[
+                                  classes.center,
+                                  classes.center,
+                                  classes.center,
+                                  classes.right
+                                ]}
+                                customHeadClassesForCells={[0, 2, 3, 4, 5]}
+                                customCellClasses={[
+                                  classes.tdName,
+                                  classes.tdNumber + " " + classes.center,
+                                  classes.center,
+                                  classes.tdNumber + " " + classes.right,
+                                ]}
+                                customClassesForCells={[1, 2, 3, 4]}
+                              />
+                              <p>Fri frakt vid ordervärde 1200 kr eller över. Annars 85 kr. För alla villkor se <span><a style={{ display: "table-cell" }} href='https://wordpress.geselle-one.com/b2b-leveransvillkor' target="_blank">https://wordpress.geselle-one.com/b2b-leveransvillkor</a></span> </p>
+                            </div>
+                          ) : (
+                              <h3 className={classes.center}>No data</h3>
+                            )
+
+                        )
+                    }
+
+                  </CardBody>
+                )
             }
-            
+
           </Card>
-          <ConfirmModal 
+          <ConfirmModal
             onOpen={this.state.confirmModal}
             onClose={(status) => this.onCloseConfirmModal(status)}
             address={this.props.shipping_address}
@@ -315,18 +318,18 @@ class ShoppingCart extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    workingForId    : state.user.workingForId,
-    cart            : state.b2b_shop.cart.cart,
+    workingForId: state.user.workingForId,
+    cart: state.b2b_shop.cart.cart,
     shipping_address: state.b2b_shop.cart.shipping_address,
-    loading         : state.b2b_shop.cart.loading
+    loading: state.b2b_shop.cart.loading
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getUserData         : Actions.getUserData,
-    getCart             : Actions.getCart,
-    getShippingAddress  : Actions.getShippingAddress
+    getUserData: Actions.getUserData,
+    getCart: Actions.getCart,
+    getShippingAddress: Actions.getShippingAddress
   }, dispatch);
 }
 
