@@ -478,7 +478,6 @@ class CreateSalon extends React.Component {
                                     ) : (
                                         undefined
                                     ),
-                                    disabled: !this.state.isEdit,
                                     onChange: event =>
                                         this.change(event, "s_mobile", "s_mobile", 1),
                                     value: this.state.s_mobile,
