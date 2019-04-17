@@ -557,7 +557,6 @@ class AddSalonModal extends React.Component {
                                 ) : (
                                 undefined
                             ),
-                            disabled: !this.state.isEdit,
                             onChange: event =>
                                 this.change(event, "s_co", "s_co", 0),
                             value: this.state.s_co,
@@ -581,7 +580,6 @@ class AddSalonModal extends React.Component {
                             ) : (
                                 undefined
                             ),
-                            disabled: !this.state.isEdit,
                             onChange: event =>
                                 this.change(event, "s_mobile", "s_mobile", 1),
                             value: this.state.s_mobile,
@@ -605,7 +603,6 @@ class AddSalonModal extends React.Component {
                                 ) : (
                                 undefined
                             ),
-                            disabled: !this.state.isEdit,
                             onChange: event =>
                                 this.change(event, "s_address1", "s_address1", 0),
                             value: this.state.s_address1,
@@ -629,7 +626,6 @@ class AddSalonModal extends React.Component {
                                 ) : (
                                 undefined
                             ),
-                            disabled: !this.state.isEdit,
                             onChange: event =>
                                 this.change(event, "s_address2", "s_address2", 0),
                             value: this.state.s_address2,
@@ -653,7 +649,6 @@ class AddSalonModal extends React.Component {
                                 ) : (
                                 undefined
                             ),
-                            disabled: !this.state.isEdit,
                             onChange: event =>
                                 this.change(event, "s_city", "s_city", 0),
                             value: this.state.s_city,
@@ -677,7 +672,6 @@ class AddSalonModal extends React.Component {
                                 ) : (
                                 undefined
                             ),
-                            disabled: !this.state.isEdit,
                             onChange: event =>
                                 this.change(event, "s_zip", "s_zip", 0),
                             value: this.state.s_zip,
