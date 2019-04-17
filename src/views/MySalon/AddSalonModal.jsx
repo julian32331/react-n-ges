@@ -78,6 +78,8 @@ class AddSalonModal extends React.Component {
             s_cityState: "",
             s_zip: "",
             s_zipState: "",
+            s_mobile: "",
+            s_mobileState: "",
         }
         this.save = this.save.bind(this);
     }
@@ -114,6 +116,8 @@ class AddSalonModal extends React.Component {
             s_cityState: "",
             s_zip: "",
             s_zipState: "",
+            s_mobile: "",
+            s_mobileState: "",
         })
     }
 
@@ -141,7 +145,8 @@ class AddSalonModal extends React.Component {
                 postalCode: this.state.s_zip,
                 city: this.state.s_city,
                 country: this.state.country,
-                co: this.state.s_co
+                co: this.state.s_co,
+                mobile: this.state.s_mobile
             }
         })
         this.initState();
@@ -161,6 +166,7 @@ class AddSalonModal extends React.Component {
             case "s_address2":
             case "s_zip":
             case "s_city":
+            case "s_mobile":
                 this.setState({
                     [stateName]: event.target.value
                 })
@@ -228,6 +234,7 @@ class AddSalonModal extends React.Component {
             this.state.s_address1State === "success" &&
             this.state.s_address2State === "success" &&
             this.state.s_cityState === "success" &&
+            this.state.s_mobileState === "success" &&
             this.state.s_zipState === "success") {
             return false;
         } else {
@@ -558,8 +565,8 @@ class AddSalonModal extends React.Component {
                         }}
                     />                    
                     <CustomInput
-                        success={this.state.phoneState === "success"}
-                        error={this.state.phoneState === "error"}
+                        success={this.state.s_mobileState === "success"}
+                        error={this.state.s_mobileState === "error"}
                         labelText="Telefonnummer *"
                         id="phone"
                         formControlProps={{
@@ -567,7 +574,7 @@ class AddSalonModal extends React.Component {
                         }}
                         inputProps={{
                             endAdornment:
-                            this.state.phoneState === "error" ? (
+                            this.state.s_mobileState === "error" ? (
                                 <InputAdornment position="end">
                                 <Warning className={classes.danger} />
                                 </InputAdornment>
@@ -576,8 +583,8 @@ class AddSalonModal extends React.Component {
                             ),
                             disabled: !this.state.isEdit,
                             onChange: event =>
-                                this.change(event, "phone", "phone", 1),
-                            value: this.state.phone,
+                                this.change(event, "s_mobile", "s_mobile", 1),
+                            value: this.state.s_mobile,
                             type: "text"
                         }}
                     />

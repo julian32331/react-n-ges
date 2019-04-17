@@ -100,9 +100,9 @@ class B2BShop extends React.Component {
         st[category["name"]] = !this.state[category.name];
         return (
           <div key={key}>
-            <ListItem divider={true} classes={{gutters: child}} className={this.state.actived_cat === category.name? classes.actived_cat : ''}>
+            <ListItem divider={true} classes={{gutters: child}} className={this.state.actived_cat === category.name? classes.actived_cat : ''} onMouseEnter={() => this.setState(st)}>
               <ListItemText primary={category.name} onClick={() => this.categoryHandler(category.id)} />
-              {this.state[category.name] ? <ExpandLess onClick={() => this.setState(st)} /> : <ExpandMore onClick={() => this.setState(st)} />}  
+              {this.state[category.name] ? <ExpandLess /> : <ExpandMore />}  
             </ListItem>
             <Collapse in={this.state[category.name]} timeout="auto" unmountOnExit>
               <List component="div">
