@@ -35,7 +35,9 @@ const productsStyle = theme => ({
   },
 
   cat_container: {
-    minHeight: '60vh',
+    minHeight: '50vh',
+    maxHeight: '70vh',
+    overflow: 'auto',
     padding: '8px',
     borderColor: '#ddd',
     borderWidth: '1px',
