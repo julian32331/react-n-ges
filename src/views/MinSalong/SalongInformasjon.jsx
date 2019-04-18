@@ -235,9 +235,9 @@ class SalongInformasjon extends React.Component {
             this.state.phoneState === "success" &&
             this.state.emailState === "success" &&
             this.state.networkState === "success" &&
-            this.state.s_coState === "success" &&
+            // this.state.s_coState === "success" &&
             this.state.s_address1State === "success" &&
-            this.state.s_address2State === "success" &&
+            // this.state.s_address2State === "success" &&
             this.state.s_cityState === "success" &&
             this.state.s_zipState === "success" &&
             this.state.s_mobileState === "success" &&
@@ -651,22 +651,22 @@ class SalongInformasjon extends React.Component {
                                     <GridContainer>
                                         <GridItem xs={12} sm={6} md={3}>
                                             <CustomInput
-                                                success={this.state.s_coState === "success"}
-                                                error={this.state.s_coState === "error"}
-                                                labelText="Co *"
+                                                // success={this.state.s_coState === "success"}
+                                                // error={this.state.s_coState === "error"}
+                                                labelText="Co"
                                                 id="city"
                                                 formControlProps={{
                                                     fullWidth: true
                                                 }}
                                                 inputProps={{
-                                                    endAdornment:
-                                                    this.state.s_coState === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                    // endAdornment:
+                                                    // this.state.s_coState === "error" ? (
+                                                    //     <InputAdornment position="end">
+                                                    //     <Warning className={classes.danger} />
+                                                    //     </InputAdornment>
+                                                    // ) : (
+                                                    //     undefined
+                                                    // ),
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
                                                         this.change(event, "s_co", "s_co", 0),
@@ -729,22 +729,22 @@ class SalongInformasjon extends React.Component {
                                         </GridItem>
                                         <GridItem xs={12} sm={6} md={3}>
                                             <CustomInput
-                                                success={this.state.s_address2State === "success"}
-                                                error={this.state.s_address2State === "error"}
-                                                labelText="Adress2 *"
+                                                // success={this.state.s_address2State === "success"}
+                                                // error={this.state.s_address2State === "error"}
+                                                labelText="Adress2"
                                                 id="address"
                                                 formControlProps={{
                                                     fullWidth: true
                                                 }}
                                                 inputProps={{
-                                                    endAdornment:
-                                                    this.state.s_address2State === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                    // endAdornment:
+                                                    // this.state.s_address2State === "error" ? (
+                                                    //     <InputAdornment position="end">
+                                                    //     <Warning className={classes.danger} />
+                                                    //     </InputAdornment>
+                                                    // ) : (
+                                                    //     undefined
+                                                    // ),
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
                                                         this.change(event, "s_address2", "s_address2", 0),

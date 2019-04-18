@@ -106,9 +106,10 @@ class ConfirmModal extends React.Component {
     }
 
     canSubmit() {
-        if(this.state.s_coState === "success" &&
+        if(
+            // this.state.s_coState === "success" &&
             this.state.s_address1State === "success" &&
-            this.state.s_address2State === "success" &&
+            // this.state.s_address2State === "success" &&
             this.state.s_cityState === "success" &&
             this.state.s_zipState === "success") {
             return true;
@@ -176,22 +177,22 @@ class ConfirmModal extends React.Component {
                     className={classes.modalBody}
                 >
                     <CustomInput
-                        success={this.state.s_coState === "success"}
-                        error={this.state.s_coState === "error"}
-                        labelText="Co *"
+                        // success={this.state.s_coState === "success"}
+                        // error={this.state.s_coState === "error"}
+                        labelText="Co"
                         id="co"
                         formControlProps={{
                             fullWidth: true
                         }}
                         inputProps={{
-                            endAdornment:
-                                this.state.s_coState === "error" ? (
-                                <InputAdornment position="end">
-                                    <Warning className={classes.danger} />
-                                </InputAdornment>
-                                ) : (
-                                undefined
-                            ),
+                            // endAdornment:
+                            //     this.state.s_coState === "error" ? (
+                            //     <InputAdornment position="end">
+                            //         <Warning className={classes.danger} />
+                            //     </InputAdornment>
+                            //     ) : (
+                            //     undefined
+                            // ),
                             onChange: event =>
                                 this.change(event, "s_co", "s_co", 0),
                             value: this.state.s_co,
@@ -222,22 +223,22 @@ class ConfirmModal extends React.Component {
                         }}
                     />
                     <CustomInput
-                        success={this.state.s_address2State === "success"}
-                        error={this.state.s_address2State === "error"}
-                        labelText="Adress2 *"
+                        // success={this.state.s_address2State === "success"}
+                        // error={this.state.s_address2State === "error"}
+                        labelText="Adress2"
                         id="address"
                         formControlProps={{
                             fullWidth: true
                         }}
                         inputProps={{
-                            endAdornment:
-                                this.state.s_address2State === "error" ? (
-                                <InputAdornment position="end">
-                                    <Warning className={classes.danger} />
-                                </InputAdornment>
-                                ) : (
-                                undefined
-                            ),
+                            // endAdornment:
+                            //     this.state.s_address2State === "error" ? (
+                            //     <InputAdornment position="end">
+                            //         <Warning className={classes.danger} />
+                            //     </InputAdornment>
+                            //     ) : (
+                            //     undefined
+                            // ),
                             onChange: event =>
                                 this.change(event, "s_address2", "s_address2", 0),
                             value: this.state.s_address2,

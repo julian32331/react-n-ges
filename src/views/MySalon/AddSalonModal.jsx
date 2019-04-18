@@ -230,9 +230,9 @@ class AddSalonModal extends React.Component {
             this.state.zipState === "success" && 
             this.state.cityState === "success" && 
             this.state.countryState === "success" && 
-            this.state.s_coState === "success" &&
+            // this.state.s_coState === "success" &&
             this.state.s_address1State === "success" &&
-            this.state.s_address2State === "success" &&
+            // this.state.s_address2State === "success" &&
             this.state.s_cityState === "success" &&
             this.state.s_mobileState === "success" &&
             this.state.s_zipState === "success") {
@@ -541,22 +541,22 @@ class AddSalonModal extends React.Component {
                         </GridItem>
                     </GridContainer>
                     <CustomInput
-                        success={this.state.s_coState === "success"}
-                        error={this.state.s_coState === "error"}
-                        labelText="Co *"
+                        // success={this.state.s_coState === "success"}
+                        // error={this.state.s_coState === "error"}
+                        labelText="Co"
                         id="city"
                         formControlProps={{
                             fullWidth: true
                         }}
                         inputProps={{
-                            endAdornment:
-                                this.state.s_coState === "error" ? (
-                                <InputAdornment position="end">
-                                    <Warning className={classes.danger} />
-                                </InputAdornment>
-                                ) : (
-                                undefined
-                            ),
+                            // endAdornment:
+                            //     this.state.s_coState === "error" ? (
+                            //     <InputAdornment position="end">
+                            //         <Warning className={classes.danger} />
+                            //     </InputAdornment>
+                            //     ) : (
+                            //     undefined
+                            // ),
                             onChange: event =>
                                 this.change(event, "s_co", "s_co", 0),
                             value: this.state.s_co,
@@ -610,22 +610,22 @@ class AddSalonModal extends React.Component {
                         }}
                     />
                     <CustomInput
-                        success={this.state.s_address2State === "success"}
-                        error={this.state.s_address2State === "error"}
-                        labelText="Adress2 *"
+                        // success={this.state.s_address2State === "success"}
+                        // error={this.state.s_address2State === "error"}
+                        labelText="Adress2"
                         id="address"
                         formControlProps={{
                             fullWidth: true
                         }}
                         inputProps={{
-                            endAdornment:
-                                this.state.s_address2State === "error" ? (
-                                <InputAdornment position="end">
-                                    <Warning className={classes.danger} />
-                                </InputAdornment>
-                                ) : (
-                                undefined
-                            ),
+                            // endAdornment:
+                            //     this.state.s_address2State === "error" ? (
+                            //     <InputAdornment position="end">
+                            //         <Warning className={classes.danger} />
+                            //     </InputAdornment>
+                            //     ) : (
+                            //     undefined
+                            // ),
                             onChange: event =>
                                 this.change(event, "s_address2", "s_address2", 0),
                             value: this.state.s_address2,
