@@ -322,13 +322,13 @@ class B2BShop extends React.Component {
                       <AddShoppingCart className={classes.icons} />
                     </Button>
 
-                    {/* <Button
+                    <Button
                       color="info"
                       className={classes.marginRight}
                       onClick={() => this.setState({mDetail: true})}
                     >
                       test
-                    </Button> */}
+                    </Button>
                   </GridItem>
                 </GridContainer>
               </div>

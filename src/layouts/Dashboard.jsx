@@ -157,7 +157,7 @@ class Dashboard extends React.Component {
               <Header
                 sidebarMinimize={this.sidebarMinimize.bind(this)}
                 miniActive={this.state.miniActive}
-                routes={dashRoutes1}
+                routes={routes}
                 handleDrawerToggle={this.handleDrawerToggle}
                 {...rest}
               />

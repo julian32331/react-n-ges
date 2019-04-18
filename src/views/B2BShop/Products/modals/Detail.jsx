@@ -123,7 +123,7 @@ class Detail extends React.Component {
                     className={classes.modalBody}
                 >
                     <Magnifier src={noImage} width={250} height={250} mgShape={'square'} style={{border: 'solid 1px #000', padding: '4px', borderRadius: '4px', background: '#ddd'}} />
-                    <div>Name: SKP BC Moisture Spray Cond, 200 ml</div>
+                    <h4><b>Name: </b>SKP BC Moisture Spray Cond, 200 ml</h4>
                     <div>Article No: G89983474</div>
                     <div>Price: Kr: 104.00</div>
                 </DialogContent>

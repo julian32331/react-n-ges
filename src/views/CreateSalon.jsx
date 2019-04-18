@@ -16,6 +16,10 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 // @material-ui/icons
 import Check from "@material-ui/icons/Check";
@@ -294,7 +298,7 @@ class CreateSalon extends React.Component {
                             <CustomInput
                                 success={this.state.phoneState === "success"}
                                 error={this.state.phoneState === "error"}
-                                labelText="Telefonnummer *"
+                                labelText="Mobilnummer *"
                                 id="phone"
                                 formControlProps={{
                                     fullWidth: true
@@ -464,7 +468,7 @@ class CreateSalon extends React.Component {
                             <CustomInput
                                 success={this.state.s_mobileState === "success"}
                                 error={this.state.s_mobileState === "error"}
-                                labelText="Telefonnummer *"
+                                labelText="Mobilnummer *"
                                 id="phone"
                                 formControlProps={{
                                     fullWidth: true
@@ -585,11 +589,55 @@ class CreateSalon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                        <GridItem xs={12} sm={6} md={4}>
-                            <CustomInput
+                        <GridItem xs={12} sm={6} md={4} className={classes.pt_8}>                        
+                            <FormControl
+                                fullWidth
+                                className={classes.selectFormControl}
+                            >
+                                <InputLabel
+                                    htmlFor="country-select"
+                                    className={this.state.s_country? classes.selectLabel + " " + classes.success : classes.selectLabel}
+                                >
+                                    Land *
+                                </InputLabel>
+                                <Select
+                                    MenuProps={{
+                                        className: classes.selectMenu
+                                    }}
+                                    classes={{
+                                        select: classes.select + " " + classes.left
+                                    }}
+                                    value={this.state.s_country}
+                                    onChange={event =>
+                                        this.change(event, "s_country", "s_country", 1)}
+                                    inputProps={{
+                                        name: "countrySelect",
+                                        id: "country-select"
+                                    }}
+                                >
+                                    <MenuItem
+                                        disabled
+                                        classes={{
+                                            root: classes.selectMenuItem
+                                        }}
+                                    >
+                                        Land
+                                    </MenuItem>
+                                    <MenuItem
+                                        classes={{
+                                            root: classes.selectMenuItem,
+                                            selected: classes.selectMenuItemSelected
+                                        }}
+                                        value="Sweden"
+                                    >
+                                        Sverige
+                                    </MenuItem>
+                                </Select>
+                            </FormControl>
+                            {/* <CustomInput
                                 success={this.state.s_countryState === "success"}
                                 error={this.state.s_countryState === "error"}
-                                labelText="Country *"
+                                labelText="Land *"
                                 id="s_country"
                                 formControlProps={{
                                     fullWidth: true
@@ -608,7 +656,7 @@ class CreateSalon extends React.Component {
                                     value: this.state.s_country,
                                     type: "text"
                                 }}
-                            />
+                            /> */}
                         </GridItem>
                     </GridContainer>
                     <GridContainer justify="flex-end" alignItems="flex-end">                   

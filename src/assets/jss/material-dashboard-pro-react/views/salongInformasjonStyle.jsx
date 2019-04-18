@@ -12,6 +12,18 @@ const salongInformasjonStyle = {
     submit: {
       float: 'right',
       marginBottom: '15px',
+    },
+    
+    selectLabel: {
+      // fontSize: "12px",
+      fontSize: "14px",
+      // textTransform: "uppercase",
+      // color: "#3C4858 !important",
+      color: "rgba(0, 0, 0, 0.54) !important",
+      top: "8px"
+    },
+    pt_8: {
+      paddingTop: '8px !important',
     }
   };
   
