@@ -44,6 +44,7 @@ import Slider from "react-slick";
 import * as Utils from 'utils';
 import * as Validator from "./../validator";
 import bookingStyle from "assets/jss/material-dashboard-pro-react/layouts/bookingStyle.jsx";
+import defaultAvatar from "assets/img/default-avatar.png";
 
 const days = [    
     "Sunday",
@@ -399,7 +400,8 @@ class Booking extends React.Component {
                                                     employees.map((employee, key) => {
                                                         return (
                                                             <div className={classes.slide_container} key={key} onClick={() => this.selectEmployee(employee)}>
-                                                                <img src={Utils.root + employee.EmployeeInformation.picturePath} className={classes.slide_img} alt="..." />
+                                                                <img src={employee.EmployeeInformation.picturePath? Utils.root + employee.EmployeeInformation.picturePath : defaultAvatar} className={classes.slide_img} alt="..." />
+                                                                <div className={classes.slide_name}>{ employee.name }</div>
                                                             </div>
                                                         )
                                                     })

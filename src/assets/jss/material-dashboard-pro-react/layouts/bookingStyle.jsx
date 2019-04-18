@@ -91,11 +91,24 @@ const bookingStyle = theme => ({
     padding: '0 15px',
   },
   slide_img: {
-    width: '100%' ,
+    width: '100%',
+    height: '300px',
     borderColor: '#245606',
     borderWidth: '1px',
     borderStyle: 'solid',
-    borderRadius: '4px'
+    borderRadius: '4px',
+    [theme.breakpoints.down("sm")]: {      
+      height: '80px',
+    }
+  },
+  slide_name: {
+    textAlign: 'center',
+    paddingTop: '8px',
+    fontSize: '16px',
+    fontWeight: '500',
+    [theme.breakpoints.down("sm")]: {      
+      fontSize: '12px',
+    }
   },
   icons: {
     width: "17px",
