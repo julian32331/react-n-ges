@@ -47,13 +47,13 @@ import bookingStyle from "assets/jss/material-dashboard-pro-react/layouts/bookin
 import defaultAvatar from "assets/img/default-avatar.png";
 
 const days = [    
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
+    "Söndag",
+    "Måndag",
+    "Tisdag",
+    "Onsdag",
+    "Torsdag",
+    "Fredag",
+    "Lördag"
 ];
 
 class Booking extends React.Component {
@@ -274,8 +274,8 @@ class Booking extends React.Component {
         const { classes, loading, employees, timeSlots } = this.props;
         const { step, booking_date } = this.state;
 
-        let button_name = "Next";
-        if(step === 4) button_name = "Finish";
+        let button_name = "Nästa";
+        if(step === 4) button_name = "Bekräfta";
         if(step === 5) button_name = "Go Back";
 
         const services = this.makeServices(this.props.services);
@@ -335,13 +335,13 @@ class Booking extends React.Component {
                         <Stepper active={this.state.step === 1} number={1} title="Tjänster" sub="Välj önskad tjänst" />
                     </GridItem>
                     <GridItem xs={12} sm={3}>
-                        <Stepper active={this.state.step === 2} number={2} title="Velg ansatt" sub="Velg ønsket ansatt" />
+                        <Stepper active={this.state.step === 2} number={2} title="Välj Frisör" sub="Välj önskad frisör" />
                     </GridItem>
                     <GridItem xs={12} sm={3}>
-                        <Stepper active={this.state.step === 3} number={3} title="Dato og tidspunkt" sub="Når vil du booke en time?" />
+                        <Stepper active={this.state.step === 3} number={3} title="Datum och tid" sub="När vill du boka tid?" />
                     </GridItem>
                     <GridItem xs={12} sm={3}>
-                        <Stepper active={this.state.step === 4} number={4} title="Kontaktinfo" sub="Legg inn kontaktinformasjon" />
+                        <Stepper active={this.state.step === 4} number={4} title="Kontaktinfo" sub="Lägg in kontaktinformation" />
                     </GridItem>
                 </GridContainer>
                 <div className={classes.content}>
@@ -549,7 +549,7 @@ class Booking extends React.Component {
                                                 fullWidth: true
                                             }}
                                             inputProps={{
-                                                placeholder: "Full Name",
+                                                placeholder: "Namn",
                                                 onChange: event => this.change(event, "consumerName", "consumerName", 1),
                                                 startAdornment: (
                                                     <InputAdornment
@@ -569,7 +569,7 @@ class Booking extends React.Component {
                                                 fullWidth: true
                                             }}
                                             inputProps={{
-                                                placeholder: "Email",
+                                                placeholder: "E-post",
                                                 onChange: event => this.change(event, "consumerEmail", "consumerEmail", 1),
                                                 startAdornment: (
                                                     <InputAdornment
@@ -589,7 +589,7 @@ class Booking extends React.Component {
                                                 fullWidth: true
                                             }}
                                             inputProps={{
-                                                placeholder: "Phone",
+                                                placeholder: "Mobilnummer",
                                                 onChange: event => this.change(event, "consumerMobile", "consumerMobile", 1),
                                                 startAdornment: (
                                                     <InputAdornment
@@ -617,7 +617,7 @@ class Booking extends React.Component {
                                     multiline
                                     rows="4"
                                     fullWidth
-                                    placeholder="Comment"
+                                    placeholder="Kommentar"
                                     margin="none"
                                     variant="outlined"
                                 />
@@ -629,7 +629,7 @@ class Booking extends React.Component {
                     step === 5 &&
                         <Card>
                             <CardBody>
-                                <div>booking complete</div>                                
+                                <div>Bokningen är klar!</div>                                
                             </CardBody>
                         </Card>
                 }

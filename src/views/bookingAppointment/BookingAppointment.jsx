@@ -144,7 +144,7 @@ class BookingAppointment extends React.Component {
                 <div className={classes.cardHeader}>
                   <GridContainer>
                     <GridItem xs={12} sm={6}>
-                      <h3 className={classes.cardTitle}>Booking Appointment</h3>
+                      <h3 className={classes.cardTitle}>Kalender</h3>
                     </GridItem>
                     <GridItem xs={12} sm={6} className={classes.right}>
                       <Button 
@@ -159,7 +159,7 @@ class BookingAppointment extends React.Component {
                         size="sm"
                         onClick={() => this.onOpenSetBreakModalWithoutId()}
                       >                         
-                        Set DayOff
+                        Lägg in ledig dag 
                       </Button>
                     </GridItem>
                   </GridContainer>

@@ -110,7 +110,7 @@ export var dashRoutes1 = [
   // },
   {
     path: "/bookingappointment",
-    name: "Booking Appointment",
+    name: "Bokningssytem",
     icon: DateRange,
     component: BookingAppointment,
     // isDev: true
@@ -181,10 +181,10 @@ export var dashRoutes1 = [
 export var dashRoutes2 = [  
   {
     path: "/createsalon",
-    name: "Creat First Salon",
+    name: "Skapa din första salong",
     icon: Home,
     component: CreateSalon
   },
-  { redirect: true, path: "/", pathTo: "/createsalon", name: "Creat First Salon" }
+  { redirect: true, path: "/", pathTo: "/createsalon", name: "Skapa din första salong" }
 ]
 // export default dashRoutes;

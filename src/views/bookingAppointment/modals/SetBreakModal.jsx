@@ -113,14 +113,14 @@ class SetBreakModal extends React.Component {
                     disableTypography
                     className={classes.modalHeader}
                 >
-                    <h3 className={classes.modalTitle}>Setting Break Time/Day</h3>
+                    <h3 className={classes.modalTitle}>Lägg in rast</h3>
                 </DialogTitle>
                 <DialogContent
                     id="setting-break-time-description"
                     className={classes.modalBody}
                 >
                     <CustomInput
-                        labelText="Time"
+                        labelText="Tid"
                         id="time"
                         formControlProps={{
                             fullWidth: true
@@ -187,7 +187,7 @@ class SetBreakModal extends React.Component {
                     <CustomInput
                         success={this.state.commentState === "success"}
                         error={this.state.commentState === "error"}
-                        labelText="Comment *"
+                        labelText="Kommentar *"
                         id="comment"
                         formControlProps={{
                             fullWidth: true
@@ -208,7 +208,7 @@ class SetBreakModal extends React.Component {
                         size="sm"
                         onClick={() => this.handleClose()}
                     >
-                        Cancel
+                        Avbryt
                     </Button>
                     <Button
                         onClick={() => this.save()}
@@ -216,7 +216,7 @@ class SetBreakModal extends React.Component {
                         size="sm"
                         disabled={!this.canSubmit()}
                     >
-                        Confirm
+                        Bekräfta
                     </Button>
                 </DialogActions>
             </Dialog>

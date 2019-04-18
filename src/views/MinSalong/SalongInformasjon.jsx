@@ -646,7 +646,7 @@ class SalongInformasjon extends React.Component {
                                         </GridItem>
                                     </GridContainer>            
                                     <div className={classes.cardHeader}>
-                                        <h3 className={classes.cardTitle}>ShippingAddress</h3>
+                                        <h3 className={classes.cardTitle}>Leveransadress</h3>
                                     </div>
                                     <GridContainer>
                                         <GridItem xs={12} sm={6} md={3}>
@@ -809,7 +809,7 @@ class SalongInformasjon extends React.Component {
                                             <CustomInput
                                                 success={this.state.s_countryState === "success"}
                                                 error={this.state.s_countryState === "error"}
-                                                labelText="Country *"
+                                                labelText="Land *"
                                                 id="s_country"
                                                 formControlProps={{
                                                     fullWidth: true

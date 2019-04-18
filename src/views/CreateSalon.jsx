@@ -432,7 +432,7 @@ class CreateSalon extends React.Component {
                         </GridItem>
                     </GridContainer>            
                     <div className={classes.cardHeader}>
-                        <h3 className={classes.cardTitle}>ShippingAddress</h3>
+                        <h3 className={classes.cardTitle}>Leveransadress</h3>
                     </div>
                     <GridContainer>
                         <GridItem xs={12} sm={6} md={3}>
