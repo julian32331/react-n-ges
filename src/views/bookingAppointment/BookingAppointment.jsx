@@ -74,6 +74,13 @@ class BookingAppointment extends React.Component {
       className: backgroundColor
     };
   }
+
+  goBooking() {
+    let salon = JSON.parse(this.props.workingFor).find(item => {
+      return item.workingForId === this.props.workingForId;      
+    });
+    this.props.history.push('/booking/' + salon.Salon.id);
+  }
   
   // Setting break time
   onOpenSetBreakModal = ({resourceId, start, end}) => {
@@ -143,6 +150,13 @@ class BookingAppointment extends React.Component {
                       <Button 
                         color="info" 
                         size="sm"
+                        onClick={() => this.goBooking()}
+                      >                         
+                        Go Booking
+                      </Button>
+                      <Button 
+                        color="info" 
+                        size="sm"
                         onClick={() => this.onOpenSetBreakModalWithoutId()}
                       >                         
                         Set DayOff
@@ -207,6 +221,7 @@ class BookingAppointment extends React.Component {
 function mapStateToProps(state) {
   return {
     workingForId: state.user.workingForId,
+    workingFor  : state.user.workingFor,
     username    : state.user.username,
     loading     : state.booking_appointment.loading,
     data        : state.booking_appointment.data,
