@@ -139,7 +139,7 @@ class CreateSalon extends React.Component {
             this.state.cityState === "success" &&
             this.state.phoneState === "success" &&
             this.state.emailState === "success" &&
-            this.state.networkState === "success" &&
+            // this.state.networkState === "success" &&
             // this.state.s_coState === "success" &&
             this.state.s_address1State === "success" &&
             // this.state.s_address2State === "success" &&
@@ -342,22 +342,22 @@ class CreateSalon extends React.Component {
                         </GridItem>
                         <GridItem xs={12} sm={12} md={4}>
                             <CustomInput
-                                success={this.state.networkState === "success"}
-                                error={this.state.networkState === "error"}
-                                labelText="Hemsida *"
+                                // success={this.state.networkState === "success"}
+                                // error={this.state.networkState === "error"}
+                                labelText="Hemsida"
                                 id="network"
                                 formControlProps={{
                                     fullWidth: true
                                 }}
                                 inputProps={{
-                                    endAdornment:
-                                      this.state.networkState === "error" ? (
-                                        <InputAdornment position="end">
-                                          <Warning className={classes.danger} />
-                                        </InputAdornment>
-                                      ) : (
-                                        undefined
-                                    ),
+                                    // endAdornment:
+                                    //   this.state.networkState === "error" ? (
+                                    //     <InputAdornment position="end">
+                                    //       <Warning className={classes.danger} />
+                                    //     </InputAdornment>
+                                    //   ) : (
+                                    //     undefined
+                                    // ),
                                     onChange: event =>
                                         this.change(event, "network", "network", 0),
                                     value: this.state.network,

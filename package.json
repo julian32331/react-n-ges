@@ -25,6 +25,7 @@
     "react-infinite-calendar": "^2.3.1",
     "react-jvectormap": "0.0.3",
     "react-loader-spinner": "^2.3.0",
+    "react-magnifier": "^3.0.0",
     "react-redux": "^6.0.0",
     "react-router-dom": "4.3.1",
     "react-scripts": "1.1.5",

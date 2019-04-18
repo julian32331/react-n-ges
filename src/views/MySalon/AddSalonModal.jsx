@@ -224,7 +224,7 @@ class AddSalonModal extends React.Component {
         if(this.state.nameState === "success" && 
             this.state.emailState === "success" && 
             this.state.telephoneState === "success" && 
-            this.state.websiteState === "success" && 
+            // this.state.websiteState === "success" && 
             this.state.descriptionState === "success" && 
             this.state.addressState === "success" && 
             this.state.zipState === "success" && 
@@ -341,22 +341,22 @@ class AddSalonModal extends React.Component {
                             }}
                         />
                         <CustomInput
-                            success={this.state.websiteState === "success"}
-                            error={this.state.websiteState === "error"}
-                            labelText="Hemsida *"
+                            // success={this.state.websiteState === "success"}
+                            // error={this.state.websiteState === "error"}
+                            labelText="Hemsida"
                             id="web-site"
                             formControlProps={{
                                 fullWidth: true
                             }}
                             inputProps={{
-                                endAdornment:
-                                    this.state.websiteState === "error" ? (
-                                    <InputAdornment position="end">
-                                        <Warning className={classes.danger} />
-                                    </InputAdornment>
-                                    ) : (
-                                    undefined
-                                ),
+                                // endAdornment:
+                                //     this.state.websiteState === "error" ? (
+                                //     <InputAdornment position="end">
+                                //         <Warning className={classes.danger} />
+                                //     </InputAdornment>
+                                //     ) : (
+                                //     undefined
+                                // ),
                                 onChange: event =>
                                     this.change(event, "website", "website", 1),
                                 type: "text",

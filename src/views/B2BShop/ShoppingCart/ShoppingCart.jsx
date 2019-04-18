@@ -290,7 +290,7 @@ class ShoppingCart extends React.Component {
                                 ]}
                                 customClassesForCells={[1, 2, 3, 4]}
                               />
-                              <p>Fri frakt vid ordervärde 1200 kr eller över. Annars 85 kr. För alla villkor se <span><a style={{ display: "table-cell" }} href='https://geselle.se' target="_blank">https://geselle.se</a></span> </p>
+                              <p>Fri frakt vid ordervärde 1200 kr eller över. Annars 85 kr. För alla villkor se <span><a style={{ display: "table-cell" }} href='https://geselle.se/b2b-leveransvillkor' target="_blank">https://geselle.se/b2b-leveransvillkor</a></span> </p>
                             </div>
                           ) : (
                               <h3 className={classes.center}>No data</h3>

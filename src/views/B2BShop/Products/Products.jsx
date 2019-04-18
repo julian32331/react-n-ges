@@ -33,7 +33,7 @@ import Pagination from "components/Pagination/Pagination.jsx";
 
 import productsStyle from "assets/jss/material-dashboard-pro-react/views/b2bshop/productsStyle.jsx";
 import noImage from "assets/img/no_image.jpg";
-// import categories from "./Category";
+import Detail from "./modals/Detail";
 
 class B2BShop extends React.Component {
   constructor(props) {
@@ -321,6 +321,14 @@ class B2BShop extends React.Component {
                     >
                       <AddShoppingCart className={classes.icons} />
                     </Button>
+
+                    {/* <Button
+                      color="info"
+                      className={classes.marginRight}
+                      onClick={() => this.setState({mDetail: true})}
+                    >
+                      test
+                    </Button> */}
                   </GridItem>
                 </GridContainer>
               </div>
@@ -396,6 +404,11 @@ class B2BShop extends React.Component {
             </CardBody>
           </Card>
         </GridItem>
+
+        <Detail 
+          onOpen={this.state.mDetail}
+          onClose={() => this.setState({mDetail: false})}
+        />
       </GridContainer>
     );
   }
