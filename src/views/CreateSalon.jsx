@@ -661,7 +661,7 @@ class CreateSalon extends React.Component {
                     </GridContainer>
                     <GridContainer justify="flex-end" alignItems="flex-end">                   
                         <GridItem xs={12} sm={12} md={6}>                    
-                            <Button color="info" size="sm" className={classes.submit} disabled={this.canSubmit()} onClick={this.addSalonInfo.bind(this)}>LAGRE</Button>
+                            <Button color="info" size="sm" className={classes.submit} disabled={this.canSubmit()} onClick={this.addSalonInfo.bind(this)}>Spara</Button>
                         </GridItem>  
                     </GridContainer>
                 </form>

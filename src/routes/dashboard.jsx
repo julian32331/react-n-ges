@@ -118,7 +118,7 @@ export var dashRoutes1 = [
   {
     collapse: true,
     path: "/b2bshop",
-    name: "B2B Shop",
+    name: "Butik",
     state: "b2bshop",
     icon: Shop,
     // isDev: true,

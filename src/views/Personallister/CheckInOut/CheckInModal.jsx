@@ -87,7 +87,7 @@ class CheckInModal extends React.Component {
                     disableTypography
                     className={classes.modalHeader}
                 >
-                    <h3 className={classes.modalTitle}>Check In</h3>
+                    <h3 className={classes.modalTitle}>Checka in</h3>
                 </DialogTitle>
                 <DialogContent
                     id="checkin-modal-description"

@@ -152,7 +152,7 @@ class BookingAppointment extends React.Component {
                         size="sm"
                         onClick={() => this.goBooking()}
                       >                         
-                        Go Booking
+                        Boka
                       </Button>
                       <Button 
                         color="info" 

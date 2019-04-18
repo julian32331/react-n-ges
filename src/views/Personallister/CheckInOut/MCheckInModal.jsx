@@ -123,7 +123,7 @@ class MCheckInModal extends React.Component {
                     disableTypography
                     className={classes.modalHeader}
                 >
-                    <h3 className={classes.modalTitle}>Manual Check In</h3>
+                    <h3 className={classes.modalTitle}>Manuell incheckning</h3>
                 </DialogTitle>
                 <DialogContent
                     id="manual-check-in-modal-description"
@@ -133,7 +133,7 @@ class MCheckInModal extends React.Component {
                         <CustomInput
                             success={this.state.nameState === "success"}
                             error={this.state.nameState === "error"}
-                            labelText="Name *"
+                            labelText="Namn *"
                             id="name"
                             formControlProps={{
                                 fullWidth: true

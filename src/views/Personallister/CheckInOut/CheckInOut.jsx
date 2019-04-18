@@ -362,21 +362,21 @@ class CheckInOut extends React.Component {
                       disabled={csvData.length<=1}
                       onClick={() => this.downloadCSV()}
                   >                            
-                      <ImportExport /> Export CSV
+                      <ImportExport /> Exportera CSV
                   </Button>
                   <Button 
                       color="info" 
                       size="sm"
                       onClick={() => this.onOpenCheckInModal()}
                   >                            
-                      <Add /> Check In
+                      <Add /> Checka in
                   </Button>
                   <Button 
                       color="info" 
                       size="sm"
                       onClick={() => this.onOpenMCheckInModal()}
                   >                            
-                      <Add /> Manual Check In
+                      <Add /> Manuell incheckning
                   </Button>
                 </GridItem>
             </GridContainer>
@@ -438,7 +438,6 @@ class CheckInOut extends React.Component {
                 <Button 
                     color="info" 
                     size="sm"
-                    style={{width: '100%'}}
                     onClick={() => {
                         this.setState({
                           search: "",
@@ -448,7 +447,7 @@ class CheckInOut extends React.Component {
                         this.search(null, null, null)
                       }
                     }
-                > Clear
+                > Rensa filter
                 </Button>
               </div>
             </GridItem>
