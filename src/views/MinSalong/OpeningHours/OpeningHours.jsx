@@ -82,6 +82,16 @@ class OpeningHours extends React.Component {
 
     initOpeninHours(data) {
         data.map(day => {
+            if (day.dayId === 0) {
+                this.setState({
+                    Sunday_id: day.id,
+                    Sunday_dayId: day.dayId,
+                    Sunday_name: day.name,
+                    Sunday_open: day.open,
+                    Sunday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
+                    Sunday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
+                });
+            }
             if (day.dayId === 1) {
                 this.setState({
                     Monday_id: day.id,
@@ -140,16 +150,6 @@ class OpeningHours extends React.Component {
                     Saturday_open: day.open,
                     Saturday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
                     Saturday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
-                });
-            }
-            if (day.dayId === 0) {
-                this.setState({
-                    Sunday_id: day.id,
-                    Sunday_dayId: day.dayId,
-                    Sunday_name: day.name,
-                    Sunday_open: day.open,
-                    Sunday_from: day.openAt.substr(0,2) + ":" + day.openAt.substr(2,2),
-                    Sunday_to: day.closeAt.substr(0,2) + ":" + day.closeAt.substr(2,2)
                 });
             }
         });
@@ -251,7 +251,7 @@ class OpeningHours extends React.Component {
                         <div className={classes.cardHeader}>
                             <GridContainer>
                                 <GridItem  xs={12} sm={6}>
-                                    <h3 className={classes.cardTitle}>Öppettider</h3>
+                                    <h3 className={classes.cardTitle}>Salong öppen</h3>
                                 </GridItem>
                             </GridContainer>
                         </div>
@@ -364,7 +364,7 @@ class OpeningHours extends React.Component {
                         <div className={classes.cardHeader}>
                             <GridContainer>
                                 <GridItem xs={12} sm={6}>
-                                    <h3 className={classes.cardTitle}>Specialdagar</h3>
+                                    <h3 className={classes.cardTitle}>Ny specialdag</h3>
                                 </GridItem>
                                 <GridItem xs={12} sm={6} className={classes.text_right}>
                                     <Button 
