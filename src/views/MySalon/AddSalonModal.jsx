@@ -501,18 +501,9 @@ class AddSalonModal extends React.Component {
                                         root: classes.selectMenuItem,
                                         selected: classes.selectMenuItemSelected
                                     }}
-                                    value="Norway"
-                                >
-                                    Norway
-                                </MenuItem> 
-                                <MenuItem
-                                    classes={{
-                                        root: classes.selectMenuItem,
-                                        selected: classes.selectMenuItemSelected
-                                    }}
                                     value="Sweden"
                                 >
-                                    Sweden
+                                    Sverige
                                 </MenuItem>
                         </Select>
                     </FormControl>
