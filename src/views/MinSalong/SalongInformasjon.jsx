@@ -906,6 +906,7 @@ class SalongInformasjon extends React.Component {
                             </div>
                         ) : 
                         <div style={{textAlign: 'center'}}>
+                            <h4>This is the description of Gallery</h4>
                             <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
                             <img src={this.state.imagePreviewUrl} style={{width: '200px', height: '200px', border: 'solid 1px', borderRadius: '8px', padding: '8px'}} />
                         </div>                          

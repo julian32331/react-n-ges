@@ -169,7 +169,7 @@ class MySalon extends React.Component {
                           <Button 
                               color="info" 
                               size="sm"
-                              // onClick={() => this.onOpenAddSalonModal()}
+                              onClick={() => this.props.history.push('/register')}
                           >                            
                               <Add /> Lägg till företag
                           </Button>

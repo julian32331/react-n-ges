@@ -64,7 +64,7 @@ class AddSalonModal extends React.Component {
             zipState: "",
             city: "",
             cityState: "",
-            country: "",
+            country: "Sweden",
             countryState: "",
             hasPark: false,
 
@@ -102,7 +102,7 @@ class AddSalonModal extends React.Component {
             zipState: "",
             city: "",
             cityState: "",
-            country: "",
+            country: "Sweden",
             countryState: "",
             hasPark: false,
             
@@ -134,6 +134,7 @@ class AddSalonModal extends React.Component {
             telephone: this.state.telephone,
             description: this.state.description,
             parking: this.state.hasPark,
+            accessibility: this.state.access,
             website: this.state.website,
             address: this.state.address,
             post: this.state.zip,
@@ -530,11 +531,34 @@ class AddSalonModal extends React.Component {
                                 label="Har parkering?"
                             />
                         </GridItem>
+                        <GridItem xs={12} className={classes.left}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        onClick={event =>
+                                            this.toggleCheck(event, "access")
+                                        }
+                                        checkedIcon={<Check className={classes.checkedIcon} />}
+                                        icon={<Check className={classes.uncheckedIcon} />}
+                                        classes={{
+                                            checked: classes.checked,
+                                            root: classes.checkRoot
+                                        }}
+                                        checked={this.state.access}
+                                    />
+                                }
+                                classes={{
+                                    label: classes.label
+                                }}
+                                label="Tillgänglighetsanpassat"
+                            />
+                        </GridItem>
                     </GridContainer>
+                    <div style={{fontSize: '18px', fontWeight: '500', textAlign: 'left'}}>Leveransadress</div>
                     <CustomInput
                         // success={this.state.s_coState === "success"}
                         // error={this.state.s_coState === "error"}
-                        labelText="Co"
+                        labelText="C/O"
                         id="city"
                         formControlProps={{
                             fullWidth: true

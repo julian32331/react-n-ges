@@ -696,7 +696,7 @@ class CompanyInformasjon extends React.Component {
                             <CustomInput
                                 success={this.state.plusgiroNo === "success"}
                                 error={this.state.plusgiroNo === "error"}
-                                labelText="Plusgiro *"
+                                labelText="Postgiro *"
                                 id="plusgiro-no"
                                 formControlProps={{
                                     fullWidth: true
