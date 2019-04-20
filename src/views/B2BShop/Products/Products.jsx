@@ -140,16 +140,16 @@ class B2BShop extends React.Component {
     )
   }
 
-  product_name = (name, sku) => {
+  product_name = (product) => {
     const { classes } = this.props;
     return (
       <span>
-        <a className={classes.tdNameAnchor}>
-          {name}
+        <a className={classes.tdNameAnchor} onClick={()=> this.setState({ isVisibleDetail: true, detailData: product })}>
+          {product.name}
         </a>
         <br />
         <small className={classes.tdNameSmall}>
-          {sku}
+          {product.articleNo}
         </small>
       </span>
     )
@@ -274,7 +274,7 @@ class B2BShop extends React.Component {
 
       if (index >= (activedPageNo - 1) * 10 && index < activedPageNo * 10) {
         temp.push(this.product_image(product.imageURL !== ""? product.imageURL : noImage));
-        temp.push(this.product_name(product.name, product.articleNo));
+        temp.push(this.product_name(product));
         temp.push(this.product_price_qty(product));
         temp.push(
           <Button color="info" simple style={{padding: '0px',}} onClick={() => this.setState({isVisibleDetail: true, detailData: product})}>

@@ -76,7 +76,7 @@ class Detail extends React.Component {
                             id="setting-break-time-description"
                             className={classes.modalBody}
                         >
-                            <Magnifier src={noImage} width={250} height={250} mgShape={'square'} style={{border: 'solid 1px #000', padding: '4px', borderRadius: '4px', background: '#ddd'}} />
+                            <Magnifier src={data.imageURL !== ""? data.imageURL : noImage} width={250} height={250} mgShape={'square'} style={{border: 'solid 1px #000', padding: '4px', borderRadius: '4px', background: '#ddd'}} />
                             <h4><b>Name: </b>{data.name}</h4>
                             <div style={{paddingBottom: '15px',}}>
                                 <span><b>Article No:</b> {data.articleNo}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -98,7 +98,7 @@ class Detail extends React.Component {
                                     />
                                 </GridItem>
                                 <GridItem xs={3}>
-                                    <Button color="info" round size="sm" className={classes.marginRight} onClick={() => this.props.addCart(data, this.state.qty)}>
+                                    <Button color="info" round size="sm" onClick={() => this.props.addCart(data, this.state.qty)}>
                                         Add
                                     </Button>
                                 </GridItem>   
