@@ -19,6 +19,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import AddShoppingCart from '@material-ui/icons/AddShoppingCart';
 
 // material-ui icons
+import MoreVert from '@material-ui/icons/MoreVert';
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -43,6 +44,8 @@ class B2BShop extends React.Component {
       cart: [],
       pageOffset: 0,
       activedPageNo: 1,
+      isVisibleDetail: false,
+      detailData: null
     };
     this.products = [];
   }
@@ -177,7 +180,7 @@ class B2BShop extends React.Component {
       </span>
     )
   }
-  addCart = (product) => {
+  addCart = (product, qty) => {
     let cart = this.state.cart? this.state.cart : [];
     console.log('cart: ', cart);
     console.log('product: ', product);
@@ -188,12 +191,19 @@ class B2BShop extends React.Component {
 
     let temp = {};
     temp['product'] = product;
-    temp['quantityOrdered'] = this.state["qty_" + product.articleNo];
+    temp['quantityOrdered'] = qty? qty : this.state["qty_" + product.articleNo];
 
     cart.push(temp);
-    this.setState({
-      cart: cart
-    });
+    if(qty) {
+      this.setState({
+        cart: cart,
+        ["qty_" + product.articleNo]: qty
+      });
+    } else {
+      this.setState({
+        cart: cart
+      });
+    }
   }
   goCart = () => {
     this.props.setCart(this.state.cart);
@@ -266,6 +276,11 @@ class B2BShop extends React.Component {
         temp.push(this.product_image(product.imageURL !== ""? product.imageURL : noImage));
         temp.push(this.product_name(product.name, product.articleNo));
         temp.push(this.product_price_qty(product));
+        temp.push(
+          <Button color="info" simple style={{padding: '0px',}} onClick={() => this.setState({isVisibleDetail: true, detailData: product})}>
+            <MoreVert />
+          </Button>
+        )
 
         products.push(temp);
       }
@@ -325,7 +340,7 @@ class B2BShop extends React.Component {
                     {/* <Button
                       color="info"
                       className={classes.marginRight}
-                      onClick={() => this.setState({mDetail: true})}
+                      onClick={() => this.setState({isVisibleDetail: true})}
                     >
                       test
                     </Button> */}
@@ -381,9 +396,10 @@ class B2BShop extends React.Component {
                           tableShopping
                           customCellClasses={[
                             classes.tdName,
-                            classes.tdNumber
+                            classes.tdNumber,
+                            classes.right
                           ]}
-                          customClassesForCells={[1, 2]}
+                          customClassesForCells={[1, 2, 3]}
                         />
                       ) : (
                         <h3 className={classes.center}>No products</h3>
@@ -406,8 +422,10 @@ class B2BShop extends React.Component {
         </GridItem>
 
         <Detail 
-          onOpen={this.state.mDetail}
-          onClose={() => this.setState({mDetail: false})}
+          onOpen={this.state.isVisibleDetail}
+          onClose={() => this.setState({isVisibleDetail: false})}
+          addCart={this.addCart}
+          data={this.state.detailData}
         />
       </GridContainer>
     );

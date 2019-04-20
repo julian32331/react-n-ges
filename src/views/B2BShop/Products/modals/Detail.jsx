@@ -22,8 +22,11 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import TextField from '@material-ui/core/TextField';
 
 // core components
+import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
@@ -41,63 +44,12 @@ class Detail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            comment         : "",            
-            commentState    : "", 
-            hairdresserId   : ""
+            qty: 3
         }
-    }
-
-    change(event, stateName, type, stateNameEqualTo) {
-        switch (type) {
-            case "comment":
-                this.setState({
-                    [stateName]: event.target.value
-                })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
-    handleEmployee = event => {
-        this.setState({ [event.target.name]: event.target.value });
-    };
-
-    handleClose() {
-        this.props.onClose();
-        this.setState({
-            comment     : "",        
-            commentState: ""
-        })
-    }
-
-    canSubmit = () => {
-        if((this.state.commentState === "success" && this.state.hairdresserId) || (this.state.commentState === "success" && this.props.data.hairdresserId))
-            return true;
-        else
-            return false;
-    }
-
-    save = () => {
-        const { workingForId, data } = this.props;
-        let root = data.hairdresserId? 'time' : 'day';
-        this.props.setBreak({
-            workingForId    : workingForId,
-            hairdresserId   : data.hairdresserId || this.state.hairdresserId,
-            breakStartAt    : data.start,
-            comment         : this.state.comment
-        }, root)
-        this.handleClose();
     }
 
     render() {
-        const { classes, data, employees } = this.props;
-
+        const { classes, data } = this.props;
         return (
             <Dialog
                 classes={{
@@ -107,7 +59,7 @@ class Detail extends React.Component {
                     open={this.props.onOpen}
                     TransitionComponent={Transition}
                     keepMounted
-                    onClose={() => this.handleClose()}
+                    onClose={() => this.props.onClose()}
                     aria-labelledby="setting-break-time-title"
                     aria-describedby="setting-break-time-description"
                 >
@@ -118,15 +70,41 @@ class Detail extends React.Component {
                 >
                     <h3 className={classes.modalTitle}>Details</h3>
                 </DialogTitle>
-                <DialogContent
-                    id="setting-break-time-description"
-                    className={classes.modalBody}
-                >
-                    <Magnifier src={noImage} width={250} height={250} mgShape={'square'} style={{border: 'solid 1px #000', padding: '4px', borderRadius: '4px', background: '#ddd'}} />
-                    <h4><b>Name: </b>SKP BC Moisture Spray Cond, 200 ml</h4>
-                    <div>Article No: G89983474</div>
-                    <div>Price: Kr: 104.00</div>
-                </DialogContent>
+                {
+                    data &&
+                        <DialogContent
+                            id="setting-break-time-description"
+                            className={classes.modalBody}
+                        >
+                            <Magnifier src={noImage} width={250} height={250} mgShape={'square'} style={{border: 'solid 1px #000', padding: '4px', borderRadius: '4px', background: '#ddd'}} />
+                            <h4><b>Name: </b>{data.name}</h4>
+                            <div style={{paddingBottom: '15px',}}>
+                                <span><b>Article No:</b> {data.articleNo}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span><b>Price: Kr:</b> {data.price}</span>
+                            </div>
+                            <GridContainer justify="center" alignItems="center">
+                                <GridItem xs={4}>
+                                    <TextField
+                                        id="outlined-bare"
+                                        className={classes.textField}
+                                        margin="normal"
+                                        variant="outlined"
+                                        type="number"
+                                        inputProps={{
+                                            className: classes.qty,
+                                            onChange: (event)=> event.target.value > 2 && this.setState({qty: event.target.value})
+                                        }}
+                                        value={this.state.qty}
+                                    />
+                                </GridItem>
+                                <GridItem xs={3}>
+                                    <Button color="info" round size="sm" className={classes.marginRight} onClick={() => this.props.addCart(data, this.state.qty)}>
+                                        Add
+                                    </Button>
+                                </GridItem>   
+                            </GridContainer>
+                        </DialogContent>
+                }
             </Dialog>
         );
   }

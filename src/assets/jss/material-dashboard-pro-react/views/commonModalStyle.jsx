@@ -47,6 +47,17 @@ const commonModalStyle = theme => ({
       backgroundColor: infoColor + " !important"
     }
   },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    marginTop: '0px !important',
+    marginBottom: '0px !important',
+  },
+  qty: {
+    width: '50px',
+    textAlign: 'center',
+    padding: '10px 10px 10px 24px !important',
+  },
 });
 
 export default commonModalStyle;

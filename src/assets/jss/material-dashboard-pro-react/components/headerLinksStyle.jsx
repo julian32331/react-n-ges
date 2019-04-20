@@ -167,8 +167,7 @@ const headerLinksStyle = theme => ({
     }
   },
   saloon_select: {
-    width: '176px',
-    marginRight: '24px'
+    width: '180px',
   }
 });
 
