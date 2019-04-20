@@ -11,7 +11,9 @@ const customSelectStyle = {
     fontWeight: "400",
     lineHeight: "1.42857",
     textDecoration: "none",
-    textTransform: "uppercase",
+    // textTransform: "uppercase",
+    textAlign: 'left',
+    paddingRight: '20px',
     color: "#3C4858",
     letterSpacing: "0",
     "&:focus": {
@@ -39,6 +41,7 @@ const customSelectStyle = {
   selectLabel: {
     // fontSize: "12px",
     fontSize: "14px",
+    fontWeight: "400",
     // textTransform: "uppercase",
     // color: "#3C4858 !important",
     color: "rgba(0, 0, 0, 0.54) !important",
@@ -94,7 +97,7 @@ const customSelectStyle = {
   selectMenuItemSelectedMultiple: {
     backgroundColor: "transparent !important",
     "&:hover": {
-      backgroundColor: primaryColor + "!important",
+      backgroundColor: infoColor + "!important",
       color: "#FFFFFF",
       ...primaryBoxShadow,
       "&:after": {

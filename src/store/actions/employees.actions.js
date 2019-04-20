@@ -14,10 +14,8 @@ export const INVITE_EMPLOYEE      = '[EMPLOYEE] INVITE';
 export const ADD_EXIST_EMPLOYEE      = '[EMPLOYEE] EXIST ADD';
 export const ADD_NON_EXIST_EMPLOYEE      = '[EMPLOYEE] NON EXIST ADD';
 
-export function getEmployees({workingForId}) {
-    const request = Utils.xapi().post('manager/employees', {
-        workingForId: workingForId
-    });
+export function getEmployees(data) {
+    const request = Utils.xapi().post('manager/employees', data);
     return (dispatch) =>
         request.then((response) => {
             return dispatch({

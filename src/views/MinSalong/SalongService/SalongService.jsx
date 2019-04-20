@@ -32,6 +32,7 @@ import salongServiceStyle from "assets/jss/material-dashboard-pro-react/views/sa
 
 import NewOrUpdateModal from "./NewOrUpdateModal.jsx";
 import DeleteModal from "./DeleteModal.jsx";
+import * as Utils from 'utils';
 
 class SalongService extends React.Component {
     constructor(props) {
@@ -82,16 +83,39 @@ class SalongService extends React.Component {
         })
     }
     onOpenNewOrUpdateModal(title, service=null) {
-        this.setState({
-            newOrUpdateModal: true,
-            modalTitle: title,
-            modalData: service
-        })
+        if(service) {
+            this.setState({
+                loading: true
+            })
+            Utils.xapi().post('manager/service/employees', {
+                workingForId: this.props.workingForId,
+                serviceId: service.id
+            }).then(res => {
+                let arr = [];
+                res.data.Employees.map(employee => {
+                    arr.push(employee.id)
+                })
+                this.setState({
+                    loading: false,
+                    newOrUpdateModal: true,
+                    modalTitle: title,
+                    modalData: service,
+                    employees: arr
+                })
+            })
+        } else {
+            this.setState({
+                newOrUpdateModal: true,
+                modalTitle: title,
+                modalData: service,
+                employees: null
+            })
+        }
     }
 
     render() {
-        const { classes, loading } = this.props;
-        console.log('this.props.services: ', this.props.services)
+        const { classes } = this.props;
+        const loading = this.props.loading || this.state.loading;
         return (
             <Card classes={{card: classes.card}}>
                 <CardHeader>            
@@ -104,7 +128,7 @@ class SalongService extends React.Component {
                                 <Button 
                                     color="info" 
                                     size="sm"
-                                    onClick={() => this.onOpenNewOrUpdateModal("Ny tjänst")}
+                                    onClick={() => this.onOpenNewOrUpdateModal("Ny tjänst", null)}
                                 >                            
                                     <Add /> Lägg till tjänst
                                 </Button>
@@ -113,84 +137,85 @@ class SalongService extends React.Component {
                     </div>
                 </CardHeader>
                 <CardBody>
+                    {
+                        loading &&
+                            <div className={classes.loading_container}>
+                                <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                            </div>
+                    }
                     <GridContainer justify="center" className={classes.mb_20}>
                         <GridItem xs={11} sm={10} md={10} lg={9}>
                         {
-                            loading? (
-                                <div className={classes.loading_container}>
-                                    <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
-                                </div>
-                            ) : (
-                                this.props.services.length > 0? (
-                                    this.props.services.map((service, key) => {
-                                        return (
-                                            <GridContainer key={key} className={classes.mb_20}>
-                                                <GridItem xs={12} md={3} className={classes.bg_title}>
-                                                    <div className={classes.title_container}> 
-                                                        <GridContainer>
-                                                            <GridItem xs={12}>
-                                                                <div className={classes.title}>{service.name}</div>
-                                                            </GridItem>
-                                                            <GridItem xs={6} md={12}>
-                                                                <div className={classes.time}><span className={classes.title_item}>Tid :&nbsp;&nbsp;</span> {service.durationInMinutes}min</div>
-                                                            </GridItem>
-                                                            <GridItem xs={6} md={12}>
-                                                                <div className={classes.price}><span className={classes.title_item}>Pris kr :&nbsp;&nbsp;</span> {service.price}</div>
-                                                            </GridItem>
-                                                        </GridContainer>
-                                                    </div>
-                                                </GridItem>
-                                                <GridItem xs={12} md={7} className={classes.bg_content}>
-                                                    {service.description}
-                                                </GridItem>
-                                                <GridItem xs={12} md={2} className={classes.btn_container}>
-                                                    <div className={classes.py_15}>
-                                                        <Button
-                                                            justIcon
-                                                            round
-                                                            color="info"
-                                                            size="sm"
-                                                            className={classes.mx_10}
-                                                            onClick={() => this.onOpenNewOrUpdateModal("Update Service", service)}
-                                                            >
-                                                            <Create />
-                                                        </Button>                        
-                                                        <Button
-                                                            justIcon
-                                                            round
-                                                            color="danger"
-                                                            size="sm"
-                                                            className={classes.mx_10}
-                                                            onClick={() => this.onOpenDeleteModal(service)}
-                                                            >
-                                                            <Close />
-                                                        </Button>
-                                                    </div>
-                                                </GridItem>
-                                            </GridContainer>
-                                        )                        
-                                    })
-                                ) : (
-                                    <div>No Services</div>
-                                )
-                            )
-                            
+                            this.props.services.length > 0 &&
+                                this.props.services.map((service, key) => {
+                                    return (
+                                        <GridContainer key={key} className={classes.mb_20}>
+                                            <GridItem xs={12} md={3} className={classes.bg_title}>
+                                                <div className={classes.title_container}> 
+                                                    <GridContainer>
+                                                        <GridItem xs={12}>
+                                                            <div className={classes.title}>{service.name}</div>
+                                                        </GridItem>
+                                                        <GridItem xs={6} md={12}>
+                                                            <div className={classes.time}><span className={classes.title_item}>Tid :&nbsp;&nbsp;</span> {service.durationInMinutes}min</div>
+                                                        </GridItem>
+                                                        <GridItem xs={6} md={12}>
+                                                            <div className={classes.price}><span className={classes.title_item}>Pris kr :&nbsp;&nbsp;</span> {service.price}</div>
+                                                        </GridItem>
+                                                    </GridContainer>
+                                                </div>
+                                            </GridItem>
+                                            <GridItem xs={12} md={7} className={classes.bg_content}>
+                                                {service.description}
+                                            </GridItem>
+                                            <GridItem xs={12} md={2} className={classes.btn_container}>
+                                                <div className={classes.py_15}>
+                                                    <Button
+                                                        justIcon
+                                                        round
+                                                        color="info"
+                                                        size="sm"
+                                                        className={classes.mx_10}
+                                                        onClick={() => this.onOpenNewOrUpdateModal("Update Service", service)}
+                                                    >
+                                                        <Create />
+                                                    </Button>                        
+                                                    <Button
+                                                        justIcon
+                                                        round
+                                                        color="danger"
+                                                        size="sm"
+                                                        className={classes.mx_10}
+                                                        onClick={() => this.onOpenDeleteModal(service)}
+                                                    >
+                                                        <Close />
+                                                    </Button>
+                                                </div>
+                                            </GridItem>
+                                        </GridContainer>
+                                    )                        
+                                })
+                        }
+                        {
+                            !this.props.loading && this.props.services.length === 0 &&
+                                <h4 style={{textAlign: 'center'}}>No Services</h4>                           
                         }                    
                         </GridItem>
                     </GridContainer>
-                    <DeleteModal 
-                        onOpen={this.state.deleteModal}
-                        onClose={this.onCloseDeleteModal.bind(this)}
-                        id={this.state.modalData? this.state.modalData.id : null}
-                    />
-                        
-                    <NewOrUpdateModal 
-                        onOpen={this.state.newOrUpdateModal}
-                        onClose={this.onCloseNewOrUpdateModal.bind(this)}
-                        modalTitle={this.state.modalTitle}
-                        data={this.state.modalData}
-                    />
                 </CardBody>
+                <DeleteModal 
+                    onOpen={this.state.deleteModal}
+                    onClose={this.onCloseDeleteModal.bind(this)}
+                    id={this.state.modalData? this.state.modalData.id : null}
+                />
+                    
+                <NewOrUpdateModal 
+                    onOpen={this.state.newOrUpdateModal}
+                    onClose={this.onCloseNewOrUpdateModal.bind(this)}
+                    modalTitle={this.state.modalTitle}
+                    data={this.state.modalData}
+                    selectedEmployees={this.state.employees}
+                />
             </Card>
         );
     }

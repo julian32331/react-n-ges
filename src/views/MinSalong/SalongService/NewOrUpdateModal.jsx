@@ -19,6 +19,10 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 // @material-ui/icons
 import Warning from "@material-ui/icons/Warning";
@@ -48,12 +52,17 @@ class NewOrUpdateModal extends React.Component {
             price: "",
             priceState: "",
             description: "",
-            descriptionState: ""
+            descriptionState: "",
+            selectedEmployees: [],
         }
+        setTimeout(() => {
+            this.props.getEmployees({ workingForId: this.props.workingForId });            
+        }, 1000);
         this.save = this.save.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log('employees: ', nextProps.selectedEmployees)
         if(nextProps.data) {
             this.setState({
                 title: nextProps.data.name,
@@ -63,7 +72,8 @@ class NewOrUpdateModal extends React.Component {
                 price: nextProps.data.price,
                 priceState: "success",
                 description: nextProps.data.description,
-                descriptionState: "success"
+                descriptionState: "success",
+                selectedEmployees: nextProps.selectedEmployees             
             })
         } else {
             this.setState({
@@ -74,7 +84,8 @@ class NewOrUpdateModal extends React.Component {
                 price: "",
                 priceState: "",
                 description: "",
-                descriptionState: ""
+                descriptionState: "",
+                selectedEmployees: []
             })
         }
     }
@@ -125,53 +136,22 @@ class NewOrUpdateModal extends React.Component {
     change(event, stateName, type, stateNameEqualTo) {
         switch (type) {
             case "title":
-                this.setState({
-                    title: event.target.value
-                })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
             case "time":
-                this.setState({
-                    time: event.target.value
-                })
-                if (Validator.verifyNumber(event.target.value)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
             case "price":
-                this.setState({
-                    price: event.target.value
-                })
-                if (Validator.verifyNumber(event.target.value)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
             case "description":
                 this.setState({
-                    description: event.target.value
+                    [stateName]: event.target.value
                 })
                 if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
                     this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyLength(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
                 }
                 break;
+            case "selectedEmployees":
+                this.setState({
+                    [stateName]: event.target.value
+                })
             default:
                 break;
         }
@@ -234,7 +214,7 @@ class NewOrUpdateModal extends React.Component {
                                     undefined
                                 ),
                                 onChange: event =>
-                                    this.change(event, "title", "title", 0),
+                                    this.change(event, "title", "title", 1),
                                 type: "text",
                                 value: this.state.title
                             }}
@@ -259,7 +239,7 @@ class NewOrUpdateModal extends React.Component {
                                             undefined
                                         ),
                                         onChange: event =>
-                                            this.change(event, "time", "time", 0),
+                                            this.change(event, "time", "time", 1),
                                         type: "number",
                                         value: this.state.time
                                     }}
@@ -284,7 +264,7 @@ class NewOrUpdateModal extends React.Component {
                                             undefined
                                         ),
                                         onChange: event =>
-                                            this.change(event, "price", "price", 0),
+                                            this.change(event, "price", "price", 1),
                                         type: "number",
                                         value: this.state.price
                                     }}
@@ -301,7 +281,7 @@ class NewOrUpdateModal extends React.Component {
                             }}
                             inputProps={{
                                 multiline: true,
-                                rows: 5,
+                                rows: 3,
                                 endAdornment:
                                     this.state.descriptionState === "error" ? (
                                     <InputAdornment position="end">
@@ -311,11 +291,58 @@ class NewOrUpdateModal extends React.Component {
                                     undefined
                                 ),
                                 onChange: event =>
-                                    this.change(event, "description", "description", 0),
+                                    this.change(event, "description", "description", 1),
                                 type: "text",
                                 value: this.state.description
                             }}
                         />
+                        <FormControl
+                            fullWidth
+                            className={classes.selectFormControl}
+                        >
+                            <InputLabel
+                                htmlFor="multiple-select"
+                                className={classes.selectLabel}
+                            >
+                                Assign to Employees
+                            </InputLabel>
+                            <Select
+                                multiple
+                                value={this.state.selectedEmployees}
+                                onChange={(event) => this.change(event, "selectedEmployees", "selectedEmployees")}
+                                MenuProps={{ className: classes.selectMenu }}
+                                classes={{ select: classes.select }}
+                                inputProps={{
+                                    name: "selectedEmployees",
+                                    id: "multiple-select"
+                                }}
+                            >
+                                <MenuItem
+                                    disabled
+                                    classes={{
+                                        root: classes.selectMenuItem
+                                    }}
+                                >
+                                    Assign to Employees
+                                </MenuItem>
+                                {
+                                    this.props.employees.map((employee, key) => {
+                                        return (
+                                            <MenuItem
+                                                classes={{
+                                                    root: classes.selectMenuItem,
+                                                    selected: classes.selectMenuItemSelectedMultiple
+                                                }}
+                                                value={employee.employeeId}
+                                                key={key}
+                                            >
+                                                {employee.name}
+                                            </MenuItem>
+                                        )
+                                    })
+                                }
+                            </Select>
+                        </FormControl>
                 </form>
                 </DialogContent>
                 <DialogActions className={classes.modalFooter}>
@@ -346,15 +373,16 @@ NewOrUpdateModal.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        workingForId    : state.user.workingForId
+        workingForId    : state.user.workingForId,
+        employees       : state.employees.employees
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         addSalonService : Actions.addSalonService,
-        // addService      : Actions.addService,
-        updateSalonService   : Actions.updateSalonService
+        updateSalonService   : Actions.updateSalonService,
+        getEmployees: Actions.getEmployees
     }, dispatch);
 }
 
