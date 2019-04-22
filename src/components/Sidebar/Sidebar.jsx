@@ -23,7 +23,7 @@ import Icon from "@material-ui/core/Icon";
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
 
 import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.jsx";
-import defaultAvatar from "assets/img/default-avatar.png";
+
 import * as Utils from 'utils';
 
 var ps;
@@ -139,7 +139,7 @@ class Sidebar extends React.Component {
     var user = (
       <div className={userWrapperClass}>
         <div className={photo}>
-          <img src={this.props.avatar? Utils.root + this.props.avatar : defaultAvatar} className={classes.avatarImg} alt="..." />
+          <img src={Utils.root + this.props.avatar} className={classes.avatarImg} alt="..." />
         </div>
         <List className={classes.list}>
           <ListItem className={classes.item + " " + classes.userItem}>
@@ -149,7 +149,6 @@ class Sidebar extends React.Component {
               onClick={() => this.openCollapse("openAvatar")}
             >
               <ListItemText
-                // primary={rtlActive ? "تانيا أندرو" : "Tania Andrew"}
                 primary={this.props.username}
                 secondary={
                   <b
@@ -178,11 +177,9 @@ class Sidebar extends React.Component {
                     }
                   >
                     <span className={collapseItemMini}>
-                      {/* {rtlActive ? "مع" : "MP"} */}
                       {"MP"}
                     </span>
                     <ListItemText
-                      // primary={rtlActive ? "ملفي" : "My Profile"}
                       primary={"Min Profil"}
                       disableTypography={true}
                       className={collapseItemText}
@@ -197,12 +194,10 @@ class Sidebar extends React.Component {
                     }
                   >
                     <span className={collapseItemMini}>
-                      {/* {rtlActive ? "هوع" : "CI"} */}
                       {"F"}
                     </span>
                     <ListItemText
                       primary={
-                        // rtlActive ? "تعديل الملف الشخصي" : "Company Information"
                         "Företagsinformation"
                       }
                       disableTypography={true}
@@ -218,11 +213,9 @@ class Sidebar extends React.Component {
                     }
                   >
                     <span className={collapseItemMini}>
-                      {/* {rtlActive ? "و" : "MS"} */}
                       {"MS"}
                     </span>
                     <ListItemText
-                      // primary={rtlActive ? "إعدادات" : "My Salons"}
                       primary={"Mina Salonger"}
                       disableTypography={true}
                       className={collapseItemText}
@@ -238,7 +231,10 @@ class Sidebar extends React.Component {
     var links = (
       <List className={classes.list}>
         {routes.map((prop, key) => {
-          if(prop.redirect || prop.name === 'Profile' || prop.name === 'Company Information' || prop.name === 'My Salon') {
+          if (prop.redirect) {
+            return null;
+          }
+          if(prop.name === 'Profile' || prop.name === 'Company Information' || prop.name === 'My Salon') {
             return null;
           }
           const customItem = prop.isDev? classes.item + " " + classes.disabledItem : classes.item;
@@ -489,12 +485,6 @@ class Sidebar extends React.Component {
               user={user}
               links={links}
             />
-            {/* {image !== undefined ? (
-              <div
-                className={classes.background}
-                style={{ backgroundImage: "url(" + image + ")" }}
-              />
-            ) : null} */}
           </Drawer>
         </Hidden>
       </div>
@@ -526,12 +516,10 @@ Sidebar.propTypes = {
   routes: PropTypes.arrayOf(PropTypes.object)
 };
 
-// export default withStyles(sidebarStyle)(Sidebar);
-
 function mapStateToProps(state) {
   return {
-    avatar: state.user.avatar,
-    username: state.user.username
+    avatar: state.auth.avatar,
+    username: state.auth.username
   };
 }
 export default withStyles(sidebarStyle)(withRouter(connect(mapStateToProps)(Sidebar)));

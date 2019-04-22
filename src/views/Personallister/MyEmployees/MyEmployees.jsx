@@ -58,10 +58,9 @@ class MyEmployees extends React.Component {
   }
 
   componentWillMount() {
-      this.props.getUserData();
-      setTimeout(() => {
-          this.getEmployees(this.props.workingForId);
-      }, 100);
+    this.props.getUser().then(() => {
+      this.getEmployees(this.props.workingForId);
+    })
   }
 
   getEmployees(id) {
@@ -307,7 +306,7 @@ MyEmployees.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    workingForId  : state.user.workingForId,
+    workingForId  : state.auth.workingForId,
     employees     : state.employees.employees,
     errorMsg      : state.employees.errorMsg
   };
@@ -315,7 +314,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getUserData : Actions.getUserData,
+    getUser     : Actions.getUser,
     getEmployees: Actions.getEmployees
   }, dispatch);
 }

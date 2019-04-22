@@ -51,12 +51,11 @@ class B2BShop extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUserData();
-    setTimeout(() => {
+    this.props.getUser().then(() => {
       this.props.featuredProduct({
         workingForId: this.props.workingForId
       });
-    }, 100);
+    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -434,7 +433,7 @@ class B2BShop extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    workingForId: state.user.workingForId,
+    workingForId: state.auth.workingForId,
     loading     : state.b2b_shop.product.loading,
     error       : state.b2b_shop.product.error,
     categories  : state.b2b_shop.product.categories,
@@ -445,7 +444,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getUserData     : Actions.getUserData,
+    getUser         : Actions.getUser,
     featuredProduct : Actions.featuredProduct,
     searchProduct   : Actions.searchProduct,
     categoryProduct : Actions.categoryProduct,

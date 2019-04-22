@@ -111,7 +111,7 @@ DeleteModal.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        workingForId    : state.user.workingForId
+        workingForId    : state.auth.workingForId,
     };
 }
 

@@ -82,21 +82,18 @@ class SalongInformasjon extends React.Component {
     }
 
     componentWillMount() {
-        this.props.getUserData();
-        setTimeout(() => {
-            this.getSalonInfo(this.props.workingForId);
-        }, 100);
-    }
-
-    getSalonInfo(id) {
-        this.props.getSalonInfo({
-            workingForId: id
+        this.props.getUser().then(() => {
+            this.props.getSalonInfo({
+                workingForId: this.props.workingForId
+            });
         })
     }
 
     componentWillReceiveProps(nextProps) {
         if(this.props.workingForId !== nextProps.workingForId) {
-            this.getSalonInfo(nextProps.workingForId);
+            this.props.getSalonInfo({
+                workingForId: this.props.workingForId
+            });
         }
 
         if(nextProps.info) {
@@ -924,7 +921,7 @@ SalongInformasjon.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        workingForId: state.user.workingForId,
+        workingForId: state.auth.workingForId,
         loading     : state.my_salon.info.loading,
         error       : state.my_salon.info.error,
         info        : state.my_salon.info.info,
@@ -933,8 +930,8 @@ function mapStateToProps(state) {
 }
   
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({          
-        getUserData         : Actions.getUserData,
+    return bindActionCreators({
+        getUser             : Actions.getUser,
         getSalonInfo        : Actions.getSalonInfo,
         addSalonGallery     : Actions.addSalonGallery,
         updateSalonGallery  : Actions.updateSalonGallery,

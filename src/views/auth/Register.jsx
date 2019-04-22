@@ -5,13 +5,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-
 import {Link} from 'react-router-dom';
-
-import {bindActionCreators} from 'redux';
-import * as Actions from 'store/actions';
-import {withRouter} from 'react-router-dom';
-import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -45,74 +39,39 @@ import Snackbar from "components/Snackbar/Snackbar.jsx";
 
 import Loader from 'react-loader-spinner';
 
-import * as Validator from "./../../validator";
-
+import * as Utils from 'utils';
+import * as Validator from "validator";
 import registerPageStyle from "assets/jss/material-dashboard-pro-react/views/registerPageStyle.jsx";
-
 import logo from "assets/img/logo.png";
 
-class RegisterPage extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      orgNo: "",
-      orgNoState: "",
-      email: "",
-      emailState: "",
-      emailPerson: "",
-      emailPersonState: "",
-      phone: "",
-      phoneState: "",
-      director: "",
-      directorState: "",
-      loading: false,
-      isBack: false,
-      alert: false,
-      isSecond: false,
-      message: ""
+      orgNo             : "",
+      orgNoState        : "",
+      isBack            : false,
+      email             : "",
+      emailState        : "",
+      emailPerson       : "",
+      emailPersonState  : "",
+      phone             : "",
+      phoneState        : "",
+      loading           : false,
+      alert             : false,
+      message           : "",
+      isSecond          : false,
+      companyInfo       : null,
+      director          : "",
+      directorState     : "",
+      isRegistered      : false
     }
-    this.onKeyDown = this.onKeyDown.bind(this)
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.next = this.next.bind(this);
+    this.register = this.register.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      loading: false
-    })
-    if(nextProps.errorMsg) {
-      if (!this.state.alert) {
-        this.setState({
-          alert: true,
-          message: nextProps.errorMsg
-        });
-        setTimeout(() => {
-          this.setState({
-            alert: false
-          })
-        }, 3000);
-      }
-    }
-    if(nextProps.companyData) {
-      this.setState({
-        isSecond: true
-      })
-    }
-    // if(nextProps.status) {
-    //   console.log('focus')
-    //   if (!this.state.alert) {
-    //     this.setState({
-    //       alert: true,
-    //       message: "Please check your email. Then you can set your password."
-    //     });
-    //     setTimeout(() => {
-    //       this.setState({
-    //         alert: false
-    //       })
-    //     }, 3000);
-    //   }
-    // }
-  }
-
-  change(event, stateName, type) {
+  changeForm(event, stateName, type) {
     switch (type) {
       case "orgNo":
         if(this.state.orgNo.length === 5 && !this.state.isBack) {
@@ -142,6 +101,7 @@ class RegisterPage extends React.Component {
             phone: event.target.value
           })
         }
+        // TODO: Phone verification
         // if (Validator.verifyPhone(event.target.value)) {
         //   this.setState({ [stateName + "State"]: "success" });
         // } else if(Validator.verifyPhone(event.target.value) === "") {
@@ -151,20 +111,9 @@ class RegisterPage extends React.Component {
         // }
         break;
       case "email":
-        this.setState({
-          email: event.target.value
-        })
-        if (Validator.verifyEmail(event.target.value)) {
-          this.setState({ [stateName + "State"]: "success" });
-        } else if(Validator.verifyEmail(event.target.value) === "") {
-          this.setState({ [stateName + "State"]: "" });
-        } else {
-          this.setState({ [stateName + "State"]: "error" });
-        }
-        break;
       case "emailPerson":
         this.setState({
-          emailPerson: event.target.value
+          [stateName]: event.target.value
         })
         if (Validator.verifyEmail(event.target.value)) {
           this.setState({ [stateName + "State"]: "success" });
@@ -205,69 +154,105 @@ class RegisterPage extends React.Component {
   }
 
   canNext() {
-    // if(this.state.orgNoState === "success" && this.state.phoneState === "success" && this.state.emailState === "success") {
     if(this.state.orgNoState === "success" && this.state.emailState === "success") {
-      return false
-    } else {
       return true
+    } else {
+      return false
     }
   }
 
-  next() {
+  next(ev) {
+    ev.preventDefault();
     this.setState({
       loading: true
     });
-    this.props.getCompanyData({
-      orgNo: this.state.orgNo,
-      email: this.state.email,
-      salesPersonEmail: this.state.emailPerson,
-      mobile: this.state.phone,
-      country: "Sweden"
+    Utils.xapi().post('register/company/firststep', {
+      orgNo             : this.state.orgNo,
+      email             : this.state.email,
+      salesPersonEmail  : this.state.emailPerson,
+      mobile            : this.state.phone,
+      country           : "Sweden"
+    }).then((response) => {
+      this.setState({
+        loading     : false,
+        companyInfo : response.data,
+        isSecond    : true
+      })
+    }).catch((error) => {
+      this.setState({
+        loading : false,
+        alert   : true,
+        message : JSON.parse(error.request.response).errorMessage
+      });  
+      setTimeout(() => {
+        this.setState({
+          alert   : false,
+          message : ""
+        })
+      }, 3000);
     })
   }
 
   canRegister() {
-    // if(this.state.orgNoState === "success" && this.state.phoneState === "success" && this.state.emailState === "success" && this.state.directorState === "success") {
-    if(this.state.orgNoState === "success" && this.state.emailState === "success" && this.state.directorState === "success") {
-      return false
-    } else {
+    if(this.state.directorState === "success") {
       return true
+    } else {
+      return false
     }
   }
 
-  register() {
+  register(ev) {
+    ev.preventDefault();
     this.setState({
-      loading: false
+      loading: true
     });
-    let name = this.props.companyData.directors.filter(director => director.SOCSECURITYNR === this.state.director);
-    this.props.register({
+    let name = this.state.companyInfo.directors.filter(director => director.SOCSECURITYNR === this.state.director);
+    Utils.xapi().post('register/company/secondstep', {
       companyData: {
-        orgNo: this.state.orgNo.replace("-", ""),
-        email: this.state.email,
-        salesPersonEmail: this.state.emailPerson,
-        mobile: this.state.phone,
-        country: this.props.companyData.country,
-        legalName: this.props.companyData.legalName,
-        addressCO: this.props.companyData.addressCO,
-        address: this.props.companyData.address,
-        post: this.props.companyData.post,
-        city: this.props.companyData.city,
-        authorizedSignerName: name[0].NAME,
-        authorizedSignerSSN: this.state.director,
-        noAuthorizedSigner: this.props.companyData.noAuthorizedSigner
+        orgNo                 : this.state.orgNo.replace("-", ""),
+        email                 : this.state.email,
+        salesPersonEmail      : this.state.emailPerson,
+        mobile                : this.state.phone,
+        country               : this.state.companyInfo.country,
+        legalName             : this.state.companyInfo.legalName,
+        addressCO             : this.state.companyInfo.addressCO,
+        address               : this.state.companyInfo.address,
+        post                  : this.state.companyInfo.post,
+        city                  : this.state.companyInfo.city,
+        authorizedSignerName  : name[0].NAME,
+        authorizedSignerSSN   : this.state.director,
+        noAuthorizedSigner    : this.state.companyInfo.noAuthorizedSigner
       }
+    }).then((response) => {
+      this.setState({
+        loading : false,
+        isRegistered: true
+      })
+    }).catch((error) => {
+      this.setState({
+        loading : false,
+        alert   : true,
+        message : JSON.parse(error.request.response).errorMessage
+      });  
+      setTimeout(() => {
+        this.setState({
+          alert: false,
+          message: ""
+        })
+      }, 3000);
     })
   }
 
   cancel() {
     this.setState({
-      orgNo: "",
-      orgNoState: "",
-      email: "",
-      emailState: "",
-      phone: "",
-      phoneState: "",
-      isSecond: false
+      orgNo       : "",
+      orgNoState  : "",
+      email       : "",
+      emailState  : "",
+      phone       : "",
+      phoneState  : "",
+      isSecond    : false,
+      companyInfo : null
     })
   }
 
@@ -284,17 +269,17 @@ class RegisterPage extends React.Component {
               </CardHeader>
               <CardBody className={classes.pb_0}>
                 {
-                  this.props.status? (
+                  this.state.isRegistered? (
                     <div>
                       <h3>Klart!</h3>
                       <div>Nu har du fått ett sms och ett e-post som innehåller vårt medlemsavtal. avtalet signerar du med BankID och så fort det är undertecknat får du ett e-post med din personliga inloggning.</div>                      
                       <div>Varmt välkommen som medlem i Geselle!</div>                      
                       <div className={classes.center + " " + classes.pt_15}>
-                        <Link className={classes.link} to="/login">Sign In</Link>
+                        <Link className={classes.link} to="/login">Logga in</Link>
                       </div>
                     </div>
                   ) : (
-                    <form className={classes.form}>
+                    <form className={classes.form} onSubmit={this.state.isSecond? this.register : this.next}>
                       <CustomInput
                         success={this.state.orgNoState === "success"}
                         error={this.state.orgNoState === "error"}
@@ -311,17 +296,14 @@ class RegisterPage extends React.Component {
                             </InputAdornment>
                           ),
                           endAdornment:
-                            this.state.orgNoState === "error" ? (
+                            this.state.orgNoState === "error" &&
                               <InputAdornment position="end">
                                 <Warning className={classes.danger} />
-                              </InputAdornment>
-                            ) : (
-                              undefined
-                          ),
+                              </InputAdornment>,
                           type: "text",
                           placeholder: "Org.nr. *",
                           onChange: event =>
-                            this.change(event, "orgNo", "orgNo"),
+                            this.changeForm(event, "orgNo", "orgNo"),
                           onKeyDown: this.onKeyDown,
                           value: this.state.orgNo,
                           disabled: this.state.loading || this.state.isSecond
@@ -343,17 +325,14 @@ class RegisterPage extends React.Component {
                             </InputAdornment>
                           ),
                           endAdornment:
-                            this.state.phoneState === "error" ? (
+                            this.state.phoneState === "error" &&
                               <InputAdornment position="end">
                                 <Warning className={classes.danger} />
-                              </InputAdornment>
-                            ) : (
-                              undefined
-                          ),
+                              </InputAdornment>,
                           type: "text",
                           placeholder: "Mobil *",
                           onChange: event =>
-                            this.change(event, "phone", "phone"),
+                            this.changeForm(event, "phone", "phone"),
                           value: this.state.phone,
                           disabled: this.state.loading || this.state.isSecond
                         }}
@@ -374,55 +353,46 @@ class RegisterPage extends React.Component {
                             </InputAdornment>
                           ),
                           endAdornment:
-                            this.state.emailState === "error" ? (
+                            this.state.emailState === "error" &&
                               <InputAdornment position="end">
                                 <Warning className={classes.danger} />
-                              </InputAdornment>
-                            ) : (
-                              undefined
-                          ),
+                              </InputAdornment>,
                           type: "email",
                           placeholder: "E-post *",
                           onChange: event =>
-                            this.change(event, "email", "email"),
+                            this.changeForm(event, "email", "email"),
                           value: this.state.email,
                           disabled: this.state.loading || this.state.isSecond
                         }}
-                      />  
-                      {
-                        !this.state.isSecond? (
-                          <CustomInput
-                            success={this.state.emailPersonState === "success"}
-                            error={this.state.emailPersonState === "error"}
-                            formControlProps={{
-                              fullWidth: true
-                            }}
-                            inputProps={{
-                              startAdornment: (
-                                <InputAdornment
-                                  position="start"
-                                  className={classes.inputAdornment}
-                                >
-                                  <Email className={classes.inputAdornmentIcon} />
-                                </InputAdornment>
-                              ),
-                              endAdornment:
-                                this.state.emailPersonState === "error" ? (
-                                  <InputAdornment position="end">
-                                    <Warning className={classes.danger} />
-                                  </InputAdornment>
-                                ) : (
-                                  undefined
-                              ),
-                              type: "email",
-                              placeholder: "E-post för säljare",
-                              onChange: event =>
-                                this.change(event, "emailPerson", "emailPerson"),
-                              value: this.state.emailPerson
-                            }}
-                          />             
-                        ) : undefined
-                      }                      
+                      />
+                      <CustomInput
+                        success={this.state.emailPersonState === "success"}
+                        error={this.state.emailPersonState === "error"}
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          startAdornment: (
+                            <InputAdornment
+                              position="start"
+                              className={classes.inputAdornment}
+                            >
+                              <Email className={classes.inputAdornmentIcon} />
+                            </InputAdornment>
+                          ),
+                          endAdornment:
+                            this.state.emailPersonState === "error" &&
+                              <InputAdornment position="end">
+                                <Warning className={classes.danger} />
+                              </InputAdornment>,
+                          type: "email",
+                          placeholder: "E-post för säljare",
+                          onChange: event =>
+                            this.changeForm(event, "emailPerson", "emailPerson"),
+                          value: this.state.emailPerson,
+                          disabled: this.state.loading || this.state.isSecond
+                        }}
+                      />                    
                       {
                         this.state.isSecond? (
                           <div>
@@ -442,7 +412,7 @@ class RegisterPage extends React.Component {
                                 type: "text",
                                 placeholder: "Legal Name",
                                 disabled: true,
-                                value: this.props.companyData.legalName
+                                value: this.state.companyInfo.legalName
                               }}
                             />
                             <CustomInput
@@ -461,7 +431,7 @@ class RegisterPage extends React.Component {
                                 type: "text",
                                 placeholder: "Address Co",
                                 disabled: true,
-                                value: this.props.companyData.addressCO
+                                value: this.state.companyInfo.addressCO
                               }}
                             />
                             <CustomInput
@@ -480,7 +450,7 @@ class RegisterPage extends React.Component {
                                 type: "text",
                                 placeholder: "Address",
                                 disabled: true,
-                                value: this.props.companyData.address
+                                value: this.state.companyInfo.address
                               }}
                             />
                             <CustomInput
@@ -499,7 +469,7 @@ class RegisterPage extends React.Component {
                                 type: "text",
                                 placeholder: "Post",
                                 disabled: true,
-                                value: this.props.companyData.post
+                                value: this.state.companyInfo.post
                               }}
                             />
                             <CustomInput
@@ -518,7 +488,7 @@ class RegisterPage extends React.Component {
                                 type: "text",
                                 placeholder: "City",
                                 disabled: true,
-                                value: this.props.companyData.city
+                                value: this.state.companyInfo.city
                               }}
                             />
                             <CustomInput
@@ -537,7 +507,7 @@ class RegisterPage extends React.Component {
                                 type: "text",
                                 placeholder: "Country",
                                 disabled: true,
-                                value: this.props.companyData.country
+                                value: this.state.companyInfo.country
                               }}
                             />   
                             <FormControl
@@ -558,7 +528,7 @@ class RegisterPage extends React.Component {
                                 }}
                                 value={this.state.director}
                                 onChange={event =>
-                                  this.change(event, "director", "director")}
+                                  this.changeForm(event, "director", "director")}
                                 inputProps={{
                                   name: "directorSelect",
                                   id: "director-select",
@@ -573,35 +543,35 @@ class RegisterPage extends React.Component {
                                   Choose Director
                                 </MenuItem>
                                 {
-                                  this.props.companyData.directors.map((director, index) => {
-                                      return (
-                                          <MenuItem
-                                              classes={{
-                                                  root: classes.selectMenuItem,
-                                                  selected: classes.selectMenuItemSelected
-                                              }}
-                                              value={director.SOCSECURITYNR}
-                                              key={index}
-                                          >
-                                              {director.NAME}
-                                          </MenuItem>
-                                      )
+                                  this.state.companyInfo.directors.map((director, index) => {
+                                    return (
+                                      <MenuItem
+                                        classes={{
+                                            root: classes.selectMenuItem,
+                                            selected: classes.selectMenuItemSelected
+                                        }}
+                                        value={director.SOCSECURITYNR}
+                                        key={index}
+                                      >
+                                        {director.NAME}
+                                      </MenuItem>
+                                    )
                                   })
                                 }   
                               </Select>
                             </FormControl>                              
                             <div className={classes.center + " " + classes.pt_15}>  
-                              <Button color="info" className={classes.w_100_p} onClick={() => this.register()} disabled={this.state.directorState !== "success"}>
+                              <Button type="submit" color="info" className={classes.w_100_p} disabled={!this.canRegister() || this.state.loading}>
                                 Sign up
                               </Button>
-                              <Button color="danger" className={classes.w_100_p} onClick={() => this.cancel()}>
+                              <Button type="button" color="danger" className={classes.w_100_p} onClick={() => this.cancel()}>
                                 Cancel
                               </Button>
                             </div>       
                           </div>
                         ) : (                   
                           <div className={classes.center + " " + classes.pt_15}>
-                            <Button color="info" className={classes.w_100_p} onClick={() => this.next()} disabled={this.canNext() || this.state.loading}>
+                            <Button type="submit" color="info" className={classes.w_100_p} disabled={!this.canNext() || this.state.loading}>
                               Next
                             </Button>
                             <div className={classes.pt_15}>Already have an account?</div>
@@ -613,7 +583,7 @@ class RegisterPage extends React.Component {
                   )
                 }                
                 {
-                  this.state.loading? (
+                  this.state.loading &&
                     <div className={classes.spinner_container}>                    
                       <Loader 
                         type="Oval"
@@ -621,8 +591,7 @@ class RegisterPage extends React.Component {
                         height="40"	
                         width="40"
                       />
-                    </div> 
-                  ) : undefined
+                    </div>
                 }
                 <Snackbar
                   place="tc"
@@ -630,7 +599,7 @@ class RegisterPage extends React.Component {
                   icon={AddAlert}
                   message={this.state.message}
                   open={this.state.alert}
-                  closeNotification={() => this.setState({ alert: false })}
+                  closeNotification={() => this.setState({ alert: false, message: "" })}
                   close
                 />
               </CardBody>
@@ -642,23 +611,8 @@ class RegisterPage extends React.Component {
   }
 }
 
-RegisterPage.propTypes = {
+Register.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    companyData: state.auth.companyData,
-    errorMsg: state.auth.errorMsg,
-    status: state.auth.status
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-      getCompanyData: Actions.getCompanyData,
-      register: Actions.register
-    }, dispatch);
-}
-
-export default withStyles(registerPageStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(RegisterPage)));
+export default withStyles(registerPageStyle)(Register);

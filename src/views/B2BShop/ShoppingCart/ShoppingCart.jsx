@@ -50,13 +50,12 @@ class ShoppingCart extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUserData();
-    setTimeout(() => {
+    this.props.getUser().then(() => {
       this.props.getShippingAddress({
         workingForId: this.props.workingForId
       });
       this.props.getCart();
-    }, 100);
+    })
   }
 
   searchHandler(name, event) {
@@ -318,7 +317,7 @@ class ShoppingCart extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    workingForId: state.user.workingForId,
+    workingForId: state.auth.workingForId,
     cart: state.b2b_shop.cart.cart,
     shipping_address: state.b2b_shop.cart.shipping_address,
     loading: state.b2b_shop.cart.loading
@@ -327,7 +326,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getUserData: Actions.getUserData,
+    getUser: Actions.getUser,
     getCart: Actions.getCart,
     getShippingAddress: Actions.getShippingAddress
   }, dispatch);

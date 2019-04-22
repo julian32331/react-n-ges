@@ -71,10 +71,9 @@ class CompanyInformasjon extends React.Component {
     }
     
     componentWillMount() {
-        this.props.getUserData();
-        setTimeout(() => {
+        this.props.getUser().then(() => {
             this.getCompanyInfo(this.props.workingForId);
-        }, 100);
+        })
     }
 
     getCompanyInfo(id) {
@@ -746,16 +745,16 @@ CompanyInformasjon.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        workingForId    : state.user.workingForId,
-        info: state.companyInfo.info
+        workingForId: state.auth.workingForId,
+        info        : state.companyInfo.info
     }
   }
   
   function mapDispatchToProps(dispatch) {
-      return bindActionCreators({          
-        getUserData : Actions.getUserData,
-        getCompanyInfo: Actions.getCompanyInfo,        
-        updateCompanyInfo: Actions.updateCompanyInfo
+      return bindActionCreators({
+        getUser             : Actions.getUser,
+        getCompanyInfo      : Actions.getCompanyInfo,        
+        updateCompanyInfo   : Actions.updateCompanyInfo
       }, dispatch);
   }
   

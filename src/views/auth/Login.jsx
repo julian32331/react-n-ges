@@ -6,12 +6,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import {Link} from 'react-router-dom';
-
-import {bindActionCreators} from 'redux';
-import * as Actions from 'store/actions';
-import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
+import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import * as Actions from 'store/actions';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -35,50 +33,27 @@ import Snackbar from "components/Snackbar/Snackbar.jsx";
 
 import Loader from 'react-loader-spinner';
 
-import * as Validator from "./../../validator";
-
+import * as Validator from "validator";
+import * as Utils from 'utils';
 import loginPageStyle from "assets/jss/material-dashboard-pro-react/views/loginPageStyle";
-
 import logo from "assets/img/logo.png";
 
-class LoginPage extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {    
-      email: "",
-      emailState: "",
-      password: "",
-      passwordState: "",
-      loading: false,
-      alert: false,
-      message: ""
+      email         : "",
+      emailState    : "",
+      password      : "",
+      passwordState : "",
+      loading       : false,
+      alert         : false,
+      message       : ""
     }
     this.login = this.login.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      loading: false
-    })
-    if(nextProps.status) {
-      this.props.history.push("/dashboard");
-    }
-    if(nextProps.errorMsg) {
-      if (!this.state.alert) {
-        this.setState({
-          alert: true,
-          message: nextProps.errorMsg
-        });
-        setTimeout(() => {
-          this.setState({
-            alert: false
-          })
-        }, 3000);
-      }
-    }
-  }
-
-  change(event, stateName, type) {
+  changeForm(event, stateName, type) {
     switch (type) {
       case "email":
         this.setState({
@@ -107,23 +82,39 @@ class LoginPage extends React.Component {
 
   canLogin() {
     if(this.state.emailState === "success" && this.state.passwordState === "success") {
-      return false
-    // } else if(this.state.email && this.state.emailState === "" && this.state.password && this.state.passwordState === "") {
-    //   return false
-    } else {
       return true
+    } else {
+      return false
     }
   }
 
-  login(ev) {    
+  login(ev) {
     ev.preventDefault();
     this.setState({
       loading: true
     });
-    this.props.login({
-      email: this.state.email,
-      password: this.state.password
-    });  
+    Utils.xapi().post('employee/login', {
+      email     : this.state.email,
+      password  : this.state.password
+    }).then((response) => {
+      this.props.setUser(response.data);
+      this.setState({
+        loading: false
+      });
+      this.props.history.push("/dashboard");
+    }).catch((error) => {
+      this.setState({
+        loading : false,
+        alert   : true,
+        message : JSON.parse(error.request.response).error
+      });      
+      setTimeout(() => {
+        this.setState({
+          alert   : false,
+          message : ""
+        })
+      }, 3000);
+    })  
   }
 
   render() {
@@ -155,18 +146,16 @@ class LoginPage extends React.Component {
                         </InputAdornment>
                       ),
                       endAdornment:
-                        this.state.emailState === "error" ? (
+                        this.state.emailState === "error" &&
                           <InputAdornment position="end">
                             <Warning className={classes.danger} />
-                          </InputAdornment>
-                        ) : (
-                          undefined
-                      ),
+                          </InputAdornment>,
                       type: "email",
                       placeholder: "E-post *",
                       onChange: event =>
-                        this.change(event, "email", "email"),
-                      value: this.state.email
+                        this.changeForm(event, "email", "email"),
+                      value: this.state.email,
+                      disabled: this.state.loading
                     }}
                   />
                   <CustomInput
@@ -185,26 +174,23 @@ class LoginPage extends React.Component {
                         </InputAdornment>
                       ),
                       endAdornment:
-                        this.state.passwordState === "error" ? (
+                        this.state.passwordState === "error" &&
                           <InputAdornment position="end">
                             <Warning className={classes.danger} />
-                          </InputAdornment>
-                        ) : (
-                          undefined
-                      ),
+                          </InputAdornment>,
                       type: "password",
                       placeholder: "Lösen *",
                       onChange: event =>
-                        this.change(event, "password", "password"),
-                      value: this.state.password
+                        this.changeForm(event, "password", "password"),
+                      value: this.state.password,
+                      disabled: this.state.loading
                     }}
                   />
                   <div className={classes.right + " " + classes.pb_15}>
                     <Link className={classes.link} to="/forgotpassword">Glömt lösen?</Link>
                   </div>
                   <div className={classes.center}>
-                    <Button color="info" className={classes.w_100_p} disabled={this.canLogin()} ref="login" type="submit">
-                    {/* onClick={this.login} */}
+                    <Button color="info" className={classes.w_100_p} disabled={!this.canLogin() || this.state.loading} ref="login" type="submit">
                       Logga in
                     </Button>   
                     <div className={classes.pt_15}>Har du inget konto?</div>
@@ -212,7 +198,7 @@ class LoginPage extends React.Component {
                   </div>
                 </form>
                 {
-                  this.state.loading? (
+                  this.state.loading &&
                     <div className={classes.spinner_container}>                    
                       <Loader 
                         type="Oval"
@@ -220,8 +206,7 @@ class LoginPage extends React.Component {
                         height="40"	
                         width="40"
                       />
-                    </div> 
-                  ) : undefined
+                    </div>
                 }
                 <Snackbar
                   place="tc"
@@ -229,7 +214,7 @@ class LoginPage extends React.Component {
                   icon={AddAlert}
                   message={this.state.message}
                   open={this.state.alert}
-                  closeNotification={() => this.setState({ alert: false })}
+                  closeNotification={() => this.setState({ alert: false, message: "" })}
                   close
                 />
               </CardBody>
@@ -241,21 +226,14 @@ class LoginPage extends React.Component {
   }
 }
 
-LoginPage.propTypes = {
+Login.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    status: state.auth.status,
-    errorMsg: state.auth.errorMsg
-  }
-}
-
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-      login: Actions.login
-    }, dispatch);
+  return bindActionCreators({
+    setUser: Actions.setUser
+  }, dispatch);
 }
 
-export default withStyles(loginPageStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginPage)));
+export default withStyles(loginPageStyle)(connect(null, mapDispatchToProps)(Login));

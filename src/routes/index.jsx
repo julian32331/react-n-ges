@@ -4,17 +4,17 @@
  */
 
 import Booking from "layouts/Booking.jsx";
-import Pages from "layouts/Pages.jsx";
+import Auth from "layouts/Auth.jsx";
 import Dashboard from "layouts/Dashboard.jsx";
 
 var indexRoutes = [
-  { path: "/booking/:salonId/:consumerId?", name: "Booking", component: Booking },
+  { path: "/booking/:salonId?/:consumerId?", name: "Booking", component: Booking },
+    
+  { path: "/login", name: "Auth", component: Auth },
+  { path: "/register", name: "Auth", component: Auth },
+  { path: "/forgotpassword", name: "Auth", component: Auth },
+  { path: "/resetpassword/:token", name: "Auth", component: Auth },
   
-  // { path: "/pages", name: "Pages", component: Pages },
-  { path: "/login", name: "Pages", component: Pages },
-  { path: "/register", name: "Pages", component: Pages },
-  { path: "/resetpassword/:token", name: "Pages", component: Pages },
-  { path: "/forgotpassword", name: "Pages", component: Pages },
   { path: "/", name: "Home", component: Dashboard }
 ];
 

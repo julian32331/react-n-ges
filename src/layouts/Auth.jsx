@@ -1,6 +1,6 @@
 /**
- * Description: Pages style
- * Date: 12/25/2018
+ * Description: Auth style
+ * Date: 3/23/2019
  */
 
 import React from "react";
@@ -10,11 +10,10 @@ import { Switch, Route, Redirect } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 
-import pagesRoutes from "routes/pages.jsx";
+import authRoutes from "routes/auth.jsx";
+import authStyle from "assets/jss/material-dashboard-pro-react/layouts/authStyle.jsx";
 
-import pagesStyle from "assets/jss/material-dashboard-pro-react/layouts/pagesStyle.jsx";
-
-class Pages extends React.Component {
+class Auth extends React.Component {
   componentDidMount() {
     document.body.style.overflow = "unset";
   }
@@ -27,7 +26,7 @@ class Pages extends React.Component {
             className={classes.fullPage}
           >
             <Switch>
-              {pagesRoutes.map((prop, key) => {
+              {authRoutes.map((prop, key) => {
                 if (prop.collapse) {
                   return null;
                 }
@@ -52,8 +51,8 @@ class Pages extends React.Component {
   }
 }
 
-Pages.propTypes = {
+Auth.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(pagesStyle)(Pages);
+export default withStyles(authStyle)(Auth);

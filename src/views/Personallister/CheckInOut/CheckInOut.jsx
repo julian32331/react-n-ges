@@ -69,11 +69,10 @@ class CheckInOut extends React.Component {
   }
 
   componentWillMount() {
-      this.props.getUserData();
-      setTimeout(() => {
-        this.getCheckList(this.props.workingForId);
-        this.getEmployees(this.props.workingForId);
-      }, 100);
+    this.props.getUser().then(() => {
+      this.getCheckList(this.props.workingForId);
+      this.getEmployees(this.props.workingForId);
+    })
   }
 
   getCheckList(id) {
@@ -547,7 +546,7 @@ CheckInOut.propTypes = {
 
 function mapStateToProps(state) {
   return {
-      workingForId: state.user.workingForId,
+      workingForId: state.auth.workingForId,
       list        : state.checkInOut.list,
       errorMsg    : state.checkInOut.errorMsg
   };
@@ -555,7 +554,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getUserData : Actions.getUserData,
+    getUser     : Actions.getUser,
     getEmployees: Actions.getEmployees,
     getCheckList: Actions.getCheckList
   }, dispatch);

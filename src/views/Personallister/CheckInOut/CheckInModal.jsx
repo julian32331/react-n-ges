@@ -172,7 +172,7 @@ CheckInModal.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    workingForId: state.user.workingForId,
+    workingForId: state.auth.workingForId,
     employees: state.employees.employees,
     errorMsg    : state.checkInOut.errorMsg
   };

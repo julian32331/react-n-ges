@@ -37,10 +37,9 @@ class MySalon extends React.Component {
   }
 
   componentWillMount() {
-      this.props.getUserData();
-      setTimeout(() => {
-        this.getCompanySalon(this.props.workingForId);
-      }, 100);
+    this.props.getUser().then(() => {
+      this.getCompanySalon(this.props.workingForId);
+    })
   }
     
   getCompanySalon(id) {
@@ -197,14 +196,14 @@ class MySalon extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    workingForId    : state.user.workingForId,
+    workingForId    : state.auth.workingForId,
     data: state.mySalons.data
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-      getUserData: Actions.getUserData,
+      getUser: Actions.getUser,
       getCompanySalon: Actions.getCompanySalon 
   }, dispatch);
 }

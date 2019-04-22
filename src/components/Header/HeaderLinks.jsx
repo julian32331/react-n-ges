@@ -1,7 +1,11 @@
+/**
+ * Description: Header Links.
+ * Date: 3/23/2019
+ */
+
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-// import { Manager, Target, Popper } from "react-popper";
 
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
@@ -18,41 +22,28 @@ import Grow from "@material-ui/core/Grow";
 import Hidden from "@material-ui/core/Hidden";
 import Popper from "@material-ui/core/Popper";
 import Select from "@material-ui/core/Select";
-import FormControl from "@material-ui/core/FormControl";
 
 // @material-ui/icons
 import Person from "@material-ui/icons/Person";
-import Notifications from "@material-ui/icons/Notifications";
-import Dashboard from "@material-ui/icons/Dashboard";
-import Search from "@material-ui/icons/Search";
 
 // core components
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import headerLinksStyle from "assets/jss/material-dashboard-pro-react/components/headerLinksStyle";
 
 class HeaderLinks extends React.Component {
   state = {
-    openNotification: false,
-    openUser: false,
-    saloonSelect: Number(this.props.workingForId),
+    openUser      : false,
+    selectedSalon : Number(this.props.workingForId),
   };
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.workingForId) {
-        this.setState({
-          saloonSelect: Number(nextProps.workingForId)
-        })
+      this.setState({
+        selectedSalon: Number(nextProps.workingForId)
+      })
     }
-  }
-
-  handleClickNotification = () => {
-    this.setState({ openNotification: !this.state.openNotification });
-  };
-  handleCloseNotification = () => {
-    this.setState({ openNotification: false });
-  };  
+  } 
   
   handleClickUser = () => {
     this.setState({ openUser: !this.state.openUser });
@@ -72,31 +63,20 @@ class HeaderLinks extends React.Component {
 
   handleSaloon = event => {
     let companyAuthLevel = JSON.parse(this.props.workingFor).find(item => {
-        return item.workingForId === event.target.value
+      return item.workingForId === event.target.value
     }).companyAuthLevel;
     this.setState({ 
-        [event.target.name]: Number(event.target.value),
-        isEmployee: companyAuthLevel === "EMPLOYEE"? true : false
+      [event.target.name]: Number(event.target.value)
     });
-    this.props.updateWorkingForId({
-      workingForId: Number(event.target.value),
-      isEmployee: companyAuthLevel === "EMPLOYEE"? true : false
+    this.props.updateUser({
+      workingForId  : Number(event.target.value),
+      isEmployee    : companyAuthLevel === "EMPLOYEE"? true : false
     });
-    // this.setState({ [event.target.name]: event.target.value });
-    // this.props.updateWorkingForId(event.target.value);
   };
 
   render() {
     const { classes, rtlActive } = this.props;
-    const { openNotification, openUser } = this.state;
-    const searchButton =
-      classes.top +
-      " " +
-      classes.searchButton +
-      " " +
-      classNames({
-        [classes.searchRTL]: rtlActive
-      });
+    const { openUser } = this.state;
     const dropdownItem = classNames(
       classes.dropdownItem,
       classes.infoHover,
@@ -122,149 +102,47 @@ class HeaderLinks extends React.Component {
     }
 
     return (
-      <div className={classes.wrapper}>
-        <div className={managerClasses + " " + classes.saloon_select_container}>   
-          <FormControl
-              fullWidth
-              className={classes.selectFormControl + " " + classes.my_0}
-          >    
-            <Select
-              MenuProps={{
-                className: classes.selectMenu
-              }}
+      <div className={wrapper}>
+        <div className={managerClasses + " " + classes.saloon_select_container}>          
+          <Select
+            MenuProps={{
+              className: classes.selectMenu
+            }}
+            classes={{
+              select: classes.select + " " + classes.saloon_select
+            }}
+            value={this.state.selectedSalon}
+            onChange={this.handleSaloon}
+            inputProps={{
+              name: "selectedSalon"
+            }}
+          >
+            <MenuItem
+              disabled
               classes={{
-                select: classes.select + " " + classes.saloon_select
-              }}
-              value={this.state.saloonSelect}
-              onChange={this.handleSaloon}
-              inputProps={{
-                name: "saloonSelect",
-                id: "saloon-select"
+                root: classes.selectMenuItem
               }}
             >
-              <MenuItem
-                disabled
-                classes={{
-                  root: classes.selectMenuItem
-                }}
-              >
-                Choose Company & Saloon
-              </MenuItem>
-              {
-                companies.map((company, index) => {
-                    return (
-                        <MenuItem
-                            classes={{
-                                root: classes.selectMenuItem,
-                                selected: classes.selectMenuItemSelected
-                            }}
-                            value={company.value}
-                            key={index}
-                        >
-                            {company.name}
-                        </MenuItem>
-                    )
-                })
-              }
-            </Select>
-          </FormControl>   
+              Choose Company & Saloon
+            </MenuItem>
+            {
+              companies.map((company, index) => {
+                  return (
+                      <MenuItem
+                          classes={{
+                              root: classes.selectMenuItem,
+                              selected: classes.selectMenuItemSelected
+                          }}
+                          value={company.value}
+                          key={index}
+                      >
+                          {company.name}
+                      </MenuItem>
+                  )
+              })
+            }
+          </Select>
         </div>
-        {/* <div className={managerClasses}>
-          <Button
-            color="transparent"
-            justIcon
-            aria-label="Notifications"
-            aria-owns={openNotification ? "menu-list" : null}
-            aria-haspopup="true"
-            onClick={this.handleClickNotification}
-            className={rtlActive ? classes.buttonLinkRTL : classes.buttonLink}
-            muiClasses={{
-              label: rtlActive ? classes.labelRTL : ""
-            }}
-            buttonRef={node => {
-              this.anchorEl = node;
-            }}
-          >
-            <Notifications
-              className={
-                classes.headerLinksSvg +
-                " " +
-                (rtlActive
-                  ? classes.links + " " + classes.linksRTL
-                  : classes.links)
-              }
-            />
-            <span className={classes.notifications}>5</span>
-            <Hidden mdUp implementation="css">
-              <span onClick={this.handleClickNotification} className={classes.linkText}>
-                {rtlActive ? "إعلام" : "Notification"}
-              </span>
-            </Hidden>
-          </Button>
-          <Popper
-            open={openNotification}
-            anchorEl={this.anchorEl}
-            transition
-            disablePortal
-            placement="bottom"
-            className={classNames({
-              [classes.popperClose]: !openNotification,
-              [classes.pooperResponsive]: true,
-              [classes.pooperNav]: true
-            })}
-          >
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                id="menu-list"
-                style={{ transformOrigin: "0 0 0" }}
-              >
-                <Paper className={classes.dropdown}>
-                  <ClickAwayListener onClickAway={this.handleCloseNotification}>
-                    <MenuList role="menu">
-                      <MenuItem
-                        onClick={this.handleCloseNotification}
-                        className={dropdownItem}
-                      >
-                        {rtlActive
-                          ? "إجلاء أوزار الأسيوي حين بل, كما"
-                          : "Notification-1"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleCloseNotification}
-                        className={dropdownItem}
-                      >
-                        {rtlActive
-                          ? "شعار إعلان الأرضية قد ذلك"
-                          : "Notification-2"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleCloseNotification}
-                        className={dropdownItem}
-                      >
-                        {rtlActive
-                          ? "ثمّة الخاصّة و على. مع جيما"
-                          : "Notification-3"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleCloseNotification}
-                        className={dropdownItem}
-                      >
-                        {rtlActive ? "قد علاقة" : "Notification-4"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={this.handleCloseNotification}
-                        className={dropdownItem}
-                      >
-                        {rtlActive ? "قد فاتّبع" : "Notification-5"}
-                      </MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
-        </div> */}
         <div className={managerClasses}>
           <Button
             color="transparent"
@@ -352,14 +230,14 @@ HeaderLinks.propTypes = {
 
 function mapStateToProps(state) {
   return {
-      workingFor: state.user.workingFor,
-      workingForId: state.user.workingForId
+    workingFor    : state.auth.workingFor,
+    workingForId  : state.auth.workingForId
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    updateWorkingForId: Actions.updateWorkingForId
+    updateUser: Actions.updateUser
   }, dispatch);
 }
 

@@ -46,12 +46,11 @@ class SalongService extends React.Component {
     }
 
     componentWillMount() {
-        this.props.getUserData();
-        setTimeout(() => {
+        this.props.getUser().then(() => {
             this.props.getSalonServices({
                 workingForId: this.props.workingForId
             })
-        }, 100);
+        })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -70,6 +69,7 @@ class SalongService extends React.Component {
         })
     }
     onOpenDeleteModal(service) {
+        console.log('test: ', service)
         this.setState({
             deleteModal: true,            
             modalData: service
@@ -227,17 +227,17 @@ SalongService.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        workingForId    : state.user.workingForId,
-        loading         : state.my_salon.services.loading,
-        error           : state.my_salon.services.error,
-        services        : state.my_salon.services.services
+        workingForId: state.auth.workingForId,
+        loading     : state.my_salon.services.loading,
+        error       : state.my_salon.services.error,
+        services    : state.my_salon.services.services
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        getUserData         : Actions.getUserData,
-        getSalonServices    : Actions.getSalonServices,
+        getUser         : Actions.getUser,
+        getSalonServices: Actions.getSalonServices,
     }, dispatch);
 }
 

@@ -45,10 +45,9 @@ class BookingAppointment extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUserData();
-    setTimeout(() => {
+    this.props.getUser().then(() => {
       this.getAppointment(this.state.initDate)
-    }, 100);
+    })
   }
 
   getAppointment(date) {
@@ -220,9 +219,9 @@ class BookingAppointment extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    workingForId: state.user.workingForId,
-    workingFor  : state.user.workingFor,
-    username    : state.user.username,
+    workingForId: state.auth.workingForId,
+    workingFor  : state.auth.workingFor,
+    username    : state.auth.username,
     loading     : state.booking_appointment.loading,
     data        : state.booking_appointment.data,
     employees   : state.booking_appointment.employees
@@ -231,8 +230,8 @@ function mapStateToProps(state) {
   
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({          
-    getUserData     : Actions.getUserData,
-    getAppointment  : Actions.getAppointment
+    getUser       : Actions.getUser,
+    getAppointment: Actions.getAppointment
   }, dispatch);
 }
   

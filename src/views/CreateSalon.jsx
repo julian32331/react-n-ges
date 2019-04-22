@@ -78,7 +78,7 @@ class CreateSalon extends React.Component {
     }
 
     componentWillMount() {
-        this.props.getUserData();
+        this.props.getUser()
     }
 
     change(event, stateName, type, stateNameEqualTo, maxValue) {
@@ -677,13 +677,13 @@ CreateSalon.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        workingForId: state.user.workingForId
+        workingForId: state.auth.workingForId
     }
 }
   
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({          
-        getUserData : Actions.getUserData,
+        getUser     : Actions.getUser,
         addSalonInfo: Actions.addSalonInfo
     }, dispatch);
 }

@@ -8,7 +8,6 @@ import PropTypes from "prop-types";
 
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
-import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
@@ -18,26 +17,15 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import InputLabel from "@material-ui/core/InputLabel";
-import Switch from "@material-ui/core/Switch";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 
-// @material-ui/icons
-import Warning from "@material-ui/icons/Warning";
-
 // core components
-import GridContainer from "components/Grid/GridContainer.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
-
-import * as Validator from "./../../validator";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
@@ -47,11 +35,9 @@ class SelectModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            company: "",
-            isEmployee: false
+            company     : "",
+            isEmployee  : false
         }
-
-        this.props.getUserData();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -67,16 +53,16 @@ class SelectModal extends React.Component {
             return item.workingForId == event.target.value
         }).companyAuthLevel;
         this.setState({ 
-            [event.target.name]: Number(event.target.value),
-            isEmployee: companyAuthLevel === "EMPLOYEE"? true : false
+            [event.target.name] : Number(event.target.value),
+            isEmployee          : companyAuthLevel === "EMPLOYEE"? true : false
         });
     };
 
     handleClose() {
         if(this.state.company) {
-            this.props.updateWorkingForId({
-                workingForId: this.state.company,
-                isEmployee: this.state.isEmployee
+            this.props.updateUser({
+                workingForId    : this.state.company,
+                isEmployee      : this.state.isEmployee
             });
             this.props.onClose();
         }
@@ -194,16 +180,15 @@ SelectModal.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        workingFor: state.user.workingFor,
-        workingForId: state.user.workingForId
+        workingFor  : state.auth.workingFor,
+        workingForId: state.auth.workingForId
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        getUserData: Actions.getUserData,
-        updateWorkingForId: Actions.updateWorkingForId
+        updateUser: Actions.updateUser
     }, dispatch);
 }
 
-export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SelectModal)));
+export default withStyles(commonModalStyle)(connect(mapStateToProps, mapDispatchToProps)(SelectModal));

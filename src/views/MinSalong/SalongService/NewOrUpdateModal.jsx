@@ -373,16 +373,16 @@ NewOrUpdateModal.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        workingForId    : state.user.workingForId,
+        workingForId    : state.auth.workingForId,
         employees       : state.employees.employees
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        addSalonService : Actions.addSalonService,
-        updateSalonService   : Actions.updateSalonService,
-        getEmployees: Actions.getEmployees
+        addSalonService     : Actions.addSalonService,
+        updateSalonService  : Actions.updateSalonService,
+        getEmployees        : Actions.getEmployees
     }, dispatch);
 }
 

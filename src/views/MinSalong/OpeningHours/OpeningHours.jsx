@@ -53,27 +53,23 @@ class OpeningHours extends React.Component {
             canUpdateHours: true,
             isEdit: false
         };
-        this.getHours = this.getHours.bind(this);
         this.updateHours = this.updateHours.bind(this);
         this.initOpeninHours = this.initOpeninHours.bind(this);
     }
 
     componentWillMount() {
-        this.props.getUserData();
-        setTimeout(() => {
-            this.getHours(this.props.workingForId);
-        }, 100);
-    }
-    
-    getHours(id) {
-        this.props.getHours({
-            workingForId: id
+        this.props.getUser().then(() => {
+            this.props.getHours({
+                workingForId: this.props.workingForId
+            })
         })
     }
 
     componentWillReceiveProps(nextProps) {
         if(this.props.workingForId !== nextProps.workingForId) {
-            this.getHours(nextProps.workingForId);
+            this.props.getHours({
+                workingForId: nextProps.workingForId
+            })
         }
         if (nextProps.openingHours) {
             this.initOpeninHours(nextProps.openingHours);
@@ -433,7 +429,7 @@ OpeningHours.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        workingForId    : state.user.workingForId,
+        workingForId    : state.auth.workingForId,
         openingHours    : state.hours.openingHours,
         specialDays     : state.hours.specialDays
     };
@@ -441,7 +437,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        getUserData : Actions.getUserData,
+        getUser     : Actions.getUser,
         getHours    : Actions.getHours,
         updateHours : Actions.updateHours
     }, dispatch);

@@ -5,12 +5,10 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-
 import {Link} from 'react-router-dom';
 
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
-import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
@@ -18,7 +16,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 // @material-ui/icons
-import Email from "@material-ui/icons/Email";
 import VpnKey from "@material-ui/icons/VpnKey";
 import Warning from "@material-ui/icons/Warning";
 import AddAlert from "@material-ui/icons/AddAlert";
@@ -35,48 +32,27 @@ import Snackbar from "components/Snackbar/Snackbar.jsx";
 
 import Loader from 'react-loader-spinner';
 
-import * as Validator from "./../../validator";
-
+import * as Utils from 'utils';
+import * as Validator from "validator";
 import resetPasswordPageStyle from "assets/jss/material-dashboard-pro-react/views/resetPasswordPageStyle";
-
 import logo from "assets/img/logo.png";
 
-class ResetPasswordPage extends React.Component {
+class ResetPassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {    
-      password: "",
-      passwordState: "",
-      c_password: "",
-      c_passwordState: "",
-      alert: false,
-      message: "",
-      loading: false
+      password        : "",
+      passwordState   : "",
+      c_password      : "",
+      c_passwordState : "",
+      loading         : false,
+      alert           : false,
+      message         : ""
     }
     this.submit = this.submit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      loading: false
-    })
-    if(nextProps.status) {
-      this.props.history.push("/dashboard");
-    }
-    if(nextProps.errorMsg) {
-      this.setState({
-        alert: true,
-        message: nextProps.errorMsg
-      })
-      setTimeout(() => {
-        this.setState({
-          alert: false
-        })
-      }, 3000);
-    }
-  }
-
-  change(event, stateName, type) {
+  changeFormInput(event, stateName, type) {
     switch (type) {
       case "password":
         this.setState({
@@ -84,8 +60,6 @@ class ResetPasswordPage extends React.Component {
         })
         if (Validator.verifyLength(event.target.value, 4)) {
           this.setState({ [stateName + "State"]: "success" });
-        } else if (Validator.verifyLength(event.target.value) === "") {
-          this.setState({ [stateName + "State"]: "" });
         } else {
           this.setState({ [stateName + "State"]: "error" });
         }
@@ -106,20 +80,39 @@ class ResetPasswordPage extends React.Component {
 
   canSubmit() {
     if(this.state.passwordState === "success" && this.state.c_passwordState === "success") {
-      return false
-    } else {
       return true
+    } else {
+      return false
     }
   }
 
-  submit() {
+  submit(ev) {
+    ev.preventDefault();
     this.setState({
       loading: true
     });
-    this.props.resetPassword({
+    Utils.xapi().post('register/setpassword', {
       password: this.state.password,
       token: this.props.match.params.token
-    });
+    }).then((response) => {
+      this.props.setUser(response.data);
+      this.setState({
+        loading: false
+      });
+      this.props.history.push("/dashboard");
+    }).catch((error) => {
+      this.setState({
+        loading : false,
+        alert   : true,
+        message : JSON.parse(error.request.response).errorMessage
+      });      
+      setTimeout(() => {
+        this.setState({
+          alert   : false,
+          message : ""
+        })
+      }, 3000);
+    })
   }
 
   render() {
@@ -134,7 +127,7 @@ class ResetPasswordPage extends React.Component {
                 <img src={logo} height={54} alt="logo" />
               </CardHeader>
               <CardBody className={classes.pb_0}>
-                <form className={classes.form}>
+                <form className={classes.form} onSubmit={this.submit}>
                   <CustomInput
                     success={this.state.passwordState === "success"}
                     error={this.state.passwordState === "error"}
@@ -151,18 +144,16 @@ class ResetPasswordPage extends React.Component {
                         </InputAdornment>
                       ),
                       endAdornment:
-                        this.state.passwordState === "error" ? (
+                        this.state.passwordState === "error" &&
                           <InputAdornment position="end">
                             <Warning className={classes.danger} />
-                          </InputAdornment>
-                        ) : (
-                          undefined
-                      ),
+                          </InputAdornment>,
                       type: "password",
                       placeholder: "Password*",
                       onChange: event =>
-                        this.change(event, "password", "password"),
-                      value: this.state.password
+                        this.changeFormInput(event, "password", "password"),
+                      value: this.state.password,
+                      disabled: this.state.loading
                     }}
                   />
                   <CustomInput
@@ -181,22 +172,20 @@ class ResetPasswordPage extends React.Component {
                         </InputAdornment>
                       ),
                       endAdornment:
-                        this.state.c_passwordState === "error" ? (
+                        this.state.c_passwordState === "error" &&
                           <InputAdornment position="end">
                             <Warning className={classes.danger} />
-                          </InputAdornment>
-                        ) : (
-                          undefined
-                      ),
+                          </InputAdornment>,
                       type: "password",
                       placeholder: "Confirm Password*",
                       onChange: event =>
-                        this.change(event, "c_password", "c_password"),
-                      value: this.state.c_password
+                        this.changeFormInput(event, "c_password", "c_password"),
+                      value: this.state.c_password,
+                      disabled: this.state.loading
                     }}
                   />
                   <div className={classes.center}>
-                    <Button color="info" className={classes.w_100_p} onClick={this.submit} disabled={this.canSubmit()}>
+                    <Button color="info" className={classes.w_100_p} type="submit" disabled={!this.canSubmit() || this.state.loading}>
                       Send
                     </Button>   
                     <div className={classes.pt_15}>
@@ -205,7 +194,7 @@ class ResetPasswordPage extends React.Component {
                   </div>
                 </form>
                 {
-                  this.state.loading? (
+                  this.state.loading &&
                     <div className={classes.spinner_container}>                    
                       <Loader 
                         type="Oval"
@@ -213,8 +202,7 @@ class ResetPasswordPage extends React.Component {
                         height="40"	
                         width="40"
                       />
-                    </div> 
-                  ) : undefined
+                    </div>
                 }
                 <Snackbar
                   place="tc"
@@ -222,7 +210,7 @@ class ResetPasswordPage extends React.Component {
                   icon={AddAlert}
                   message={this.state.message}
                   open={this.state.alert}
-                  closeNotification={() => this.setState({ alert: false })}
+                  closeNotification={() => this.setState({ alert: false, message: "" })}
                   close
                 />
               </CardBody>
@@ -234,21 +222,14 @@ class ResetPasswordPage extends React.Component {
   }
 }
 
-ResetPasswordPage.propTypes = {
+ResetPassword.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    status: state.auth.status,
-    errorMsg: state.auth.errorMsg
-  }
-}
-
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-      resetPassword: Actions.resetPassword
-    }, dispatch);
+  return bindActionCreators({
+    setUser: Actions.setUser      
+  }, dispatch);
 }
 
-export default withStyles(resetPasswordPageStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(ResetPasswordPage)));
+export default withStyles(resetPasswordPageStyle)(connect(null, mapDispatchToProps)(ResetPassword));

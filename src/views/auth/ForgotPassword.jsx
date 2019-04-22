@@ -1,17 +1,11 @@
 /**
- * Description: Login Page
+ * Description: Fogotpassword Page
  * Date: 12/24/2018
  */
 
 import React from "react";
 import PropTypes from "prop-types";
-
-import {Link} from 'react-router-dom';
-
-import {bindActionCreators} from 'redux';
-import * as Actions from 'store/actions';
-import {withRouter} from 'react-router-dom';
-import connect from 'react-redux/es/connect/connect';
+import { Link } from 'react-router-dom';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -19,7 +13,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
-import VpnKey from "@material-ui/icons/VpnKey";
 import Warning from "@material-ui/icons/Warning";
 import AddAlert from "@material-ui/icons/AddAlert";
 
@@ -35,55 +28,25 @@ import Snackbar from "components/Snackbar/Snackbar.jsx";
 
 import Loader from 'react-loader-spinner';
 
-import * as Validator from "./../../validator";
-
+import * as Utils from 'utils';
+import * as Validator from "validator";
 import forgotPasswordPageStyle from "assets/jss/material-dashboard-pro-react/views/forgotPasswordPageStyle";
-
 import logo from "assets/img/logo.png";
 
-class ForgotPasswordPage extends React.Component {
+class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {    
-      email: "",
-      emailState: "",
-      alert: false,
-      message: "",
-      loading: false
+      email       : "",
+      emailState  : "",
+      loading     : false,
+      alert       : false,
+      message     : "",
     }
     this.submit = this.submit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('next props: ', nextProps)
-    this.setState({
-      loading: false
-    })
-    if(nextProps.status) {
-      this.setState({
-        alert: true,
-        message: "Please check your email. Then you can set your password."
-      });
-      setTimeout(() => {
-        this.setState({
-          alert: false
-        })
-      }, 3000);
-    }
-    if(nextProps.errorMsg) {
-      this.setState({
-        alert: true,
-        message: nextProps.errorMsg
-      })
-      setTimeout(() => {
-        this.setState({
-          alert: false
-        })
-      }, 3000);
-    }
-  }
-
-  change(event, stateName, type) {
+  changeForm(event, stateName, type) {
     switch (type) {
       case "email":
         this.setState({
@@ -91,8 +54,6 @@ class ForgotPasswordPage extends React.Component {
         })
         if (Validator.verifyEmail(event.target.value)) {
           this.setState({ [stateName + "State"]: "success" });
-        } else if(Validator.verifyEmail(event.target.value) === "") {
-          this.setState({ [stateName + "State"]: "" });
         } else {
           this.setState({ [stateName + "State"]: "error" });
         }
@@ -104,19 +65,38 @@ class ForgotPasswordPage extends React.Component {
 
   canSubmit() {
     if(this.state.emailState === "success") {
-      return false
-    } else {
       return true
+    } else {
+      return false
     }
   }
 
-  submit() {
+  submit(ev) {
+    ev.preventDefault();
     this.setState({
       loading: true
     });
-    this.props.forgotPassword({
+    Utils.xapi().post('employee/forgotpassword', {
       email: this.state.email
-    });
+    }).then(() => {
+      this.setState({
+        loading : false,
+        alert   : true,
+        message : "Please check your email."
+      })
+    }).catch((error) => {
+      this.setState({
+        loading : false,
+        alert   : true,
+        message : JSON.parse(error.request.response).errorMessage
+      })
+      setTimeout(() => {
+        this.setState({
+          alert   : false,
+          message : ""
+        })        
+      }, 3000);
+    })
   }
 
   render() {
@@ -131,7 +111,7 @@ class ForgotPasswordPage extends React.Component {
                 <img src={logo} height={54} alt="logo" />
               </CardHeader>
               <CardBody className={classes.pb_0}>
-                <form className={classes.form}>
+                <form className={classes.form} onSubmit={this.submit}>
                   <CustomInput
                     success={this.state.emailState === "success"}
                     error={this.state.emailState === "error"}
@@ -148,22 +128,20 @@ class ForgotPasswordPage extends React.Component {
                         </InputAdornment>
                       ),
                       endAdornment:
-                        this.state.emailState === "error" ? (
+                        this.state.emailState === "error" &&
                           <InputAdornment position="end">
                             <Warning className={classes.danger} />
-                          </InputAdornment>
-                        ) : (
-                          undefined
-                      ),
+                          </InputAdornment>,
                       type: "email",
                       placeholder: "E-post*",
                       onChange: event =>
-                        this.change(event, "email", "email"),
-                      value: this.state.email
+                        this.changeForm(event, "email", "email"),
+                      value: this.state.email,
+                      disabled: this.state.loading
                     }}
                   />
                   <div className={classes.center}>
-                    <Button color="info" className={classes.w_100_p} onClick={this.submit} disabled={this.canSubmit()}>
+                    <Button color="info" className={classes.w_100_p} disabled={!this.canSubmit() || this.state.loading}>
                       Skicka
                     </Button>   
                     <div className={classes.pt_15}>
@@ -172,7 +150,7 @@ class ForgotPasswordPage extends React.Component {
                   </div>
                 </form>
                 {
-                  this.state.loading? (
+                  this.state.loading &&
                     <div className={classes.spinner_container}>                    
                       <Loader 
                         type="Oval"
@@ -180,8 +158,7 @@ class ForgotPasswordPage extends React.Component {
                         height="40"	
                         width="40"
                       />
-                    </div> 
-                  ) : undefined
+                    </div>
                 }
                 <Snackbar
                   place="tc"
@@ -189,7 +166,7 @@ class ForgotPasswordPage extends React.Component {
                   icon={AddAlert}
                   message={this.state.message}
                   open={this.state.alert}
-                  closeNotification={() => this.setState({ alert: false })}
+                  closeNotification={() => this.setState({ alert: false, message: "" })}
                   close
                 />
               </CardBody>
@@ -201,21 +178,8 @@ class ForgotPasswordPage extends React.Component {
   }
 }
 
-ForgotPasswordPage.propTypes = {
+ForgotPassword.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    status: state.auth.status,
-    errorMsg: state.auth.errorMsg
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-      forgotPassword: Actions.forgotPassword
-    }, dispatch);
-}
-
-export default withStyles(forgotPasswordPageStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordPage)));
+export default withStyles(forgotPasswordPageStyle)(ForgotPassword);

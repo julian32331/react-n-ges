@@ -58,10 +58,9 @@ class Profile extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getUserData();
-    setTimeout(() => {
+    this.props.getUser().then(() => {
       this.getProfileData(this.props.workingForId);
-    }, 100);
+    })
   }
     
   getProfileData(id) {
@@ -442,17 +441,17 @@ class Profile extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    workingForId    : state.user.workingForId,
-    isEmployee      : state.user.isEmployee,
-    data: state.profile.data
+    workingForId: state.auth.workingForId,
+    isEmployee  : state.auth.isEmployee,
+    data        : state.profile.data
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getUserData: Actions.getUserData,
+    getUser       : Actions.getUser,
     getProfileData: Actions.getProfileData,
-    updateProfile: Actions.updateProfile
+    updateProfile : Actions.updateProfile
   }, dispatch);
 }
 

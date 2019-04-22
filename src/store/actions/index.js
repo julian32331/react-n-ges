@@ -3,14 +3,13 @@
  * Date: 3/19/2019
  */
 
-//  Booking actions
 export * from './booking';
+export * from './auth';
 export * from './my_salon';
 export * from './booking_appointment';
 export * from './b2b_shop';
 
-// Admin section
-export * from './auth.actions';
+// export * from './auth.actions';
 export * from './user.actions';
 export * from './salonInfo.actions';
 export * from './companyInfo.actions';
