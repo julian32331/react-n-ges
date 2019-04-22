@@ -25,6 +25,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import bookingAppointmentStyle from "assets/jss/material-dashboard-pro-react/views/bookingAppointment/bookingAppointmentStyle.jsx";
 import CustomToolbar from "./CutomToolbar";
 import SetBreakModal from './modals/SetBreakModal';
+import DetailedEvent from './modals/DetailedEvent';
 
 const localizer = BigCalendar.momentLocalizer(moment);
 const colors = [
@@ -39,7 +40,9 @@ class BookingAppointment extends React.Component {
       setBreakModal : false,
       hairdresserId : "",
       start         : "",
-      end           : ""
+      end           : "",
+      detailedEvent : false,
+      detailedData  : null
     };
     this.onChangeDate = this.onChangeDate.bind(this);
   }
@@ -83,17 +86,12 @@ class BookingAppointment extends React.Component {
   
   // Setting break time
   onOpenSetBreakModal = ({resourceId, start, end}) => {
-    // let user = this.props.employees.find((employee) => {
-    //   return employee.hairdresser_id == resourceId
-    // })
-    // if(user.name === this.props.username) {
-      this.setState({
-        setBreakModal : true,
-        hairdresserId : resourceId,
-        start         : moment(start).format('YYYY-MM-DD HH:mm'),
-        end           : moment(end).format('HH:mm')
-      })
-    // }
+    this.setState({
+      setBreakModal : true,
+      hairdresserId : resourceId,
+      start         : moment(start).format('YYYY-MM-DD HH:mm'),
+      end           : moment(end).format('HH:mm')
+    })
   }
   onOpenSetBreakModalWithoutId = () => {
     this.setState({
@@ -104,10 +102,22 @@ class BookingAppointment extends React.Component {
   }
   onCloseSetBreakModal = () => {
     this.setState({
-      setBreakModal: false,
+      setBreakModal : false,
       hairdresserId : "",
       start         : "",
       end           : ""
+    })
+  }
+
+  onOpenDetailedEvent = (data) => {
+    this.setState({
+      detailedEvent : true,
+      detailedData  : data
+    })
+  }
+  onCloseDetailedEvent = () => {
+    this.setState({
+      detailedEvent: false
     })
   }
 
@@ -123,7 +133,7 @@ class BookingAppointment extends React.Component {
     this.props.data.map(list => {
       let temp = {};
       temp.comment = list.comment;
-      temp.consumerName = list.consumerName? list.consumerName + " - " + list.comment : list.comment;
+      temp.consumerName = list.consumerName? list.consumerName : "Break Time";
       temp.resourceId = list.hairdresser_id;
       temp.id = list.id;
       temp.plannedEndTime = moment(list.plannedEndTime).toDate();
@@ -196,6 +206,7 @@ class BookingAppointment extends React.Component {
                       onNavigate={(date) => this.onChangeDate(date)}
                       selectable
                       onSelectSlot={this.onOpenSetBreakModal}
+                      onSelectEvent={(event) => this.onOpenDetailedEvent(event)}
                     />
                 }              
               </CardBody>                
@@ -209,6 +220,12 @@ class BookingAppointment extends React.Component {
                 start         : this.state.start,
                 end           : this.state.end
               }}
+            />
+
+            <DetailedEvent 
+              onOpen={this.state.detailedEvent}
+              onClose={this.onCloseDetailedEvent}
+              data={this.state.detailedData}
             />
           </GridItem>
         </GridContainer>
