@@ -48,6 +48,11 @@ class Detail extends React.Component {
         }
     }
 
+    add = () => {
+        this.props.addCart(this.props.data, this.state.qty);
+        this.props.onClose();
+    }
+
     render() {
         const { classes, data } = this.props;
         return (
@@ -98,7 +103,7 @@ class Detail extends React.Component {
                                     />
                                 </GridItem>
                                 <GridItem xs={3}>
-                                    <Button color="info" round size="sm" onClick={() => this.props.addCart(data, this.state.qty)}>
+                                    <Button color="info" round size="sm" onClick={this.add}>
                                         Add
                                     </Button>
                                 </GridItem>   
@@ -114,18 +119,4 @@ Detail.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-// function mapStateToProps(state) {
-//   return {
-//     workingForId: state.user.workingForId,
-//     employees   : state.booking_appointment.employees
-//   };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({
-//     setBreak: Actions.setBreak
-//   }, dispatch);
-// }
-
-// export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SetBreakModal)));
 export default withStyles(commonModalStyle)(withRouter(Detail));

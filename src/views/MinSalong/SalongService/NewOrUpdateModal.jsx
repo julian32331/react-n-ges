@@ -62,7 +62,6 @@ class NewOrUpdateModal extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('employees: ', nextProps.selectedEmployees)
         if(nextProps.data) {
             this.setState({
                 title: nextProps.data.name,
@@ -73,7 +72,7 @@ class NewOrUpdateModal extends React.Component {
                 priceState: "success",
                 description: nextProps.data.description,
                 descriptionState: "success",
-                selectedEmployees: nextProps.selectedEmployees             
+                selectedEmployees: nextProps.selectedEmployees? nextProps.selectedEmployees : []             
             })
         } else {
             this.setState({
@@ -112,21 +111,42 @@ class NewOrUpdateModal extends React.Component {
         if(isNew) {
             this.props.addSalonService({
                 workingForId: this.props.workingForId,
-                name: this.state.title,
-                description: this.state.description,
-                price: this.state.price,
-                durationInMinutes: this.state.time
-            })
-        } else {            
-            this.props.updateSalonService({
-                workingForId: this.props.workingForId,
-                id: this.props.data.id,
                 serviceData: {
                     name: this.state.title,
                     description: this.state.description,
                     price: this.state.price,
                     durationInMinutes: this.state.time
-                }        
+                },
+                assignData: {
+                    addedEmployeeIds: this.state.selectedEmployees
+                }
+            })
+        } else {
+            let addedEmployeeIds = [];          
+            let removedEmployeeIds = [];
+            this.state.selectedEmployees.forEach(curr => {
+                if(!this.props.selectedEmployees.includes(curr)){
+                    addedEmployeeIds.push(curr);
+                }
+            });
+            this.props.selectedEmployees.forEach(curr => {
+                if(!this.state.selectedEmployees.includes(curr)){
+                    removedEmployeeIds.push(curr);
+                }
+            });
+            this.props.updateSalonService({
+                workingForId: this.props.workingForId,
+                serviceId: this.props.data.id,
+                serviceData: {
+                    name: this.state.title,
+                    description: this.state.description,
+                    price: this.state.price,
+                    durationInMinutes: this.state.time
+                },
+                assignData: {
+                    addedEmployeeIds: addedEmployeeIds,
+                    removedEmployeeIds: removedEmployeeIds 
+                }       
             })
         }
         this.initState();
