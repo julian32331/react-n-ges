@@ -6,9 +6,6 @@ import my_salon from './my_salon';
 import booking_appointment from './booking_appointment';
 import b2b_shop from './b2b_shop';
 
-
-// import auth from "./auth.reducer";
-import user from "./user.reducer";
 import companyInfo from "./companyInfo.reducer";
 import hours from "./hours.reducer";
 import checkInOut from "./checkinout.reducer";
@@ -25,7 +22,6 @@ const createReducer = (asyncReducers) =>
         booking_appointment,
         b2b_shop,
         
-        user,
         companyInfo,
         hours,
         checkInOut,

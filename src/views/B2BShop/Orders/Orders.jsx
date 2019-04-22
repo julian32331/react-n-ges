@@ -59,10 +59,9 @@ class Orders extends React.Component {
   }
 
   componentWillMount() {
-      this.props.getUserData();
-      setTimeout(() => {
+      this.props.getUser().then(() => {
         this.getEmployees(this.props.workingForId);
-      }, 100);
+      });
   }
 
   getEmployees(id) {
@@ -310,7 +309,7 @@ Orders.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    workingForId  : state.user.workingForId,
+    workingForId  : state.auth.workingForId,
     employees     : state.employees.employees,
     errorMsg      : state.employees.errorMsg
   };
@@ -318,7 +317,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getUserData : Actions.getUserData,
+    getUser : Actions.getUser,
     getEmployees: Actions.getEmployees
   }, dispatch);
 }

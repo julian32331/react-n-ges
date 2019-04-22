@@ -9,8 +9,6 @@ export * from './my_salon';
 export * from './booking_appointment';
 export * from './b2b_shop';
 
-// export * from './auth.actions';
-export * from './user.actions';
 export * from './salonInfo.actions';
 export * from './companyInfo.actions';
 export * from './hours.actions';
