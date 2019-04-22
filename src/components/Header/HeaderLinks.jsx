@@ -22,6 +22,7 @@ import Grow from "@material-ui/core/Grow";
 import Hidden from "@material-ui/core/Hidden";
 import Popper from "@material-ui/core/Popper";
 import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
 
 // @material-ui/icons
 import Person from "@material-ui/icons/Person";
@@ -102,46 +103,51 @@ class HeaderLinks extends React.Component {
     }
 
     return (
-      <div className={wrapper}>
-        <div className={managerClasses + " " + classes.saloon_select_container}>          
-          <Select
-            MenuProps={{
-              className: classes.selectMenu
-            }}
-            classes={{
-              select: classes.select + " " + classes.saloon_select
-            }}
-            value={this.state.selectedSalon}
-            onChange={this.handleSaloon}
-            inputProps={{
-              name: "selectedSalon"
-            }}
+      <div className={classes.wrapper}>
+        <div className={managerClasses + " " + classes.saloon_select_container}>    
+          <FormControl
+            fullWidth
+            className={classes.selectFormControl + " " + classes.my_0}      
           >
-            <MenuItem
-              disabled
+            <Select
+              MenuProps={{
+                className: classes.selectMenu
+              }}
               classes={{
-                root: classes.selectMenuItem
+                select: classes.select + " " + classes.saloon_select
+              }}
+              value={this.state.selectedSalon}
+              onChange={this.handleSaloon}
+              inputProps={{
+                name: "selectedSalon"
               }}
             >
-              Choose Company & Saloon
-            </MenuItem>
-            {
-              companies.map((company, index) => {
-                  return (
-                      <MenuItem
-                          classes={{
-                              root: classes.selectMenuItem,
-                              selected: classes.selectMenuItemSelected
-                          }}
-                          value={company.value}
-                          key={index}
-                      >
-                          {company.name}
-                      </MenuItem>
-                  )
-              })
-            }
-          </Select>
+              <MenuItem
+                disabled
+                classes={{
+                  root: classes.selectMenuItem
+                }}
+              >
+                Choose Company & Saloon
+              </MenuItem>
+              {
+                companies.map((company, index) => {
+                    return (
+                        <MenuItem
+                            classes={{
+                                root: classes.selectMenuItem,
+                                selected: classes.selectMenuItemSelected
+                            }}
+                            value={company.value}
+                            key={index}
+                        >
+                            {company.name}
+                        </MenuItem>
+                    )
+                })
+              }
+            </Select>
+          </FormControl>
         </div>
         <div className={managerClasses}>
           <Button
