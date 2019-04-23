@@ -79,7 +79,7 @@ class BookingAppointment extends React.Component {
 
   goBooking() {
     let salon = JSON.parse(this.props.workingFor).find(item => {
-      return item.workingForId === this.props.workingForId;      
+      return item.workingForId == this.props.workingForId;      
     });
     this.props.history.push('/booking/' + salon.Salon.id);
   }
