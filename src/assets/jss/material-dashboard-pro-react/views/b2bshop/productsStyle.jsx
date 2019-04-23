@@ -63,6 +63,20 @@ const productsStyle = theme => ({
   },
   loading: {
     color: '#7da8ae !important'
+  },
+  badge: {
+    width: '22px',
+    height: '22px',
+    background: '#f00',
+    color: '#fff',
+    fontSize: '12px',
+    fontWeight: '500',
+    borderRadius: '50%',
+    textAlign: 'center',
+    position: 'absolute',
+    right: '12px',
+    top: '20px',
+    zIndex: 1,
   }
 });
 

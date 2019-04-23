@@ -45,7 +45,8 @@ class B2BShop extends React.Component {
       pageOffset: 0,
       activedPageNo: 1,
       isVisibleDetail: false,
-      detailData: null
+      detailData: null,
+      badge: 0
     };
     this.products = [];
   }
@@ -181,16 +182,20 @@ class B2BShop extends React.Component {
   }
   addCart = (product, qty) => {
     let cart = this.state.cart? this.state.cart : [];
-    console.log('cart: ', cart);
-    console.log('product: ', product);
+    let total_product = this.state.badge;
     cart.map((item, key) => {
-      if(item.product.articleNo === product.articleNo)
+      if(item.product.articleNo === product.articleNo) {
+        total_product -= Number(item['quantityOrdered']);
         cart.splice(key, 1)
+      }
     })
 
     let temp = {};
     temp['product'] = product;
     temp['quantityOrdered'] = qty? qty : this.state["qty_" + product.articleNo];
+
+    
+    qty? total_product += Number(qty) : total_product += Number(this.state["qty_" + product.articleNo]);
 
     cart.push(temp);
     if(qty) {
@@ -200,7 +205,8 @@ class B2BShop extends React.Component {
       });
     } else {
       this.setState({
-        cart: cart
+        cart: cart,
+        badge: total_product
       });
     }
   }
@@ -325,6 +331,10 @@ class B2BShop extends React.Component {
                     <h3 className={classes.cardTitle}>Products</h3>
                   </GridItem>
                   <GridItem xs={12} sm={6} className={classes.text_right}>
+                    {
+                      this.state.badge > 0 &&
+                        <div className={classes.badge}>{this.state.badge}</div>
+                    }                    
                     <Button
                       justIcon
                       round
