@@ -44,7 +44,7 @@ class Detail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            qty: 3
+            qty: 1
         }
     }
 
@@ -97,7 +97,7 @@ class Detail extends React.Component {
                                         type="number"
                                         inputProps={{
                                             className: classes.qty,
-                                            onChange: (event)=> event.target.value > 2 && this.setState({qty: event.target.value})
+                                            onChange: (event)=> event.target.value > 1 && this.setState({qty: event.target.value})
                                         }}
                                         value={this.state.qty}
                                     />

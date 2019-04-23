@@ -154,9 +154,9 @@ class ShoppingCart extends React.Component {
             type="number"
             inputProps={{
               className: classes.qty,
-              onChange: (event) => event.target.value > 2 && this.changeQTY(event, key)
+              onChange: (event) => event.target.value >= 1 && this.changeQTY(event, key)
             }}
-            value={this.state.cart[key]['quantityOrdered'] ? this.state.cart[key]['quantityOrdered'] : 3}
+            value={this.state.cart[key]['quantityOrdered'] ? this.state.cart[key]['quantityOrdered'] : 1}
           />
         </div>
       )
