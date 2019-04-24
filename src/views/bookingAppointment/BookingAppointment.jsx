@@ -123,6 +123,7 @@ class BookingAppointment extends React.Component {
 
   deleteEvent = () => {
     this.props.deleteBookingEvent({
+      workingForId: this.props.workingForId,
       bookingId: this.state.detailedData.id
     });
   }

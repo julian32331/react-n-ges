@@ -61,7 +61,7 @@ export function deleteBookingEvent(data) {
         request.then(() =>
             dispatch({
                 type    : DELETE_EVENT_SUCCESS,
-                payload : data.id
+                payload : data.bookingId
             })
         ).catch((error) => {
             dispatch({

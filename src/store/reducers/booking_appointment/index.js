@@ -45,7 +45,7 @@ const booking_appointment = function (state = initialState, action) {
             
         case Actions.DELETE_EVENT_SUCCESS:
             let index = state.data.findIndex((event) => {
-                return event.id === action.payload;
+                return event.id == action.payload;
             });
             state.data.splice(index, 1);
             return {
