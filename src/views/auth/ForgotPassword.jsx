@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
@@ -26,11 +27,9 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 
-import Loader from 'react-loader-spinner';
-
 import * as Utils from 'utils';
 import * as Validator from "validator";
-import forgotPasswordPageStyle from "assets/jss/material-dashboard-pro-react/views/forgotPasswordPageStyle";
+import forgotPasswordStyle from "assets/jss/material-dashboard-pro-react/views/auth/forgotPasswordStyle";
 import logo from "assets/img/logo.png";
 
 class ForgotPassword extends React.Component {
@@ -149,27 +148,22 @@ class ForgotPassword extends React.Component {
                     </div>
                   </div>
                 </form>
-                {
-                  this.state.loading &&
-                    <div className={classes.spinner_container}>                    
-                      <Loader 
-                        type="Oval"
-                        color="#7da8ae"
-                        height="40"	
-                        width="40"
-                      />
-                    </div>
-                }
-                <Snackbar
-                  place="tc"
-                  color="info"
-                  icon={AddAlert}
-                  message={this.state.message}
-                  open={this.state.alert}
-                  closeNotification={() => this.setState({ alert: false, message: "" })}
-                  close
-                />
               </CardBody>
+              {
+                this.state.loading &&                    
+                  <div className={classes.loading_container}>
+                    <CircularProgress classes={{colorPrimary: classes.loading}} />
+                  </div>
+              }
+              <Snackbar
+                place="tc"
+                color="info"
+                icon={AddAlert}
+                message={this.state.message}
+                open={this.state.alert}
+                closeNotification={() => this.setState({ alert: false, message: "" })}
+                close
+              />
             </Card>
           </GridItem>
         </GridContainer>
@@ -182,4 +176,4 @@ ForgotPassword.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(forgotPasswordPageStyle)(ForgotPassword);
+export default withStyles(forgotPasswordStyle)(ForgotPassword);

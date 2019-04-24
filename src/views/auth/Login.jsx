@@ -1,6 +1,6 @@
 /**
  * Description: Login Page
- * Date: 12/24/2018
+ * Date: 4/23/2019
  */
 
 import React from "react";
@@ -14,6 +14,7 @@ import * as Actions from 'store/actions';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
@@ -31,11 +32,9 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 
-import Loader from 'react-loader-spinner';
-
 import * as Validator from "validator";
 import * as Utils from 'utils';
-import loginPageStyle from "assets/jss/material-dashboard-pro-react/views/loginPageStyle";
+import loginStyle from "assets/jss/material-dashboard-pro-react/views/auth/loginStyle";
 import logo from "assets/img/logo.png";
 
 class Login extends React.Component {
@@ -197,27 +196,22 @@ class Login extends React.Component {
                     <Link className={classes.link} to="/register">Skaffa konto</Link>
                   </div>
                 </form>
-                {
-                  this.state.loading &&
-                    <div className={classes.spinner_container}>                    
-                      <Loader 
-                        type="Oval"
-                        color="#7da8ae"
-                        height="40"	
-                        width="40"
-                      />
-                    </div>
-                }
-                <Snackbar
-                  place="tc"
-                  color="info"
-                  icon={AddAlert}
-                  message={this.state.message}
-                  open={this.state.alert}
-                  closeNotification={() => this.setState({ alert: false, message: "" })}
-                  close
-                />
               </CardBody>
+              {
+                this.state.loading &&                    
+                  <div className={classes.loading_container}>
+                    <CircularProgress classes={{colorPrimary: classes.loading}} />
+                  </div>
+              }
+              <Snackbar
+                place="tc"
+                color="info"
+                icon={AddAlert}
+                message={this.state.message}
+                open={this.state.alert}
+                closeNotification={() => this.setState({ alert: false, message: "" })}
+                close
+              />
             </Card>
           </GridItem>
         </GridContainer>
@@ -236,4 +230,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default withStyles(loginPageStyle)(connect(null, mapDispatchToProps)(Login));
+export default withStyles(loginStyle)(connect(null, mapDispatchToProps)(Login));

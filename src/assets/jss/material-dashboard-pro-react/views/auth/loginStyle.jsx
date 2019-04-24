@@ -1,6 +1,6 @@
 /**
  * Description: Login page style
- * Date: 23/12/2018
+ * Date: 4/23/2019
  */
 
 import {
@@ -9,10 +9,10 @@ import {
 import {
   dangerColor
 } from "assets/jss/material-dashboard-pro-react.jsx";
-import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
+import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
 
-const loginPageStyle = {
-  ...customSelectStyle,
+const loginStyle = {
+  ...commonStyle,
   container: {
     ...container,
     position: "relative",
@@ -26,9 +26,6 @@ const loginPageStyle = {
     padding: "40px 0px",
     marginTop: "10vh"
   },
-  center: {
-    textAlign: "center"
-  },
   form: {
     padding: "0 20px",
     position: "relative"
@@ -39,9 +36,6 @@ const loginPageStyle = {
   },
   inputAdornmentIcon: {
     color: "#555"
-  },
-  right: {
-    textAlign: "right"
   },
   link: {
     color: "#7da8ae",
@@ -66,15 +60,9 @@ const loginPageStyle = {
   pt_15: {
     paddingTop: '15px',
   },
-  spinner_container: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
-  },
   danger: {
     color: dangerColor + "!important"
   }
 };
 
-export default loginPageStyle;
+export default loginStyle;

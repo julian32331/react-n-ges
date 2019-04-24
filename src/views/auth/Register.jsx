@@ -14,6 +14,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
@@ -37,11 +38,9 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 
-import Loader from 'react-loader-spinner';
-
 import * as Utils from 'utils';
 import * as Validator from "validator";
-import registerPageStyle from "assets/jss/material-dashboard-pro-react/views/registerPageStyle.jsx";
+import registerStyle from "assets/jss/material-dashboard-pro-react/views/auth/registerStyle.jsx";
 import logo from "assets/img/logo.png";
 
 class Register extends React.Component {
@@ -581,28 +580,23 @@ class Register extends React.Component {
                       }
                     </form>
                   )
-                }                
-                {
-                  this.state.loading &&
-                    <div className={classes.spinner_container}>                    
-                      <Loader 
-                        type="Oval"
-                        color="#7da8ae"
-                        height="40"	
-                        width="40"
-                      />
-                    </div>
                 }
-                <Snackbar
-                  place="tc"
-                  color="info"
-                  icon={AddAlert}
-                  message={this.state.message}
-                  open={this.state.alert}
-                  closeNotification={() => this.setState({ alert: false, message: "" })}
-                  close
-                />
               </CardBody>
+              {
+                this.state.loading &&                                    
+                  <div className={classes.loading_container}>
+                    <CircularProgress classes={{colorPrimary: classes.loading}} />
+                  </div>
+              }
+              <Snackbar
+                place="tc"
+                color="info"
+                icon={AddAlert}
+                message={this.state.message}
+                open={this.state.alert}
+                closeNotification={() => this.setState({ alert: false, message: "" })}
+                close
+              />
             </Card>
           </GridItem>
         </GridContainer>
@@ -615,4 +609,4 @@ Register.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(registerPageStyle)(Register);
+export default withStyles(registerStyle)(Register);

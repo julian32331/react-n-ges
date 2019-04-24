@@ -1,6 +1,6 @@
 /**
- * Description: Login page style
- * Date: 23/12/2018
+ * Description: Register page style
+ * Date: 4/23/2019
  */
 
 import {
@@ -9,25 +9,24 @@ import {
 import {
   dangerColor
 } from "assets/jss/material-dashboard-pro-react.jsx";
+import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
-const resetPasswordPageStyle = {
+const registerStyle = {
+  ...commonStyle,
   ...customSelectStyle,
   container: {
     ...container,
     position: "relative",
     zIndex: "3"
   },
-  cardSignin: {
+  cardSignup: {
     borderRadius: "6px",
     boxShadow:
       "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)",
-    marginBottom: "100px",
+    marginBottom: "50px",
     padding: "40px 0px",
-    marginTop: "10vh"
-  },
-  center: {
-    textAlign: "center"
+    marginTop: "5vh"
   },
   form: {
     padding: "0 20px",
@@ -39,9 +38,6 @@ const resetPasswordPageStyle = {
   },
   inputAdornmentIcon: {
     color: "#555"
-  },
-  right: {
-    textAlign: "right"
   },
   link: {
     color: "#7da8ae",
@@ -60,21 +56,12 @@ const resetPasswordPageStyle = {
   pb_0: {
     paddingBottom: '0',
   },
-  pb_15: {
-    paddingBottom: '15px',
-  },
   pt_15: {
     paddingTop: '15px',
-  },
-  spinner_container: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
   },
   danger: {
     color: dangerColor + "!important"
   }
 };
 
-export default resetPasswordPageStyle;
+export default registerStyle;
