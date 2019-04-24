@@ -1,6 +1,6 @@
 /**
- * Descirption: NewOrUpdate modal for saloon service
- * Date: 12/28/2018
+ * Descirption: Select salon modal
+ * Date: 4/23/2019
  */
 
 import React from "react";
@@ -25,13 +25,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 
-import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
+import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
 
-class SelectModal extends React.Component {
+class SelectSalon extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -115,7 +115,7 @@ class SelectModal extends React.Component {
                                 htmlFor="company"
                                 className={classes.selectLabel}
                                 >
-                                Choose Company/Salon
+                                Choose Company / Salon
                             </InputLabel>
                             <Select
                                 MenuProps={{
@@ -137,7 +137,7 @@ class SelectModal extends React.Component {
                                         root: classes.selectMenuItem
                                     }}
                                 >
-                                    Choose Company
+                                    Choose Company / Salon
                                 </MenuItem>
                                 {
                                     companies.map((company, index) => {
@@ -174,7 +174,7 @@ class SelectModal extends React.Component {
     }
 }
 
-SelectModal.propTypes = {
+SelectSalon.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
@@ -191,4 +191,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default withStyles(commonModalStyle)(connect(mapStateToProps, mapDispatchToProps)(SelectModal));
+export default withStyles(modalStyle)(connect(mapStateToProps, mapDispatchToProps)(SelectSalon));

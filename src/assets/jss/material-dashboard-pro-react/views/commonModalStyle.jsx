@@ -16,11 +16,14 @@ const commonModalStyle = theme => ({
   ...modalStyle(theme),
   ...customSelectStyle,
   ...customCheckboxRadioSwitch,
+  left: {
+    textAlign: "left"
+  },
   center: {
     textAlign: "center"
   },
-  left: {
-    textAlign: "left"
+  right: {
+    textAlign: 'right'
   },
   lowercase: {
     textTransform: "lowercase"

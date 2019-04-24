@@ -1,12 +1,18 @@
-// ##############################
-// // // Modal component styles
-// #############################
+/**
+ * Description: Modal Style
+ * Date: 4/24/2019
+ */
 
 import {
   infoColor
 } from "assets/jss/material-dashboard-pro-react.jsx";
+import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
+import customCheckboxRadioSwitch from "assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.jsx";
 
 const modalStyle = theme => ({
+  ...customSelectStyle,
+  ...customCheckboxRadioSwitch,
+
   modalRoot: {
     overflow: "auto",
     alignItems: "unset",
@@ -14,7 +20,7 @@ const modalStyle = theme => ({
   },
   modal: {
     [theme.breakpoints.up("sm")]: {
-      width: "400px",
+      width: "450px",
       margin: "1.75rem auto"
     },
     marginHorizontal: 'auto',
@@ -39,6 +45,30 @@ const modalStyle = theme => ({
     color: infoColor,
     fontWeight: '500'
   },
+  modalBody: {
+    paddingTop: "16px",
+    paddingRight: "24px",
+    paddingBottom: "16px",
+    paddingLeft: "24px",
+    position: "relative",
+    overflow: "visible"
+  },
+  modalFooter: {
+    padding: "15px",
+    textAlign: "right",
+    paddingTop: "0",
+    margin: "0"
+  },
+  left: {
+    textAlign: 'left'
+  },
+  center: {
+    textAlign: 'center'
+  },
+  right: {
+    textAlign: 'right'
+  },
+
   modalCloseButton: {
     color: "#999999",
     marginTop: "-12px",
@@ -57,20 +87,6 @@ const modalStyle = theme => ({
   modalClose: {
     width: "16px",
     height: "16px"
-  },
-  modalBody: {
-    paddingTop: "16px",
-    paddingRight: "24px",
-    paddingBottom: "16px",
-    paddingLeft: "24px",
-    position: "relative",
-    overflow: "visible"
-  },
-  modalFooter: {
-    padding: "15px",
-    textAlign: "right",
-    paddingTop: "0",
-    margin: "0"
   },
   modalFooterCenter: {
     marginLeft: "auto",

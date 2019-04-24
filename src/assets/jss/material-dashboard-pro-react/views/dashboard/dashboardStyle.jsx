@@ -32,7 +32,7 @@ const dashboardStyle = theme => ({
     }
   },
   title: {
-    padding: '60px 0',
+    padding: '90px 0 30px',
     lineHeight: '48px',
     fontSize: '40px',
     [theme.breakpoints.down("md")]: {
@@ -55,16 +55,6 @@ const dashboardStyle = theme => ({
       lineHeight: '20px',
       margin: '16px 0'
     }
-  },
-  
-  text_center: {
-    textAlign: 'center'
-  },
-  spinner_container: {
-    position: 'absolute',
-    top: '50%',
-    left: '42%',
-    transform: 'translate(-50%, -50%)'
   }
 });
 

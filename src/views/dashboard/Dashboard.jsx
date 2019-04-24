@@ -1,6 +1,6 @@
 /**
- * Description: Dashboard view
- * Date: 12/21/2018
+ * Description: Dashboard page
+ * Date: 4/24/2019
  */
 
 import React from "react";
@@ -8,7 +8,6 @@ import PropTypes from "prop-types";
 
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
-import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
@@ -18,16 +17,15 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
-import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle.jsx";
-import SelectModal from "./SelectModal.jsx";
+import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboard/dashboardStyle.jsx";
+import SelectSalon from "./modals/SelectSalon.jsx";
 
 class Dashboard extends React.Component {
 
   constructor(props) {
     super(props);
     this.state ={ 
-      selectModal: false,
-      isLoading: true
+      showSelectSalon: false
     }
   }
   
@@ -39,7 +37,7 @@ class Dashboard extends React.Component {
         let workingFor = this.props.workingFor? JSON.parse(this.props.workingFor) : [];
         if(!this.props.workingForId && workingFor.length > 1) {
           this.setState({
-            selectModal: true
+            showSelectSalon: true
           })
         } else {
           this.props.updateUser({
@@ -51,16 +49,16 @@ class Dashboard extends React.Component {
     })
   }
   
-  onCloseSelectModal() {
+  onCloseSelectSalon() {
     this.setState({
-      selectModal: false
+      showSelectSalon: false
     })
   }
 
   render() {
     const { classes } = this.props;
     return (
-      <Card>
+      <Card className={classes.card}>
         <CardBody className={classes.cardContent}>
           <div className={classes.container}>
             <div className={classes.title}>VARMT VÄLKOMMEN TILL GESELLE</div>
@@ -79,9 +77,9 @@ class Dashboard extends React.Component {
           </div>
         </CardBody>
 
-        <SelectModal
-          onOpen={this.state.selectModal}
-          onClose={this.onCloseSelectModal.bind(this)}
+        <SelectSalon
+          onOpen={this.state.showSelectSalon}
+          onClose={this.onCloseSelectSalon.bind(this)}
         />
       </Card>       
     );
@@ -107,4 +105,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default withStyles(dashboardStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard)));
+export default withStyles(dashboardStyle)(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

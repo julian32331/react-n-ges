@@ -3,7 +3,7 @@
  * Date: 12/25/2018
  */
 
-import Dashboard from "views/Dashboard/Dashboard.jsx";
+import Dashboard from "views/dashboard/Dashboard.jsx";
 import CreateSalon from "views/CreateSalon.jsx";
 import SalongInformasjon from "views/MinSalong/SalongInformasjon.jsx";
 import SalongService from "views/MinSalong/SalongService/SalongService.jsx";
