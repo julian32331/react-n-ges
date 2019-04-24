@@ -426,7 +426,7 @@ class Profile extends React.Component {
                     </GridItem>                                
                   ) : (
                     <GridItem xs={12}>                    
-                      <Button color="info" size="sm" className={classes.submit} disabled={this.props.isEmployee} onClick={this.enableEdit.bind(this)}>Edit</Button>
+                      <Button color="info" size="sm" className={classes.submit} disabled={this.props.isEmployee === 'true'} onClick={this.enableEdit.bind(this)}>Edit</Button>
                     </GridItem> 
                   )
                 } 
