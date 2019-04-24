@@ -29,6 +29,7 @@ const booking_appointment = function (state = initialState, action) {
             };
         case Actions.APPOINTMENT_FAILED:
         case Actions.BREAK_FAILED:
+        case Actions.DELETE_EVENT_FAILED:
             return {
                 ...state,
                 loading     : false,
@@ -39,6 +40,17 @@ const booking_appointment = function (state = initialState, action) {
             return {
                 ...state,
                 data        : state.data.concat(action.payload),
+            };
+
+            
+        case Actions.DELETE_EVENT_SUCCESS:
+            let index = state.data.findIndex((event) => {
+                return event.id === action.payload;
+            });
+            state.data.splice(index, 1);
+            return {
+                ...state,
+                data: state.data.concat()
             };
         default:
             return state

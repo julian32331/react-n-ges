@@ -14,9 +14,13 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 
+// @material-ui/icons
+import Delete from "@material-ui/icons/Delete";
+
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
+import Button from "components/CustomButtons/Button.jsx";
 
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 
@@ -27,6 +31,11 @@ function Transition(props) {
 class DetailedEvent extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    deleteEvent = () => {
+        this.props.onDelete();
+        this.props.onClose();
     }
 
     render() {
@@ -50,6 +59,16 @@ class DetailedEvent extends React.Component {
                     disableTypography
                     className={classes.modalHeader}
                 >
+                    <Button
+                        justIcon
+                        round
+                        color="danger"
+                        size="sm"
+                        className={classes.modalCloseButton}
+                        onClick={this.deleteEvent}
+                    >
+                        <Delete className={classes.modalClose} />
+                    </Button>
                     <h3 className={classes.modalTitle}>Details</h3>
                 </DialogTitle>
                 <DialogContent

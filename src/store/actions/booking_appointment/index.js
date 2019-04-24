@@ -50,3 +50,24 @@ export function setBreak(data, root) {
         });
     }
 }
+
+export const DELETE_EVENT_SUCCESS = '[BOOKING APPOINTMENT] DELETE SUCCESS';
+export const DELETE_EVENT_FAILED  = '[BOOKING APPOINTMENT] DELETE FAILED';
+
+export function deleteBookingEvent(data) {
+    const request = Utils.xapi().post('booking/dashboard/delete', data);
+    
+    return (dispatch) => {
+        request.then(() =>
+            dispatch({
+                type    : DELETE_EVENT_SUCCESS,
+                payload : data.id
+            })
+        ).catch((error) => {
+            dispatch({
+                type    : DELETE_EVENT_FAILED,
+                payload : error
+            })
+        });
+    }
+}

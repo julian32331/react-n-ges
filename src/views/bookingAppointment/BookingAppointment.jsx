@@ -121,6 +121,12 @@ class BookingAppointment extends React.Component {
     })
   }
 
+  deleteEvent = () => {
+    this.props.deleteBookingEvent({
+      bookingId: this.state.detailedData.id
+    });
+  }
+
   render() {
     const { classes, loading } = this.props;
 
@@ -225,6 +231,7 @@ class BookingAppointment extends React.Component {
             <DetailedEvent 
               onOpen={this.state.detailedEvent}
               onClose={this.onCloseDetailedEvent}
+              onDelete={this.deleteEvent}
               data={this.state.detailedData}
             />
           </GridItem>
@@ -247,8 +254,9 @@ function mapStateToProps(state) {
   
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({          
-    getUser       : Actions.getUser,
-    getAppointment: Actions.getAppointment
+    getUser             : Actions.getUser,
+    getAppointment      : Actions.getAppointment,
+    deleteBookingEvent  : Actions.deleteBookingEvent
   }, dispatch);
 }
   
