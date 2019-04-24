@@ -18,7 +18,7 @@ class Auth extends React.Component {
     document.body.style.overflow = "unset";
   }
   render() {
-    const { classes, ...rest } = this.props;
+    const { classes } = this.props;
     return (
       <div>
         <div className={classes.wrapper} ref="wrapper">

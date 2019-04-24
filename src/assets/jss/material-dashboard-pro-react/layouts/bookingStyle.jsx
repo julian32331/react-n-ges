@@ -1,3 +1,8 @@
+/**
+ * Description: Booking style
+ * Date: 4/23/2019
+ */
+
 import {
   infoColor
 } from "assets/jss/material-dashboard-pro-react.jsx";

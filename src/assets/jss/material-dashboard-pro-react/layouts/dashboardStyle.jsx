@@ -1,6 +1,7 @@
-// ##############################
-// // // App styles
-// #############################
+/**
+ * Description: Dashboard style
+ * Date: 4/23/2019
+ */
 
 import {
   drawerWidth,
@@ -10,7 +11,7 @@ import {
 } from "assets/jss/material-dashboard-pro-react.jsx";
 import bg from "assets/img/bg.png";
 
-const appStyle = theme => ({
+const dashboardStyle = theme => ({
   wrapper: {
     position: "relative",
     top: "0",
@@ -57,18 +58,6 @@ const appStyle = theme => ({
   mainPanelWithPerfectScrollbar: {
     overflow: "hidden !important"
   },
-  scrollTop: {
-    position: 'fixed',
-    bottom: '60px',
-    right: '30px',
-    width: '64px',
-    // height: '64px',
-    // padding: '16px',
-    background: 'rgba(0, 0, 0, 0.15)',
-    zIndex: '1031',
-    borderRadius: '8px',
-    textAlign: 'center',
-}
 });
 
-export default appStyle;
+export default dashboardStyle;
