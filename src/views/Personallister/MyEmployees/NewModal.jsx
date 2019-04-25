@@ -39,8 +39,8 @@ import Danger from "components/Typography/Danger.jsx";
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 import defaultAvatar from "assets/img/default-avatar.png";
 
-import * as Validator from "./../../../validator";
-import * as Utils from 'utils';
+import * as Validator from "utils/validator";
+import * as Utils from 'utils/api';
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;

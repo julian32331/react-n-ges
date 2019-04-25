@@ -3,7 +3,7 @@
  * Date: 3/20/2019
  */
 
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 export const SERVICES_REQUEST   = '[BOOKING] SERVICES REQUEST';
 export const SERVICES_SUCCESS   = '[BOOKING] SERVICES SUCCESS';

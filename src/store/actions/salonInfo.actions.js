@@ -3,7 +3,7 @@
  * Date: 1/12/2019
  */
 
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 import {setUserData, updateWorkingForId} from './user.actions';
 
 // export const GET_SALON_INFO           = '[SALON INFO] GET';

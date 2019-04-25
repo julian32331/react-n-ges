@@ -3,7 +3,7 @@
  * Date: 4/8/2019
  */
 
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 export const GET_SALON_SERVICE         = '[SALON SERVICE] GET';
 export const GET_SALON_SERVICE_SUCCESS = '[SALON SERVICE] GET SUCCESS';

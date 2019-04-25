@@ -37,7 +37,7 @@ import NewModal from "./NewModal";
 import UpdateModal from "./UpdateModal";
 import DeleteModal from "./DeleteModal";
 import defaultAvatar from "assets/img/default-avatar.png";
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 class MyEmployees extends React.Component {
 

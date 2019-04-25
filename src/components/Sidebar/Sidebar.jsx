@@ -24,7 +24,7 @@ import HeaderLinks from "components/Header/HeaderLinks.jsx";
 
 import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.jsx";
 
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 var ps;
 

@@ -2,7 +2,7 @@
  * Description: Actions of the opening hours
  * Date: 1/6/2019
  */
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 export const GET_HOURS          = '[HOURS] GET';
 export const UPDATE_HOURS       = '[HOURS] UPDATE';

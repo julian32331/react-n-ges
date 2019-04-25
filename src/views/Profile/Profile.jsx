@@ -31,8 +31,8 @@ import profileStyles from "assets/jss/material-dashboard-pro-react/views/profile
 import defaultAvatar from "assets/img/default-avatar.png";
 
 import avatar from "assets/img/faces/marc.jpg";
-import * as Validator from "./../../validator";
-import * as Utils from 'utils';
+import * as Validator from "utils/validator";
+import * as Utils from 'utils/api';
 
 class Profile extends React.Component {
   constructor(props) {

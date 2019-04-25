@@ -27,7 +27,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
-import * as Validator from "./../../../validator";
+import * as Validator from "utils/validator";
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 
 function Transition(props) {

@@ -32,7 +32,7 @@ import salongServiceStyle from "assets/jss/material-dashboard-pro-react/views/sa
 
 import NewOrUpdateModal from "./NewOrUpdateModal.jsx";
 import DeleteModal from "./DeleteModal.jsx";
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 class SalongService extends React.Component {
     constructor(props) {

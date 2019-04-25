@@ -38,7 +38,7 @@ import myEmployeesStyle from "assets/jss/material-dashboard-pro-react/views/myEm
 // import UpdateModal from "./UpdateModal";
 // import DeleteModal from "./DeleteModal";
 import DefaultAvatar from "assets/img/default-avatar.png";
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 class Orders extends React.Component {
 

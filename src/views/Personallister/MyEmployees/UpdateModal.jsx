@@ -41,8 +41,8 @@ import avatar from "assets/img/faces/marc.jpg";
 import defaultAvatar from "assets/img/default-avatar.png";
 import cert from "assets/img/cert.png";
 
-import * as Validator from "./../../../validator";
-import * as Utils from 'utils';
+import * as Validator from "utils/validator";
+import * as Utils from 'utils/api';
 
 
 function Transition(props) {

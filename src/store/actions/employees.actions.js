@@ -2,7 +2,7 @@
  * Description: Reducer of the checklist data
  * Date: 1/3/2019
  */
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 export const GET_EMPLOYEES = '[EMPLOYEES] GET';
 export const UPDATE_EMPLOYEE     = '[EMPLOYEE] UPDATE';

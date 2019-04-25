@@ -41,8 +41,8 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import 'react-infinite-calendar/styles.css';
 import Slider from "react-slick";
 
-import * as Utils from 'utils';
-import * as Validator from "./../validator";
+import * as Utils from 'utils/api';
+import * as Validator from "utils/validator";
 import bookingStyle from "assets/jss/material-dashboard-pro-react/layouts/bookingStyle.jsx";
 import defaultAvatar from "assets/img/default-avatar.png";
 

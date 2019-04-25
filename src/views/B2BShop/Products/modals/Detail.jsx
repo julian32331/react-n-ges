@@ -32,7 +32,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 import Magnifier from 'react-magnifier';
 
-import * as Validator from "./../../../../validator";
+import * as Validator from "utils/validator";
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 import noImage from "assets/img/no_image.jpg";
 

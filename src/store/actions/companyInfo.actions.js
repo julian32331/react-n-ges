@@ -3,7 +3,7 @@
  * Date: 1/12/2019
  */
 
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 export const GET_COMPANY_INFO           = '[COMPANY INFO] GET';
 export const UPDATE_COMPANY_INFO           = '[COMPANY INFO] UPDATE';

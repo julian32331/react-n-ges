@@ -2,7 +2,7 @@
  * Description: Actions of the booking.
  * Date: 2/11/2019
  */
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 export const B2BSHOP_INIT = '[B2BSHOP] INIT';
 

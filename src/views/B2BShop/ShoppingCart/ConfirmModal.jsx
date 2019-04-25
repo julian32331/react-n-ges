@@ -32,7 +32,7 @@ import Warning from "@material-ui/icons/Warning";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
-import * as Validator from "../../../validator";
+import * as Validator from "utils/validator";
 import checkInModalStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInModalStyle.jsx";
 
 function Transition(props) {

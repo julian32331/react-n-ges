@@ -3,7 +3,7 @@
  * Date: 4/4/2019
  */
 
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 export const SHIPPING_ADDRESS_REQUEST = '[CART] SHIPPING ADDRESS REQUEST';
 export const SHIPPING_ADDRESS_SUCCESS = '[CART] SHIPPING ADDRESS SUCCESS';

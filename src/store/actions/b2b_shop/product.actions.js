@@ -2,7 +2,7 @@
  * Description: Product Actions
  * Date: 4/3/2019
  */
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 export const FEATURED_PRODUCT_REQUEST = '[PRODUCT] FEATURED REQUEST';
 export const FEATURED_PRODUCT_SUCCESS = '[PRODUCT] FEATURED SUCCESS';

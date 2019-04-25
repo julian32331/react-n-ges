@@ -3,7 +3,7 @@
  * Date: 1/30/2019
  */
 
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 import {updateAvatarName} from './user.actions';
 
 export const GET_PROFILE_DATA = '[PROFILE] DATA GET';

@@ -32,8 +32,8 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 
-import * as Validator from "validator";
-import * as Utils from 'utils';
+import * as Validator from "utils/validator";
+import * as Utils from 'utils/api';
 import loginStyle from "assets/jss/material-dashboard-pro-react/views/auth/loginStyle";
 import logo from "assets/img/logo.png";
 

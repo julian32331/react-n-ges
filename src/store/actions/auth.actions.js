@@ -4,7 +4,7 @@
  */
 
 import {setUserData} from './user.actions';
-import * as Utils from 'utils';
+import * as Utils from 'utils/api';
 
 export const LOGIN = 'LOGIN';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
