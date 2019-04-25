@@ -1,6 +1,6 @@
 /**
- * Descirption: NewOrUpdate modal for saloon service
- * Date: 12/23/2018
+ * Descirption: Add update salon service
+ * Date: 4/25/2019
  */
 
 import React from "react";
@@ -34,14 +34,13 @@ import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
-
 import * as Validator from "utils/validator";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
 
-class NewOrUpdateModal extends React.Component {
+class AddUpdate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -56,9 +55,10 @@ class NewOrUpdateModal extends React.Component {
             selectedEmployees: [],
         }
         setTimeout(() => {
-            this.props.getEmployees({ workingForId: this.props.workingForId });            
+            this.props.getEmployees({ 
+                workingForId: this.props.workingForId
+            });
         }, 1000);
-        this.save = this.save.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -75,17 +75,7 @@ class NewOrUpdateModal extends React.Component {
                 selectedEmployees: nextProps.selectedEmployees? nextProps.selectedEmployees : []             
             })
         } else {
-            this.setState({
-                title: "",
-                titleState: "",
-                time: "",
-                timeState: "",
-                price: "",
-                priceState: "",
-                description: "",
-                descriptionState: "",
-                selectedEmployees: []
-            })
+            this.initState();
         }
     }
 
@@ -98,8 +88,42 @@ class NewOrUpdateModal extends React.Component {
             price: "",
             priceState: "",
             description: "",
-            descriptionState: ""
+            descriptionState: "",
+            selectedEmployees: []
         })
+    }
+    
+    changeForm(event, stateName, type, length) {
+        switch (type) {
+            case "title":
+            case "description":
+                this.setState({
+                    [stateName]: event.target.value
+                })
+                if (Validator.verifyLength(event.target.value, length)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "error" });
+                }
+                break;
+            case "time":
+            case "price":
+                this.setState({
+                    [stateName]: event.target.value > 0? event.target.value : 1
+                })
+                if (Validator.verifyLength(event.target.value, length)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "error" });
+                }
+                break;
+            case "selectedEmployees":
+                this.setState({
+                    [stateName]: event.target.value
+                })
+            default:
+                break;
+        }
     }
 
     handleClose() {
@@ -107,7 +131,7 @@ class NewOrUpdateModal extends React.Component {
         this.props.onClose();
     }
 
-    save(isNew) {
+    save = (isNew) => {
         if(isNew) {
             this.props.addSalonService({
                 workingForId: this.props.workingForId,
@@ -149,41 +173,14 @@ class NewOrUpdateModal extends React.Component {
                 }       
             })
         }
-        this.initState();
-        this.props.onClose();
-    }
-
-    change(event, stateName, type, stateNameEqualTo) {
-        switch (type) {
-            case "title":
-            case "time":
-            case "price":
-            case "description":
-                this.setState({
-                    [stateName]: event.target.value
-                })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
-                    this.setState({ [stateName + "State"]: "success" });
-                } else {
-                    this.setState({ [stateName + "State"]: "error" });
-                }
-                break;
-            case "selectedEmployees":
-                this.setState({
-                    [stateName]: event.target.value
-                })
-            default:
-                break;
-        }
-    }
+        this.handleClose();
+    }    
 
     canSave() {
         if(this.state.titleState === "success" && this.state.timeState === "success" && this.state.priceState === "success" && this.state.descriptionState === "success") {
-            return false;
-        } else if(this.props.data) {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -201,18 +198,18 @@ class NewOrUpdateModal extends React.Component {
                 TransitionComponent={Transition}
                 keepMounted
                 onClose={() => this.handleClose()}
-                aria-labelledby="saloon-service-newOrUpdate-modal-title"
-                aria-describedby="saloon-service-newOrUpdate-modal-description"
+                aria-labelledby="saloon-service-new-update-modal-title"
+                aria-describedby="saloon-service-new-update-modal-description"
             >
                 <DialogTitle
-                    id="saloon-service-newOrUpdate-modal-title"
+                    id="saloon-service-new-update-modal-title"
                     disableTypography
                     className={classes.modalHeader}
                 >
-                    <h3 className={classes.modalTitle}>{this.props.modalTitle}</h3>
+                    <h3 className={classes.modalTitle}>{this.props.title}</h3>
                 </DialogTitle>
                 <DialogContent
-                    id="saloon-service-newOrUpdate-modal-description"
+                    id="saloon-service-new-update-modal-description"
                     className={classes.modalBody}
                 >
                     <form>
@@ -226,15 +223,12 @@ class NewOrUpdateModal extends React.Component {
                             }}
                             inputProps={{
                                 endAdornment:
-                                    this.state.titleState === "error" ? (
-                                    <InputAdornment position="end">
-                                        <Warning className={classes.danger} />
-                                    </InputAdornment>
-                                    ) : (
-                                    undefined
-                                ),
+                                    this.state.titleState === "error" &&
+                                        <InputAdornment position="end">
+                                            <Warning className={classes.danger} />
+                                        </InputAdornment>,
                                 onChange: event =>
-                                    this.change(event, "title", "title", 1),
+                                    this.changeForm(event, "title", "title", 1),
                                 type: "text",
                                 value: this.state.title
                             }}
@@ -251,15 +245,12 @@ class NewOrUpdateModal extends React.Component {
                                     }}
                                     inputProps={{
                                         endAdornment:
-                                            this.state.timeState === "error" ? (
-                                            <InputAdornment position="end">
-                                                <Warning className={classes.danger} />
-                                            </InputAdornment>
-                                            ) : (
-                                            undefined
-                                        ),
+                                            this.state.timeState === "error" &&
+                                                <InputAdornment position="end">
+                                                    <Warning className={classes.danger} />
+                                                </InputAdornment>,
                                         onChange: event =>
-                                            this.change(event, "time", "time", 1),
+                                            this.changeForm(event, "time", "time", 1),
                                         type: "number",
                                         value: this.state.time
                                     }}
@@ -276,15 +267,12 @@ class NewOrUpdateModal extends React.Component {
                                     }}
                                     inputProps={{
                                         endAdornment:
-                                            this.state.priceState === "error" ? (
-                                            <InputAdornment position="end">
-                                                <Warning className={classes.danger} />
-                                            </InputAdornment>
-                                            ) : (
-                                            undefined
-                                        ),
+                                            this.state.priceState === "error" &&
+                                                <InputAdornment position="end">
+                                                    <Warning className={classes.danger} />
+                                                </InputAdornment>,
                                         onChange: event =>
-                                            this.change(event, "price", "price", 1),
+                                            this.changeForm(event, "price", "price", 1),
                                         type: "number",
                                         value: this.state.price
                                     }}
@@ -303,15 +291,12 @@ class NewOrUpdateModal extends React.Component {
                                 multiline: true,
                                 rows: 3,
                                 endAdornment:
-                                    this.state.descriptionState === "error" ? (
-                                    <InputAdornment position="end">
-                                        <Warning className={classes.danger} />
-                                    </InputAdornment>
-                                    ) : (
-                                    undefined
-                                ),
+                                    this.state.descriptionState === "error" &&
+                                        <InputAdornment position="end">
+                                            <Warning className={classes.danger} />
+                                        </InputAdornment>,
                                 onChange: event =>
-                                    this.change(event, "description", "description", 1),
+                                    this.changeForm(event, "description", "description", 1),
                                 type: "text",
                                 value: this.state.description
                             }}
@@ -329,7 +314,7 @@ class NewOrUpdateModal extends React.Component {
                             <Select
                                 multiple
                                 value={this.state.selectedEmployees}
-                                onChange={(event) => this.change(event, "selectedEmployees", "selectedEmployees")}
+                                onChange={(event) => this.changeForm(event, "selectedEmployees", "selectedEmployees")}
                                 MenuProps={{ className: classes.selectMenu }}
                                 classes={{ select: classes.select }}
                                 inputProps={{
@@ -377,7 +362,7 @@ class NewOrUpdateModal extends React.Component {
                         onClick={() => this.save(this.props.data? false : true)}
                         color="info"
                         size="sm"
-                        disabled={this.canSave()}
+                        disabled={!this.canSave()}
                     >
                         Save
                     </Button>
@@ -387,7 +372,7 @@ class NewOrUpdateModal extends React.Component {
     }
 }
 
-NewOrUpdateModal.propTypes = {
+AddUpdate.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -406,4 +391,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(NewOrUpdateModal)));
+export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(AddUpdate)));

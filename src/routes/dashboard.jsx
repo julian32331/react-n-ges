@@ -5,7 +5,7 @@
 
 import Dashboard from "views/dashboard/Dashboard.jsx";
 import Info from "views/my_salon/info/Info.jsx";
-import SalongService from "views/my_salon/SalongService/SalongService.jsx";
+import Services from "views/my_salon/services/Services.jsx";
 import OpeningHours from "views/my_salon/OpeningHours/OpeningHours.jsx";
 import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
@@ -69,7 +69,7 @@ export var dashRoutes1 = [
         path: "/minsalong/salongService",
         name: "Salongstjänster",
         mini: "SS",
-        component: SalongService
+        component: Services
       },
       {
         path: "/minsalong/openingHours",

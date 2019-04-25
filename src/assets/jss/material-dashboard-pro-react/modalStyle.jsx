@@ -4,7 +4,8 @@
  */
 
 import {
-  infoColor
+  infoColor,
+  dangerColor
 } from "assets/jss/material-dashboard-pro-react.jsx";
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 import customCheckboxRadioSwitch from "assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.jsx";
@@ -67,6 +68,13 @@ const modalStyle = theme => ({
   },
   right: {
     textAlign: 'right'
+  },  
+  warning_icon: {
+    fontSize: '72px',
+    color: dangerColor + " !important"
+  },
+  mt_0: {
+    marginTop: '0px',
   },
 
   modalCloseButton: {

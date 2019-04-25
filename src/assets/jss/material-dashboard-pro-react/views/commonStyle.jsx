@@ -14,6 +14,7 @@ const commonStyle = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
+    zIndex: '999'
   },
   loading: {
     color: '#7da8ae'

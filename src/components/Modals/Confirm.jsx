@@ -1,15 +1,10 @@
 /**
- * Descirption: Saloon Service
- * Date: 12/23/2018
+ * Descirption: Confirm Modal
+ * Date: 4/25/2019
  */
 
 import React from "react";
 import PropTypes from "prop-types";
-
-import {bindActionCreators} from 'redux';
-import * as Actions from 'store/actions';
-import {withRouter} from 'react-router-dom';
-import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -24,32 +19,29 @@ import ErrorOutline from "@material-ui/icons/ErrorOutline";
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 
-import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
+import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
 
-class DeleteModal extends React.Component {
+class Confirm extends React.Component {
     constructor(props) {
         super(props);
-        this.delete = this.delete.bind(this);
     }
 
     handleClose() {
         this.props.onClose();
     }
 
-    delete() {
-        this.props.deleteSalonService({
-            workingForId: this.props.workingForId,
-            id: this.props.id
-        })
+    handleConfirm() {
+        this.props.onConfirm();
         this.props.onClose();
     }
 
     render() {
         const { classes } = this.props;
+
         return (
             <Dialog
                 classes={{
@@ -60,17 +52,17 @@ class DeleteModal extends React.Component {
                 TransitionComponent={Transition}
                 keepMounted
                 onClose={() => {this.handleClose()}}
-                aria-labelledby="saloon-service-delete-modal-title"
-                aria-describedby="saloon-service-delete-modal-description"
+                aria-labelledby="confirm-modal-title"
+                aria-describedby="confirm-modal-description"
             >
                 <DialogContent
-                    id="saloon-service-delete-modal-description"
+                    id="confirm-modal-description"
                     className={
                     classes.modalBody + " " + classes.modalSmallBody
                     }
                 >
-                    <ErrorOutline className={classes.danger + " " + classes.warning_icon} />
-                    <h3>Are you sure?</h3>
+                    <ErrorOutline className={classes.warning_icon} />
+                    <h3 className={classes.mt_0}>Are you sure?</h3>
                 </DialogContent>
                 <DialogActions
                     className={
@@ -83,19 +75,13 @@ class DeleteModal extends React.Component {
                         onClick={() => this.handleClose()}
                         color="info"
                         size="sm"
-                        className={classes.modalSmallFooterFirstButton}
                     >
                     No
                     </Button>
                     <Button
-                        onClick={() => this.delete()}
+                        onClick={() => this.handleConfirm()}
                         color="danger"
                         size="sm"
-                        className={
-                            classes.modalSmallFooterFirstButton +
-                            " " +
-                            classes.modalSmallFooterSecondButton
-                        }
                     >
                     Yes
                     </Button>
@@ -105,20 +91,8 @@ class DeleteModal extends React.Component {
     }
 }
 
-DeleteModal.propTypes = {
+Confirm.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-    return {
-        workingForId    : state.auth.workingForId,
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-        deleteSalonService: Actions.deleteSalonService
-    }, dispatch);
-}
-
-export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(DeleteModal)));
+export default withStyles(modalStyle)(Confirm);
