@@ -4,15 +4,12 @@
  */
 
 import Dashboard from "views/dashboard/Dashboard.jsx";
-import CreateSalon from "views/CreateSalon.jsx";
-import SalongInformasjon from "views/MinSalong/SalongInformasjon.jsx";
-import SalongService from "views/MinSalong/SalongService/SalongService.jsx";
-import OpeningHours from "views/MinSalong/OpeningHours/OpeningHours.jsx";
+import Info from "views/my_salon/info/Info.jsx";
+import SalongService from "views/my_salon/SalongService/SalongService.jsx";
+import OpeningHours from "views/my_salon/OpeningHours/OpeningHours.jsx";
 import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
-// import Booking from "views/Booking/Booking.jsx";
 import BookingAppointment from "views/bookingAppointment/BookingAppointment.jsx";
-// import Dnd from "views/Admin/Dnd.jsx";
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
 import Products from "views/B2BShop/Products/Products.jsx";
@@ -22,6 +19,8 @@ import Orders from "views/B2BShop/Orders/Orders.jsx";
 import Profile from "views/Profile/Profile.jsx";
 import CompanyInformasjon from "views/CompanyInformasjon.jsx";
 import MySalon from "views/MySalon/MySalon.jsx";
+
+import CreateSalon from "views/CreateSalon.jsx";
 
 // @material-ui/icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -64,7 +63,7 @@ export var dashRoutes1 = [
         path: "/minsalong/salongInformasjon",
         name: "Salongsinformation",
         mini: "SI",
-        component: SalongInformasjon
+        component: Info
       },
       {
         path: "/minsalong/salongService",

@@ -1,6 +1,6 @@
 /**
  * Description: Salon Info
- * Date: 4/3/2019
+ * Date: 4/25/2019
  */
 
 import React from "react";
@@ -8,7 +8,6 @@ import PropTypes from "prop-types";
 
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
-import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
@@ -21,7 +20,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // @material-ui/icons
 import Check from "@material-ui/icons/Check";
 import Warning from "@material-ui/icons/Warning";
-import Add from "@material-ui/icons/Add";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -34,9 +32,9 @@ import Button from "components/CustomButtons/Button.jsx";
 
 import * as Utils from "utils/api";
 import * as Validator from "utils/validator";
-import salongInformasjonStyle from "assets/jss/material-dashboard-pro-react/views/salongInformasjonStyle.jsx";
+import infoStyle from "assets/jss/material-dashboard-pro-react/views/my_salon/info/infoStyle.jsx";
 
-class SalongInformasjon extends React.Component {
+class Info extends React.Component {
     constructor(props) {
         super(props);
         this.state = {      
@@ -57,6 +55,7 @@ class SalongInformasjon extends React.Component {
             parkCheck: false,
             accessCheck: false,
             description: "",
+            descriptionState: "",
 
             s_co: "",
             s_coState: "",
@@ -111,18 +110,18 @@ class SalongInformasjon extends React.Component {
                 email: nextProps.info.email? nextProps.info.email : "",
                 emailState: nextProps.info.email? "success" : "error",
                 network: nextProps.info.website? nextProps.info.website : "",
-                networkState: nextProps.info.website? "success" : "error",
+                networkState: nextProps.info.website? "success" : "",
                 description: nextProps.info.description? nextProps.info.description : "",
-                descriptionState: nextProps.info.description? "success" : "error",
+                descriptionState: nextProps.info.description? "success" : "",
                 parkCheck: nextProps.info.parking,
                 accessCheck: nextProps.info.accessibility,
 
                 s_co: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.co? nextProps.info.ShippingAddress.co : "",
-                s_coState: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.co? "success" : "error",
+                s_coState: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.co? "success" : "",
                 s_address1: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.street1? nextProps.info.ShippingAddress.street1 : "",
                 s_address1State: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.street1? "success" : "error",
                 s_address2: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.street2? nextProps.info.ShippingAddress.street2 : "",
-                s_address2State: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.street2? "success" : "error",
+                s_address2State: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.street2? "success" : "",
                 s_city: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.city? nextProps.info.ShippingAddress.city : "",
                 s_cityState: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.city? "success" : "error",
                 s_zip: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.postalCode? nextProps.info.ShippingAddress.postalCode : "",
@@ -147,45 +146,38 @@ class SalongInformasjon extends React.Component {
         }
     }
 
-    change(event, stateName, type, stateNameEqualTo, maxValue) {
+    changeForm(event, stateName, type, length) {
         switch (type) {
             case "name":
             case "address":
             case "zip":
             case "city":
-            case "phone":
+            case "description":
             case "s_co":
             case "s_address1":
             case "s_address2":
             case "s_zip":
             case "s_city":
             case "s_country":
-            case "s_mobile":
                 this.setState({
                     [stateName]: event.target.value
                 })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
+                if (Validator.verifyLength(event.target.value, length)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
                 }
-                break;
-                // if(this.state.phone.length === 0) {
-                //     this.setState({
-                //         phone: "+46" + event.target.value
-                //     })
-                // } else {
-                //     this.setState({
-                //         phone: event.target.value
-                //     })
-                // }
-                // if (Validator.verifyPhone(event.target.value)) {
-                //     this.setState({ [stateName + "State"]: "success" });
-                // } else if(Validator.verifyPhone(event.target.value) === "") {
-                //     this.setState({ [stateName + "State"]: "" });
-                // } else {
-                //     this.setState({ [stateName + "State"]: "error" });
-                // }
+                break;            
+            case "phone":
+            case "s_mobile":
+                this.setState({
+                    [stateName]: event.target.value
+                })
+                if (Validator.verifyPhone(event.target.value)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "error" });
+                }
                 break;
             case "email":
                 this.setState({
@@ -205,47 +197,37 @@ class SalongInformasjon extends React.Component {
                 })
                 if (Validator.verifyUrl(event.target.value)) {
                     this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyUrl(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
                 }
                 break;
-            case "description":
-                this.setState({
-                    description: event.target.value
-                })
+            case "parkCheck":
+            case "accessCheck":
+                this.setState({ [stateName]: event.target.checked })
             default:
                 break;
         }
     }
 
-    toggleCheck(event, stateName) {
-        this.setState({ [stateName]: event.target.checked });
-    }
-
-    canSubmit() {
+    canUpdateInfo() {
         if(this.state.nameState === "success" &&
             this.state.addressState === "success" &&
             this.state.zipState === "success" &&
             this.state.cityState === "success" &&
             this.state.phoneState === "success" &&
             this.state.emailState === "success" &&
-            // this.state.networkState === "success" &&
-            // this.state.s_coState === "success" &&
             this.state.s_address1State === "success" &&
-            // this.state.s_address2State === "success" &&
             this.state.s_cityState === "success" &&
             this.state.s_zipState === "success" &&
             this.state.s_mobileState === "success" &&
             this.state.s_countryState === "success") {
-            return false;
+            return true;
         } else {
-          return true
+          return false
         }
     }
 
-    enableEdit() {
+    enableEditInfo() {
         this.setState({
             isEdit: true
         })
@@ -266,16 +248,16 @@ class SalongInformasjon extends React.Component {
             email: this.props.info.email? this.props.info.email : "",
             emailState: this.props.info.email? "success" : "error",
             network: this.props.info.website? this.props.info.website : "",
-            networkState: this.props.info.website? "success" : "error",
+            networkState: this.props.info.website? "success" : "",
             description: this.props.info.description? this.props.info.description : "",
-            descriptionState: this.props.info.description? "success" : "error",
+            descriptionState: this.props.info.description? "success" : "",
 
             s_co: this.props.info.ShippingAddress && this.props.info.ShippingAddress.co? this.props.info.ShippingAddress.co : "",
             s_coState: this.props.info.ShippingAddress && this.props.info.ShippingAddress.co? "success" : "error",
             s_address1: this.props.info.ShippingAddress && this.props.info.ShippingAddress.street1? this.props.info.ShippingAddress.street1 : "",
             s_address1State: this.props.info.ShippingAddress && this.props.info.ShippingAddress.street1? "success" : "error",
             s_address2: this.props.info.ShippingAddress && this.props.info.ShippingAddress.street2? this.props.info.ShippingAddress.street2 : "",
-            s_address2State: this.props.info.ShippingAddress && this.props.info.ShippingAddress.street2? "success" : "error",
+            s_address2State: this.props.info.ShippingAddress && this.props.info.ShippingAddress.street2? "success" : "",
             s_city: this.props.info.ShippingAddress && this.props.info.ShippingAddress.city? this.props.info.ShippingAddress.city : "",
             s_cityState: this.props.info.ShippingAddress && this.props.info.ShippingAddress.city? "success" : "error",
             s_zip: this.props.info.ShippingAddress && this.props.info.ShippingAddress.postalCode? this.props.info.ShippingAddress.postalCode : "",
@@ -376,19 +358,22 @@ class SalongInformasjon extends React.Component {
         const { classes, loading } = this.props;
         return (
             <div>
-                <Card classes={{card: classes.card}}>
-                    <CardHeader>            
-                        <div className={classes.cardHeader}>
-                            <h3 className={classes.cardTitle}>Salongsinformation</h3>
+                <Card classes={{card: classes.card1}}>
+                {
+                    loading &&
+                        <div className={classes.loading_container}>
+                            <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
                         </div>
-                    </CardHeader>
-                    <CardBody>
-                        {
-                            loading? (
-                                <div className={classes.loading_container}>
-                                    <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                }
+                {
+                    !loading &&
+                        <div>
+                            <CardHeader>            
+                                <div className={classes.cardHeader}>
+                                    <h3 className={classes.cardTitle}>Salongsinformation</h3>
                                 </div>
-                            ) : 
+                            </CardHeader>
+                            <CardBody>
                                 <form>
                                     <GridContainer>
                                         <GridItem xs={12} sm={6} md={3}>
@@ -402,16 +387,13 @@ class SalongInformasjon extends React.Component {
                                                 }}
                                                 inputProps={{
                                                     endAdornment:
-                                                    this.state.nameState === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                        this.state.nameState === "error" &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,                                                    
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "name", "name", 0),
+                                                        this.changeForm(event, "name", "name", 1),
                                                     value: this.state.name,
                                                     type: "text"
                                                 }}
@@ -428,16 +410,13 @@ class SalongInformasjon extends React.Component {
                                                 }}
                                                 inputProps={{
                                                     endAdornment:
-                                                    this.state.addressState === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                        this.state.addressState === "error" &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "address", "address", 0),
+                                                        this.changeForm(event, "address", "address", 1),
                                                     value: this.state.address,
                                                     type: "text"
                                                 }}
@@ -454,16 +433,13 @@ class SalongInformasjon extends React.Component {
                                                 }}
                                                 inputProps={{
                                                     endAdornment:
-                                                    this.state.cityState === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                        this.state.cityState === "error" &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,  
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "city", "city", 0),
+                                                        this.changeForm(event, "city", "city", 1),
                                                     value: this.state.city,
                                                     type: "text"
                                                 }}
@@ -480,16 +456,13 @@ class SalongInformasjon extends React.Component {
                                                 }}
                                                 inputProps={{
                                                     endAdornment:
-                                                    this.state.zipState === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                        this.state.zipState === "error"  &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,  
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "zip", "zip", 0),
+                                                        this.changeForm(event, "zip", "zip", 1),
                                                     value: this.state.zip,
                                                     type: "number"
                                                 }}
@@ -506,16 +479,13 @@ class SalongInformasjon extends React.Component {
                                                 }}
                                                 inputProps={{
                                                     endAdornment:
-                                                    this.state.phoneState === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                        this.state.phoneState === "error"  &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,  
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "phone", "phone", 1),
+                                                        this.changeForm(event, "phone", "phone", 1),
                                                     value: this.state.phone,
                                                     type: "text"
                                                 }}
@@ -532,16 +502,13 @@ class SalongInformasjon extends React.Component {
                                                 }}
                                                 inputProps={{
                                                     endAdornment:
-                                                    this.state.emailState === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                        this.state.emailState === "error"  &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "email", "email", 0),
+                                                        this.changeForm(event, "email", "email", 1),
                                                     value: this.state.email,
                                                     type: "email"
                                                 }}
@@ -549,25 +516,22 @@ class SalongInformasjon extends React.Component {
                                         </GridItem>
                                         <GridItem xs={12} sm={12} md={4}>
                                             <CustomInput
-                                                // success={this.state.networkState === "success"}
-                                                // error={this.state.networkState === "error"}
+                                                success={this.state.networkState === "success"}
+                                                error={this.state.networkState === "error"}
                                                 labelText="Hemsida"
                                                 id="network"
                                                 formControlProps={{
                                                     fullWidth: true
                                                 }}
                                                 inputProps={{
-                                                    // endAdornment:
-                                                    // this.state.networkState === "error" ? (
-                                                    //     <InputAdornment position="end">
-                                                    //     <Warning className={classes.danger} />
-                                                    //     </InputAdornment>
-                                                    // ) : (
-                                                    //     undefined
-                                                    // ),
+                                                    endAdornment:
+                                                        this.state.networkState === "error"  &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "network", "network", 0),
+                                                        this.changeForm(event, "network", "network", 1),
                                                     value: this.state.network,
                                                     type: "url"
                                                 }}
@@ -575,17 +539,24 @@ class SalongInformasjon extends React.Component {
                                         </GridItem>
                                         <GridItem xs={12} sm={12} md={6}>
                                             <CustomInput
+                                                success={this.state.descriptionState === "success"}
+                                                error={this.state.descriptionState === "error"}
                                                 labelText="Salongsbeskrivning"
                                                 id="description"
                                                 formControlProps={{
                                                     fullWidth: true
                                                 }}
                                                 inputProps={{
+                                                    endAdornment:
+                                                        this.state.descriptionState === "error"  &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,
                                                     multiline: true,
-                                                    rows: 4,   
+                                                    rows: 3,   
                                                     disabled: !this.state.isEdit,                                 
                                                     onChange: event =>
-                                                        this.change(event, "description", "description", 0),
+                                                        this.changeForm(event, "description", "description", 1),
                                                     value: this.state.description,
                                                     type: "text"
                                                 }}
@@ -597,7 +568,7 @@ class SalongInformasjon extends React.Component {
                                                     control={
                                                         <Checkbox
                                                             onClick={event =>
-                                                                this.toggleCheck(event, "parkCheck")
+                                                                this.changeForm(event, "parkCheck", "parkCheck")
                                                             }
                                                             checkedIcon={<Check className={classes.checkedIcon} />}
                                                             icon={<Check className={classes.uncheckedIcon} />}
@@ -622,7 +593,7 @@ class SalongInformasjon extends React.Component {
                                                     control={
                                                         <Checkbox
                                                             onClick={event =>
-                                                                this.toggleCheck(event, "accessCheck")
+                                                                this.changeForm(event, "accessCheck", "accessCheck")
                                                             }
                                                             checkedIcon={<Check className={classes.checkedIcon} />}
                                                             icon={<Check className={classes.uncheckedIcon} />}
@@ -648,25 +619,22 @@ class SalongInformasjon extends React.Component {
                                     <GridContainer>
                                         <GridItem xs={12} sm={6} md={3}>
                                             <CustomInput
-                                                // success={this.state.s_coState === "success"}
-                                                // error={this.state.s_coState === "error"}
-                                                labelText="Co"
-                                                id="city"
+                                                success={this.state.s_coState === "success"}
+                                                error={this.state.s_coState === "error"}
+                                                labelText="C/O"
+                                                id="co"
                                                 formControlProps={{
                                                     fullWidth: true
                                                 }}
                                                 inputProps={{
-                                                    // endAdornment:
-                                                    // this.state.s_coState === "error" ? (
-                                                    //     <InputAdornment position="end">
-                                                    //     <Warning className={classes.danger} />
-                                                    //     </InputAdornment>
-                                                    // ) : (
-                                                    //     undefined
-                                                    // ),
+                                                    endAdornment:
+                                                        this.state.s_coState === "error"  &&
+                                                        <InputAdornment position="end">
+                                                            <Warning className={classes.danger} />
+                                                        </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "s_co", "s_co", 0),
+                                                        this.changeForm(event, "s_co", "s_co", 1),
                                                     value: this.state.s_co,
                                                     type: "text"
                                                 }}
@@ -683,16 +651,13 @@ class SalongInformasjon extends React.Component {
                                                 }}
                                                 inputProps={{
                                                     endAdornment:
-                                                    this.state.s_mobileState === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                        this.state.s_mobileState === "error"  &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "s_mobile", "s_mobile", 1),
+                                                        this.changeForm(event, "s_mobile", "s_mobile", 1),
                                                     value: this.state.s_mobile,
                                                     type: "text"
                                                 }}
@@ -709,16 +674,13 @@ class SalongInformasjon extends React.Component {
                                                 }}
                                                 inputProps={{
                                                     endAdornment:
-                                                    this.state.s_address1State === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                        this.state.s_address1State === "error"  &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "s_address1", "s_address1", 0),
+                                                        this.changeForm(event, "s_address1", "s_address1", 1),
                                                     value: this.state.s_address1,
                                                     type: "text"
                                                 }}
@@ -726,25 +688,22 @@ class SalongInformasjon extends React.Component {
                                         </GridItem>
                                         <GridItem xs={12} sm={6} md={3}>
                                             <CustomInput
-                                                // success={this.state.s_address2State === "success"}
-                                                // error={this.state.s_address2State === "error"}
+                                                success={this.state.s_address2State === "success"}
+                                                error={this.state.s_address2State === "error"}
                                                 labelText="Adress2"
                                                 id="address"
                                                 formControlProps={{
                                                     fullWidth: true
                                                 }}
                                                 inputProps={{
-                                                    // endAdornment:
-                                                    // this.state.s_address2State === "error" ? (
-                                                    //     <InputAdornment position="end">
-                                                    //     <Warning className={classes.danger} />
-                                                    //     </InputAdornment>
-                                                    // ) : (
-                                                    //     undefined
-                                                    // ),
+                                                    endAdornment:
+                                                        this.state.s_address2State === "error"  &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "s_address2", "s_address2", 0),
+                                                        this.changeForm(event, "s_address2", "s_address2", 1),
                                                     value: this.state.s_address2,
                                                     type: "text"
                                                 }}
@@ -761,16 +720,13 @@ class SalongInformasjon extends React.Component {
                                                 }}
                                                 inputProps={{
                                                     endAdornment:
-                                                    this.state.s_cityState === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                        this.state.s_cityState === "error"  &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "s_city", "s_city", 0),
+                                                        this.changeForm(event, "s_city", "s_city", 1),
                                                     value: this.state.s_city,
                                                     type: "text"
                                                 }}
@@ -787,16 +743,13 @@ class SalongInformasjon extends React.Component {
                                                 }}
                                                 inputProps={{
                                                     endAdornment:
-                                                    this.state.s_zipState === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                        this.state.s_zipState === "error"  &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "s_zip", "s_zip", 0),
+                                                        this.changeForm(event, "s_zip", "s_zip", 1),
                                                     value: this.state.s_zip,
                                                     type: "number"
                                                 }}
@@ -813,16 +766,13 @@ class SalongInformasjon extends React.Component {
                                                 }}
                                                 inputProps={{
                                                     endAdornment:
-                                                    this.state.s_countryState === "error" ? (
-                                                        <InputAdornment position="end">
-                                                        <Warning className={classes.danger} />
-                                                        </InputAdornment>
-                                                    ) : (
-                                                        undefined
-                                                    ),
+                                                        this.state.s_countryState === "error"  &&
+                                                            <InputAdornment position="end">
+                                                                <Warning className={classes.danger} />
+                                                            </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
-                                                        this.change(event, "s_country", "s_country", 0),
+                                                        this.changeForm(event, "s_country", "s_country", 1),
                                                     value: this.state.s_country,
                                                     type: "text"
                                                 }}
@@ -830,92 +780,99 @@ class SalongInformasjon extends React.Component {
                                         </GridItem>
                                     </GridContainer>
                                     <GridContainer justify="flex-end" alignItems="flex-end">
-                                        {
-                                            this.state.isEdit? (                      
-                                                <GridItem xs={12} sm={12} md={6}>                    
-                                                    <Button color="info" size="sm" className={classes.submit} disabled={this.canSubmit()} onClick={this.updateSalonInfo.bind(this)}>LAGRE</Button>
-                                                    <Button color="danger" size="sm" className={classes.submit} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
-                                                </GridItem>                                
-                                            ) : (
-                                                <GridItem xs={12} sm={12} md={6}>                    
-                                                    <Button color="info" size="sm" className={classes.submit} onClick={this.enableEdit.bind(this)}>Redigera</Button>
-                                                </GridItem> 
-                                            )
-                                        } 
+                                    {
+                                        this.state.isEdit? (                      
+                                            <GridItem xs={12} sm={12} md={6} className={classes.right}>       
+                                                <Button color="danger" size="sm" className={classes.mr_8} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
+                                                <Button color="info" size="sm" disabled={!this.canUpdateInfo()} onClick={this.updateSalonInfo.bind(this)}>LAGRE</Button>
+                                            </GridItem>                                
+                                        ) : (
+                                            <GridItem xs={12} sm={12} md={6} className={classes.right}>                    
+                                                <Button color="info" size="sm" className={classes.submit} onClick={this.enableEditInfo.bind(this)}>Redigera</Button>
+                                            </GridItem> 
+                                        )
+                                    } 
                                     </GridContainer>
                                 </form>
-                        }
-                    </CardBody>
+                            </CardBody>
+                        </div>
+                }                    
                 </Card>
 
-                <Card>
-                    <CardHeader>           
-                        <div className={classes.cardHeader}>
-                            <GridContainer>
-                                <GridItem xs={12} sm={6}>
-                                    <h3 className={classes.cardTitle}>Galleries</h3>
-                                </GridItem>
-                                {
-                                    this.state.isEditImage? (
-                                        <GridItem xs={12} sm={6} className={classes.right}>
-                                            <Button 
-                                                color="danger" 
-                                                size="sm"
-                                                onClick={() => this.cancelImageEdit()}
-                                            >                            
-                                                Cancel
-                                            </Button>
-                                            <Button 
-                                                color="info" 
-                                                size="sm"
-                                                onClick={() => this.saveImage()}
-                                            >                            
-                                                Save
-                                            </Button>
-                                        </GridItem>
-                                    ) : (
-                                        <GridItem xs={12} sm={6} className={classes.right}>
-                                            <Button 
-                                                color="danger" 
-                                                size="sm"
-                                                onClick={() => this.deleteImage()}
-                                            >                            
-                                                Delete
-                                            </Button>
-                                            <Button 
-                                                color="info" 
-                                                size="sm"
-                                                onClick={() => this.handleClick()}
-                                            >                            
-                                                {this.state.imageData? "Update" : "Add"}
-                                            </Button>
-                                        </GridItem>
-                                    )
-                                }
-                            </GridContainer>
+                <Card classes={{card: classes.card2}}>
+                {
+                    loading &&
+                        <div className={classes.loading_container}>
+                            <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
                         </div>
-                    </CardHeader>
-                    <CardBody>
-                    {
-                        loading? (
-                            <div className={classes.loading_container}>
-                                <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
-                            </div>
-                        ) : 
-                        <div style={{textAlign: 'center'}}>
-                            <h4>This is the description of Gallery</h4>
-                            <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
-                            <img src={this.state.imagePreviewUrl} style={{width: '200px', height: '200px', border: 'solid 1px', borderRadius: '8px', padding: '8px'}} />
-                        </div>                          
-                    }
-                    </CardBody>
+                }
+                {
+                    !loading &&
+                        <div>
+                            <CardHeader>           
+                                <div className={classes.cardHeader}>
+                                    <GridContainer>
+                                        <GridItem xs={12} sm={6}>
+                                            <h3 className={classes.cardTitle}>Galleries</h3>
+                                        </GridItem>
+                                        {
+                                            this.state.isEditImage? (
+                                                <GridItem xs={12} sm={6} className={classes.right}>
+                                                    <Button 
+                                                        color="danger" 
+                                                        size="sm"
+                                                        onClick={() => this.cancelImageEdit()}
+                                                        className={classes.mr_8}
+                                                    >                            
+                                                        Cancel
+                                                    </Button>
+                                                    <Button 
+                                                        color="info" 
+                                                        size="sm"
+                                                        onClick={() => this.saveImage()}
+                                                    >                            
+                                                        Save
+                                                    </Button>
+                                                </GridItem>
+                                            ) : (
+                                                <GridItem xs={12} sm={6} className={classes.right}>
+                                                    <Button 
+                                                        color="danger" 
+                                                        size="sm"
+                                                        onClick={() => this.deleteImage()}
+                                                        className={classes.mr_8}
+                                                    >                            
+                                                        Delete
+                                                    </Button>
+                                                    <Button 
+                                                        color="info" 
+                                                        size="sm"
+                                                        onClick={() => this.handleClick()}
+                                                    >                            
+                                                        {this.state.imageData? "Update" : "Add"}
+                                                    </Button>
+                                                </GridItem>
+                                            )
+                                        }
+                                    </GridContainer>
+                                </div>
+                            </CardHeader>
+                            <CardBody>
+                                <div className={classes.center}>
+                                    <h4>This is the description of Gallery</h4>
+                                    <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
+                                    <img src={this.state.imagePreviewUrl} className={classes.img} />
+                                </div>
+                            </CardBody>
+                        </div>
+                }
                 </Card>
             </div>
         );
     }
 }
 
-SalongInformasjon.propTypes = {
+Info.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -939,4 +896,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default withStyles(salongInformasjonStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SalongInformasjon)));
+export default withStyles(infoStyle)(connect(mapStateToProps, mapDispatchToProps)(Info));

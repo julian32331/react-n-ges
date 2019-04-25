@@ -3,6 +3,10 @@
  * Date: 4/23/2019
  */
 
+import {
+  dangerColor
+} from "assets/jss/material-dashboard-pro-react.jsx";
+
 const commonStyle = {
   // loading styles
   loading_container: {
@@ -24,6 +28,16 @@ const commonStyle = {
   },
   right: {
     textAlign: 'right'
+  },
+
+  // text color
+  danger: {
+    color: dangerColor + ' !important'
+  },
+
+  // margin
+  mr_8: {
+    marginRight: '8px',
   },
 
   card: {
