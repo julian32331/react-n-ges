@@ -1,3 +1,8 @@
+/**
+ * Description: Store
+ * Date: 4/25/2019
+ */
+
 import * as reduxModule from 'redux';
 import {applyMiddleware, compose, createStore} from 'redux';
 import createReducer from 'store/reducers';
