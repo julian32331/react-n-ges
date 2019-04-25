@@ -84,30 +84,19 @@ class Register extends React.Component {
         }
         if (Validator.verifyOrgNo(event.target.value)) {
           this.setState({ [stateName + "State"]: "success" });
-        } else if(Validator.verifyOrgNo(event.target.value) === "") {
-          this.setState({ [stateName + "State"]: "" });
         } else {
           this.setState({ [stateName + "State"]: "error" });
         }
         break;
       case "phone":
-        if(this.state.phone.length === 0) {
-          this.setState({
-            phone: "+46" + event.target.value
-          })
+        this.setState({
+          phone: event.target.value
+        })
+        if (Validator.verifyPhone(event.target.value)) {
+          this.setState({ [stateName + "State"]: "success" });
         } else {
-          this.setState({
-            phone: event.target.value
-          })
+          this.setState({ [stateName + "State"]: "error" });
         }
-        // TODO: Phone verification
-        // if (Validator.verifyPhone(event.target.value)) {
-        //   this.setState({ [stateName + "State"]: "success" });
-        // } else if(Validator.verifyPhone(event.target.value) === "") {
-        //   this.setState({ [stateName + "State"]: "" });
-        // } else {
-        //   this.setState({ [stateName + "State"]: "error" });
-        // }
         break;
       case "email":
       case "emailPerson":
@@ -116,8 +105,6 @@ class Register extends React.Component {
         })
         if (Validator.verifyEmail(event.target.value)) {
           this.setState({ [stateName + "State"]: "success" });
-        } else if(Validator.verifyEmail(event.target.value) === "") {
-          this.setState({ [stateName + "State"]: "" });
         } else {
           this.setState({ [stateName + "State"]: "error" });
         }
@@ -129,8 +116,6 @@ class Register extends React.Component {
         })
         if (Validator.verifyLength("" + event.target.value, 1)) {
           this.setState({ [stateName + "State"]: "success" });
-        } else if(Validator.verifyLength("" + event.target.value, 1) === "") {
-          this.setState({ [stateName + "State"]: "" });
         } else {
           this.setState({ [stateName + "State"]: "error" });
         }
