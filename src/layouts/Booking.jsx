@@ -284,9 +284,11 @@ class Booking extends React.Component {
             arrows: false,
             lazyLoad: true,
             infinite: true,
-            slidesToShow: 3,
+            slidesToShow: employees.length > 2? 3 : employees.length,
             speed: 500
         };
+
+        const width = employees.length > 2? '100%' : employees.length * 30 + '%';
 
         const dates = this.generateDates();
         const date_settings = {
@@ -395,18 +397,20 @@ class Booking extends React.Component {
                                 ) : (
                                     employees.length > 0 && 
                                         <div className={classes.employee}>
-                                            <Slider {...settings} ref="employee_slider">
-                                                {
-                                                    employees.map((employee, key) => {
-                                                        return (
-                                                            <div className={classes.slide_container} key={key} onClick={() => this.selectEmployee(employee)}>
-                                                                <img src={employee.EmployeeInformation.picturePath? Utils.root + employee.EmployeeInformation.picturePath : defaultAvatar} className={classes.slide_img} alt="..." />
-                                                                <div className={classes.slide_name}>{ employee.name }</div>
-                                                            </div>
-                                                        )
-                                                    })
-                                                }
-                                            </Slider>                                   
+                                            <div style={{width: width, margin: 'auto'}}>
+                                                <Slider {...settings} ref="employee_slider">
+                                                    {
+                                                        employees.map((employee, key) => {
+                                                            return (
+                                                                <div className={classes.slide_container} key={key} onClick={() => this.selectEmployee(employee)}>
+                                                                    <img src={employee.EmployeeInformation.picturePath? Utils.root + employee.EmployeeInformation.picturePath : defaultAvatar} className={classes.slide_img} alt="..." />
+                                                                    <div className={classes.slide_name}>{ employee.name }</div>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </Slider>
+                                            </div>                                   
                                             <GridContainer alignItems="center">
                                                 <GridItem xs={3}>
                                                     <Button
