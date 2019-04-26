@@ -20,7 +20,7 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import customToolbarStyle from "assets/jss/material-dashboard-pro-react/views/bookingAppointment/customToolbarStyle.jsx";
+import customToolbarStyle from "assets/jss/material-dashboard-pro-react/views/booking_appointment/customToolbarStyle.jsx";
 
 class CustomToolbar extends React.PureComponent {
     constructor(props) {

@@ -8,7 +8,6 @@ import PropTypes from "prop-types";
 
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
-import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
@@ -28,13 +27,13 @@ import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 import * as Validator from "utils/validator";
-import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
+import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
 
-class SetBreakModal extends React.Component {
+class SetBreak extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -44,13 +43,13 @@ class SetBreakModal extends React.Component {
         }
     }
 
-    change(event, stateName, type, stateNameEqualTo) {
+    change(event, stateName, type, length) {
         switch (type) {
             case "comment":
                 this.setState({
                     [stateName]: event.target.value
                 })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
+                if (Validator.verifyLength(event.target.value, length)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
@@ -68,8 +67,9 @@ class SetBreakModal extends React.Component {
     handleClose() {
         this.props.onClose();
         this.setState({
-            comment     : "",        
-            commentState: ""
+            comment         : "",        
+            commentState    : "",
+            hairdresserId   : ""
         })
     }
 
@@ -224,7 +224,7 @@ class SetBreakModal extends React.Component {
   }
 }
 
-SetBreakModal.propTypes = {
+SetBreak.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -241,4 +241,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SetBreakModal)));
+export default withStyles(modalStyle)(connect(mapStateToProps, mapDispatchToProps)(SetBreak));

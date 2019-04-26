@@ -2,7 +2,6 @@ import React from "react";
 
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
-import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 
 // react component used to create a calendar with events on it
@@ -22,9 +21,9 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import bookingAppointmentStyle from "assets/jss/material-dashboard-pro-react/views/bookingAppointment/bookingAppointmentStyle.jsx";
+import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
 import CustomToolbar from "./CutomToolbar";
-import SetBreakModal from './modals/SetBreakModal';
+import SetBreak from './modals/SetBreak';
 import DetailedEvent from './modals/DetailedEvent';
 
 const localizer = BigCalendar.momentLocalizer(moment);
@@ -36,13 +35,13 @@ class BookingAppointment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      initDate      : moment().toDate(),
-      setBreakModal : false,
-      hairdresserId : "",
-      start         : "",
-      end           : "",
-      detailedEvent : false,
-      detailedData  : null
+      initDate          : moment().toDate(),
+      showSetBreak      : false,
+      hairdresserId     : "",
+      start             : "",
+      end               : "",
+      showDetailedEvent : false,
+      detailedData      : null
     };
     this.onChangeDate = this.onChangeDate.bind(this);
   }
@@ -85,24 +84,24 @@ class BookingAppointment extends React.Component {
   }
   
   // Setting break time
-  onOpenSetBreakModal = ({resourceId, start, end}) => {
+  onOpenSetBreak = ({resourceId, start, end}) => {
     this.setState({
-      setBreakModal : true,
+      showSetBreak  : true,
       hairdresserId : resourceId,
       start         : moment(start).format('YYYY-MM-DD HH:mm'),
       end           : moment(end).format('HH:mm')
     })
   }
-  onOpenSetBreakModalWithoutId = () => {
+  onOpenSetBreakWithoutId = () => {
     this.setState({
-      setBreakModal : true,
+      showSetBreak  : true,
       start         : moment().format('YYYY-MM-DD'),
       end           : ""
     })
   }
-  onCloseSetBreakModal = () => {
+  onCloseSetBreak = () => {
     this.setState({
-      setBreakModal : false,
+      showSetBreak  : false,
       hairdresserId : "",
       start         : "",
       end           : ""
@@ -111,13 +110,13 @@ class BookingAppointment extends React.Component {
 
   onOpenDetailedEvent = (data) => {
     this.setState({
-      detailedEvent : true,
-      detailedData  : data
+      showDetailedEvent : true,
+      detailedData      : data
     })
   }
   onCloseDetailedEvent = () => {
     this.setState({
-      detailedEvent: false
+      showDetailedEvent: false
     })
   }
 
@@ -155,39 +154,42 @@ class BookingAppointment extends React.Component {
       <div>
         <GridContainer justify="center">
           <GridItem xs={12}>
-            <Card classes={{card: classes.card}}>            
-              <CardHeader>   
-                <div className={classes.cardHeader}>
-                  <GridContainer>
-                    <GridItem xs={12} sm={6}>
-                      <h3 className={classes.cardTitle}>Kalender</h3>
-                    </GridItem>
-                    <GridItem xs={12} sm={6} className={classes.right}>
-                      <Button 
-                        color="info" 
-                        size="sm"
-                        onClick={() => this.goBooking()}
-                      >                         
-                        Boka
-                      </Button>
-                      <Button 
-                        color="info" 
-                        size="sm"
-                        onClick={() => this.onOpenSetBreakModalWithoutId()}
-                      >                         
-                        Lägg in ledig dag 
-                      </Button>
-                    </GridItem>
-                  </GridContainer>
+            <Card classes={{card: classes.card}}>  
+            {
+              loading &&
+                <div className={classes.loading_container}>
+                  <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
                 </div>
-              </CardHeader>
-              <CardBody calendar>
-                {
-                  loading? (
-                    <div className={classes.loading_container}>
-                      <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+            }    
+            {
+              data.length > 0 &&
+                <div>
+                  <CardHeader>   
+                    <div className={classes.cardHeader}>
+                      <GridContainer>
+                        <GridItem xs={12} sm={6}>
+                          <h3 className={classes.cardTitle}>Kalender</h3>
+                        </GridItem>
+                        <GridItem xs={12} sm={6} className={classes.right}>
+                          <Button 
+                            color="info" 
+                            size="sm"
+                            onClick={() => this.goBooking()}
+                          >                         
+                            Boka
+                          </Button>
+                          <Button 
+                            color="info" 
+                            size="sm"
+                            onClick={() => this.onOpenSetBreakWithoutId()}
+                          >                         
+                            Lägg in ledig dag 
+                          </Button>
+                        </GridItem>
+                      </GridContainer>
                     </div>
-                  ) : 
+                  </CardHeader>
+                  <CardBody calendar>
                     <BigCalendar
                       formats={formats}
                       localizer={localizer}
@@ -212,16 +214,17 @@ class BookingAppointment extends React.Component {
                       endAccessor="plannedEndTime"
                       onNavigate={(date) => this.onChangeDate(date)}
                       selectable
-                      onSelectSlot={this.onOpenSetBreakModal}
+                      onSelectSlot={this.onOpenSetBreak}
                       onSelectEvent={(event) => this.onOpenDetailedEvent(event)}
-                    />
-                }              
-              </CardBody>                
+                    />             
+                  </CardBody> 
+                </div>
+            }                     
             </Card>
                         
-            <SetBreakModal 
-              onOpen={this.state.setBreakModal}
-              onClose={this.onCloseSetBreakModal}
+            <SetBreak 
+              onOpen={this.state.showSetBreak}
+              onClose={this.onCloseSetBreak}
               data={{
                 hairdresserId : this.state.hairdresserId,
                 start         : this.state.start,
@@ -230,7 +233,7 @@ class BookingAppointment extends React.Component {
             />
 
             <DetailedEvent 
-              onOpen={this.state.detailedEvent}
+              onOpen={this.state.showDetailedEvent}
               onClose={this.onCloseDetailedEvent}
               onDelete={this.deleteEvent}
               data={this.state.detailedData}
@@ -261,4 +264,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
   
-export default withStyles(bookingAppointmentStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(BookingAppointment)));
+export default withStyles(commonStyle)(connect(mapStateToProps, mapDispatchToProps)(BookingAppointment));

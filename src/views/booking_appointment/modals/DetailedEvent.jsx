@@ -22,7 +22,7 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
+import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
@@ -105,4 +105,4 @@ DetailedEvent.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(commonModalStyle)((DetailedEvent));
+export default withStyles(modalStyle)((DetailedEvent));

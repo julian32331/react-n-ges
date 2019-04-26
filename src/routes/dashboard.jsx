@@ -9,7 +9,7 @@ import Services from "views/my_salon/services/Services.jsx";
 import OpeningHours from "views/my_salon/OpeningHours/OpeningHours.jsx";
 import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
-import BookingAppointment from "views/bookingAppointment/BookingAppointment.jsx";
+import BookingAppointment from "views/booking_appointment/BookingAppointment.jsx";
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
 import Products from "views/B2BShop/Products/Products.jsx";
