@@ -247,7 +247,7 @@ class OpeningHours extends React.Component {
                         <div className={classes.cardHeader}>
                             <GridContainer>
                                 <GridItem  xs={12} sm={6}>
-                                    <h3 className={classes.cardTitle}>Salong öppen</h3>
+                                    <h3 className={classes.cardTitle}>Salongen öppen</h3>
                                 </GridItem>
                             </GridContainer>
                         </div>
@@ -366,7 +366,7 @@ class OpeningHours extends React.Component {
                                     <Button 
                                         color="info" 
                                         size="sm"
-                                        onClick={() => this.onOpenNewOrUpdateModal("New Special Day")}
+                                        onClick={() => this.onOpenNewOrUpdateModal("Ny specialdag")}
                                     >                            
                                         <Add /> Lägg till avvikande öppettider
                                     </Button>

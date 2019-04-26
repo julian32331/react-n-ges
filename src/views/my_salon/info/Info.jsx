@@ -106,9 +106,9 @@ class Info extends React.Component {
                 city: nextProps.info.city? nextProps.info.city : "",
                 cityState: nextProps.info.city? "success" : "error",
                 phone: nextProps.info.telephone? nextProps.info.telephone : "",
-                phoneState: nextProps.info.telephone? "success" : "error",
+                phoneState: nextProps.info.telephone? "success" : "",
                 email: nextProps.info.email? nextProps.info.email : "",
-                emailState: nextProps.info.email? "success" : "error",
+                emailState: nextProps.info.email? "success" : "",
                 network: nextProps.info.website? nextProps.info.website : "",
                 networkState: nextProps.info.website? "success" : "",
                 description: nextProps.info.description? nextProps.info.description : "",
@@ -152,10 +152,7 @@ class Info extends React.Component {
             case "address":
             case "zip":
             case "city":
-            case "description":
-            case "s_co":
             case "s_address1":
-            case "s_address2":
             case "s_zip":
             case "s_city":
             case "s_country":
@@ -167,8 +164,29 @@ class Info extends React.Component {
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
                 }
-                break;            
+                break; 
+            case "description":
+            case "s_co":
+            case "s_address2":
+                this.setState({
+                    [stateName]: event.target.value
+                })
+                if (Validator.verifyLength(event.target.value, length)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "" });
+                }
+                break;           
             case "phone":
+                this.setState({
+                    [stateName]: event.target.value
+                })
+                if (Validator.verifyPhone(event.target.value)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "" });
+                }
+                break;
             case "s_mobile":
                 this.setState({
                     [stateName]: event.target.value
@@ -185,10 +203,8 @@ class Info extends React.Component {
                 })
                 if (Validator.verifyEmail(event.target.value)) {
                     this.setState({ [stateName + "State"]: "success" });
-                } else if(Validator.verifyEmail(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
                 } else {
-                    this.setState({ [stateName + "State"]: "error" });
+                    this.setState({ [stateName + "State"]: "" });
                 }
                 break;
             case "network":
@@ -198,7 +214,7 @@ class Info extends React.Component {
                 if (Validator.verifyUrl(event.target.value)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else {
-                    this.setState({ [stateName + "State"]: "error" });
+                    this.setState({ [stateName + "State"]: "" });
                 }
                 break;
             case "parkCheck":
@@ -214,8 +230,6 @@ class Info extends React.Component {
             this.state.addressState === "success" &&
             this.state.zipState === "success" &&
             this.state.cityState === "success" &&
-            this.state.phoneState === "success" &&
-            this.state.emailState === "success" &&
             this.state.s_address1State === "success" &&
             this.state.s_cityState === "success" &&
             this.state.s_zipState === "success" &&
@@ -223,7 +237,7 @@ class Info extends React.Component {
             this.state.s_countryState === "success") {
             return true;
         } else {
-          return false
+            return false
         }
     }
 
@@ -244,9 +258,9 @@ class Info extends React.Component {
             city: this.props.info.city? this.props.info.city : "",
             cityState: this.props.info.city? "success" : "error",
             phone: this.props.info.telephone? this.props.info.telephone : "",
-            phoneState: this.props.info.telephone? "success" : "error",
+            phoneState: this.props.info.telephone? "success" : "",
             email: this.props.info.email? this.props.info.email : "",
-            emailState: this.props.info.email? "success" : "error",
+            emailState: this.props.info.email? "success" : "",
             network: this.props.info.website? this.props.info.website : "",
             networkState: this.props.info.website? "success" : "",
             description: this.props.info.description? this.props.info.description : "",
@@ -279,7 +293,6 @@ class Info extends React.Component {
                 name: this.state.name,
                 description: this.state.description,
                 telephone: this.state.phone,
-                // descriptionValidated: false,
                 accessibility: this.state.accessCheck,
                 parking: this.state.parkCheck,
                 website: this.state.network,
@@ -472,17 +485,12 @@ class Info extends React.Component {
                                             <CustomInput
                                                 success={this.state.phoneState === "success"}
                                                 error={this.state.phoneState === "error"}
-                                                labelText="Telefonnummer *"
+                                                labelText="Telefonnummer"
                                                 id="phone"
                                                 formControlProps={{
                                                     fullWidth: true
                                                 }}
                                                 inputProps={{
-                                                    endAdornment:
-                                                        this.state.phoneState === "error"  &&
-                                                            <InputAdornment position="end">
-                                                                <Warning className={classes.danger} />
-                                                            </InputAdornment>,  
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
                                                         this.changeForm(event, "phone", "phone", 1),
@@ -495,17 +503,12 @@ class Info extends React.Component {
                                             <CustomInput
                                                 success={this.state.emailState === "success"}
                                                 error={this.state.emailState === "error"}
-                                                labelText="E-post *"
+                                                labelText="E-post"
                                                 id="email"
                                                 formControlProps={{
                                                     fullWidth: true
                                                 }}
                                                 inputProps={{
-                                                    endAdornment:
-                                                        this.state.emailState === "error"  &&
-                                                            <InputAdornment position="end">
-                                                                <Warning className={classes.danger} />
-                                                            </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
                                                         this.changeForm(event, "email", "email", 1),
@@ -524,11 +527,6 @@ class Info extends React.Component {
                                                     fullWidth: true
                                                 }}
                                                 inputProps={{
-                                                    endAdornment:
-                                                        this.state.networkState === "error"  &&
-                                                            <InputAdornment position="end">
-                                                                <Warning className={classes.danger} />
-                                                            </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
                                                         this.changeForm(event, "network", "network", 1),
@@ -547,11 +545,6 @@ class Info extends React.Component {
                                                     fullWidth: true
                                                 }}
                                                 inputProps={{
-                                                    endAdornment:
-                                                        this.state.descriptionState === "error"  &&
-                                                            <InputAdornment position="end">
-                                                                <Warning className={classes.danger} />
-                                                            </InputAdornment>,
                                                     multiline: true,
                                                     rows: 3,   
                                                     disabled: !this.state.isEdit,                                 
@@ -627,11 +620,6 @@ class Info extends React.Component {
                                                     fullWidth: true
                                                 }}
                                                 inputProps={{
-                                                    endAdornment:
-                                                        this.state.s_coState === "error"  &&
-                                                        <InputAdornment position="end">
-                                                            <Warning className={classes.danger} />
-                                                        </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
                                                         this.changeForm(event, "s_co", "s_co", 1),
@@ -696,11 +684,6 @@ class Info extends React.Component {
                                                     fullWidth: true
                                                 }}
                                                 inputProps={{
-                                                    endAdornment:
-                                                        this.state.s_address2State === "error"  &&
-                                                            <InputAdornment position="end">
-                                                                <Warning className={classes.danger} />
-                                                            </InputAdornment>,
                                                     disabled: !this.state.isEdit,
                                                     onChange: event =>
                                                         this.changeForm(event, "s_address2", "s_address2", 1),
@@ -859,7 +842,7 @@ class Info extends React.Component {
                             </CardHeader>
                             <CardBody>
                                 <div className={classes.center}>
-                                    <h4>This is the description of Gallery</h4>
+                                    <h4>Här kan du lägga till bilder från din salong som visas för kunderna i appen</h4>
                                     <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
                                     <img src={this.state.imagePreviewUrl} className={classes.img} />
                                 </div>

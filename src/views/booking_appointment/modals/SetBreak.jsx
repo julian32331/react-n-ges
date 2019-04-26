@@ -9,6 +9,8 @@ import PropTypes from "prop-types";
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
 import connect from 'react-redux/es/connect/connect';
+import Datetime from "react-datetime";
+import moment from 'moment';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -37,14 +39,32 @@ class SetBreak extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            date            : "",
+            dateState       : "",
             comment         : "",            
             commentState    : "", 
             hairdresserId   : ""
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.data) {
+            this.setState({
+                date        : nextProps.data.start,
+                dateState   : "success"
+            })
+        }
+    }
+
     change(event, stateName, type, length) {
         switch (type) {
+            case "date":
+                if(!moment(event._d).isSame(moment())) {
+                    this.setState({ [stateName]: moment(event._d).format("YYYY-MM-DD"), [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName]: "", [stateName + "State"]: "error" });
+                }
+            break;
             case "comment":
                 this.setState({
                     [stateName]: event.target.value
@@ -67,6 +87,7 @@ class SetBreak extends React.Component {
     handleClose() {
         this.props.onClose();
         this.setState({
+            date            : "",
             comment         : "",        
             commentState    : "",
             hairdresserId   : ""
@@ -74,7 +95,7 @@ class SetBreak extends React.Component {
     }
 
     canSubmit = () => {
-        if((this.state.commentState === "success" && this.state.hairdresserId) || (this.state.commentState === "success" && this.props.data.hairdresserId))
+        if((this.state.commentState === "success" && this.state.hairdresserId && this.state.dateState === "success") || (this.state.commentState === "success" && this.props.data.hairdresserId))
             return true;
         else
             return false;
@@ -83,10 +104,11 @@ class SetBreak extends React.Component {
     save = () => {
         const { workingForId, data } = this.props;
         let root = data.hairdresserId? 'time' : 'day';
+        let date = data.hairdresserId? data.start : this.state.date;
         this.props.setBreak({
             workingForId    : workingForId,
             hairdresserId   : data.hairdresserId || this.state.hairdresserId,
-            breakStartAt    : data.start,
+            breakStartAt    : date,
             comment         : this.state.comment
         }, root)
         this.handleClose();
@@ -119,18 +141,33 @@ class SetBreak extends React.Component {
                     id="setting-break-time-description"
                     className={classes.modalBody}
                 >
-                    <CustomInput
-                        labelText="Tid"
-                        id="time"
-                        formControlProps={{
-                            fullWidth: true
-                        }}
-                        inputProps={{
-                            disabled: true,
-                            value: data.end? data.start + " - " + data.end : data.start,
-                            type: "text"
-                        }}
-                    />
+                    {
+                        data.hairdresserId? (
+                            <CustomInput
+                                labelText="Tid *"
+                                id="time"
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    disabled: true,
+                                    value: data.end? data.start + " - " + data.end : data.start,
+                                    type: "text"
+                                }}
+                            />
+                        ) : (                                    
+                            <FormControl fullWidth style={{paddingTop: '27px', marginBottom: '17px',}}>
+                                <Datetime
+                                    dateFormat={"YYYY-MM-DD"}
+                                    timeFormat={false}
+                                    inputProps={{ placeholder: "Tid *" }}
+                                    value={this.state.date}
+                                    onChange={event => this.change(event, "date", "date")}
+                                />
+                            </FormControl> 
+                        )
+                    }
+                    
                     {
                         !data.hairdresserId &&
                             <FormControl

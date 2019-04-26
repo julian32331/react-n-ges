@@ -3,6 +3,9 @@
  * Date: 2/6/2019
  */
 
+import {
+  dangerColor
+} from "assets/jss/material-dashboard-pro-react.jsx";
 import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
 import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
 
@@ -67,7 +70,7 @@ const productsStyle = theme => ({
   badge: {
     width: '22px',
     height: '22px',
-    background: '#f00',
+    background: dangerColor,
     color: '#fff',
     fontSize: '12px',
     fontWeight: '500',

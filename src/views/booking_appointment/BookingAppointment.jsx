@@ -175,8 +175,9 @@ class BookingAppointment extends React.Component {
                             color="info" 
                             size="sm"
                             onClick={() => this.goBooking()}
+                            className={classes.mr_8}
                           >                         
-                            Boka
+                            Boka tid
                           </Button>
                           <Button 
                             color="info" 
@@ -214,6 +215,7 @@ class BookingAppointment extends React.Component {
                       endAccessor="plannedEndTime"
                       onNavigate={(date) => this.onChangeDate(date)}
                       selectable
+                      onSelecting = {slot => false}
                       onSelectSlot={this.onOpenSetBreak}
                       onSelectEvent={(event) => this.onOpenDetailedEvent(event)}
                     />             

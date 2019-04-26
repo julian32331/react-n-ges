@@ -204,7 +204,7 @@ class Orders extends React.Component {
           <div className={classes.cardHeader}>
             <GridContainer>
                 <GridItem xs={12} sm={6}>
-                    <h3 className={classes.cardTitle}>Orders</h3>
+                    <h3 className={classes.cardTitle}>Order</h3>
                 </GridItem>
             </GridContainer>
           </div>

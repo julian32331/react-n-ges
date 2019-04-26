@@ -201,7 +201,8 @@ class B2BShop extends React.Component {
     if(qty) {
       this.setState({
         cart: cart,
-        ["qty_" + product.articleNo]: qty
+        ["qty_" + product.articleNo]: qty,
+        badge: total_product
       });
     } else {
       this.setState({
@@ -328,7 +329,7 @@ class B2BShop extends React.Component {
               <div className={classes.cardHeader}>
                 <GridContainer>
                   <GridItem xs={12} sm={6}>
-                    <h3 className={classes.cardTitle}>Products</h3>
+                    <h3 className={classes.cardTitle}>Produkter</h3>
                   </GridItem>
                   <GridItem xs={12} sm={6} className={classes.text_right}>
                     {

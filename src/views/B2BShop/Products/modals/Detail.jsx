@@ -65,11 +65,11 @@ class Detail extends React.Component {
                     TransitionComponent={Transition}
                     keepMounted
                     onClose={() => this.props.onClose()}
-                    aria-labelledby="setting-break-time-title"
-                    aria-describedby="setting-break-time-description"
+                    aria-labelledby="product-detail-title"
+                    aria-describedby="product-detail-description"
                 >
                 <DialogTitle
-                    id="setting-break-time-title"
+                    id="product-detail-title"
                     disableTypography
                     className={classes.modalHeader}
                 >
@@ -78,7 +78,7 @@ class Detail extends React.Component {
                 {
                     data &&
                         <DialogContent
-                            id="setting-break-time-description"
+                            id="product-detail-description"
                             className={classes.modalBody}
                         >
                             <Magnifier src={data.imageURL !== ""? data.imageURL : noImage} width={250} height={250} mgShape={'square'} style={{border: 'solid 1px #000', padding: '4px', borderRadius: '4px', background: '#ddd'}} />
@@ -97,7 +97,7 @@ class Detail extends React.Component {
                                         type="number"
                                         inputProps={{
                                             className: classes.qty,
-                                            onChange: (event)=> event.target.value > 1 && this.setState({qty: event.target.value})
+                                            onChange: (event)=> event.target.value > 0 && this.setState({qty: event.target.value})
                                         }}
                                         value={this.state.qty}
                                     />

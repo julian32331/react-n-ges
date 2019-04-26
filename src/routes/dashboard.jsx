@@ -124,7 +124,7 @@ export var dashRoutes1 = [
     views: [
       {
         path: "/b2bshop/products",
-        name: "Products",
+        name: "Produkter",
         mini: "P",
         component: Products
       },
@@ -136,7 +136,7 @@ export var dashRoutes1 = [
       },
       {
         path: "/b2bshop/orders",
-        name: "Orders",
+        name: "Order",
         mini: "O",
         component: Orders
       }
