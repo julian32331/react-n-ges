@@ -19,6 +19,7 @@ const booking_appointment = function (state = initialState, action) {
                 ...state,
                 loading     : true,
                 error       : '',
+                data        : []
             };
         case Actions.APPOINTMENT_SUCCESS:
             return {

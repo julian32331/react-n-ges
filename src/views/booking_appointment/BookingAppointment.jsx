@@ -162,7 +162,7 @@ class BookingAppointment extends React.Component {
                 </div>
             }    
             {
-              data.length > 0 &&
+              this.props.employees.length > 0 &&
                 <div>
                   <CardHeader>   
                     <div className={classes.cardHeader}>
