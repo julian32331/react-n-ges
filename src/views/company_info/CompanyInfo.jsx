@@ -8,7 +8,6 @@ import PropTypes from "prop-types";
 
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
-import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 
 // @material-ui/core components
@@ -680,4 +679,4 @@ function mapStateToProps(state) {
       }, dispatch);
   }
   
-export default withStyles(commonStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(CompanyInfo)));
+export default withStyles(commonStyle)(connect(mapStateToProps, mapDispatchToProps)(CompanyInfo));

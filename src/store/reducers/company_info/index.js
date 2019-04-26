@@ -37,7 +37,10 @@ const company = function (state = initialState, action) {
         case Actions.UPDATE_COMPANY_INFO_SUCCESS:
             return {
                 ...state,
-                info: action.payload
+                info: {
+                    ...state.info,
+                    ...action.payload
+                }
             };
         case Actions.UPDATE_COMPANY_INFO_FAILED:
             return {
