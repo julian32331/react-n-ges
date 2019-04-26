@@ -1,11 +1,11 @@
 /**
- * Description: Saloon service Style
- * Date: 12/22/2018
+ * Description: Services page style
+ * Date: 4/26/2019
  */
 
 import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
 
-const salongServiceStyle = theme => ({
+const servicesStyle = theme => ({
   ...commonStyle,
   text_right: {
       textAlign: 'right'
@@ -88,4 +88,4 @@ const salongServiceStyle = theme => ({
   },
 });
 
-export default salongServiceStyle;
+export default servicesStyle;

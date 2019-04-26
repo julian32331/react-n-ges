@@ -29,7 +29,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Confirm from "components/Modals/Confirm.jsx";
 
-import salongServiceStyle from "assets/jss/material-dashboard-pro-react/views/salongService/salongServiceStyle.jsx";
+import servicesStyle from "assets/jss/material-dashboard-pro-react/views/my_salon/services/servicesStyle.jsx";
 import AddUpdate from "./modals/AddUpdate.jsx";
 import * as Utils from 'utils/api';
 
@@ -251,4 +251,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default withStyles(salongServiceStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(Services)));
+export default withStyles(servicesStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(Services)));
