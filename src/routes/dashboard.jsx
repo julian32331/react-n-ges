@@ -17,7 +17,7 @@ import ShoppingCart from "views/B2BShop/ShoppingCart/ShoppingCart.jsx";
 import Orders from "views/B2BShop/Orders/Orders.jsx";
 
 import Profile from "views/Profile/Profile.jsx";
-import CompanyInformasjon from "views/CompanyInformasjon.jsx";
+import CompanyInfo from "views/company_info/CompanyInfo.jsx";
 import MySalon from "views/MySalon/MySalon.jsx";
 
 import CreateSalon from "views/CreateSalon.jsx";
@@ -39,7 +39,7 @@ export var dashRoutes1 = [
   {
     path: "/companyInformasjon",
     name: "Company Information",
-    component: CompanyInformasjon
+    component: CompanyInfo
   },
   {
     path: "/mySalon",
