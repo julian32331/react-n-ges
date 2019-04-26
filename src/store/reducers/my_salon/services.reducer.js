@@ -47,10 +47,10 @@ const services = function (state = initialState, action) {
             index = state.services.findIndex((service) => {
                 return service.id === action.payload.id;
             });
-            state.services.splice(index, 1);
+            state.services[index] = action.payload;
             return {
                 ...state,
-                services: state.services.concat(action.payload)
+                services: state.services.concat()
             };
 
         case Actions.DELETE_SALON_SERVICE_SUCCESS:
