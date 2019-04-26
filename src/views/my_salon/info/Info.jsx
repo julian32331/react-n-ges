@@ -286,7 +286,7 @@ class Info extends React.Component {
     }
 
     updateSalonInfo() {
-        Utils.xapi().post('manager/salon/update', {
+        this.props.updateSalonInfo({
             workingForId: this.props.workingForId,
             salonData: {
                 email: this.state.email,
@@ -873,6 +873,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         getUser             : Actions.getUser,
         getSalonInfo        : Actions.getSalonInfo,
+        updateSalonInfo     : Actions.updateSalonInfo,
         addSalonGallery     : Actions.addSalonGallery,
         updateSalonGallery  : Actions.updateSalonGallery,
         deleteSalonGallery  : Actions.deleteSalonGallery

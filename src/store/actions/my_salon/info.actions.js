@@ -30,6 +30,32 @@ export function getSalonInfo(data) {
     }        
 }
 
+export const UPDATE_SALON_INFO_SUCCESS = '[SALON INFO] UPDATE SUCCESS';
+export const UPDATE_SALON_INFO_FAILED  = '[SALON INFO] UPDATE FAILED';
+
+export function updateSalonInfo(data) {
+    const request = Utils.xapi().post('manager/salon/update', data);
+
+    return (dispatch) => {
+        request.then(() =>
+            dispatch({
+                type    : UPDATE_SALON_INFO_SUCCESS,
+                payload : {
+                    ...data.salonData,
+                    ShippingAddress: {
+                        ...data.shippingAddress
+                    }
+                }
+            })
+        ).catch((error) => {
+            dispatch({
+                type    : UPDATE_SALON_INFO_FAILED,
+                payload : error
+            })
+        });
+    }        
+}
+
 export const ADD_SALON_GALLERY_SUCCESS = '[SALON GALLERY] ADD SUCCESS';
 export const ADD_SALON_GALLERY_FAILED  = '[SALON GALLERY] ADD FAILED';
 

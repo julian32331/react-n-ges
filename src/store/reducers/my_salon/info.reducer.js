@@ -35,6 +35,20 @@ const info = function (state = initialState, action) {
                 loading : false,
                 error   : action.payload
             };
+
+        case Actions.UPDATE_SALON_INFO_SUCCESS:
+            return {
+                ...state,
+                info: {
+                    ...state.info,
+                    ...action.payload
+                }
+            };
+        case Actions.UPDATE_SALON_INFO_FAILED:
+            return {
+                ...state,
+                error: action.payload
+            };
             
         case Actions.ADD_SALON_GALLERY_SUCCESS:
         case Actions.UPDATE_SALON_GALLERY_SUCCESS:
