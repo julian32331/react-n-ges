@@ -37,10 +37,10 @@ class Services extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showDelete      : false,
+            showConfirm     : false,
             showAddUpdate   : false,
-            modalTitle: '',
-            modalData: null
+            modalTitle      : '',
+            modalData       : null
         };
     }
 
@@ -60,26 +60,26 @@ class Services extends React.Component {
         }
     }
 
-    // Open and close Delete modal
-    onCloseDelete() {
+    // Confirm modal Actions
+    onCloseConfirm() {
         this.setState({
-            showDelete: false
+            showConfirm: false
         })
     }
-    onOpenDelete(service) {
+    onOpenConfirm(service) {
         this.setState({
-            showDelete: true,            
-            modalData: service
+            showConfirm : true,            
+            modalData   : service
         })
     }
     onConfirmDelete() {
         this.props.deleteSalonService({
             workingForId: this.props.workingForId,
-            id: this.state.modalData.id
+            id          : this.state.modalData.id
         })
     }
 
-    // Open and close AddUpdate modal
+    // AddUpdate modal Actions
     onCloseAddUpdate() {
         this.setState({
             showAddUpdate: false
@@ -92,26 +92,26 @@ class Services extends React.Component {
             })
             Utils.xapi().post('manager/service/employees', {
                 workingForId: this.props.workingForId,
-                serviceId: service.id
+                serviceId   : service.id
             }).then(res => {
                 let arr = [];
                 res.data.Employees.map(employee => {
                     arr.push(employee.id)
                 })
                 this.setState({
-                    loading: false,
-                    showAddUpdate: true,
-                    modalTitle: title,
-                    modalData: service,
-                    employees: arr
+                    loading         : false,
+                    showAddUpdate   : true,
+                    modalTitle      : title,
+                    modalData       : service,
+                    employees       : arr
                 })
             })
         } else {
             this.setState({
-                showAddUpdate: true,
-                modalTitle: title,
-                modalData: service,
-                employees: null
+                showAddUpdate   : true,
+                modalTitle      : title,
+                modalData       : service,
+                employees       : null
             })
         }
     }
@@ -192,7 +192,7 @@ class Services extends React.Component {
                                                                     color="danger"
                                                                     size="sm"
                                                                     className={classes.mx_10}
-                                                                    onClick={() => this.onOpenDelete(service)}
+                                                                    onClick={() => this.onOpenConfirm(service)}
                                                                 >
                                                                     <Close />
                                                                 </Button>
@@ -213,8 +213,8 @@ class Services extends React.Component {
                 }
 
                 <Confirm
-                    onOpen={this.state.showDelete}
-                    onClose={this.onCloseDelete.bind(this)}
+                    onOpen={this.state.showConfirm}
+                    onClose={this.onCloseConfirm.bind(this)}
                     onConfirm={this.onConfirmDelete.bind(this)}
                 />
                     
