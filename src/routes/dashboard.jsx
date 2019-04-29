@@ -33,17 +33,17 @@ import DateRange from "@material-ui/icons/DateRange";
 export var dashRoutes1 = [ 
   {
     path: "/profile",
-    name: "Profile",
+    name: "Min Profil",
     component: Profile
   },
   {
     path: "/companyInformasjon",
-    name: "Company Information",
+    name: "Företagsinformation",
     component: CompanyInfo
   },
   {
     path: "/mySalon",
-    name: "My Salon",
+    name: "Mina Salonger",
     component: MySalon
   },
   {
