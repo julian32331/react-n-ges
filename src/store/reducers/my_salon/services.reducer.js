@@ -1,5 +1,5 @@
 /**
- * Description: My salon Info reducer
+ * Description: My salon Services reducer
  * Date: 3/30/2019
  */
 

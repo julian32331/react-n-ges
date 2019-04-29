@@ -5,3 +5,4 @@
 
 export * from './info.actions';
 export * from './services.actions';
+export * from './hours.actions';

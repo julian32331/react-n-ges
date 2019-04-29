@@ -198,18 +198,18 @@ class AddUpdate extends React.Component {
                 TransitionComponent={Transition}
                 keepMounted
                 onClose={() => this.handleClose()}
-                aria-labelledby="saloon-service-new-update-modal-title"
-                aria-describedby="saloon-service-new-update-modal-description"
+                aria-labelledby="saloon-service-add-update-modal-title"
+                aria-describedby="saloon-service-add-update-modal-description"
             >
                 <DialogTitle
-                    id="saloon-service-new-update-modal-title"
+                    id="saloon-service-add-update-modal-title"
                     disableTypography
                     className={classes.modalHeader}
                 >
                     <h3 className={classes.modalTitle}>{this.props.title}</h3>
                 </DialogTitle>
                 <DialogContent
-                    id="saloon-service-new-update-modal-description"
+                    id="saloon-service-add-update-modal-description"
                     className={classes.modalBody}
                 >
                     <form>

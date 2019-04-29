@@ -1,6 +1,6 @@
 /**
- * Descirption: NewOrUpdate modal for saloon service
- * Date: 12/23/2018
+ * Descirption: Add Update Salon hours
+ * Date: 4/29/2019
  */
 
 import React from "react";
@@ -36,68 +36,57 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
-import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
-
+import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 import * as Validator from "utils/validator";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
 
-class NewOrUpdateModal extends React.Component {
+class AddUpdate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
-            nameState: "",
-            isOpened: true,
-            date: "",
-            dateState: "",
-            from: "",
-            fromState: "",
-            to: "",
-            toState: ""
+            name        : "",
+            nameState   : "",
+            isOpened    : true,
+            date        : "",
+            dateState   : "",
+            from        : "",
+            fromState   : "",
+            to          : "",
+            toState     : ""
         }
-        this.save = this.save.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.data) {
             this.setState({
-                name: nextProps.data.name,
-                nameState: "success",
-                date: moment(nextProps.data.date).format("YYYY-MM-DD"),
-                dateState: "success",
-                from: nextProps.data.openAt.substr(0,2) + ":" + nextProps.data.openAt.substr(2,2),
-                fromState: "success",
-                to: nextProps.data.closeAt.substr(0,2) + ":" + nextProps.data.closeAt.substr(2,2),
-                toState: "success"
+                name        : nextProps.data.name,
+                nameState   : "success",
+                date        : moment(nextProps.data.date).format("YYYY-MM-DD"),
+                dateState   : "success",
+                from        : nextProps.data.openAt.substr(0,2) + ":" + nextProps.data.openAt.substr(2,2),
+                fromState   : "success",
+                to          : nextProps.data.closeAt.substr(0,2) + ":" + nextProps.data.closeAt.substr(2,2),
+                toState     : "success"
             })
         } else {
-            this.setState({
-                name: "",
-                nameState: "",
-                date: "",
-                dateState: "",
-                from: "",
-                fromState: "",
-                to: "",
-                toState: ""
-            })
+            this.initState();
         }
     }
 
     initState() {
         this.setState({
-            name: "",
-            nameState: "",
-            date: "",
-            dateState: "",
-            from: "",
-            fromState: "",
-            to: "",
-            toState: "",
-            isOpened: true,
+            name        : "",
+            nameState   : "",
+            isOpened    : true,
+            date        : "",
+            dateState   : "",
+            from        : "",
+            fromState   : "",
+            to          : "",
+            toState     : ""
         })
     }
 
@@ -112,33 +101,7 @@ class NewOrUpdateModal extends React.Component {
         });
     };
 
-    save(isNew) {
-        if(isNew) {
-            this.props.addSpecialDay({
-                workingForId: this.props.workingForId,
-                specialDayData: {
-                    name: this.state.name,
-                    date: this.state.date,
-                    openAt: this.state.from.replace(":", ""),
-                    closeAt: this.state.to.replace(":", "")
-                }
-            })
-        } else {            
-            this.props.updateSpecialDay({
-                workingForId: this.props.workingForId,
-                specialDayData: {
-                    id: this.props.data.id,
-                    name: this.state.name,
-                    openAt: this.state.from.replace(":", ""),
-                    closeAt: this.state.to.replace(":", "")
-                }        
-            })
-        }
-        this.initState();
-        this.props.onClose();
-    }
-
-    change(event, stateName, type, stateNameEqualTo) {
+    changeForm(event, stateName, type, stateNameEqualTo) {
         switch (type) {
             case "name":
                 this.setState({
@@ -188,12 +151,40 @@ class NewOrUpdateModal extends React.Component {
 
     canSave() {
         if((this.state.nameState === "success" && this.state.dateState === "success" && this.state.fromState === "success" && this.state.toState === "success") || (this.state.nameState === "success" && this.state.dateState === "success")) {
-            return false;
+            return true;
         } else if(this.props.data) {
-            return false;
+            return true;
         } else {
             return true;
         }
+    }
+
+    save = (isNew) => {
+        if(isNew) {
+            this.props.addSalonSpecialDay({
+                workingForId: this.props.workingForId,
+                specialDayData: {
+                    name: this.state.name,
+                    date: this.state.date,
+                    openAt: this.state.from.replace(":", ""),
+                    closeAt: this.state.to.replace(":", "")
+                }
+            })
+        } else {            
+            this.props.updateSalonSpecialDay({
+                workingForId: this.props.workingForId,
+                specialDayId: this.props.data.id,
+                specialDayData: {
+                    name: this.state.name,
+                    date: moment(this.state.date).format("YYYY-MM-DD"),
+                    open: this.state.isOpened,
+                    openAt: this.state.from.replace(":", ""),
+                    closeAt: this.state.to.replace(":", "")
+                }
+            })
+        }
+        this.initState();
+        this.props.onClose();
     }
 
     render() {
@@ -208,18 +199,18 @@ class NewOrUpdateModal extends React.Component {
                 TransitionComponent={Transition}
                 keepMounted
                 onClose={() => this.handleClose()}
-                aria-labelledby="opening-hours-newOrUpdate-modal-title"
-                aria-describedby="opening-hours-newOrUpdate-modal-description"
+                aria-labelledby="opening-hours-add-update-modal-title"
+                aria-describedby="opening-hours-add-update-modal-description"
                 >
                 <DialogTitle
-                    id="opening-hours-newOrUpdate-modal-title"
+                    id="opening-hours-add-update-modal-title"
                     disableTypography
                     className={classes.modalHeader}
                 >
                     <h3 className={classes.modalTitle}>{this.props.modalTitle}</h3>
                 </DialogTitle>
                 <DialogContent
-                    id="opening-hours-newOrUpdate-modal-description"
+                    id="opening-hours-add-update-modal-description"
                     className={classes.modalBody}
                 >
                     <form> 
@@ -241,7 +232,7 @@ class NewOrUpdateModal extends React.Component {
                                     undefined
                                 ),
                                 onChange: event =>
-                                    this.change(event, "name", "name", 0),
+                                    this.changeForm(event, "name", "name", 0),
                                 type: "text",
                                 value: this.state.name
                             }}
@@ -271,7 +262,7 @@ class NewOrUpdateModal extends React.Component {
                                 dateFormat={"DD/MM/YYYY"}
                                 inputProps={{ placeholder: "Datum *" }}
                                 value={this.state.date}
-                                onChange={event => this.change(event, "date", "date")}
+                                onChange={event => this.changeForm(event, "date", "date")}
                             />
                         </FormControl>     
                         {
@@ -284,7 +275,7 @@ class NewOrUpdateModal extends React.Component {
                                                 timeFormat={"HH:mm"}
                                                 inputProps={{ placeholder: "Från *" }}
                                                 value={this.state.from}
-                                                onChange={event => this.change(event, "from", "from")}
+                                                onChange={event => this.changeForm(event, "from", "from")}
                                             />
                                         </FormControl>
                                     </GridItem>
@@ -295,7 +286,7 @@ class NewOrUpdateModal extends React.Component {
                                                 timeFormat={"HH:mm"}
                                                 inputProps={{ placeholder: "Till *" }}
                                                 value={this.state.to}
-                                                onChange={event => this.change(event, "to", "to")}
+                                                onChange={event => this.changeForm(event, "to", "to")}
                                             />
                                         </FormControl>
                                     </GridItem>
@@ -316,7 +307,7 @@ class NewOrUpdateModal extends React.Component {
                         onClick={() => this.save(this.props.data? false : true)}
                         color="info"
                         size="sm"
-                        disabled={this.canSave()}
+                        disabled={!this.canSave()}
                     >
                         Save
                     </Button>
@@ -326,7 +317,7 @@ class NewOrUpdateModal extends React.Component {
     }
 }
 
-NewOrUpdateModal.propTypes = {
+AddUpdate.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -338,9 +329,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        addSpecialDay      : Actions.addSpecialDay,
-        updateSpecialDay   : Actions.updateSpecialDay
+        addSalonSpecialDay      : Actions.addSalonSpecialDay,
+        updateSalonSpecialDay   : Actions.updateSalonSpecialDay
     }, dispatch);
 }
 
-export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(NewOrUpdateModal)));
+export default withStyles(modalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(AddUpdate)));

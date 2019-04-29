@@ -6,7 +6,7 @@
 import Dashboard from "views/dashboard/Dashboard.jsx";
 import Info from "views/my_salon/info/Info.jsx";
 import Services from "views/my_salon/services/Services.jsx";
-import OpeningHours from "views/my_salon/OpeningHours/OpeningHours.jsx";
+import Hours from "views/my_salon/hours/Hours.jsx";
 import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
 import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
 import BookingAppointment from "views/booking_appointment/BookingAppointment.jsx";
@@ -75,7 +75,7 @@ export var dashRoutes1 = [
         path: "/minsalong/openingHours",
         name: "Öppettider",
         mini: "O",
-        component: OpeningHours
+        component: Hours
       }
     ]
   },

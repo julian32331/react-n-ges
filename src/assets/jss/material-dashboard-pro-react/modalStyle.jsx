@@ -76,6 +76,15 @@ const modalStyle = theme => ({
   mt_0: {
     marginTop: '0px',
   },
+  switchIconChecked: {
+    borderColor: infoColor,
+    transform: "translateX(0px)!important"
+  },
+  switchChecked: {
+    "& + $switchBar": {
+      backgroundColor: infoColor + " !important"
+    }
+  },
 
   modalCloseButton: {
     color: "#999999",

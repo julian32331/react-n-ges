@@ -11,8 +11,6 @@ export * from './b2b_shop';
 export * from './company_info';
 
 export * from './salonInfo.actions';
-// export * from './companyInfo.actions';
-export * from './hours.actions';
 export * from './checkinout.actions';
 export * from './employees.actions';
 export * from './mySalons.actions';
