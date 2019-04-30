@@ -259,7 +259,7 @@ class AddUpdate extends React.Component {
                         <FormControl fullWidth style={{paddingTop: '27px', marginBottom: '17px',}}>
                             <Datetime
                                 timeFormat={false}
-                                dateFormat={"DD/MM/YYYY"}
+                                dateFormat={"YYYY-MM-DD"}
                                 inputProps={{ placeholder: "Datum *" }}
                                 value={this.state.date}
                                 onChange={event => this.changeForm(event, "date", "date")}
