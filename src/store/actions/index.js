@@ -15,4 +15,3 @@ export * from './checkinout.actions';
 export * from './employees.actions';
 export * from './mySalons.actions';
 export * from './profile.actions';
-export * from './b2bshop.actions';
