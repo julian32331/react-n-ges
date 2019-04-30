@@ -329,7 +329,7 @@ class Booking extends React.Component {
             <div className={classes.container}>
                 <GridContainer>
                     <GridItem xs={12} >
-                        <h1 className={classes.title}>Bokavtale</h1>
+                        <h1 className={classes.title}>Boka tid</h1>
                     </GridItem>
                 </GridContainer>
                 <GridContainer>

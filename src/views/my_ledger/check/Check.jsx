@@ -1,7 +1,6 @@
 /**
- * Description: Dashboard view
- * Date: 12/21/2018
- * Author: Dnaijel
+ * Description: Check view
+ * Date: 4/30/2019
  */
 
 import React from "react";
@@ -18,6 +17,7 @@ import connect from 'react-redux/es/connect/connect';
 import withStyles from "@material-ui/core/styles/withStyles";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // @material-ui/icons
 import Add from "@material-ui/icons/Add";
@@ -37,60 +37,55 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Table from "components/Table/Table.jsx";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 import Pagination from "components/Pagination/Pagination.jsx";
+import Confirm from "components/Modals/Confirm.jsx";
 
 import {CSVLink} from 'react-csv';
 
-import checkInOutStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInOutStyle.jsx";
-import CheckInModal from "./CheckInModal";
-import MCheckInModal from "./MCheckInModal";
-import CheckOutModal from "./CheckOutModal";
-import EditModal from "./EditModal";
+import checkStyle from "assets/jss/material-dashboard-pro-react/views/my_ledger/check/checkStyle.jsx";
+import CheckIn from "./modals/CheckIn";
+import MCheckIn from "./modals/MCheckIn";
+import EditCheck from "./modals/EditCheck";
 
-class CheckInOut extends React.Component {
+class Check extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      search: "",
-      searchFrom: "",
-      searchTo: "",
-      checkInModal: false,
-      checkOutModal: false,
-      mCheckInModal: false,
-      editModal: false,
-      modalData: null,
-      alert: false,
-      message: "",
-      pageOffset: 0,
-      activedPageNo: 1,
+      search        : "",
+      searchFrom    : "",
+      searchTo      : "",
+      checkInModal  : false,
+      showConfirm   : false,
+      mCheckInModal : false,
+      editModal     : false,
+      modalData     : null,
+      alert         : false,
+      message       : "",
+      pageOffset    : 0,
+      activedPageNo : 1,
     }
     this.list = [];
-    this.getCheckList = this.getCheckList.bind(this);
   }
 
   componentWillMount() {
     this.props.getUser().then(() => {
-      this.getCheckList(this.props.workingForId);
-      this.getEmployees(this.props.workingForId);
-    })
-  }
-
-  getCheckList(id) {
-    this.props.getCheckList({
-        workingForId: id
-    });
-
-  }
-  getEmployees(id) {
-    this.props.getEmployees({
-      workingForId: id
+      this.props.getLedgerChecks({
+        workingForId: this.props.workingForId
+      });
+      this.props.getEmployees({
+        workingForId: this.props.workingForId
+      });
     })
   }
 
   componentWillReceiveProps(nextProps){    
     if(this.props.workingForId !== nextProps.workingForId) {
-      this.getCheckList(nextProps.workingForId);
-      this.getEmployees(nextProps.workingForId);
+      this.props.getLedgerChecks({
+        workingForId: nextProps.workingForId
+      });
+      this.props.getEmployees({
+        workingForId: nextProps.workingForId
+      });
     }
 
     if(nextProps.list) 
@@ -111,11 +106,11 @@ class CheckInOut extends React.Component {
     }
   }
 
+  // Search actions
   searchHandler(name, event) {
     this.setState({ [name]: event.target.value });
     this.search(event.target.value.toLowerCase(), this.state.searchFrom, this.state.searchTo);
   };
-
   timeHandler(name, event) {
     if(!moment(event._d).isSame(moment())) {
       this.setState({ [name]: moment(event._d) });
@@ -132,8 +127,7 @@ class CheckInOut extends React.Component {
         this.search(this.state.search.toLowerCase(), this.state.searchFrom,  "");
       }
     }
-  }
-  
+  }  
   search(search, from, to) {
     let temp = [];
 
@@ -162,16 +156,24 @@ class CheckInOut extends React.Component {
       checkInModal: true,
     })
   }
-
-  onCloseCheckOutModal() {
+  
+  // Confirm modal Actions
+  onCloseConfirm() {
     this.setState({
-      checkOutModal: false
+      showConfirm: false
     })
   }
-  onOpenCheckOutModal(data) {
+  onOpenConfirm(data) {
     this.setState({
-      checkOutModal: true,
-      modalData: data
+      showConfirm : true,            
+      modalData   : data
+    })
+  }
+  onConfirmDelete() {
+    this.props.checkOut({
+      workingForId: this.props.workingForId,
+      personnelListId: this.state.modalData.personnelListId,
+      source: "WEB"
     })
   }
   
@@ -257,16 +259,12 @@ class CheckInOut extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, loading } = this.props;
 
     const actionButtons = data => {
-      return (
-        // <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenCheckOutModal(data)}>
-        //   <Remove className={classes.icon} /> Check Out User
-        // </Button>
-        
+      return (        
         <div>
-          <Button color="info" className={classes.actionButton} onClick={() => this.onOpenCheckOutModal(data)}>
+          <Button color="info" className={classes.actionButton} onClick={() => this.onOpenConfirm(data)}>
               <Remove className={classes.icon} /> Check Out
           </Button>                
           <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenEditModal(data)}>
@@ -347,41 +345,52 @@ class CheckInOut extends React.Component {
       ]
 
     return (
-      <Card>
-        <CardHeader className={classes.pb_0}>
-          <div className={classes.cardHeader}>
-            <GridContainer>
-                <GridItem xs={12} sm={6}>
-                  <h3 className={classes.cardTitle}>Checka in/ut</h3>
-                </GridItem>
-                <GridItem xs={12} sm={6} className={classes.text_right}>
-                  <Button 
-                      color="success" 
-                      size="sm"
-                      disabled={csvData.length<=1}
-                      onClick={() => this.downloadCSV()}
-                  >                            
-                      <ImportExport /> Exportera CSV
-                  </Button>
-                  <Button 
-                      color="info" 
-                      size="sm"
-                      onClick={() => this.onOpenCheckInModal()}
-                  >                            
-                      <Add /> Checka in
-                  </Button>
-                  <Button 
-                      color="info" 
-                      size="sm"
-                      onClick={() => this.onOpenMCheckInModal()}
-                  >                            
-                      <Add /> Manuell incheckning
-                  </Button>
-                </GridItem>
-            </GridContainer>
+      <Card classes={{card: loading? classes.card : classes.m_0}}>
+      {
+        loading &&
+          <div className={classes.loading_container}>
+            <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
           </div>
-        </CardHeader>
-        <CardBody className={classes.pt_0}>
+      }
+      {
+        !loading &&
+          <div>
+            <CardHeader className={classes.pb_0}>
+              <div className={classes.cardHeader}>
+                <GridContainer>
+                    <GridItem xs={12} sm={6}>
+                      <h3 className={classes.cardTitle}>Checka in/ut</h3>
+                    </GridItem>
+                    <GridItem xs={12} sm={6} className={classes.right}>
+                      <Button 
+                          color="success" 
+                          size="sm"
+                          disabled={csvData.length<=1}
+                          onClick={() => this.downloadCSV()}
+                          className={classes.mr_8}
+                      >                            
+                          <ImportExport /> Exportera CSV
+                      </Button>
+                      <Button 
+                          color="info" 
+                          size="sm"
+                          onClick={() => this.onOpenCheckInModal()}
+                          className={classes.mr_8}
+                      >                            
+                          <Add /> Checka in
+                      </Button>
+                      <Button 
+                          color="info" 
+                          size="sm"
+                          onClick={() => this.onOpenMCheckInModal()}
+                      >                            
+                          <Add /> Manuell incheckning
+                      </Button>
+                    </GridItem>
+                </GridContainer>
+              </div>
+            </CardHeader>
+            <CardBody className={classes.pt_0}>
           <GridContainer>
             <GridItem xs={4} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
@@ -502,23 +511,23 @@ class CheckInOut extends React.Component {
             ref={(r) => this.csvLink = r}
             target="_blank"/>
 
-          <CheckInModal 
+          <CheckIn 
             onOpen={this.state.checkInModal}
             onClose={this.onCloseCheckInModal.bind(this)} 
           />
 
-          <MCheckInModal 
+          <MCheckIn 
             onOpen={this.state.mCheckInModal}
             onClose={this.onCloseMCheckInModal.bind(this)} 
           />
 
-          <CheckOutModal 
-            onOpen={this.state.checkOutModal}
-            onClose={this.onCloseCheckOutModal.bind(this)}
-            data={this.state.modalData? this.state.modalData.personnelListId : null} 
+          <Confirm
+            onOpen={this.state.showConfirm}
+            onClose={this.onCloseConfirm.bind(this)}
+            onConfirm={this.onConfirmDelete.bind(this)}
           />
 
-          <EditModal 
+          <EditCheck 
             onOpen={this.state.editModal}
             onClose={this.onCloseEditModal.bind(this)}
             data={this.state.modalData} 
@@ -535,29 +544,32 @@ class CheckInOut extends React.Component {
             close
           />
         </CardBody>
+          </div>
+      }
       </Card>
     );
   }
 }
 
-CheckInOut.propTypes = {
+Check.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   return {
       workingForId: state.auth.workingForId,
-      list        : state.checkInOut.list,
-      errorMsg    : state.checkInOut.errorMsg
+      loading     : state.my_ledger.check.loading,
+      list        : state.my_ledger.check.list
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    getUser     : Actions.getUser,
-    getEmployees: Actions.getEmployees,
-    getCheckList: Actions.getCheckList
+    getUser         : Actions.getUser,
+    getLedgerChecks : Actions.getLedgerChecks,
+    getEmployees    : Actions.getEmployees,    
+    checkOut        : Actions.checkOut
   }, dispatch);
 }
 
-export default withStyles(checkInOutStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(CheckInOut)));
+export default withStyles(checkStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(Check)));

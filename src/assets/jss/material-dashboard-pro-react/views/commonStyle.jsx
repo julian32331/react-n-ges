@@ -40,6 +40,9 @@ const commonStyle = {
   mr_8: {
     marginRight: '8px',
   },
+  m_0: {
+    margin: '0',
+  },
 
   card: {
     minHeight: '65vh',

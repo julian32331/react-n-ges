@@ -64,7 +64,7 @@ class MCheckInModal extends React.Component {
     }
 
     save() {
-        this.props.mCheckIn({
+        this.props.manualCheckIn({
             workingForId: this.props.workingForId,
             manualEntryName: this.state.name,
             manualEntrySSN: this.state.ssn
@@ -212,7 +212,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        mCheckIn: Actions.mCheckIn
+        manualCheckIn: Actions.manualCheckIn
     }, dispatch);
 }
 

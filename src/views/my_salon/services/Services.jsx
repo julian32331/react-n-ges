@@ -120,7 +120,7 @@ class Services extends React.Component {
         const { classes } = this.props;
         const loading = this.props.loading || this.state.loading;
         return (
-            <Card classes={{card: classes.card}}>
+            <Card classes={{card: loading? classes.card : classes.m_0}}>
                 {
                     loading &&
                         <div className={classes.loading_container}>

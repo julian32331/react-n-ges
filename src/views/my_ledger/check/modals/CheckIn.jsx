@@ -29,13 +29,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 
-import checkInModalStyle from "assets/jss/material-dashboard-pro-react/views/checkInOut/checkInModalStyle.jsx";
+import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
 
-class CheckInModal extends React.Component {
+class CheckIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {            
@@ -166,15 +166,14 @@ class CheckInModal extends React.Component {
   }
 }
 
-CheckInModal.propTypes = {
+CheckIn.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     workingForId: state.auth.workingForId,
-    employees: state.employees.employees,
-    errorMsg    : state.checkInOut.errorMsg
+    employees: state.employees.employees
   };
 }
 
@@ -184,4 +183,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default withStyles(checkInModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(CheckInModal)));
+export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(CheckIn)));

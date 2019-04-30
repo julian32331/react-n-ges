@@ -4,11 +4,14 @@
  */
 
 import Dashboard from "views/dashboard/Dashboard.jsx";
+
 import Info from "views/my_salon/info/Info.jsx";
 import Services from "views/my_salon/services/Services.jsx";
 import Hours from "views/my_salon/hours/Hours.jsx";
-import CheckInOut from "views/Personallister/CheckInOut/CheckInOut.jsx";
-import MyEmployees from "views/Personallister/MyEmployees/MyEmployees.jsx";
+
+import Check from "views/my_ledger/check/Check.jsx";
+import MyEmployees from "views/my_ledger/MyEmployees/MyEmployees.jsx";
+
 import BookingAppointment from "views/booking_appointment/BookingAppointment.jsx";
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
@@ -90,7 +93,7 @@ export var dashRoutes1 = [
         path: "/personallister/checkInOut",
         name: "Checka in/ut",
         mini: "CIU",
-        component: CheckInOut
+        component: Check
       },
       {
         path: "/personallister/myEmployees",

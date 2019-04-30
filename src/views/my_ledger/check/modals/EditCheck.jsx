@@ -88,7 +88,7 @@ class EditModal extends React.Component {
     }
 
     save() {
-        this.props.editCheckInOut({
+        this.props.updateCheckInOut({
             workingForId: this.props.workingForId,
             personnelListId: this.props.data.personnelListId,
             checkInEditable: this.state.checkInEditableDate + " " + this.state.checkInEditableTime + ":00",
@@ -271,7 +271,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        editCheckInOut: Actions.editCheckInOut
+        updateCheckInOut: Actions.updateCheckInOut
     }, dispatch);
 }
 
