@@ -104,11 +104,12 @@ class SetBreak extends React.Component {
     save = () => {
         const { workingForId, data } = this.props;
         let root = data.hairdresserId? 'time' : 'day';
+        let key = data.hairdresserId? "breakStartAt" : "date";
         let date = data.hairdresserId? data.start : this.state.date;
         this.props.setBreak({
             workingForId    : workingForId,
             hairdresserId   : data.hairdresserId || this.state.hairdresserId,
-            breakStartAt    : date,
+            [key]           : date,
             comment         : this.state.comment
         }, root)
         this.handleClose();
