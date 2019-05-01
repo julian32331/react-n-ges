@@ -1,6 +1,6 @@
 /**
- * Descirption: NewOrUpdate modal for saloon service
- * Date: 12/23/2018
+ * Descirption: Edit check in/out modal
+ * Date: 5/1/2019
  */
 
 import React from "react";
@@ -24,8 +24,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import FormControl from "@material-ui/core/FormControl";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 
 // @material-ui/icons
 import Warning from "@material-ui/icons/Warning";
@@ -36,26 +34,24 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
-import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
-
+import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 import * as Validator from "utils/validator";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
 
-class EditModal extends React.Component {
+class EditCheck extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            checkInEditableDate: "",
-            checkInEditableTime: "",
+            checkInEditableDate : "",
+            checkInEditableTime : "",
             checkOutEditableDate: "",
             checkOutEditableTime: "",
-            editComment: "",
-            editCommentState: ""
+            editComment         : "",
+            editCommentState    : ""
         }
-        this.save = this.save.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -73,12 +69,12 @@ class EditModal extends React.Component {
 
     initState() {
         this.setState({
-            checkInEditableDate: "",
-            checkInEditableTime: "",
+            checkInEditableDate : "",
+            checkInEditableTime : "",
             checkOutEditableDate: "",
             checkOutEditableTime: "",
-            editComment: "",
-            editCommentState: ""
+            editComment         : "",
+            editCommentState    : ""
         })
     }
 
@@ -95,11 +91,10 @@ class EditModal extends React.Component {
             checkOutEditable: this.state.checkOutEditableDate + " " + this.state.checkOutEditableTime + ":00",
             editComment: this.state.editComment                  
         })
-        this.initState();
-        this.props.onClose();
+        this.handleClose();
     }
 
-    change(event, stateName, type, stateNameEqualTo) {
+    changeForm(event, stateName, type, length) {
         switch (type) {
             case "checkInEditableDate":
             case "checkOutEditableDate":
@@ -121,7 +116,7 @@ class EditModal extends React.Component {
                 this.setState({
                     [stateName]: event.target.value
                 })
-                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
+                if (Validator.verifyLength(event.target.value, length)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
@@ -133,11 +128,7 @@ class EditModal extends React.Component {
     }
 
     canSave() {
-        // if(this.state.checkInEditableState === "success" && this.state.editCommentState === "success") {
-            return false;
-        // } else {
-        //     return true;
-        // }
+        return false;
     }
 
     render() {
@@ -175,7 +166,7 @@ class EditModal extends React.Component {
                                         timeFormat={false}
                                         inputProps={{ placeholder: "CheckInDate" }}
                                         value={this.state.checkInEditableDate}
-                                        onChange={event => this.change(event, "checkInEditableDate", "checkInEditableDate")}
+                                        onChange={event => this.changeForm(event, "checkInEditableDate", "checkInEditableDate")}
                                     />
                                 </FormControl> 
                             </GridItem>
@@ -186,7 +177,7 @@ class EditModal extends React.Component {
                                         timeFormat={"HH:mm"}
                                         inputProps={{ placeholder: "CheckInTime" }}
                                         value={this.state.checkInEditableTime}
-                                        onChange={event => this.change(event, "checkInEditableTime", "checkInEditableTime")}
+                                        onChange={event => this.changeForm(event, "checkInEditableTime", "checkInEditableTime")}
                                     />
                                 </FormControl> 
                             </GridItem><GridItem xs={7}>        
@@ -196,7 +187,7 @@ class EditModal extends React.Component {
                                         timeFormat={false}
                                         inputProps={{ placeholder: "CheckOutDate" }}
                                         value={this.state.checkOutEditableDate}
-                                        onChange={event => this.change(event, "checkOutEditableDate", "checkOutEditableDate")}
+                                        onChange={event => this.changeForm(event, "checkOutEditableDate", "checkOutEditableDate")}
                                     />
                                 </FormControl> 
                             </GridItem>
@@ -207,7 +198,7 @@ class EditModal extends React.Component {
                                         timeFormat={"HH:mm"}
                                         inputProps={{ placeholder: "CheckOutTime" }}
                                         value={this.state.checkOutEditableTime}
-                                        onChange={event => this.change(event, "checkOutEditableTime", "checkOutEditableTime")}
+                                        onChange={event => this.changeForm(event, "checkOutEditableTime", "checkOutEditableTime")}
                                     />
                                 </FormControl> 
                             </GridItem>
@@ -230,7 +221,7 @@ class EditModal extends React.Component {
                                     undefined
                                 ),
                                 onChange: event =>
-                                    this.change(event, "editComment", "editComment", 1),
+                                    this.changeForm(event, "editComment", "editComment", 1),
                                 type: "text",
                                 value: this.state.editComment
                             }}
@@ -259,7 +250,7 @@ class EditModal extends React.Component {
     }
 }
 
-EditModal.propTypes = {
+EditCheck.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -275,4 +266,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(EditModal)));
+export default withStyles(modalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(EditCheck)));

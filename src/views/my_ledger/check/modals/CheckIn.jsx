@@ -1,6 +1,6 @@
 /**
  * Description: Check in modal
- * Date: 24/12/2018
+ * Date: 5/1/2019
  */
 
 import React from "react";
@@ -29,7 +29,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 
-import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
+import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
@@ -39,14 +39,14 @@ class CheckIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {            
-            employeeSelect: "",
+            employee: "",
         }
     }
 
     handleClose() {
         this.props.onClose();
         this.setState({
-            employeeSelect: ""
+            employee: ""
         })
     }
 
@@ -57,11 +57,11 @@ class CheckIn extends React.Component {
     checkIn() {
         this.props.checkIn({
             workingForId: this.props.workingForId,
-            employeeId: this.state.employeeSelect,
+            employeeId: this.state.employee,
             source: "WEB"
         })
         this.setState({
-            employeeSelect: ""
+            employee: ""
         })
         this.props.onClose();
     }
@@ -99,7 +99,7 @@ class CheckIn extends React.Component {
                         className={classes.selectFormControl}
                     >
                         <InputLabel
-                            htmlFor="simple-select"
+                            htmlFor="employee"
                             className={classes.selectLabel}
                         >
                             Select Employee
@@ -111,11 +111,11 @@ class CheckIn extends React.Component {
                             classes={{
                                 select: classes.select + " " + classes.text_left
                             }}
-                            value={this.state.employeeSelect}
+                            value={this.state.employee}
                             onChange={this.handleEmployee}
                             inputProps={{
-                                name: "employeeSelect",
-                                id: "simple-select"
+                                name: "employee",
+                                id: "employee"
                             }}
                         >
                             <MenuItem
@@ -183,4 +183,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(CheckIn)));
+export default withStyles(modalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(CheckIn)));

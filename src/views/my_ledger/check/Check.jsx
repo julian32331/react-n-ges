@@ -54,15 +54,15 @@ class Check extends React.Component {
       search        : "",
       searchFrom    : "",
       searchTo      : "",
-      checkInModal  : false,
+      showCheckIn   : false,
       showConfirm   : false,
-      mCheckInModal : false,
-      editModal     : false,
+      showMCheckIn  : false,
+      showEditCheck : false,
       modalData     : null,
-      alert         : false,
-      message       : "",
       pageOffset    : 0,
       activedPageNo : 1,
+      alert         : false,
+      message       : "",
     }
     this.list = [];
   }
@@ -146,14 +146,15 @@ class Check extends React.Component {
     this.list = temp;
   }
 
-  onCloseCheckInModal() {
+  // Check in modal Actions
+  onCloseCheckIn() {
     this.setState({
-      checkInModal: false
+      showCheckIn: false
     })
   }
-  onOpenCheckInModal() {
+  onOpenCheckIn() {
     this.setState({
-      checkInModal: true,
+      showCheckIn: true,
     })
   }
   
@@ -177,25 +178,27 @@ class Check extends React.Component {
     })
   }
   
-  onCloseMCheckInModal() {
+  // Manual Check in modal Actions
+  onCloseMCheckIn() {
     this.setState({
-      mCheckInModal: false
+      showMCheckIn: false
     })
   }
-  onOpenMCheckInModal() {
+  onOpenMCheckIn() {
     this.setState({
-      mCheckInModal: true,
+      showMCheckIn: true,
     })
   }
 
-  onCloseEditModal() {
+  // Edit Check in/out modal Actions
+  onCloseEditCheck() {
     this.setState({
-      editModal: false
+      showEditCheck: false
     })
   }
-  onOpenEditModal(data) {
+  onOpenEditCheck(data) {
     this.setState({
-      editModal: true,
+      showEditCheck: true,
       modalData: data
     })
   }
@@ -267,7 +270,7 @@ class Check extends React.Component {
           <Button color="info" className={classes.actionButton} onClick={() => this.onOpenConfirm(data)}>
               <Remove className={classes.icon} /> Check Out
           </Button>                
-          <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenEditModal(data)}>
+          <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenEditCheck(data)}>
               <Edit className={classes.icon} /> Edit
           </Button>
         </div> 
@@ -276,7 +279,7 @@ class Check extends React.Component {
     
     const editButton = data => {
       return (               
-        <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenEditModal(data)}>
+        <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenEditCheck(data)}>
             <Edit className={classes.icon} /> Edit
         </Button>
       )
@@ -374,7 +377,7 @@ class Check extends React.Component {
                       <Button 
                           color="info" 
                           size="sm"
-                          onClick={() => this.onOpenCheckInModal()}
+                          onClick={() => this.onOpenCheckIn()}
                           className={classes.mr_8}
                       >                            
                           <Add /> Checka in
@@ -382,7 +385,7 @@ class Check extends React.Component {
                       <Button 
                           color="info" 
                           size="sm"
-                          onClick={() => this.onOpenMCheckInModal()}
+                          onClick={() => this.onOpenMCheckIn()}
                       >                            
                           <Add /> Manuell incheckning
                       </Button>
@@ -512,13 +515,13 @@ class Check extends React.Component {
             target="_blank"/>
 
           <CheckIn 
-            onOpen={this.state.checkInModal}
-            onClose={this.onCloseCheckInModal.bind(this)} 
+            onOpen={this.state.showCheckIn}
+            onClose={this.onCloseCheckIn.bind(this)} 
           />
 
           <MCheckIn 
-            onOpen={this.state.mCheckInModal}
-            onClose={this.onCloseMCheckInModal.bind(this)} 
+            onOpen={this.state.showMCheckIn}
+            onClose={this.onCloseMCheckIn.bind(this)} 
           />
 
           <Confirm
@@ -528,8 +531,8 @@ class Check extends React.Component {
           />
 
           <EditCheck 
-            onOpen={this.state.editModal}
-            onClose={this.onCloseEditModal.bind(this)}
+            onOpen={this.state.showEditCheck}
+            onClose={this.onCloseEditCheck.bind(this)}
             data={this.state.modalData} 
           />
 

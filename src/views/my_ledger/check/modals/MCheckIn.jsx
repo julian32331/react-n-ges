@@ -1,6 +1,6 @@
 /**
  * Description: Manual check in modal
- * Date: 2/2/2019
+ * Date: 5/1/2019
  */
 
 import React from "react";
@@ -24,20 +24,17 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Warning from "@material-ui/icons/Warning";
 
 // core components
-import GridContainer from "components/Grid/GridContainer.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
-import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
-
+import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 import * as Validator from "utils/validator";
 
 function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
 
-class MCheckInModal extends React.Component {
+class MCheckIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -46,7 +43,6 @@ class MCheckInModal extends React.Component {
             ssn: "",
             ssnState: "",
         }
-        this.save = this.save.bind(this);
     }
 
     initState() {
@@ -69,11 +65,10 @@ class MCheckInModal extends React.Component {
             manualEntryName: this.state.name,
             manualEntrySSN: this.state.ssn
         });
-        this.initState();
-        this.props.onClose();
+        this.handleClose();
     }
 
-    change(event, stateName, type, stateNameEqualTo) {
+    changeForm(event, stateName, type, stateNameEqualTo) {
         switch (type) {
             case "name":
             case "ssn":
@@ -93,11 +88,9 @@ class MCheckInModal extends React.Component {
 
     canSave() {
         if(this.state.nameState === "success" && this.state.ssnState === "success") {
-            return false;
-        } else if(this.props.data) {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -140,15 +133,12 @@ class MCheckInModal extends React.Component {
                             }}
                             inputProps={{
                                 endAdornment:
-                                    this.state.nameState === "error" ? (
-                                    <InputAdornment position="end">
-                                        <Warning className={classes.danger} />
-                                    </InputAdornment>
-                                    ) : (
-                                    undefined
-                                ),
+                                    this.state.nameState === "error" &&
+                                        <InputAdornment position="end">
+                                            <Warning className={classes.danger} />
+                                        </InputAdornment>,
                                 onChange: event =>
-                                    this.change(event, "name", "name", 1),
+                                    this.changeForm(event, "name", "name", 1),
                                 type: "text",
                                 value: this.state.name
                             }}
@@ -163,15 +153,12 @@ class MCheckInModal extends React.Component {
                             }}
                             inputProps={{
                                 endAdornment:
-                                    this.state.ssnState === "error" ? (
-                                    <InputAdornment position="end">
-                                        <Warning className={classes.danger} />
-                                    </InputAdornment>
-                                    ) : (
-                                    undefined
-                                ),
+                                    this.state.ssnState === "error" &&
+                                        <InputAdornment position="end">
+                                            <Warning className={classes.danger} />
+                                        </InputAdornment>,
                                 onChange: event =>
-                                    this.change(event, "ssn", "ssn", 1),
+                                    this.changeForm(event, "ssn", "ssn", 1),
                                 type: "number",
                                 value: this.state.ssn
                             }}
@@ -190,7 +177,7 @@ class MCheckInModal extends React.Component {
                         onClick={() => this.save()}
                         color="info"
                         size="sm"
-                        disabled={this.canSave()}
+                        disabled={!this.canSave()}
                     >
                         Save
                     </Button>
@@ -200,7 +187,7 @@ class MCheckInModal extends React.Component {
     }
 }
 
-MCheckInModal.propTypes = {
+MCheckIn.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -216,4 +203,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(MCheckInModal)));
+export default withStyles(modalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(MCheckIn)));

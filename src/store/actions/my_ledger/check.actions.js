@@ -51,8 +51,8 @@ export function checkIn(data) {
     }       
 }
 
-export const LEDGER_MANUAL_CHECKIN_SUCCESS = '[LEDGER CHECK] MANUAL CHECKIN SUCCESS';
-export const LEDGER_MANUAL_CHECKIN_FAILED  = '[LEDGER CHECK] MANUAL CHECKIN FAILED';
+export const LEDGER_MANUAL_CHECKIN_SUCCESS = '[LEDGER] MANUAL CHECKIN SUCCESS';
+export const LEDGER_MANUAL_CHECKIN_FAILED  = '[LEDGER] MANUAL CHECKIN FAILED';
 
 export function manualCheckIn(data) {
     const request = Utils.xapi().post('employee/manualcheckin', data);
