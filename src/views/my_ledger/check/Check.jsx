@@ -263,6 +263,7 @@ class Check extends React.Component {
 
   render() {
     const { classes, loading } = this.props;
+    const { activedPageNo } = this.state;
 
     const actionButtons = data => {
       return (        
@@ -286,20 +287,22 @@ class Check extends React.Component {
     }
 
     let list = [];
-    this.list.map(item => {
+    this.list.map((item, index) => {
       let temp = [];
-      if(item.checkInEditable || item.checkOutEditable || item.editComment) {
-        temp.push("(Redigerad)")
-      } else {
-        temp.push("")
-      }
-      temp.push(item.name);
-      temp.push(item.SSNumber);
-      temp.push(moment(item.checkIn).format("YYYY-MM-DD HH:mm"));
-      temp.push(item.checkOut? moment(item.checkOut).format("YYYY-MM-DD HH:mm") : null);
-      item.canCheckOut? temp.push(actionButtons(item)) : temp.push(editButton(item))
+      if (index >= (activedPageNo - 1) * 10 && index < activedPageNo * 10) {
+        if(item.checkInEditable || item.checkOutEditable || item.editComment) {
+          temp.push("(Redigerad)")
+        } else {
+          temp.push("")
+        }
+        temp.push(item.name);
+        temp.push(item.SSNumber);
+        temp.push(moment(item.checkIn).format("YYYY-MM-DD HH:mm"));
+        temp.push(item.checkOut? moment(item.checkOut).format("YYYY-MM-DD HH:mm") : null);
+        item.canCheckOut? temp.push(actionButtons(item)) : temp.push(editButton(item))
 
-      list.push(temp);
+        list.push(temp);
+      }
     });
 
     let csvData = [

@@ -213,13 +213,10 @@ class EditCheck extends React.Component {
                             }}
                             inputProps={{
                                 endAdornment:
-                                    this.state.nameState === "error" ? (
-                                    <InputAdornment position="end">
-                                        <Warning className={classes.danger} />
-                                    </InputAdornment>
-                                    ) : (
-                                    undefined
-                                ),
+                                    this.state.nameState === "error" &&
+                                        <InputAdornment position="end">
+                                            <Warning className={classes.danger} />
+                                        </InputAdornment>,
                                 onChange: event =>
                                     this.changeForm(event, "editComment", "editComment", 1),
                                 type: "text",

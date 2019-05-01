@@ -37,7 +37,7 @@ const check = function (state = initialState, action) {
         case Actions.LEDGER_MANUAL_CHECKIN_SUCCESS:
             return {
                 ...state,
-                list: state.list.concat(action.payload)
+                list: [action.payload].concat(state.list)
             };
 
         case Actions.LEDGER_CHECKIN_FAILED:
@@ -52,9 +52,12 @@ const check = function (state = initialState, action) {
         case Actions.LEDGER_UPDATE_CHECKINOUT_SUCCESS:
         case Actions.LEDGER_CHECKOUT_SUCCESS:
             index = state.list.findIndex((item) => {
-                return item.id === action.payload.id;
+                return item.personnelListId === action.payload.personnelListId;
             });
-            state.list[index] = action.payload;
+            state.list[index] = {
+                ...state.list[index],
+                ...action.payload
+            };
             return {
                 ...state,
                 list: state.list.concat()

@@ -61,7 +61,11 @@ export function manualCheckIn(data) {
         request.then((response) =>
             dispatch({
                 type    : LEDGER_MANUAL_CHECKIN_SUCCESS,
-                payload : response.data
+                payload : {
+                    SSNumber: data.manualEntrySSN,
+                    name:  data.manualEntryName,
+                    ...response.data
+                }
             })
         ).catch((error) => {
             dispatch({
@@ -97,13 +101,17 @@ export const LEDGER_CHECKOUT_SUCCESS = '[LEDGER] CHECKOUT SUCCESS';
 export const LEDGER_CHECKOUT_FAILED  = '[LEDGER] CHECKOUT FAILED';
 
 export function checkOut(data) {
+    console.log('focus')
     const request = Utils.xapi().post('employee/checkout', data);
     
     return (dispatch) => {
         request.then((response) =>
             dispatch({
                 type    : LEDGER_CHECKOUT_SUCCESS,
-                payload : response.data
+                payload : {
+                    ...response.data,
+                    canCheckOut: false
+                }
             })
         ).catch((error) => {
             dispatch({
