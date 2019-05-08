@@ -196,6 +196,7 @@ class Booking extends React.Component {
             let start = moment().subtract(3, 'days');
             let end = moment().endOf('month').add(3, 'days');
             while(start < end){
+                // console.log('start: ', start);
                 let temp = {};
                 temp.date = moment(start).format('YYYY MM DD');
                 temp.day = days[moment(start).day()];
@@ -203,7 +204,7 @@ class Booking extends React.Component {
                     temp.status = 1; // passed and next month
                 } else if(moment(start.format('YYYY MM DD')).isSame(this.state.booking_date)) {
                     temp.status = 2; // actived
-                } else if(this.isDisabledDay(this.props.daysOff.salonClosingDays, start.day())) {
+                } else if(this.isDisabledDay(this.props.daysOff.salonClosingDays, start.day()) || this.isDisabledDate(this.props.daysOff.hairdresserOffDays, start)) {
                     temp.status = 3; // disabled
                 } else {
                     temp.status = 0; // enable
@@ -222,6 +223,14 @@ class Booking extends React.Component {
         })
 
         return isDisabled;
+    }
+
+    isDisabledDate = (arr, value) => {
+        let isDisabled = arr.find(item => {
+            return moment(moment(item.plannedStartTime).format('YYYY-MM-DD')).isSame(moment(value).format("YYYY-MM-DD"));
+        });
+
+        return isDisabled; 
     }
 
     selectDate = (data) => {

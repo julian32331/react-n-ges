@@ -95,7 +95,7 @@ class BookingAppointment extends React.Component {
   onOpenSetBreakWithoutId = () => {
     this.setState({
       showSetBreak  : true,
-      start         : moment().format('YYYY-MM-DD'),
+      start         : moment(this.state.initDate).format('YYYY-MM-DD'),
       end           : ""
     })
   }

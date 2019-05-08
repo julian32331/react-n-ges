@@ -35,6 +35,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import * as Validator from "utils/validator";
+import * as Utils from 'utils/api';
 
 import salongInformasjonStyle from "assets/jss/material-dashboard-pro-react/views/salongInformasjonStyle.jsx";
 
@@ -158,7 +159,7 @@ class CreateSalon extends React.Component {
     }
 
     addSalonInfo() {
-        this.props.addSalonInfo({
+        Utils.xapi().post('register/salon', {
             workingForId: this.props.workingForId,
             email: this.state.email,
             name: this.state.name,
@@ -179,7 +180,16 @@ class CreateSalon extends React.Component {
                 co: this.state.s_co,
                 mobile: this.state.s_mobile
             }
-        });
+        }).then((response) => {
+            let companyAuthLevel = response.data.workingFor.find(item => {
+                return item.workingForId === Number(this.props.workingForId)
+            }).companyAuthLevel;
+
+            this.props.updateUser({
+                ...response.data,
+                isEmployee: companyAuthLevel === "EMPLOYEE"? true : false
+            })
+        })
     }
 
     render() {
@@ -684,7 +694,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({          
         getUser     : Actions.getUser,
-        addSalonInfo: Actions.addSalonInfo
+        updateUser  : Actions.updateUser
     }, dispatch);
 }
   
