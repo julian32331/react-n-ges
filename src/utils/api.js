@@ -7,6 +7,8 @@ import axios from 'axios/index';
 
 export const root = "https://dev.geselle-one.com";
 export const apiRoot = root + "/api/dev";
+//export const root = 'https://staging.geselle-one.com';
+//export const apiRoot = root + '/api/v1';
 // export const root = "https://geselle-one.com";
 // export const apiRoot = root + "/api/v1";
 
