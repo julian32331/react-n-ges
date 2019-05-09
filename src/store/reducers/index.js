@@ -7,10 +7,10 @@ import booking_appointment from './booking_appointment';
 import b2b_shop from './b2b_shop';
 import company from './company_info';
 import my_ledger from './my_ledger';
+import profile from './profile';
 
 import employees from "./employees.reducer";
 import mySalons from "./mySalons.reducer";
-import profile from "./profile.reducer";
 
 const createReducer = (asyncReducers) =>
     combineReducers({
@@ -21,10 +21,10 @@ const createReducer = (asyncReducers) =>
         b2b_shop,        
         company,
         my_ledger,
+        profile,
         
         employees,
         mySalons,
-        profile,
         ...asyncReducers
     });
 

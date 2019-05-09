@@ -9,7 +9,9 @@ const cardAvatarStyle = {
     maxWidth: "130px",
     maxHeight: "130px",
     margin: "-50px auto 0",
+    backgroundColor: "#ffffff",
     borderRadius: "50%",
+    border: "solid 2px #7da8ae",
     overflow: "hidden",
     padding: "0",
     boxShadow:

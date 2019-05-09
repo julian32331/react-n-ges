@@ -102,7 +102,7 @@ class BookingAppointment extends React.Component {
       showSetBreak  : true,
       hairdresserId : resourceId,
       start         : moment(start).format('YYYY-MM-DD HH:mm'),
-      end           : moment(end).format('HH:mm')
+      end           : moment(end).format('YYYY-MM-DD HH:mm')
     })
   }
   onOpenSetBreakWithoutId = () => {
@@ -230,7 +230,7 @@ class BookingAppointment extends React.Component {
                       endAccessor="plannedEndTime"
                       onNavigate={(date) => this.onChangeDate(date)}
                       selectable
-                      onSelecting = {slot => false}
+                      onSelecting = {slot => console.log("slot: ", slot)}
                       onSelectSlot={this.onOpenSetBreak}
                       onSelectEvent={(event) => this.onOpenDetailedEvent(event)}
                     />             

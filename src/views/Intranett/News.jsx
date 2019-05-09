@@ -16,7 +16,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
-import newsStyle from "assets/jss/material-dashboard-pro-react/views/newsStyle";
+import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle";
 
 import priceImage1 from "assets/img/card-2.jpeg";
 import priceImage2 from "assets/img/card-3.jpeg";
@@ -136,4 +136,4 @@ News.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(newsStyle)(News);
+export default withStyles(commonStyle)(News);

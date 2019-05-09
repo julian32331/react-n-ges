@@ -19,7 +19,7 @@ import Products from "views/B2BShop/Products/Products.jsx";
 import ShoppingCart from "views/B2BShop/ShoppingCart/ShoppingCart.jsx";
 import Orders from "views/B2BShop/Orders/Orders.jsx";
 
-import Profile from "views/Profile/Profile.jsx";
+import Profile from "views/profile/Profile.jsx";
 import CompanyInfo from "views/company_info/CompanyInfo.jsx";
 import MySalon from "views/MySalon/MySalon.jsx";
 

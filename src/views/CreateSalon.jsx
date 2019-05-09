@@ -37,7 +37,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import * as Validator from "utils/validator";
 import * as Utils from 'utils/api';
 
-import salongInformasjonStyle from "assets/jss/material-dashboard-pro-react/views/salongInformasjonStyle.jsx";
+import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
 
 class CreateSalon extends React.Component {
     constructor(props) {
@@ -698,4 +698,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
   
-export default withStyles(salongInformasjonStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateSalon)));
+export default withStyles(commonStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateSalon)));

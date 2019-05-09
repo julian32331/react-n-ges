@@ -110,6 +110,7 @@ class SetBreak extends React.Component {
             workingForId    : workingForId,
             hairdresserId   : data.hairdresserId || this.state.hairdresserId,
             [key]           : date,
+            breakEndAt      : data.hairdresserId? data.end : null,
             comment         : this.state.comment
         }, root)
         this.handleClose();
@@ -117,6 +118,7 @@ class SetBreak extends React.Component {
 
     render() {
         const { classes, data, employees } = this.props;
+        console.log("data: ", data)
 
         return (
             <Dialog
@@ -152,7 +154,7 @@ class SetBreak extends React.Component {
                                 }}
                                 inputProps={{
                                     disabled: true,
-                                    value: data.end? data.start + " - " + data.end : data.start,
+                                    value: data.end? data.start + " - " + moment(data.end).format("HH:mm") : data.start,
                                     type: "text"
                                 }}
                             />
