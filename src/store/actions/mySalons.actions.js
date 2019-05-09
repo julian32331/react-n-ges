@@ -4,7 +4,7 @@
  */
 
 import * as Utils from 'utils/api';
-import {setUserData, updateWorkingForId} from './user.actions';
+import { updateUser } from './auth';
 
 export const GET_COMPANY_SALON = '[COMPANY SALON] GET' ;
 export const ADD_SALON        = '[SALON] ADD';
@@ -29,13 +29,11 @@ export function addSalon(data) {
             let companyAuthLevel = response.data.workingFor.find(item => {
                 return item.workingForId === Number(data.workingForId)
             }).companyAuthLevel;
-            dispatch(setUserData(
-                response.data
-            ));   
-            dispatch(updateWorkingForId({
+            dispatch(updateUser({
+                ...response.data,
                 workingForId: data.workingForId,
                 isEmployee: companyAuthLevel === "EMPLOYEE"? true : false
-            })); 
+            }));
             dispatch(getCompanySalon({
                 workingForId: data.workingForId
             }));

@@ -40,7 +40,7 @@ class DetailedEvent extends React.Component {
 
     render() {
         const { classes, data } = this.props;
-        console.log('data: ', data)
+        
         return (
             <Dialog
                 classes={{
@@ -82,11 +82,35 @@ class DetailedEvent extends React.Component {
                         <GridItem xs={12} sm={6} className={classes.left}>
                             <h4 style={{marginTop: '0'}}>{data? data.consumerName : ""}</h4>
                         </GridItem>
+                        <GridItem xs={12} sm={6} className={classes.left}>
+                            <h4 style={{marginTop: '0'}}><b>Email: </b></h4>
+                        </GridItem>
+                        <GridItem xs={12} sm={6} className={classes.left}>
+                            <h4 style={{marginTop: '0'}}>test@test.com</h4>
+                        </GridItem>
+                        <GridItem xs={12} sm={6} className={classes.left}>
+                            <h4 style={{marginTop: '0'}}><b>Phone: </b></h4>
+                        </GridItem>
+                        <GridItem xs={12} sm={6} className={classes.left}>
+                            <h4 style={{marginTop: '0'}}>123456789</h4>
+                        </GridItem>
                         <GridItem xs={12} sm className={classes.left}>
                             <h4 style={{marginTop: '0'}}><b>Time: </b></h4>
                         </GridItem>
                         <GridItem xs={12} sm={6} className={classes.left}>
                             <h4 style={{marginTop: '0'}}>{data? moment(data.plannedStartTime).format('YYYY-MM-DD HH:mm') + " - " + moment(data.plannedEndTime).format('HH:mm') : ""}</h4>
+                        </GridItem>
+                        <GridItem xs={12} sm={6} className={classes.left}>
+                            <h4 style={{marginTop: '0'}}><b>Booked Service: </b></h4>
+                        </GridItem>
+                        <GridItem xs={12} sm={6} className={classes.left}>
+                            <h4 style={{marginTop: '0'}}>Service name</h4>
+                        </GridItem>
+                        <GridItem xs={12} sm={6} className={classes.left}>
+                            <h4 style={{marginTop: '0'}}><b>Employee Name: </b></h4>
+                        </GridItem>
+                        <GridItem xs={12} sm={6} className={classes.left}>
+                            <h4 style={{marginTop: '0'}}>{data? data.employee : ""}</h4>
                         </GridItem>
                         <GridItem xs={12} className={classes.left}>
                             <h4 style={{marginTop: '0'}}><b>Comment: </b></h4>

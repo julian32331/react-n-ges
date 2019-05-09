@@ -8,7 +8,6 @@ import b2b_shop from './b2b_shop';
 import company from './company_info';
 import my_ledger from './my_ledger';
 
-// import checkInOut from "./checkinout.reducer";
 import employees from "./employees.reducer";
 import mySalons from "./mySalons.reducer";
 import profile from "./profile.reducer";
@@ -23,7 +22,6 @@ const createReducer = (asyncReducers) =>
         company,
         my_ledger,
         
-        // checkInOut,
         employees,
         mySalons,
         profile,

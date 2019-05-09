@@ -41,7 +41,8 @@ class BookingAppointment extends React.Component {
       start             : "",
       end               : "",
       showDetailedEvent : false,
-      detailedData      : null
+      detailedData      : null,
+      employeesObj      : null
     };
     this.onChangeDate = this.onChangeDate.bind(this);
   }
@@ -57,6 +58,18 @@ class BookingAppointment extends React.Component {
       workingForId: this.props.workingForId,
       date: moment(date).format("YYYY-MM-DD")
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.employees.length > 0) {
+      let employeesObj = {};
+      nextProps.employees.map(employee => {
+        employeesObj[employee.hairdresser_id] = employee.name
+      })
+      this.setState({
+        employeesObj: employeesObj
+      })
+    }
   }
 
   onChangeDate(date) {
@@ -109,6 +122,7 @@ class BookingAppointment extends React.Component {
   }
 
   onOpenDetailedEvent = (data) => {
+    console.log('detailedData: ', data)
     this.setState({
       showDetailedEvent : true,
       detailedData      : data
@@ -141,6 +155,7 @@ class BookingAppointment extends React.Component {
       temp.comment = list.comment;
       temp.consumerName = list.consumerName? list.consumerName : "Break Time";
       temp.resourceId = list.hairdresser_id;
+      temp.employee = this.state.employeesObj[list.hairdresser_id]
       temp.id = list.id;
       temp.plannedEndTime = moment(list.plannedEndTime).toDate();
       temp.plannedStartTime = moment(list.plannedStartTime).toDate();
