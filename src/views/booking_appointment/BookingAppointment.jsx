@@ -41,8 +41,7 @@ class BookingAppointment extends React.Component {
       start             : "",
       end               : "",
       showDetailedEvent : false,
-      detailedData      : null,
-      employeesObj      : null
+      detailedData      : null
     };
     this.onChangeDate = this.onChangeDate.bind(this);
   }
@@ -58,18 +57,6 @@ class BookingAppointment extends React.Component {
       workingForId: this.props.workingForId,
       date: moment(date).format("YYYY-MM-DD")
     })
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.employees.length > 0) {
-      let employeesObj = {};
-      nextProps.employees.map(employee => {
-        employeesObj[employee.hairdresser_id] = employee.name
-      })
-      this.setState({
-        employeesObj: employeesObj
-      })
-    }
   }
 
   onChangeDate(date) {
@@ -146,16 +133,22 @@ class BookingAppointment extends React.Component {
 
     const formats = {
       timeGutterFormat: "HH:mm",
-      dayHeaderFormat: "YYYY-MM-DD"
+      dayHeaderFormat: "YYYY-MM-DD",
+      eventTimeRangeFormat: ({start, end}, culture, local) => local.format(start, "HH:mm", culture) + " - " + local.format(end, "HH:mm", culture)
     }
+
+    let employeesObj = {};
+    this.props.employees.map(employee => {
+      employeesObj[employee.hairdresser_id] = employee.name
+    })
 
     const data = [];
     this.props.data.map(list => {
       let temp = {};
       temp.comment = list.comment;
-      temp.consumerName = list.consumerName? list.consumerName : "Break Time";
+      temp.consumerName = list.consumerName;
       temp.resourceId = list.hairdresser_id;
-      temp.employee = this.state.employeesObj[list.hairdresser_id]
+      temp.employee = employeesObj[list.hairdresser_id]
       temp.id = list.id;
       temp.plannedEndTime = moment(list.plannedEndTime).toDate();
       temp.plannedStartTime = moment(list.plannedStartTime).toDate();
@@ -225,7 +218,7 @@ class BookingAppointment extends React.Component {
                       resourceIdAccessor="hairdresser_id"
                       resourceTitleAccessor="name"
                       events={data}
-                      titleAccessor="consumerName"
+                      titleAccessor={(event) => event.consumerName? event.consumerName : event.comment}
                       startAccessor="plannedStartTime"
                       endAccessor="plannedEndTime"
                       onNavigate={(date) => this.onChangeDate(date)}

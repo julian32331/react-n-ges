@@ -76,12 +76,18 @@ class DetailedEvent extends React.Component {
                     className={classes.modalBody}
                 >
                     <GridContainer>
-                        <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}><b>Consumer Name: </b></h4>
-                        </GridItem>
-                        <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}>{data? data.consumerName : ""}</h4>
-                        </GridItem>
+                        {
+                            data && data.bookingType === "SELFBOOKING" &&                                
+                                <GridItem xs={12} sm={6} className={classes.left}>
+                                    <h4 style={{marginTop: '0'}}><b>Consumer Name: </b></h4>
+                                </GridItem>
+                        }
+                        {
+                            data && data.bookingType === "SELFBOOKING" &&      
+                                <GridItem xs={12} sm={6} className={classes.left}>
+                                    <h4 style={{marginTop: '0'}}>{data? data.consumerName : ""}</h4>
+                                </GridItem>
+                        }
                         <GridItem xs={12} sm={6} className={classes.left}>
                             <h4 style={{marginTop: '0'}}><b>Email: </b></h4>
                         </GridItem>
