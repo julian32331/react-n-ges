@@ -147,7 +147,7 @@ class Booking extends React.Component {
                 hairdresserId: this.state.hairdresserId,
                 consumerId: this.props.match.params.consumerId,
                 bookingOrigin: "WEB",
-                plannedStartTime: moment(this.state.booking_date).format('YYYY-MM-DD') + " " + this.state.booking_time + ":00",
+                plannedStartTime: moment(this.state.booking_date, "YYYY MM DD").format('YYYY-MM-DD') + " " + this.state.booking_time + ":00",
                 consumerName: this.state.consumerName,
                 consumerEmail: this.state.consumerEmail,
                 consumerMobile: this.state.consumerMobile,
@@ -239,7 +239,7 @@ class Booking extends React.Component {
             this.props.getBookingTimeslots({
                 salonId: this.props.match.params.salonId,
                 hairdresserId: this.state.hairdresserId,
-                date: moment(data.date).format("YYYY-MM-DD")
+                date: moment(data.date, "YYYY MM DD").format("YYYY-MM-DD")
             })
         }
     }
@@ -464,7 +464,7 @@ class Booking extends React.Component {
                                     </div>
                                 ) : (
                                     <div className={classes.date_time}>
-                                        <div className={classes.month_container}>{booking_date? moment(booking_date).format('MMMM') : moment().format('MMMM')}</div>
+                                        <div className={classes.month_container}>{booking_date? moment(booking_date, "YYYY MM DD").format('MMMM') : moment().format('MMMM')}</div>
                                         <Slider {...date_settings} ref="date_slider">
                                             {
                                                 dates.map((item, key) => {
@@ -484,7 +484,7 @@ class Booking extends React.Component {
                                                     }
                                                     return (
                                                         <div key={key} className={classes.date_container} onClick={() => this.selectDate(item, dates.length)}>
-                                                            <div className={date}>{moment(item.date).format('D')}</div>
+                                                            <div className={date}>{moment(item.date, "YYYY MM DD").format('D')}</div>
                                                             <div className={day}>{item.day}</div>
                                                         </div>
                                                     )
@@ -528,7 +528,7 @@ class Booking extends React.Component {
                                                 </Button>
                                             </GridItem>
                                             <GridItem xs={6}>
-                                                <div className={classes.employeeName}>{this.state.booking_date !=="" && moment(this.state.booking_date).format('DD MMMM YYYY')} {this.state.booking_time} </div>
+                                                <div className={classes.employeeName}>{this.state.booking_date !=="" && moment(this.state.booking_date, "YYYY MM DD").format('DD MMMM YYYY')} {this.state.booking_time} </div>
                                             </GridItem>
                                             <GridItem xs={3} className={classes.right}>
                                                 <Button
