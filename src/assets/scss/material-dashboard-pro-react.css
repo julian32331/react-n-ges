@@ -463,7 +463,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     font-size: 14px;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-weight: 500;
-    color: #aaa; }
+    color: #555555; }
   .rdt input.form-control:focus {
     outline: none;
     background-image: linear-gradient(#7da8ae, #7da8ae), linear-gradient(#D2D2D2, #D2D2D2);
