@@ -137,18 +137,16 @@ class BookingAppointment extends React.Component {
       eventTimeRangeFormat: ({start, end}, culture, local) => local.format(start, "HH:mm", culture) + " - " + local.format(end, "HH:mm", culture)
     }
 
-    let employeesObj = {};
-    this.props.employees.map(employee => {
-      employeesObj[employee.hairdresser_id] = employee.name
-    })
-
     const data = [];
     this.props.data.map(list => {
       let temp = {};
       temp.comment = list.comment;
       temp.consumerName = list.consumerName;
+      temp.consumerEmail = list.consumerEmail;
+      temp.consumerMobile = list.consumerMobile;
+      temp.service = list.Service? list.Service.name : "";
+      temp.employee = list.Employee? list.Employee.name : "";
       temp.resourceId = list.hairdresser_id;
-      temp.employee = employeesObj[list.hairdresser_id]
       temp.id = list.id;
       temp.plannedEndTime = moment(list.plannedEndTime).toDate();
       temp.plannedStartTime = moment(list.plannedStartTime).toDate();

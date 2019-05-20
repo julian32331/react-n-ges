@@ -92,13 +92,13 @@ class DetailedEvent extends React.Component {
                             <h4 style={{marginTop: '0'}}><b>Email: </b></h4>
                         </GridItem>
                         <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}>test@test.com</h4>
+                            <h4 style={{marginTop: '0'}}>{data? data.consumerEmail : ""}</h4>
                         </GridItem>
                         <GridItem xs={12} sm={6} className={classes.left}>
                             <h4 style={{marginTop: '0'}}><b>Phone: </b></h4>
                         </GridItem>
                         <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}>123456789</h4>
+                            <h4 style={{marginTop: '0'}}>{data? data.consumerMobile : ""}</h4>
                         </GridItem>
                         <GridItem xs={12} sm className={classes.left}>
                             <h4 style={{marginTop: '0'}}><b>Time: </b></h4>
@@ -110,7 +110,7 @@ class DetailedEvent extends React.Component {
                             <h4 style={{marginTop: '0'}}><b>Booked Service: </b></h4>
                         </GridItem>
                         <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}>Service name</h4>
+                            <h4 style={{marginTop: '0'}}>{data? data.service : ""}</h4>
                         </GridItem>
                         <GridItem xs={12} sm={6} className={classes.left}>
                             <h4 style={{marginTop: '0'}}><b>Employee Name: </b></h4>
