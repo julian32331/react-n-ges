@@ -763,7 +763,7 @@ class Info extends React.Component {
                                             />
                                         </GridItem>
                                     </GridContainer>
-                                    <GridContainer> 
+                                    {/* <GridContainer> 
                                         <GridItem xs={12}>                                       
                                             <FormControlLabel
                                                 control={
@@ -806,7 +806,7 @@ class Info extends React.Component {
                                                 label="test"
                                             />                                            
                                         </GridItem>
-                                    </GridContainer>
+                                    </GridContainer> */}
                                     <GridContainer justify="flex-end" alignItems="flex-end">
                                     {
                                         this.state.isEdit? (                      

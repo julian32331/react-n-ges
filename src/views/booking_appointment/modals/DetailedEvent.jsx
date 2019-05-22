@@ -69,7 +69,7 @@ class DetailedEvent extends React.Component {
                     >
                         <Delete className={classes.modalClose} />
                     </Button>
-                    <h3 className={classes.modalTitle}>Details</h3>
+                    <h3 className={classes.modalTitle}>Bokningsdetaljer</h3>
                 </DialogTitle>
                 <DialogContent
                     id="setting-break-time-description"
@@ -79,7 +79,7 @@ class DetailedEvent extends React.Component {
                         {
                             data && data.bookingType === "SELFBOOKING" &&                                
                                 <GridItem xs={12} sm={6} className={classes.left}>
-                                    <h4 style={{marginTop: '0'}}><b>Consumer Name: </b></h4>
+                                    <h4 style={{marginTop: '0'}}><b>Kundens namn: </b></h4>
                                 </GridItem>
                         }
                         {
@@ -91,7 +91,7 @@ class DetailedEvent extends React.Component {
                         {
                             data && data.bookingType === "SELFBOOKING" &&  
                                 <GridItem xs={12} sm={6} className={classes.left}>
-                                    <h4 style={{marginTop: '0'}}><b>Email: </b></h4>
+                                    <h4 style={{marginTop: '0'}}><b>E-post: </b></h4>
                                 </GridItem>
                         }
                         {
@@ -103,7 +103,7 @@ class DetailedEvent extends React.Component {
                         {
                             data && data.bookingType === "SELFBOOKING" &&  
                                 <GridItem xs={12} sm={6} className={classes.left}>
-                                    <h4 style={{marginTop: '0'}}><b>Phone: </b></h4>
+                                    <h4 style={{marginTop: '0'}}><b>Mobil: </b></h4>
                                 </GridItem>
                         }
                         {
@@ -113,7 +113,7 @@ class DetailedEvent extends React.Component {
                                 </GridItem>
                         }
                         <GridItem xs={12} sm className={classes.left}>
-                            <h4 style={{marginTop: '0'}}><b>Time: </b></h4>
+                            <h4 style={{marginTop: '0'}}><b>Tid: </b></h4>
                         </GridItem>
                         <GridItem xs={12} sm={6} className={classes.left}>
                             <h4 style={{marginTop: '0'}}>{data? moment(data.plannedStartTime).format('YYYY-MM-DD HH:mm') + " - " + moment(data.plannedEndTime).format('HH:mm') : ""}</h4>
@@ -121,7 +121,7 @@ class DetailedEvent extends React.Component {
                         {
                             data && data.bookingType === "SELFBOOKING" &&  
                                 <GridItem xs={12} sm={6} className={classes.left}>
-                                    <h4 style={{marginTop: '0'}}><b>Booked Service: </b></h4>
+                                    <h4 style={{marginTop: '0'}}><b>Bokad tjänst: </b></h4>
                                 </GridItem>
                         }
                         {
@@ -131,13 +131,13 @@ class DetailedEvent extends React.Component {
                                 </GridItem>
                         }
                         <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}><b>Employee Name: </b></h4>
+                            <h4 style={{marginTop: '0'}}><b>Fris: </b></h4>
                         </GridItem>
                         <GridItem xs={12} sm={6} className={classes.left}>
                             <h4 style={{marginTop: '0'}}>{data? data.employee : ""}</h4>
                         </GridItem>
                         <GridItem xs={12} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}><b>Comment: </b></h4>
+                            <h4 style={{marginTop: '0'}}><b>Kommentar: </b></h4>
                         </GridItem>
                         <GridItem xs={12} className={classes.left}>
                             <p style={{marginLeft: '15px'}}>{data? data.comment : ""}</p>
