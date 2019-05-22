@@ -15,6 +15,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import Switch from "@material-ui/core/Switch";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 // @material-ui/icons
@@ -760,6 +761,50 @@ class Info extends React.Component {
                                                     type: "text"
                                                 }}
                                             />
+                                        </GridItem>
+                                    </GridContainer>
+                                    <GridContainer> 
+                                        <GridItem xs={12}>                                       
+                                            <FormControlLabel
+                                                control={
+                                                    <Switch
+                                                        // disabled={!this.state.isEditHours}
+                                                        checked={false}
+                                                        // onChange={this.openHandler(`${hour.name}_open`)}
+                                                        classes={{
+                                                            switchBase: classes.switchBase,
+                                                            checked: classes.switchChecked,
+                                                            icon: classes.switchIcon,
+                                                            iconChecked: classes.switchIconChecked,
+                                                            bar: classes.switchBar
+                                                        }}
+                                                    />
+                                                }
+                                                classes={{
+                                                    label: classes.label
+                                                }}
+                                                label="test"
+                                            />                                
+                                            <FormControlLabel
+                                                control={
+                                                    <Switch
+                                                        // disabled={!this.state.isEditHours}
+                                                        checked={false}
+                                                        // onChange={this.openHandler(`${hour.name}_open`)}
+                                                        classes={{
+                                                            switchBase: classes.switchBase,
+                                                            checked: classes.switchChecked,
+                                                            icon: classes.switchIcon,
+                                                            iconChecked: classes.switchIconChecked,
+                                                            bar: classes.switchBar
+                                                        }}
+                                                    />
+                                                }
+                                                classes={{
+                                                    label: classes.label
+                                                }}
+                                                label="test"
+                                            />                                            
                                         </GridItem>
                                     </GridContainer>
                                     <GridContainer justify="flex-end" alignItems="flex-end">

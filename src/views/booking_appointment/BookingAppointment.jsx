@@ -80,7 +80,9 @@ class BookingAppointment extends React.Component {
     let salon = JSON.parse(this.props.workingFor).find(item => {
       return item.workingForId == this.props.workingForId;      
     });
-    this.props.history.push('/booking/' + salon.Salon.id);
+    // TODO;
+    // this.props.history.push('/booking/' + salon.Salon.id);
+    this.props.history.push('/salonbooking/' + salon.Salon.id);
   }
   
   // Setting break time
@@ -201,8 +203,8 @@ class BookingAppointment extends React.Component {
                       formats={formats}
                       localizer={localizer}
                       date={this.state.initDate}
-                      step={30}
-                      timeslots={4}
+                      step={15}
+                      timeslots={8}
                       min={new Date(2019, 1, 0, 8, 0, 0)}
                       defaultView="day"
                       views={['day']}

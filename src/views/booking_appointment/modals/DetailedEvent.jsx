@@ -88,30 +88,48 @@ class DetailedEvent extends React.Component {
                                     <h4 style={{marginTop: '0'}}>{data? data.consumerName : ""}</h4>
                                 </GridItem>
                         }
-                        <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}><b>Email: </b></h4>
-                        </GridItem>
-                        <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}>{data? data.consumerEmail : ""}</h4>
-                        </GridItem>
-                        <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}><b>Phone: </b></h4>
-                        </GridItem>
-                        <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}>{data? data.consumerMobile : ""}</h4>
-                        </GridItem>
+                        {
+                            data && data.bookingType === "SELFBOOKING" &&  
+                                <GridItem xs={12} sm={6} className={classes.left}>
+                                    <h4 style={{marginTop: '0'}}><b>Email: </b></h4>
+                                </GridItem>
+                        }
+                        {
+                            data && data.bookingType === "SELFBOOKING" &&
+                                <GridItem xs={12} sm={6} className={classes.left}>
+                                    <h4 style={{marginTop: '0'}}>{data? data.consumerEmail : ""}</h4>
+                                </GridItem>
+                        }
+                        {
+                            data && data.bookingType === "SELFBOOKING" &&  
+                                <GridItem xs={12} sm={6} className={classes.left}>
+                                    <h4 style={{marginTop: '0'}}><b>Phone: </b></h4>
+                                </GridItem>
+                        }
+                        {
+                            data && data.bookingType === "SELFBOOKING" &&
+                                <GridItem xs={12} sm={6} className={classes.left}>
+                                    <h4 style={{marginTop: '0'}}>{data? data.consumerMobile : ""}</h4>
+                                </GridItem>
+                        }
                         <GridItem xs={12} sm className={classes.left}>
                             <h4 style={{marginTop: '0'}}><b>Time: </b></h4>
                         </GridItem>
                         <GridItem xs={12} sm={6} className={classes.left}>
                             <h4 style={{marginTop: '0'}}>{data? moment(data.plannedStartTime).format('YYYY-MM-DD HH:mm') + " - " + moment(data.plannedEndTime).format('HH:mm') : ""}</h4>
                         </GridItem>
-                        <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}><b>Booked Service: </b></h4>
-                        </GridItem>
-                        <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}>{data? data.service : ""}</h4>
-                        </GridItem>
+                        {
+                            data && data.bookingType === "SELFBOOKING" &&  
+                                <GridItem xs={12} sm={6} className={classes.left}>
+                                    <h4 style={{marginTop: '0'}}><b>Booked Service: </b></h4>
+                                </GridItem>
+                        }
+                        {
+                            data && data.bookingType === "SELFBOOKING" &&
+                                <GridItem xs={12} sm={6} className={classes.left}>
+                                    <h4 style={{marginTop: '0'}}>{data? data.service : ""}</h4>
+                                </GridItem>
+                        }
                         <GridItem xs={12} sm={6} className={classes.left}>
                             <h4 style={{marginTop: '0'}}><b>Employee Name: </b></h4>
                         </GridItem>

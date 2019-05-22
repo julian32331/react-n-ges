@@ -4,11 +4,13 @@
  */
 
 import Booking from "layouts/Booking.jsx";
+import InternalBooking from "layouts/InternalBooking.jsx";
 import Auth from "layouts/Auth.jsx";
 import Dashboard from "layouts/Dashboard.jsx";
 
 var indexRoutes = [
   { path: "/booking/:salonId?/:consumerId?", name: "Booking", component: Booking },
+  { path: "/salonbooking/:salonId?/:consumerId?", name: "InternalBooking", component: InternalBooking },
     
   { path: "/login", name: "Auth", component: Auth },
   { path: "/register", name: "Auth", component: Auth },
