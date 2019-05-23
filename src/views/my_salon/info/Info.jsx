@@ -74,6 +74,10 @@ class Info extends React.Component {
             s_mobileState: "",
             isEdit: false,
 
+            disableBooking: false,
+            externalBookingUrl: "",
+            externalBookingUrlState: "",
+
             file: null,
             imageData: null,
             imagePreviewUrl: "",
@@ -131,6 +135,10 @@ class Info extends React.Component {
                 s_countryState: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.country? "success" : "error",
                 s_mobile: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.mobile? nextProps.info.ShippingAddress.mobile : "",
                 s_mobileState: nextProps.info.ShippingAddress && nextProps.info.ShippingAddress.mobile? "success" : "error",
+
+                disableBooking: !nextProps.info.bookingEnabled,
+                externalBookingUrl: nextProps.info.externalBookingUrl,
+                externalBookingUrlState: nextProps.info.externalBookingUrl? "success" : "",
             })
         }
 
@@ -209,8 +217,9 @@ class Info extends React.Component {
                 }
                 break;
             case "network":
+            case "externalBookingUrl":
                 this.setState({
-                    network: event.target.value
+                    [stateName]: event.target.value
                 })
                 if (Validator.verifyUrl(event.target.value)) {
                     this.setState({ [stateName + "State"]: "success" });
@@ -225,6 +234,11 @@ class Info extends React.Component {
                 break;
         }
     }
+    handleToggle = name => event => {
+        this.setState({ 
+            [name]: event.target.checked,
+        });
+    };
 
     canUpdateInfo() {
         if(this.state.nameState === "success" &&
@@ -235,8 +249,21 @@ class Info extends React.Component {
             this.state.s_cityState === "success" &&
             this.state.s_zipState === "success" &&
             this.state.s_mobileState === "success" &&
-            this.state.s_countryState === "success") {
-            return true;
+            this.state.s_countryState === "success" && 
+            this.state.disableBooking && 
+            this.state.externalBookingUrlState === "success") {
+                return true;
+        } else if(this.state.nameState === "success" &&
+            this.state.addressState === "success" &&
+            this.state.zipState === "success" &&
+            this.state.cityState === "success" &&
+            this.state.s_address1State === "success" &&
+            this.state.s_cityState === "success" &&
+            this.state.s_zipState === "success" &&
+            this.state.s_mobileState === "success" &&
+            this.state.s_countryState === "success" && 
+            !this.state.disableBooking) {
+                return true;
         } else {
             return false
         }
@@ -282,6 +309,10 @@ class Info extends React.Component {
             s_mobile: this.props.info.ShippingAddress && this.props.info.ShippingAddress.mobile? this.props.info.ShippingAddress.mobile : "",
             s_mobileState: this.props.info.ShippingAddress && this.props.info.ShippingAddress.mobile? "success" : "error",
 
+            disableBooking: !this.props.info.bookingEnabled,
+            externalBookingUrl: this.props.info.externalBookingUrl,
+            externalBookingUrlState: this.props.info.externalBookingUrl? "success" : "",
+
             isEdit: false
         });
     }
@@ -300,7 +331,9 @@ class Info extends React.Component {
                 address: this.state.address,
                 post: this.state.zip,
                 city: this.state.city,
-                country: "Sweden"
+                country: "Sweden",
+                bookingEnabled: !this.state.disableBooking,
+                externalBookingUrl: this.state.disableBooking? this.state.externalBookingUrl : ""
             },
             shippingAddress: {
                 street1: this.state.s_address1,
@@ -763,14 +796,14 @@ class Info extends React.Component {
                                             />
                                         </GridItem>
                                     </GridContainer>
-                                    {/* <GridContainer> 
-                                        <GridItem xs={12}>                                       
+                                    <GridContainer alignItems="center"> 
+                                        <GridItem xs={12} sm={6} md={3}>                                       
                                             <FormControlLabel
                                                 control={
                                                     <Switch
-                                                        // disabled={!this.state.isEditHours}
-                                                        checked={false}
-                                                        // onChange={this.openHandler(`${hour.name}_open`)}
+                                                        disabled={!this.state.isEdit}
+                                                        checked={this.state.disableBooking}
+                                                        onChange={this.handleToggle('disableBooking')}
                                                         classes={{
                                                             switchBase: classes.switchBase,
                                                             checked: classes.switchChecked,
@@ -783,30 +816,36 @@ class Info extends React.Component {
                                                 classes={{
                                                     label: classes.label
                                                 }}
-                                                label="test"
-                                            />                                
-                                            <FormControlLabel
-                                                control={
-                                                    <Switch
-                                                        // disabled={!this.state.isEditHours}
-                                                        checked={false}
-                                                        // onChange={this.openHandler(`${hour.name}_open`)}
-                                                        classes={{
-                                                            switchBase: classes.switchBase,
-                                                            checked: classes.switchChecked,
-                                                            icon: classes.switchIcon,
-                                                            iconChecked: classes.switchIconChecked,
-                                                            bar: classes.switchBar
-                                                        }}
-                                                    />
-                                                }
-                                                classes={{
-                                                    label: classes.label
-                                                }}
-                                                label="test"
-                                            />                                            
+                                                label="Disable customer booking?"
+                                            />      
                                         </GridItem>
-                                    </GridContainer> */}
+                                        {
+                                            this.state.disableBooking &&                         
+                                                <GridItem xs={12} sm={6} md={3}>
+                                                    <CustomInput
+                                                        success={this.state.externalBookingUrlState === "success"}
+                                                        error={this.state.externalBookingUrlState === "error"}
+                                                        labelText="External booking URL *"
+                                                        id="externalBooking"
+                                                        formControlProps={{
+                                                            fullWidth: true
+                                                        }}
+                                                        inputProps={{
+                                                            endAdornment:
+                                                                this.state.externalBookingUrlState === "error"  &&
+                                                                    <InputAdornment position="end">
+                                                                        <Warning className={classes.danger} />
+                                                                    </InputAdornment>,
+                                                            disabled: !this.state.isEdit,
+                                                            onChange: event =>
+                                                                this.changeForm(event, "externalBookingUrl", "externalBookingUrl", 1),
+                                                            value: this.state.externalBookingUrl,
+                                                            type: "text"
+                                                        }}
+                                                    />
+                                                </GridItem>
+                                        } 
+                                    </GridContainer>
                                     <GridContainer justify="flex-end" alignItems="flex-end">
                                     {
                                         this.state.isEdit? (                      

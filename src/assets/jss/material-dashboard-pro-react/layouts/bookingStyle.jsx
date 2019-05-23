@@ -48,6 +48,9 @@ const bookingStyle = theme => ({
     }
   },
   loading_container: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
     textAlign: 'center',
     padding: '30px 0',
   },
