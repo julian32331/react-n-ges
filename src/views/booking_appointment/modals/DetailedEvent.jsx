@@ -131,7 +131,7 @@ class DetailedEvent extends React.Component {
                                 </GridItem>
                         }
                         <GridItem xs={12} sm={6} className={classes.left}>
-                            <h4 style={{marginTop: '0'}}><b>Fris: </b></h4>
+                            <h4 style={{marginTop: '0'}}><b>Frisör: </b></h4>
                         </GridItem>
                         <GridItem xs={12} sm={6} className={classes.left}>
                             <h4 style={{marginTop: '0'}}>{data? data.employee : ""}</h4>

@@ -214,6 +214,24 @@ const bookingStyle = theme => ({
     color: '#aaa',
     fontSize: '14px',
     fontFamily: "Roboto"
+  },
+
+  salonTitle: {
+    textAlign: 'center',
+    color: infoColor
+  },
+  externalSite: {
+    padding: '0',
+    margin: '0',
+    color: '#000',
+    textTransform: 'lowercase',    
+    "&:hover": {
+      color: '#000',
+    }
+  },
+  bookingLink: {
+    borderBottom: '1px solid ' + infoColor,
+    marginTop: '0'
   }
 });
 
