@@ -429,7 +429,7 @@ class Info extends React.Component {
                                                 classes={{
                                                     label: classes.label
                                                 }}
-                                                label="Disable customer booking?"
+                                                label="Stäng av online-bokning?"
                                             />      
                                         </GridItem>
                                         {
@@ -438,7 +438,7 @@ class Info extends React.Component {
                                                     <CustomInput
                                                         success={this.state.externalBookingUrlState === "success"}
                                                         error={this.state.externalBookingUrlState === "error"}
-                                                        labelText="External booking URL *"
+                                                        labelText="Bokningssida"
                                                         id="externalBooking"
                                                         formControlProps={{
                                                             fullWidth: true
