@@ -383,14 +383,14 @@ class Booking extends React.Component {
                             {
                                 this.state.disabledSalonInfo? (
                                     <div style={{paddingTop: '200px'}}>
-                                        <h2 className={classes.salonTitle}>Salon booking infos</h2>
+                                        <h2 className={classes.salonTitle}>Boknigsinformation</h2>
                                         <h3 className={classes.center}>Denna salong har valt att inte erbjuda Geselles tidbokning online</h3>
                                         <GridContainer justify="center">
                                             <GridItem xs={12} sm={3} className={classes.right}>
                                                 <h3 style={{marginTop: '0'}}><b>Adress: </b></h3>
                                             </GridItem>
                                             <GridItem xs={12} sm={5} className={classes.left}>
-                                                <h3 style={{marginTop: '0'}}>{this.state.disabledSalonInfo? this.state.disabledSalonInfo.address + " " + this.state.disabledSalonInfo.city + ", " + this.state.disabledSalonInfo.post : ""}</h3>
+                                                <h3 style={{marginTop: '0'}}>{this.state.disabledSalonInfo? this.state.disabledSalonInfo.address + " " + this.state.disabledSalonInfo.post : " " + this.state.disabledSalonInfo.city}</h3>
                                             </GridItem>
                                         </GridContainer>
                                         <GridContainer justify="center">

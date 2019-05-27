@@ -81,8 +81,8 @@ class BookingAppointment extends React.Component {
       return item.workingForId == this.props.workingForId;      
     });
     // TODO;
-    this.props.history.push('/booking/' + salon.Salon.id);
-    // this.props.history.push('/salonbooking/' + salon.Salon.id);
+    // this.props.history.push('/booking/' + salon.Salon.id);
+    window.open('/salonbooking/' + salon.Salon.id, '_blank')
   }
   
   // Setting break time

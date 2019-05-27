@@ -43,8 +43,20 @@ class SetBreak extends React.Component {
             dateState       : "",
             comment         : "",            
             commentState    : "", 
-            hairdresserId   : ""
+            hairdresserId   : "",
+            repeatedDays    : [],
+            finalDate       : "",
+            finalDateState  : ""
         }
+        this.days = [
+            "Söndag",
+            "Måndag",
+            "Tisdag",
+            "Onsdag",
+            "Torsdag",
+            "Fredag",
+            "Lördag"
+        ]
     }
 
     componentWillReceiveProps(nextProps) {
@@ -59,6 +71,7 @@ class SetBreak extends React.Component {
     change(event, stateName, type, length) {
         switch (type) {
             case "date":
+            case "finalDate":
                 if(!moment(event._d).isSame(moment())) {
                     this.setState({ [stateName]: moment(event._d).format("YYYY-MM-DD"), [stateName + "State"]: "success" });
                 } else {
@@ -240,7 +253,63 @@ class SetBreak extends React.Component {
                             value: this.state.comment,
                             type: "text"
                         }}
-                    />
+                    /> 
+                    <FormControl
+                            fullWidth
+                            className={classes.selectFormControl}
+                        >
+                        <InputLabel
+                            htmlFor="repeated-days"
+                            className={classes.selectLabel}
+                        >
+                            Repeat Days
+                        </InputLabel>
+                        <Select
+                            multiple
+                            value={this.state.repeatedDays}
+                            onChange={(event) => this.changeForm(event, "repeatedDays", "repeatedDays")}
+                            MenuProps={{ className: classes.selectMenu }}
+                            classes={{ select: classes.select }}
+                            inputProps={{
+                                name: "repeatedDays",
+                                id: "repeated-days"
+                            }}
+                        >
+                            <MenuItem
+                                disabled
+                                classes={{
+                                    root: classes.selectMenuItem
+                                }}
+                            >
+                                Repeat Days
+                            </MenuItem>
+                            {
+                                this.days.map((day, key) => {
+                                    return (
+                                        <MenuItem
+                                            classes={{
+                                                root: classes.selectMenuItem,
+                                                selected: classes.selectMenuItemSelectedMultiple
+                                            }}
+                                            value={day}
+                                            key={key}
+                                        >
+                                            {day}
+                                        </MenuItem>
+                                    )
+                                })
+                            }
+                        </Select>
+                    </FormControl>                       
+                    <FormControl fullWidth style={{paddingTop: '27px', marginBottom: '17px',}}>
+                        <Datetime
+                            timeFormat={false}
+                            dateFormat={"YYYY-MM-DD"}
+                            inputProps={{ placeholder: "Final date *" }}
+                            value={this.state.finalDate}
+                            onChange={event => this.change(event, "finalDate", "finalDate")}
+                        />
+                    </FormControl>
                 </DialogContent>
                 <DialogActions className={classes.modalFooter}>
                     <Button 

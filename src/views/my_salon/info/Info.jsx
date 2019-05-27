@@ -76,7 +76,7 @@ class Info extends React.Component {
 
             disableBooking: false,
             externalBookingUrl: "",
-            externalBookingUrlState: "",
+            bookingWeeks: 1,
 
             file: null,
             imageData: null,
@@ -139,6 +139,8 @@ class Info extends React.Component {
                 disableBooking: !nextProps.info.bookingEnabled,
                 externalBookingUrl: nextProps.info.externalBookingUrl,
                 externalBookingUrlState: nextProps.info.externalBookingUrl? "success" : "",
+                bookingWeeks: nextProps.info.bookingWeeks? nextProps.info.bookingWeeks : 1,
+
             })
         }
 
@@ -179,6 +181,16 @@ class Info extends React.Component {
             case "s_address2":
                 this.setState({
                     [stateName]: event.target.value
+                })
+                if (Validator.verifyLength(event.target.value, length)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "" });
+                }
+                break; 
+            case "bookingWeeks":
+                this.setState({
+                    [stateName]: event.target.value > 0? event.target.value : 1
                 })
                 if (Validator.verifyLength(event.target.value, length)) {
                     this.setState({ [stateName + "State"]: "success" });
@@ -299,6 +311,7 @@ class Info extends React.Component {
             disableBooking: !this.props.info.bookingEnabled,
             externalBookingUrl: this.props.info.externalBookingUrl,
             externalBookingUrlState: this.props.info.externalBookingUrl? "success" : "",
+            bookingWeeks: this.props.info.bookingWeeks? this.props.info.bookingWeeks : 1,
 
             isEdit: false
         });
@@ -320,7 +333,8 @@ class Info extends React.Component {
                 city: this.state.city,
                 country: "Sweden",
                 bookingEnabled: !this.state.disableBooking,
-                externalBookingUrl: this.state.disableBooking? this.state.externalBookingUrl : ""
+                externalBookingUrl: this.state.disableBooking? this.state.externalBookingUrl : "",
+                bookingWeeks: this.state.bookingWeeks
             },
             shippingAddress: {
                 street1: this.state.s_address1,
@@ -433,7 +447,7 @@ class Info extends React.Component {
                                             />      
                                         </GridItem>
                                         {
-                                            this.state.disableBooking &&                         
+                                            this.state.disableBooking? (                
                                                 <GridItem xs={12} sm={6} md={3}>
                                                     <CustomInput
                                                         success={this.state.externalBookingUrlState === "success"}
@@ -452,6 +466,25 @@ class Info extends React.Component {
                                                         }}
                                                     />
                                                 </GridItem>
+                                            ) : (
+                                                <GridItem xs={12} sm={6} md={3}>
+                                                    <CustomInput
+                                                        success={true}
+                                                        labelText="Enalbed booking weeks"
+                                                        id="bookingWeeks"
+                                                        formControlProps={{
+                                                            fullWidth: true
+                                                        }}
+                                                        inputProps={{                                                   
+                                                            disabled: !this.state.isEdit,
+                                                            onChange: event =>
+                                                                this.changeForm(event, "bookingWeeks", "bookingWeeks", 1),
+                                                            value: this.state.bookingWeeks,
+                                                            type: "number"
+                                                        }}
+                                                    />
+                                                </GridItem>
+                                            )
                                         } 
                                     </GridContainer>
                                     <GridContainer>
@@ -833,7 +866,7 @@ class Info extends React.Component {
                                         this.state.isEdit? (                      
                                             <GridItem xs={12} sm={12} md={6} className={classes.right}>       
                                                 <Button color="danger" size="sm" className={classes.mr_8} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
-                                                <Button color="info" size="sm" disabled={!this.canUpdateInfo()} onClick={this.updateSalonInfo.bind(this)}>LAGRE</Button>
+                                                <Button color="info" size="sm" disabled={!this.canUpdateInfo()} onClick={this.updateSalonInfo.bind(this)}>Spara</Button>
                                             </GridItem>                                
                                         ) : (
                                             <GridItem xs={12} sm={12} md={6} className={classes.right}>                    
