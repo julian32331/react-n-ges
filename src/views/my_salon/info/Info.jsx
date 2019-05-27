@@ -249,20 +249,7 @@ class Info extends React.Component {
             this.state.s_cityState === "success" &&
             this.state.s_zipState === "success" &&
             this.state.s_mobileState === "success" &&
-            this.state.s_countryState === "success" && 
-            this.state.disableBooking && 
-            this.state.externalBookingUrlState === "success") {
-                return true;
-        } else if(this.state.nameState === "success" &&
-            this.state.addressState === "success" &&
-            this.state.zipState === "success" &&
-            this.state.cityState === "success" &&
-            this.state.s_address1State === "success" &&
-            this.state.s_cityState === "success" &&
-            this.state.s_zipState === "success" &&
-            this.state.s_mobileState === "success" &&
-            this.state.s_countryState === "success" && 
-            !this.state.disableBooking) {
+            this.state.s_countryState === "success") {
                 return true;
         } else {
             return false
@@ -422,6 +409,51 @@ class Info extends React.Component {
                             </CardHeader>
                             <CardBody>
                                 <form>
+                                    <GridContainer alignItems="center"> 
+                                        <GridItem xs={12} sm={6} md={3}>                                       
+                                            <FormControlLabel
+                                                control={
+                                                    <Switch
+                                                        disabled={!this.state.isEdit}
+                                                        checked={this.state.disableBooking}
+                                                        onChange={this.handleToggle('disableBooking')}
+                                                        classes={{
+                                                            switchBase: classes.switchBase,
+                                                            checked: classes.switchChecked,
+                                                            icon: classes.switchIcon,
+                                                            iconChecked: classes.switchIconChecked,
+                                                            bar: classes.switchBar
+                                                        }}
+                                                    />
+                                                }
+                                                classes={{
+                                                    label: classes.label
+                                                }}
+                                                label="Disable customer booking?"
+                                            />      
+                                        </GridItem>
+                                        {
+                                            this.state.disableBooking &&                         
+                                                <GridItem xs={12} sm={6} md={3}>
+                                                    <CustomInput
+                                                        success={this.state.externalBookingUrlState === "success"}
+                                                        error={this.state.externalBookingUrlState === "error"}
+                                                        labelText="External booking URL *"
+                                                        id="externalBooking"
+                                                        formControlProps={{
+                                                            fullWidth: true
+                                                        }}
+                                                        inputProps={{
+                                                            disabled: !this.state.isEdit,
+                                                            onChange: event =>
+                                                                this.changeForm(event, "externalBookingUrl", "externalBookingUrl", 1),
+                                                            value: this.state.externalBookingUrl,
+                                                            type: "text"
+                                                        }}
+                                                    />
+                                                </GridItem>
+                                        } 
+                                    </GridContainer>
                                     <GridContainer>
                                         <GridItem xs={12} sm={6} md={3}>
                                             <CustomInput
@@ -795,56 +827,6 @@ class Info extends React.Component {
                                                 }}
                                             />
                                         </GridItem>
-                                    </GridContainer>
-                                    <GridContainer alignItems="center"> 
-                                        <GridItem xs={12} sm={6} md={3}>                                       
-                                            <FormControlLabel
-                                                control={
-                                                    <Switch
-                                                        disabled={!this.state.isEdit}
-                                                        checked={this.state.disableBooking}
-                                                        onChange={this.handleToggle('disableBooking')}
-                                                        classes={{
-                                                            switchBase: classes.switchBase,
-                                                            checked: classes.switchChecked,
-                                                            icon: classes.switchIcon,
-                                                            iconChecked: classes.switchIconChecked,
-                                                            bar: classes.switchBar
-                                                        }}
-                                                    />
-                                                }
-                                                classes={{
-                                                    label: classes.label
-                                                }}
-                                                label="Disable customer booking?"
-                                            />      
-                                        </GridItem>
-                                        {
-                                            this.state.disableBooking &&                         
-                                                <GridItem xs={12} sm={6} md={3}>
-                                                    <CustomInput
-                                                        success={this.state.externalBookingUrlState === "success"}
-                                                        error={this.state.externalBookingUrlState === "error"}
-                                                        labelText="External booking URL *"
-                                                        id="externalBooking"
-                                                        formControlProps={{
-                                                            fullWidth: true
-                                                        }}
-                                                        inputProps={{
-                                                            endAdornment:
-                                                                this.state.externalBookingUrlState === "error"  &&
-                                                                    <InputAdornment position="end">
-                                                                        <Warning className={classes.danger} />
-                                                                    </InputAdornment>,
-                                                            disabled: !this.state.isEdit,
-                                                            onChange: event =>
-                                                                this.changeForm(event, "externalBookingUrl", "externalBookingUrl", 1),
-                                                            value: this.state.externalBookingUrl,
-                                                            type: "text"
-                                                        }}
-                                                    />
-                                                </GridItem>
-                                        } 
                                     </GridContainer>
                                     <GridContainer justify="flex-end" alignItems="flex-end">
                                     {
