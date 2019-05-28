@@ -335,7 +335,7 @@ class Booking extends React.Component {
         const width = employees.length > 2? '100%' : employees.length * 30 + '%';
 
         const dates = this.generateDates();
-        if(dates.length > 0) {
+        if(dates.length > 0 && booking_date == "") {
             this.selectDate(dates[0])
         }
         const date_settings = {
