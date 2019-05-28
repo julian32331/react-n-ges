@@ -141,7 +141,7 @@ class Info extends React.Component {
                 externalBookingUrl: nextProps.info.externalBookingUrl,
                 externalBookingUrlState: nextProps.info.externalBookingUrl? "success" : "",
                 bookingWeeks: nextProps.info.bookingWeeks,
-                bookingWeeksState: nextProps.info.bookingWeeksState? "success" : "",
+                bookingWeeksState: nextProps.info.bookingWeeks? "success" : "",
 
             })
         }
@@ -264,7 +264,8 @@ class Info extends React.Component {
             this.state.s_cityState === "success" &&
             this.state.s_zipState === "success" &&
             this.state.s_mobileState === "success" &&
-            this.state.s_countryState === "success") {
+            this.state.s_countryState === "success" &&
+            this.state.disableBooking) {
                 return true;
         } else if(this.state.nameState === "success" &&
             this.state.addressState === "success" &&
@@ -275,7 +276,7 @@ class Info extends React.Component {
             this.state.s_zipState === "success" &&
             this.state.s_mobileState === "success" &&
             this.state.s_countryState === "success" &&
-            this.state.disableBooking && this.state.bookingWeeksState === "success") {
+            !this.state.disableBooking && this.state.bookingWeeksState === "success") {
             return true;
         } else {
             return false
@@ -326,7 +327,7 @@ class Info extends React.Component {
             externalBookingUrl: this.props.info.externalBookingUrl,
             externalBookingUrlState: this.props.info.externalBookingUrl? "success" : "",
             bookingWeeks: this.props.info.bookingWeeks? this.props.info.bookingWeeks : 1,
-            bookingWeeksState: this.props.info.bookingWeeksState? "success" : "",
+            bookingWeeksState: this.props.info.bookingWeeks? "success" : "",
 
             isEdit: false
         });
@@ -484,7 +485,8 @@ class Info extends React.Component {
                                             ) : (
                                                 <GridItem xs={12} sm={6} md={3}>
                                                     <CustomInput
-                                                        success={true}
+                                                        success={this.state.bookingWeeksState === "success"}
+                                                        error={this.state.bookingWeeksState === "error"}
                                                         labelText="Enalbed booking weeks"
                                                         id="bookingWeeks"
                                                         formControlProps={{
