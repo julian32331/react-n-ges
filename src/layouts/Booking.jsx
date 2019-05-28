@@ -383,11 +383,11 @@ class Booking extends React.Component {
                         <div>
                             {
                                 this.state.disabledSalonInfo? (
-                                    <div style={{paddingTop: '200px'}}>
+                                    <div className={classes.infoContainer}>
                                         <h2 className={classes.salonTitle}>Boknigsinformation</h2>
                                         <h3 className={classes.center}>Denna salong har valt att inte erbjuda Geselles tidbokning online</h3>
                                         <GridContainer justify="center">
-                                            <GridItem xs={12} sm={3} className={classes.right}>
+                                            <GridItem xs={12} sm={3} className={classes.key}>
                                                 <h3 style={{marginTop: '0'}}><b>Adress: </b></h3>
                                             </GridItem>
                                             <GridItem xs={12} sm={5} className={classes.left}>
@@ -395,23 +395,26 @@ class Booking extends React.Component {
                                             </GridItem>
                                         </GridContainer>
                                         <GridContainer justify="center">
-                                            <GridItem xs={12} sm={3} className={classes.right}>
+                                            <GridItem xs={12} sm={3} className={classes.key}>
                                                 <h3 style={{marginTop: '0'}}><b>Telefon: </b></h3>
                                             </GridItem>
                                             <GridItem xs={12} sm={5} className={classes.left}>
                                                 <h3 style={{marginTop: '0'}}>{this.state.disabledSalonInfo? this.state.disabledSalonInfo.telephone : ""}</h3>
                                             </GridItem>
                                         </GridContainer>
-                                        <GridContainer justify="center">
-                                            <GridItem xs={12} sm={3} className={classes.right}>
-                                                <h3 style={{marginTop: '0'}}><b>Bokningssida: </b></h3>
-                                            </GridItem>
-                                            <GridItem xs={12} sm={5} className={classes.left}>                                                                                                    
-                                                <Button simple className={classes.externalSite} onClick={() => this.goExternalBooking(this.state.disabledSalonInfo? this.state.disabledSalonInfo.externalBookingUrl : "")}>
-                                                    <h3 className={classes.bookingLink}>{this.state.disabledSalonInfo? this.state.disabledSalonInfo.externalBookingUrl : ""}</h3>  
-                                                </Button>                                                 
-                                            </GridItem>
-                                        </GridContainer>
+                                        {
+                                            this.state.disabledSalonInfo && this.state.disabledSalonInfo.externalBookingUrl &&
+                                                <GridContainer justify="center">
+                                                    <GridItem xs={12} sm={3} className={classes.key}>
+                                                        <h3 style={{marginTop: '0'}}><b>Bokningssida: </b></h3>
+                                                    </GridItem>
+                                                    <GridItem xs={12} sm={5} className={classes.left}>                                                                                                    
+                                                        <Button simple className={classes.externalSite} onClick={() => this.goExternalBooking(this.state.disabledSalonInfo? this.state.disabledSalonInfo.externalBookingUrl : "")}>
+                                                            <h3 className={classes.bookingLink}>{this.state.disabledSalonInfo? this.state.disabledSalonInfo.externalBookingUrl : ""}</h3>  
+                                                        </Button>                                                 
+                                                    </GridItem>
+                                                </GridContainer>
+                                        }                                        
                                     </div>
                                 ) : (
                                     <div>

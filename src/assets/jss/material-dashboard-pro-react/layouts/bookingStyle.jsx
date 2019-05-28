@@ -216,9 +216,21 @@ const bookingStyle = theme => ({
     fontFamily: "Roboto"
   },
 
+  infoContainer: {
+    paddingTop: '200px',
+    [theme.breakpoints.down("sm")]: {      
+      paddingTop: '100px',
+    }
+  },
   salonTitle: {
     textAlign: 'center',
     color: infoColor
+  },
+  key: {
+    textAlign: 'right',
+    [theme.breakpoints.down("sm")]: {      
+      textAlign: 'left',
+    }
   },
   externalSite: {
     padding: '0',
