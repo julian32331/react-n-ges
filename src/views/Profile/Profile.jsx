@@ -23,6 +23,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardAvatar from "components/Card/CardAvatar.jsx";
+import ImageCrop from "components/Modals/ImageCrop.jsx";
 
 import profileStyles from "assets/jss/material-dashboard-pro-react/views/profile/profileStyles.jsx";
 import defaultAvatar from "assets/img/default-avatar.png";
@@ -49,7 +50,8 @@ class Profile extends React.Component {
       file            : null,
       imagePreviewUrl : "",
       isChangedAvatar : false,
-      isEdit          : false
+      isEdit          : false,
+      showImageCrop   : false
     };
   }
 
@@ -112,8 +114,12 @@ class Profile extends React.Component {
   }
 
   handleClick() {
-    if(this.state.isEdit)
-      this.refs.fileInput.click();
+    if(this.state.isEdit) {
+      /** image crop */
+      this.onOpenImageCrop();
+      /** image crop */
+      //this.refs.fileInput.click();
+    }
   }
   handleImageChange(e) {
     e.preventDefault();
@@ -181,6 +187,29 @@ class Profile extends React.Component {
     this.setState({
       isEdit: false
     })
+  }
+
+  // Confirm modal Actions
+  onCloseImageCrop = () => {
+    this.setState({
+        showImageCrop: false
+    })
+  }
+  onOpenImageCrop = () => {
+      this.setState({
+        showImageCrop : true
+      })
+  }
+  onSave = (data) => {
+    let reader = new FileReader();
+    reader.onloadend = () => {
+      this.setState({
+        file: data,
+        isChangedAvatar: true,
+        imagePreviewUrl: reader.result
+      });
+    };
+    reader.readAsDataURL(data);
   }
 
   render() {   
@@ -349,6 +378,11 @@ class Profile extends React.Component {
             </GridContainer>
           )
         }
+        <ImageCrop
+          onOpen={this.state.showImageCrop}
+          onClose={this.onCloseImageCrop.bind(this)}
+          onSave={this.onSave.bind(this)}
+        />
       </Card>
     )
   }  

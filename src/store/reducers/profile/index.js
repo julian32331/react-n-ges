@@ -34,7 +34,10 @@ const profile = function (state = initialState, action) {
 
         case Actions.UPDATE_PROFIEL_DATA:
             return {
-                data: state.data
+                data: {
+                    ...state.data,
+                    ...action.payload
+                }
             };
         default:
             return state

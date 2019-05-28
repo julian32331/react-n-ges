@@ -46,7 +46,8 @@ export function updateProfile(data, id) {
                 name: response.data.name
             }));      
             return dispatch({
-                type: UPDATE_PROFIEL_DATA
+                type: UPDATE_PROFIEL_DATA,
+                payload: response.data
             });
         });
 }
