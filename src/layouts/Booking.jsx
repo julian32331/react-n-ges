@@ -64,6 +64,7 @@ class Booking extends React.Component {
         this.state = {
             checkBookingState   : true,
             disabledSalonInfo   : null,
+            bookingWeeks        : 0,
             step                : 1,
             serviceId           : null,
             serviceDuration     : "",            
@@ -84,7 +85,8 @@ class Booking extends React.Component {
         let salonId = this.props.match.params.salonId
         Utils.xapi().post('booking/checksalon', {salonId: salonId}).then(response => {
             this.setState({
-                checkBookingState: false
+                checkBookingState: false,
+                bookingWeeks: response.data.bookingWeeks
             })
             if(response.data.bookingEnabled) {
                 this.props.getBookingServices({
@@ -222,17 +224,13 @@ class Booking extends React.Component {
         let arr = [];
 
         if(this.props.daysOff) {
-            let today = moment();
-            let start = moment().subtract(3, 'days');
-            let end = moment().endOf('month').add(3, 'days');
+            let start = moment();
+            let end = moment().add(this.state.bookingWeeks, 'weeks')
             while(start < end){
-                // console.log('start: ', start);
                 let temp = {};
                 temp.date = moment(start).format('YYYY MM DD');
                 temp.day = days[moment(start).day()];
-                if(moment(start).isBefore(today) || moment(start).month() > today.month()) {
-                    temp.status = 1; // passed and next month
-                } else if(moment(start.format('YYYY MM DD')).isSame(this.state.booking_date)) {
+                if(moment(start.format('YYYY MM DD')).isSame(this.state.booking_date)) {
                     temp.status = 2; // actived
                 } else if(this.isDisabledDay(this.props.daysOff.salonClosingDays, start.day()) || this.isDisabledDate(this.props.daysOff.hairdresserOffDays, start)) {
                     temp.status = 3; // disabled
@@ -337,6 +335,9 @@ class Booking extends React.Component {
         const width = employees.length > 2? '100%' : employees.length * 30 + '%';
 
         const dates = this.generateDates();
+        if(dates.length > 0) {
+            this.selectDate(dates[0])
+        }
         const date_settings = {
             arrows: false,
             infinite: false,
@@ -569,29 +570,35 @@ class Booking extends React.Component {
                                                                         })
                                                                     }
                                                                 </Slider>
-            
-                                                                <Slider {...time_settings} ref="time_slider">
-                                                                    {
-                                                                        timeSlots.map((item, key) => {
-                                                                            let time;
-                                                                            if(item.status == 1) {
-                                                                                time = classes.time + " " + classes.timePassed;
-                                                                            } else if(item.status == 2) {
-                                                                                time = classes.time
-                                                                            } else if(item.status == 3) {
-                                                                                time = classes.time + " " + classes.timeDisabled;
-                                                                            } 
-                                                                            if(item.time === this.state.booking_time) {
-                                                                                time = classes.time + " " + classes.timeActived;
+
+                                                                {
+                                                                    this.props.timeSlots.length == 0? (
+                                                                        <h4 className={classes.center}>No availible booking</h4>
+                                                                    ) : (
+                                                                        <Slider {...time_settings} ref="time_slider">
+                                                                            {
+                                                                                timeSlots.map((item, key) => {
+                                                                                    let time;
+                                                                                    if(item.status == 1) {
+                                                                                        time = classes.time + " " + classes.timePassed;
+                                                                                    } else if(item.status == 2) {
+                                                                                        time = classes.time
+                                                                                    } else if(item.status == 3) {
+                                                                                        time = classes.time + " " + classes.timeDisabled;
+                                                                                    } 
+                                                                                    if(item.time === this.state.booking_time) {
+                                                                                        time = classes.time + " " + classes.timeActived;
+                                                                                    }
+                                                                                    return (
+                                                                                        <div key={key} className={classes.time_container}>
+                                                                                            <div className={time} onClick={() => this.selectTime(item)}>{item.time}</div>
+                                                                                        </div>
+                                                                                    )
+                                                                                })
                                                                             }
-                                                                            return (
-                                                                                <div key={key} className={classes.time_container}>
-                                                                                    <div className={time} onClick={() => this.selectTime(item)}>{item.time}</div>
-                                                                                </div>
-                                                                            )
-                                                                        })
-                                                                    }
-                                                                </Slider>
+                                                                        </Slider>
+                                                                    )
+                                                                }  
             
                                                                 <GridContainer alignItems="center">
                                                                     <GridItem xs={3}>
