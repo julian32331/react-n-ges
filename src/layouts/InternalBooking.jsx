@@ -67,8 +67,10 @@ class InternalBooking extends React.Component {
             bookingWeeks        : 0,
             step                : 1,
             serviceId           : null,
+            serviceName         : "",
             serviceDuration     : "",            
             hairdresserId       : null,
+            hairdresserName     : "",
             booking_date        : "",
             booking_time        : "",
             consumerName        : "",
@@ -145,6 +147,7 @@ class InternalBooking extends React.Component {
     selectService = (service) => {
         this.setState({
             serviceId: service.id,
+            serviceName: service.name,
             serviceDuration: service.durationInMinutes
         })
     }
@@ -730,7 +733,11 @@ class InternalBooking extends React.Component {
                                             step === 5 &&
                                                 <Card>
                                                     <CardBody>
-                                                        <div>Bokningen är klar!</div>                                
+                                                        <div>Bokningen är klar!</div>                                                        
+                                                        {/* booking Summary */}
+                                                        {/* <h2 className={classes.salonTitle}>Bokningen är klar!</h2>
+                                                        <h3 className={classes.center}>Your booking is <b>{this.state.serviceName}</b>. <b>{this.state.hairdresserName}</b> will serve you on <b>{moment(this.state.booking_date, "YYYY MM DD").format("YYYY-MM-DD")} {this.state.booking_time}</b>. Duration is <b>{this.state.serviceDuration}</b> mins.</h3>                            */}
+                                                        {/* booking Summary */}
                                                     </CardBody>
                                                 </Card>
                                         }

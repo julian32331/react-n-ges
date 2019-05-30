@@ -8,6 +8,7 @@ import * as Actions from './../../actions';
 const initialState = {
     loading     : false,
     error       : '',
+    isSalonOpen : true,
     data        : [],
     employees   : [],
 };
@@ -18,6 +19,7 @@ const booking_appointment = function (state = initialState, action) {
             return {
                 ...state,
                 loading     : true,
+                isSalonOpen : true,
                 error       : '',
                 data        : []
             };
@@ -25,6 +27,7 @@ const booking_appointment = function (state = initialState, action) {
             return {
                 ...state,
                 loading     : false,
+                isSalonOpen : action.payload.isSalonOpen,
                 data        : action.payload.bookingData,
                 employees   : action.payload.hairdressers
             };

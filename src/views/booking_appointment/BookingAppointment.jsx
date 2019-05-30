@@ -145,23 +145,44 @@ class BookingAppointment extends React.Component {
     })
 
     const data = [];
-    this.props.data.map(list => {
-      let temp = {};
-      temp.comment = list.comment;
-      temp.consumerName = list.consumerName;
-      temp.consumerEmail = list.consumerEmail;
-      temp.consumerMobile = list.consumerMobile;
-      temp.service = list.Service? list.Service.name : "";
-      temp.employee = employeesObj[list.hairdresser_id];
-      temp.resourceId = list.hairdresser_id;
-      temp.id = list.id;
-      temp.plannedEndTime = moment(list.plannedEndTime).toDate();
-      temp.plannedStartTime = moment(list.plannedStartTime).toDate();
-      temp.bookingType = list.bookingType;
+    /** show closing in calender */
+    if(this.props.isSalonOpen) {
+      this.props.data.map(list => {
+        let temp = {};
+        temp.comment = list.comment;
+        temp.consumerName = list.consumerName;
+        temp.consumerEmail = list.consumerEmail;
+        temp.consumerMobile = list.consumerMobile;
+        temp.service = list.Service? list.Service.name : "";
+        temp.employee = employeesObj[list.hairdresser_id];
+        temp.resourceId = list.hairdresser_id;
+        temp.id = list.id;
+        temp.plannedEndTime = moment(list.plannedEndTime).toDate();
+        temp.plannedStartTime = moment(list.plannedStartTime).toDate();
+        temp.bookingType = list.bookingType;
 
-      data.push(temp);
-    });
+        data.push(temp);
+      });
+    } else {
+      let today = moment(this.state.initDate).format("YYYY-MM-DD")
+      this.props.employees.map(employee => {
+        let temp = {};
+        temp.comment = "Salon is closed.";
+        temp.consumerName = null;
+        temp.consumerEmail = null;
+        temp.consumerMobile = null;
+        temp.service = null;
+        temp.employee = employeesObj[employee.hairdresser_id];
+        temp.resourceId = employee.hairdresser_id;
+        //temp.id = list.id;
+        temp.plannedStartTime = moment(today + " 00:00").toDate();
+        temp.plannedEndTime = moment(today + " 23:59").toDate();
+        temp.bookingType = "BREAK";
 
+        data.push(temp);
+      })
+    }    
+    /** show closing in calender */
 
     return (
       <div>
@@ -266,6 +287,7 @@ function mapStateToProps(state) {
     workingFor  : state.auth.workingFor,
     username    : state.auth.username,
     loading     : state.booking_appointment.loading,
+    isSalonOpen : state.booking_appointment.isSalonOpen,
     data        : state.booking_appointment.data,
     employees   : state.booking_appointment.employees
   }

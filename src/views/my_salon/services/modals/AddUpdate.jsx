@@ -11,6 +11,8 @@ import * as Actions from 'store/actions';
 import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 
+import { ChromePicker, SliderPicker, HuePicker } from 'react-color';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Slide from "@material-ui/core/Slide";
@@ -348,7 +350,13 @@ class AddUpdate extends React.Component {
                                 }
                             </Select>
                         </FormControl>
-                </form>
+                        <GridContainer justify="center">
+                            <GridItem>
+                                <div className={classes.py_15}>Color of service</div>
+                                <HuePicker />
+                            </GridItem>
+                        </GridContainer>
+                    </form>
                 </DialogContent>
                 <DialogActions className={classes.modalFooter}>
                     <Button 

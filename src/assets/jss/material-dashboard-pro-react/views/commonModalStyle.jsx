@@ -61,6 +61,10 @@ const commonModalStyle = theme => ({
     textAlign: 'center',
     padding: '10px 10px 10px 24px !important',
   },
+  py_15: {
+    paddingTop: '15px',
+    paddingBottom: '15px',
+  }
 });
 
 export default commonModalStyle;
