@@ -350,12 +350,14 @@ class AddUpdate extends React.Component {
                                 }
                             </Select>
                         </FormControl>
-                        <GridContainer justify="center">
+                        {/* colorcode booking */}
+                        {/* <GridContainer justify="center">
                             <GridItem>
                                 <div className={classes.py_15}>Color of service</div>
                                 <HuePicker />
                             </GridItem>
-                        </GridContainer>
+                        </GridContainer> */}
+                        {/* colorcode booking */}
                     </form>
                 </DialogContent>
                 <DialogActions className={classes.modalFooter}>
