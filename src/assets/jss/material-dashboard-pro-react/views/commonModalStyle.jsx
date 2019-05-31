@@ -64,6 +64,29 @@ const commonModalStyle = theme => ({
   py_15: {
     paddingTop: '15px',
     paddingBottom: '15px',
+  },
+  datePicker_label: {
+    fontSize: '10px',
+    float: 'left'
+  },
+  success_datePicker_label: {
+    fontSize: '10px',
+    color: successColor + ' !important',
+    float: 'left',
+    paddingTop: '17px',
+  },
+  error_datePicker_label: {
+    fontSize: '10px',
+    color:  dangerColor + ' !important',
+    float: 'left',
+    paddingTop: '17px',
+  },
+  datePicker: {
+    paddingTop: '27px', 
+    marginBottom: '17px'
+  },
+  selectedDatePicker: {
+    marginBottom: '17px'
   }
 });
 
