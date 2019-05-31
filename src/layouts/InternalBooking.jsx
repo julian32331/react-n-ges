@@ -394,7 +394,7 @@ class InternalBooking extends React.Component {
                                                 <h3 style={{marginTop: '0'}}><b>Adress: </b></h3>
                                             </GridItem>
                                             <GridItem xs={12} sm={5} className={classes.left}>
-                                                <h3 style={{marginTop: '0'}}>{this.state.disabledSalonInfo? this.state.disabledSalonInfo.address + " " + this.state.disabledSalonInfo.post : " " + this.state.disabledSalonInfo.city}</h3>
+                                            <h3 style={{marginTop: '0'}}>{this.state.disabledSalonInfo? this.state.disabledSalonInfo.address + " " + this.state.disabledSalonInfo.post + " " + this.state.disabledSalonInfo.city : ""}</h3>
                                             </GridItem>
                                         </GridContainer>
                                         <GridContainer justify="center">
