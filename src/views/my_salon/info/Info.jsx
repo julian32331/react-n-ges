@@ -260,22 +260,22 @@ class Info extends React.Component {
             this.state.addressState === "success" &&
             this.state.zipState === "success" &&
             this.state.cityState === "success" &&
-            this.state.s_address1State === "success" &&
-            this.state.s_cityState === "success" &&
-            this.state.s_zipState === "success" &&
-            this.state.s_mobileState === "success" &&
-            this.state.s_countryState === "success" &&
+            // this.state.s_address1State === "success" &&
+            // this.state.s_cityState === "success" &&
+            // this.state.s_zipState === "success" &&
+            // this.state.s_mobileState === "success" &&
+            // this.state.s_countryState === "success" &&
             this.state.disableBooking) {
                 return true;
         } else if(this.state.nameState === "success" &&
             this.state.addressState === "success" &&
             this.state.zipState === "success" &&
             this.state.cityState === "success" &&
-            this.state.s_address1State === "success" &&
-            this.state.s_cityState === "success" &&
-            this.state.s_zipState === "success" &&
-            this.state.s_mobileState === "success" &&
-            this.state.s_countryState === "success" &&
+            // this.state.s_address1State === "success" &&
+            // this.state.s_cityState === "success" &&
+            // this.state.s_zipState === "success" &&
+            // this.state.s_mobileState === "success" &&
+            // this.state.s_countryState === "success" &&
             !this.state.disableBooking && this.state.bookingWeeksState === "success") {
             return true;
         } else {
@@ -722,7 +722,7 @@ class Info extends React.Component {
                                             </div>
                                         </GridItem>
                                     </GridContainer>            
-                                    <div className={classes.cardHeader}>
+                                    {/* <div className={classes.cardHeader}>
                                         <h3 className={classes.cardTitle}>Leveransadress</h3>
                                     </div>
                                     <GridContainer>
@@ -877,7 +877,7 @@ class Info extends React.Component {
                                                 }}
                                             />
                                         </GridItem>
-                                    </GridContainer>
+                                    </GridContainer> */}
                                     <GridContainer justify="flex-end" alignItems="flex-end">
                                     {
                                         this.state.isEdit? (                      

@@ -18,6 +18,7 @@ import Contacts from "views/Intranett/Contacts/Contacts.jsx";
 import Products from "views/B2BShop/Products/Products.jsx";
 import ShoppingCart from "views/B2BShop/ShoppingCart/ShoppingCart.jsx";
 import Orders from "views/B2BShop/Orders/Orders.jsx";
+import Blank from "views/B2BShop/Blank.jsx";
 
 import Profile from "views/profile/Profile.jsx";
 import CompanyInfo from "views/company_info/CompanyInfo.jsx";
@@ -102,49 +103,48 @@ export var dashRoutes1 = [
         component: MyEmployees
       }
     ]
-  },
-  // {
-  //   path: "/booking/:salonId?/:consumerId?",
-  //   name: "Booking",
-  //   icon: DateRange,
-  //   component: Booking,
-  //   isDev: true
-  // },
+  },,
   {
     path: "/bookingappointment",
     name: "Bokningssytem",
     icon: DateRange,
     component: BookingAppointment,
     // isDev: true
-  },
+  },  
   {
-    collapse: true,
     path: "/b2bshop",
     name: "Butik",
-    state: "b2bshop",
     icon: Shop,
-    // isDev: true,
-    views: [
-      {
-        path: "/b2bshop/products",
-        name: "Produkter",
-        mini: "P",
-        component: Products
-      },
-      {
-        path: "/b2bshop/cart",
-        name: "Shopping Cart",
-        mini: "SC",
-        component: ShoppingCart
-      },
-      {
-        path: "/b2bshop/orders",
-        name: "Order",
-        mini: "O",
-        component: Orders
-      }
-    ]
+    component: Blank
   },
+  // {
+  //   collapse: true,
+  //   path: "/b2bshop",
+  //   name: "Butik",
+  //   state: "b2bshop",
+  //   icon: Shop,
+  //   // isDev: true,
+  //   views: [
+  //     {
+  //       path: "/b2bshop/products",
+  //       name: "Produkter",
+  //       mini: "P",
+  //       component: Products
+  //     },
+  //     {
+  //       path: "/b2bshop/cart",
+  //       name: "Shopping Cart",
+  //       mini: "SC",
+  //       component: ShoppingCart
+  //     },
+  //     {
+  //       path: "/b2bshop/orders",
+  //       name: "Order",
+  //       mini: "O",
+  //       component: Orders
+  //     }
+  //   ]
+  // },
   {
     collapse: true,
     path: "/intranett",

@@ -63,7 +63,6 @@ class InternalBooking extends React.Component {
         super(props);
         this.state = {
             checkBookingState   : true,
-            disabledSalonInfo   : null,
             bookingWeeks        : 0,
             step                : 1,
             serviceId           : null,
@@ -90,25 +89,9 @@ class InternalBooking extends React.Component {
                 checkBookingState: false,
                 bookingWeeks: response.data.bookingWeeks
             })
-            if(response.data.bookingEnabled) {
-                this.props.getBookingServices({
-                    salonId: salonId
-                })
-            } else {
-                this.setState({
-                    disabledSalonInfo: {
-                        address: response.data.address,
-                        bookingEnabled: response.data.bookingEnabled,
-                        city: response.data.city,
-                        country: response.data.country,
-                        email: response.data.email,
-                        externalBookingUrl: response.data.externalBookingUrl,
-                        post: response.data.post,
-                        telephone: response.data.telephone,
-                        website: response.data.website
-                    }
-                })
-            }
+            this.props.getBookingServices({
+                salonId: salonId
+            })
         })
     }
 
@@ -384,378 +367,338 @@ class InternalBooking extends React.Component {
                         </div>
                     ) : (
                         <div>
+                            <GridContainer>
+                                <GridItem xs={12} >
+                                    <h1 className={classes.title}>Boka tid</h1>
+                                </GridItem>
+                            </GridContainer>
+                            <GridContainer>
+                                <GridItem xs={12} sm={3}>
+                                    <Stepper active={this.state.step === 1} number={1} title="Tjänster" sub="Välj önskad tjänst" />
+                                </GridItem>
+                                <GridItem xs={12} sm={3}>
+                                    <Stepper active={this.state.step === 2} number={2} title="Välj Frisör" sub="Välj önskad frisör" />
+                                </GridItem>
+                                <GridItem xs={12} sm={3}>
+                                    <Stepper active={this.state.step === 3} number={3} title="Datum och tid" sub="När vill du boka tid?" />
+                                </GridItem>
+                                <GridItem xs={12} sm={3}>
+                                    <Stepper active={this.state.step === 4} number={4} title="Kontaktinfo" sub="Lägg in kontaktinformation" />
+                                </GridItem>
+                            </GridContainer>
+                            <div className={classes.content}>
                             {
-                                this.state.disabledSalonInfo? (
-                                    <div className={classes.infoContainer}>
-                                        <h2 className={classes.salonTitle}>Boknigsinformation</h2>
-                                        <h3 className={classes.center}>Denna salong har valt att inte erbjuda Geselles tidbokning online</h3>
-                                        <GridContainer justify="center">
-                                            <GridItem xs={12} sm={3} className={classes.key}>
-                                                <h3 style={{marginTop: '0'}}><b>Adress: </b></h3>
-                                            </GridItem>
-                                            <GridItem xs={12} sm={5} className={classes.left}>
-                                            <h3 style={{marginTop: '0'}}>{this.state.disabledSalonInfo? this.state.disabledSalonInfo.address + " " + this.state.disabledSalonInfo.post + " " + this.state.disabledSalonInfo.city : ""}</h3>
-                                            </GridItem>
-                                        </GridContainer>
-                                        <GridContainer justify="center">
-                                            <GridItem xs={12} sm={3} className={classes.key}>
-                                                <h3 style={{marginTop: '0'}}><b>Telefon: </b></h3>
-                                            </GridItem>
-                                            <GridItem xs={12} sm={5} className={classes.left}>
-                                                <h3 style={{marginTop: '0'}}>{this.state.disabledSalonInfo? this.state.disabledSalonInfo.telephone : ""}</h3>
-                                            </GridItem>
-                                        </GridContainer>
-                                        {
-                                            this.state.disabledSalonInfo && this.state.disabledSalonInfo.externalBookingUrl &&
-                                                <GridContainer justify="center">
-                                                    <GridItem xs={12} sm={3} className={classes.key}>
-                                                        <h3 style={{marginTop: '0'}}><b>Bokningssida: </b></h3>
-                                                    </GridItem>
-                                                    <GridItem xs={12} sm={5} className={classes.left}>                                                                                                    
-                                                        <Button simple className={classes.externalSite} onClick={() => this.goExternalBooking(this.state.disabledSalonInfo? this.state.disabledSalonInfo.externalBookingUrl : "")}>
-                                                            <h3 className={classes.bookingLink}>{this.state.disabledSalonInfo? this.state.disabledSalonInfo.externalBookingUrl : ""}</h3>  
-                                                        </Button>                                                 
-                                                    </GridItem>
-                                                </GridContainer>
-                                        }                                        
-                                    </div>
-                                ) : (
+                                step === 1 &&
                                     <div>
-                                        <GridContainer>
-                                            <GridItem xs={12} >
-                                                <h1 className={classes.title}>Boka tid</h1>
-                                            </GridItem>
-                                        </GridContainer>
-                                        <GridContainer>
-                                            <GridItem xs={12} sm={3}>
-                                                <Stepper active={this.state.step === 1} number={1} title="Tjänster" sub="Välj önskad tjänst" />
-                                            </GridItem>
-                                            <GridItem xs={12} sm={3}>
-                                                <Stepper active={this.state.step === 2} number={2} title="Välj Frisör" sub="Välj önskad frisör" />
-                                            </GridItem>
-                                            <GridItem xs={12} sm={3}>
-                                                <Stepper active={this.state.step === 3} number={3} title="Datum och tid" sub="När vill du boka tid?" />
-                                            </GridItem>
-                                            <GridItem xs={12} sm={3}>
-                                                <Stepper active={this.state.step === 4} number={4} title="Kontaktinfo" sub="Lägg in kontaktinformation" />
-                                            </GridItem>
-                                        </GridContainer>
-                                        <div className={classes.content}>
-                                        {
-                                            step === 1 &&
-                                                <div>
-                                                {
-                                                    loading? (
-                                                        <div className={classes.loading_container}>
-                                                            <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
-                                                        </div>
-                                                    ) : 
-                                                    <Card>
-                                                        <CardBody>
-                                                            <Table
-                                                                striped
-                                                                tableHead={[
-                                                                    "#",
-                                                                    "",
-                                                                    "Namn på tjänsten",
-                                                                    "Varaktighet",
-                                                                    "Pris"
-                                                                ]}
-                                                                tableData={services}
-                                                                customCellClasses={[
-                                                                    classes.center,
-                                                                    classes.nowrap,
-                                                                    classes.right + " " + classes.nowrap
-                                                                ]}
-                                                                customClassesForCells={[0, 1, 4]}
-                                                                customHeadCellClasses={[
-                                                                    classes.center,
-                                                                    classes.nowrap,
-                                                                    classes.right + " " + classes.nowrap
-                                                                ]}
-                                                                customHeadClassesForCells={[0, 1, 4]}
-                                                            />
-                                                        </CardBody>
-                                                    </Card>
-                                                }
-                                                </div>
-                                        }    
-                                        {                    
-                                            step === 2 &&
-                                                <div>
-                                                    {
-                                                        loading? (
-                                                            <div className={classes.loading_container}>
-                                                                <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
-                                                            </div>
-                                                        ) : (
-                                                            employees.length > 0 && 
-                                                                <div className={classes.employee}>
-                                                                    <div style={{width: width, margin: 'auto'}}>
-                                                                        <Slider {...settings} ref="employee_slider">
-                                                                            {
-                                                                                employees.map((employee, key) => {
-                                                                                    return (
-                                                                                        <div className={classes.slide_container} key={key} onClick={() => this.selectEmployee(employee)}>
-                                                                                            <img src={employee.EmployeeInformation.picturePath? Utils.root + employee.EmployeeInformation.picturePath : defaultAvatar} className={classes.slide_img} alt="..." />
-                                                                                            <div className={classes.slide_name}>{ employee.name }</div>
-                                                                                        </div>
-                                                                                    )
-                                                                                })
-                                                                            }
-                                                                        </Slider>
-                                                                    </div>                                   
-                                                                    <GridContainer alignItems="center">
-                                                                        <GridItem xs={3}>
-                                                                            <Button
-                                                                                justIcon
-                                                                                simple
-                                                                                size="lg"
-                                                                                color="info"
-                                                                                onClick={()=>this.refs.employee_slider.slickPrev()}
-                                                                                >
-                                                                                <ArrowBackIos className={classes.icons} />
-                                                                            </Button>
-                                                                        </GridItem>
-                                                                        <GridItem xs={6}>
-                                                                            <div className={classes.employeeName}>{this.state.hairdresserName}</div>
-                                                                            {/* <div className={classes.employeeExpert}>BEAUTY THERAPIST</div> */}
-                                                                        </GridItem>
-                                                                        <GridItem xs={3} className={classes.right}>
-                                                                            <Button
-                                                                                justIcon
-                                                                                simple
-                                                                                size="lg"
-                                                                                color="info"
-                                                                                onClick={()=>this.refs.employee_slider.slickNext()}
-                                                                                >
-                                                                                <ArrowForwardIos className={classes.icons} />
-                                                                            </Button>
-                                                                        </GridItem>
-                                                                    </GridContainer>
-                                                                </div>
-                                                        )                                
-                                                    }
-                                                </div>
-                                                
-                                        }                
-                                        {
-                                            step === 3 &&
-                                                <div>
-                                                    {
-                                                        loading? (
-                                                            <div className={classes.loading_container}>
-                                                                <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
-                                                            </div>
-                                                        ) : (
-                                                            <div className={classes.date_time}>
-                                                                <div className={classes.month_container}>{booking_date? moment(booking_date, "YYYY MM DD").format('MMMM') : moment().format('MMMM')}</div>
-                                                                <Slider {...date_settings} ref="date_slider">
-                                                                    {
-                                                                        dates.map((item, key) => {
-                                                                            let date, day;
-                                                                            if(item.status == 1) {
-                                                                                date = classes.date + " " + classes.date_dayPassed;
-                                                                                day = classes.day + " " + classes.date_dayPassed;
-                                                                            } else if(item.status == 2) {
-                                                                                date = classes.date + " " + classes.dateActived;
-                                                                                day = classes.day + " " + classes.dayActived;
-                                                                            } else if(item.status == 3) {
-                                                                                date = classes.date + " " + classes.date_dayDisabled;
-                                                                                day = classes.day + " " + classes.date_dayDisabled;
-                                                                            } else {
-                                                                                date = classes.date;
-                                                                                day = classes.day;
-                                                                            }
-                                                                            return (
-                                                                                <div key={key} className={classes.date_container} onClick={() => this.selectDate(item, dates.length)}>
-                                                                                    <div className={date}>{moment(item.date, "YYYY MM DD").format('D')}</div>
-                                                                                    <div className={day}>{item.day}</div>
-                                                                                </div>
-                                                                            )
-                                                                        })
-                                                                    }
-                                                                </Slider>
-
-                                                                {
-                                                                    this.props.timeSlots.length == 0? (
-                                                                        <h4 className={classes.center}>No availible booking</h4>
-                                                                    ) : (
-                                                                        <Slider {...time_settings} ref="time_slider">
-                                                                            {
-                                                                                timeSlots.map((item, key) => {
-                                                                                    let time;
-                                                                                    if(item.status == 1) {
-                                                                                        time = classes.time + " " + classes.timePassed;
-                                                                                    } else if(item.status == 2) {
-                                                                                        time = classes.time
-                                                                                    } else if(item.status == 3) {
-                                                                                        time = classes.time + " " + classes.timeDisabled;
-                                                                                    } 
-                                                                                    if(item.time === this.state.booking_time) {
-                                                                                        time = classes.time + " " + classes.timeActived;
-                                                                                    }
-                                                                                    return (
-                                                                                        <div key={key} className={classes.time_container}>
-                                                                                            <div className={time} onClick={() => this.selectTime(item)}>{item.time}</div>
-                                                                                        </div>
-                                                                                    )
-                                                                                })
-                                                                            }
-                                                                        </Slider>
-                                                                    )
-                                                                }  
-            
-                                                                <GridContainer alignItems="center">
-                                                                    <GridItem xs={3}>
-                                                                        <Button
-                                                                            justIcon
-                                                                            simple
-                                                                            size="lg"
-                                                                            color="info"
-                                                                            onClick={()=>this.refs.date_slider.slickPrev()}
-                                                                            >
-                                                                            <ArrowBackIos className={classes.icons} />
-                                                                        </Button>
-                                                                    </GridItem>
-                                                                    <GridItem xs={6}>
-                                                                        <div className={classes.employeeName}>{this.state.booking_date !=="" && moment(this.state.booking_date, "YYYY MM DD").format('DD MMMM YYYY')} {this.state.booking_time} </div>
-                                                                    </GridItem>
-                                                                    <GridItem xs={3} className={classes.right}>
-                                                                        <Button
-                                                                            justIcon
-                                                                            simple
-                                                                            size="lg"
-                                                                            color="info"
-                                                                            onClick={()=>this.refs.date_slider.slickNext()}
-                                                                            >
-                                                                            <ArrowForwardIos className={classes.icons} />
-                                                                        </Button>
-                                                                    </GridItem>
-                                                                </GridContainer>
-                                                            </div>
-                                                        )
-                                                    }
-                                                </div>
-                                        }
-                                        {
-                                            step === 4 &&
-                                                <GridContainer justify="center">
-                                                    <GridItem xs={12} sm={4}>
-                                                    {
-                                                        !this.props.match.params.consumerId &&
-                                                            <div>
-                                                                <CustomInput
-                                                                    success={this.state.consumerNameState === "success"}
-                                                                    error={this.state.consumerNameState === "error"}
-                                                                    id="fullname"
-                                                                    formControlProps={{
-                                                                        fullWidth: true
-                                                                    }}
-                                                                    inputProps={{
-                                                                        placeholder: "Namn",
-                                                                        onChange: event => this.change(event, "consumerName", "consumerName", 1),
-                                                                        startAdornment: (
-                                                                            <InputAdornment
-                                                                                position="start"
-                                                                                className={classes.inputAdornment}
-                                                                            >
-                                                                                <Face classes={{root: classes.iconRoot}} className={classes.inputAdornmentIcon} />
-                                                                            </InputAdornment>
-                                                                        )
-                                                                    }}
-                                                                />
-                                                                <CustomInput
-                                                                    success={this.state.consumerEmailState === "success"}
-                                                                    error={this.state.consumerEmailState === "error"}
-                                                                    id="email"
-                                                                    formControlProps={{
-                                                                        fullWidth: true
-                                                                    }}
-                                                                    inputProps={{
-                                                                        placeholder: "E-post",
-                                                                        onChange: event => this.change(event, "consumerEmail", "consumerEmail", 1),
-                                                                        startAdornment: (
-                                                                            <InputAdornment
-                                                                                position="start"
-                                                                                className={classes.inputAdornment}
-                                                                            >
-                                                                                <Email classes={{root: classes.iconRoot}} className={classes.inputAdornmentIcon} />
-                                                                            </InputAdornment>
-                                                                        )
-                                                                    }}
-                                                                />
-                                                                <CustomInput
-                                                                    success={this.state.consumerMobileState === "success"}
-                                                                    error={this.state.consumerMobileState === "error"}
-                                                                    id="phone"
-                                                                    formControlProps={{
-                                                                        fullWidth: true
-                                                                    }}
-                                                                    inputProps={{
-                                                                        placeholder: "Mobilnummer",
-                                                                        onChange: event => this.change(event, "consumerMobile", "consumerMobile", 1),
-                                                                        startAdornment: (
-                                                                            <InputAdornment
-                                                                                position="start"
-                                                                                className={classes.inputAdornment}
-                                                                            >
-                                                                                <Phone classes={{root: classes.iconRoot}} className={classes.inputAdornmentIcon} />
-                                                                            </InputAdornment>
-                                                                        )
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                    }
-                                                        
-                                                        <TextField
-                                                            id="outlined-bare"
-                                                            className={classes.textArea}
-                                                            InputProps={{
-                                                                classes: {
-                                                                    multiline: classes.multiline,
-                                                                    inputMultiline: classes.inputMultiline
-                                                                },
-                                                                onChange: event => this.change(event, "comment", "comment", 1),
-                                                            }}
-                                                            multiline
-                                                            rows="4"
-                                                            fullWidth
-                                                            placeholder="Kommentar"
-                                                            margin="none"
-                                                            variant="outlined"
-                                                        />
-                                                    </GridItem>
-                                                </GridContainer>
-                                                
-                                        }
-                                        {
-                                            step === 5 &&
-                                                <Card>
-                                                    <CardBody>
-                                                        <div>Bokningen är klar!</div>                                                        
-                                                        {/* booking Summary */}
-                                                        {/* <h2 className={classes.salonTitle}>Bokningen är klar!</h2>
-                                                        <h3 className={classes.center}>Your booking is <b>{this.state.serviceName}</b>. <b>{this.state.hairdresserName}</b> will serve you on <b>{moment(this.state.booking_date, "YYYY MM DD").format("YYYY-MM-DD")} {this.state.booking_time}</b>. Duration is <b>{this.state.serviceDuration}</b> mins.</h3>                            */}
-                                                        {/* booking Summary */}
-                                                    </CardBody>
-                                                </Card>
-                                        }
-                                        </div>
-                                        <GridContainer justify="space-between" alignItems="center">
-                                            <GridItem>
-                                            </GridItem>
-                                            <GridItem>
-                                                <Button color="info" disabled={!this.canNext()} onClick={() => this.handlerStep()}>{button_name}</Button>
-                                            </GridItem>
-                                        </GridContainer>
-                                        <div className={classes.divider}></div>
+                                    {
+                                        loading? (
+                                            <div className={classes.loading_container}>
+                                                <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                                            </div>
+                                        ) : 
+                                        <Card>
+                                            <CardBody>
+                                                <Table
+                                                    striped
+                                                    tableHead={[
+                                                        "#",
+                                                        "",
+                                                        "Namn på tjänsten",
+                                                        "Varaktighet",
+                                                        "Pris"
+                                                    ]}
+                                                    tableData={services}
+                                                    customCellClasses={[
+                                                        classes.center,
+                                                        classes.nowrap,
+                                                        classes.right + " " + classes.nowrap
+                                                    ]}
+                                                    customClassesForCells={[0, 1, 4]}
+                                                    customHeadCellClasses={[
+                                                        classes.center,
+                                                        classes.nowrap,
+                                                        classes.right + " " + classes.nowrap
+                                                    ]}
+                                                    customHeadClassesForCells={[0, 1, 4]}
+                                                />
+                                            </CardBody>
+                                        </Card>
+                                    }
                                     </div>
-                                )
+                            }    
+                            {                    
+                                step === 2 &&
+                                    <div>
+                                        {
+                                            loading? (
+                                                <div className={classes.loading_container}>
+                                                    <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                                                </div>
+                                            ) : (
+                                                employees.length > 0 && 
+                                                    <div className={classes.employee}>
+                                                        <div style={{width: width, margin: 'auto'}}>
+                                                            <Slider {...settings} ref="employee_slider">
+                                                                {
+                                                                    employees.map((employee, key) => {
+                                                                        return (
+                                                                            <div className={classes.slide_container} key={key} onClick={() => this.selectEmployee(employee)}>
+                                                                                <img src={employee.EmployeeInformation.picturePath? Utils.root + employee.EmployeeInformation.picturePath : defaultAvatar} className={classes.slide_img} alt="..." />
+                                                                                <div className={classes.slide_name}>{ employee.name }</div>
+                                                                            </div>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </Slider>
+                                                        </div>                                   
+                                                        <GridContainer alignItems="center">
+                                                            <GridItem xs={3}>
+                                                                <Button
+                                                                    justIcon
+                                                                    simple
+                                                                    size="lg"
+                                                                    color="info"
+                                                                    onClick={()=>this.refs.employee_slider.slickPrev()}
+                                                                    >
+                                                                    <ArrowBackIos className={classes.icons} />
+                                                                </Button>
+                                                            </GridItem>
+                                                            <GridItem xs={6}>
+                                                                <div className={classes.employeeName}>{this.state.hairdresserName}</div>
+                                                                {/* <div className={classes.employeeExpert}>BEAUTY THERAPIST</div> */}
+                                                            </GridItem>
+                                                            <GridItem xs={3} className={classes.right}>
+                                                                <Button
+                                                                    justIcon
+                                                                    simple
+                                                                    size="lg"
+                                                                    color="info"
+                                                                    onClick={()=>this.refs.employee_slider.slickNext()}
+                                                                    >
+                                                                    <ArrowForwardIos className={classes.icons} />
+                                                                </Button>
+                                                            </GridItem>
+                                                        </GridContainer>
+                                                    </div>
+                                            )                                
+                                        }
+                                    </div>
+                                    
+                            }                
+                            {
+                                step === 3 &&
+                                    <div>
+                                        {
+                                            loading? (
+                                                <div className={classes.loading_container}>
+                                                    <CircularProgress className={classes.progress} classes={{colorPrimary: classes.loading}} />
+                                                </div>
+                                            ) : (
+                                                <div className={classes.date_time}>
+                                                    <div className={classes.month_container}>{booking_date? moment(booking_date, "YYYY MM DD").format('MMMM') : moment().format('MMMM')}</div>
+                                                    <Slider {...date_settings} ref="date_slider">
+                                                        {
+                                                            dates.map((item, key) => {
+                                                                let date, day;
+                                                                if(item.status == 1) {
+                                                                    date = classes.date + " " + classes.date_dayPassed;
+                                                                    day = classes.day + " " + classes.date_dayPassed;
+                                                                } else if(item.status == 2) {
+                                                                    date = classes.date + " " + classes.dateActived;
+                                                                    day = classes.day + " " + classes.dayActived;
+                                                                } else if(item.status == 3) {
+                                                                    date = classes.date + " " + classes.date_dayDisabled;
+                                                                    day = classes.day + " " + classes.date_dayDisabled;
+                                                                } else {
+                                                                    date = classes.date;
+                                                                    day = classes.day;
+                                                                }
+                                                                return (
+                                                                    <div key={key} className={classes.date_container} onClick={() => this.selectDate(item, dates.length)}>
+                                                                        <div className={date}>{moment(item.date, "YYYY MM DD").format('D')}</div>
+                                                                        <div className={day}>{item.day}</div>
+                                                                    </div>
+                                                                )
+                                                            })
+                                                        }
+                                                    </Slider>
+
+                                                    {
+                                                        this.props.timeSlots.length == 0? (
+                                                            <h4 className={classes.center}>No availible booking</h4>
+                                                        ) : (
+                                                            <Slider {...time_settings} ref="time_slider">
+                                                                {
+                                                                    timeSlots.map((item, key) => {
+                                                                        let time;
+                                                                        if(item.status == 1) {
+                                                                            time = classes.time + " " + classes.timePassed;
+                                                                        } else if(item.status == 2) {
+                                                                            time = classes.time
+                                                                        } else if(item.status == 3) {
+                                                                            time = classes.time + " " + classes.timeDisabled;
+                                                                        } 
+                                                                        if(item.time === this.state.booking_time) {
+                                                                            time = classes.time + " " + classes.timeActived;
+                                                                        }
+                                                                        return (
+                                                                            <div key={key} className={classes.time_container}>
+                                                                                <div className={time} onClick={() => this.selectTime(item)}>{item.time}</div>
+                                                                            </div>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </Slider>
+                                                        )
+                                                    }  
+
+                                                    <GridContainer alignItems="center">
+                                                        <GridItem xs={3}>
+                                                            <Button
+                                                                justIcon
+                                                                simple
+                                                                size="lg"
+                                                                color="info"
+                                                                onClick={()=>this.refs.date_slider.slickPrev()}
+                                                                >
+                                                                <ArrowBackIos className={classes.icons} />
+                                                            </Button>
+                                                        </GridItem>
+                                                        <GridItem xs={6}>
+                                                            <div className={classes.employeeName}>{this.state.booking_date !=="" && moment(this.state.booking_date, "YYYY MM DD").format('DD MMMM YYYY')} {this.state.booking_time} </div>
+                                                        </GridItem>
+                                                        <GridItem xs={3} className={classes.right}>
+                                                            <Button
+                                                                justIcon
+                                                                simple
+                                                                size="lg"
+                                                                color="info"
+                                                                onClick={()=>this.refs.date_slider.slickNext()}
+                                                                >
+                                                                <ArrowForwardIos className={classes.icons} />
+                                                            </Button>
+                                                        </GridItem>
+                                                    </GridContainer>
+                                                </div>
+                                            )
+                                        }
+                                    </div>
                             }
+                            {
+                                step === 4 &&
+                                    <GridContainer justify="center">
+                                        <GridItem xs={12} sm={4}>
+                                        {
+                                            !this.props.match.params.consumerId &&
+                                                <div>
+                                                    <CustomInput
+                                                        success={this.state.consumerNameState === "success"}
+                                                        error={this.state.consumerNameState === "error"}
+                                                        id="fullname"
+                                                        formControlProps={{
+                                                            fullWidth: true
+                                                        }}
+                                                        inputProps={{
+                                                            placeholder: "Namn",
+                                                            onChange: event => this.change(event, "consumerName", "consumerName", 1),
+                                                            startAdornment: (
+                                                                <InputAdornment
+                                                                    position="start"
+                                                                    className={classes.inputAdornment}
+                                                                >
+                                                                    <Face classes={{root: classes.iconRoot}} className={classes.inputAdornmentIcon} />
+                                                                </InputAdornment>
+                                                            )
+                                                        }}
+                                                    />
+                                                    <CustomInput
+                                                        success={this.state.consumerEmailState === "success"}
+                                                        error={this.state.consumerEmailState === "error"}
+                                                        id="email"
+                                                        formControlProps={{
+                                                            fullWidth: true
+                                                        }}
+                                                        inputProps={{
+                                                            placeholder: "E-post",
+                                                            onChange: event => this.change(event, "consumerEmail", "consumerEmail", 1),
+                                                            startAdornment: (
+                                                                <InputAdornment
+                                                                    position="start"
+                                                                    className={classes.inputAdornment}
+                                                                >
+                                                                    <Email classes={{root: classes.iconRoot}} className={classes.inputAdornmentIcon} />
+                                                                </InputAdornment>
+                                                            )
+                                                        }}
+                                                    />
+                                                    <CustomInput
+                                                        success={this.state.consumerMobileState === "success"}
+                                                        error={this.state.consumerMobileState === "error"}
+                                                        id="phone"
+                                                        formControlProps={{
+                                                            fullWidth: true
+                                                        }}
+                                                        inputProps={{
+                                                            placeholder: "Mobilnummer",
+                                                            onChange: event => this.change(event, "consumerMobile", "consumerMobile", 1),
+                                                            startAdornment: (
+                                                                <InputAdornment
+                                                                    position="start"
+                                                                    className={classes.inputAdornment}
+                                                                >
+                                                                    <Phone classes={{root: classes.iconRoot}} className={classes.inputAdornmentIcon} />
+                                                                </InputAdornment>
+                                                            )
+                                                        }}
+                                                    />
+                                                </div>
+                                        }
+                                            
+                                            <TextField
+                                                id="outlined-bare"
+                                                className={classes.textArea}
+                                                InputProps={{
+                                                    classes: {
+                                                        multiline: classes.multiline,
+                                                        inputMultiline: classes.inputMultiline
+                                                    },
+                                                    onChange: event => this.change(event, "comment", "comment", 1),
+                                                }}
+                                                multiline
+                                                rows="4"
+                                                fullWidth
+                                                placeholder="Kommentar"
+                                                margin="none"
+                                                variant="outlined"
+                                            />
+                                        </GridItem>
+                                    </GridContainer>
+                                    
+                            }
+                            {
+                                step === 5 &&
+                                    <Card>
+                                        <CardBody>
+                                            <div>Bokningen är klar!</div>                                                        
+                                            {/* booking Summary */}
+                                            {/* <h2 className={classes.salonTitle}>Bokningen är klar!</h2>
+                                            <h3 className={classes.center}>Your booking is <b>{this.state.serviceName}</b>. <b>{this.state.hairdresserName}</b> will serve you on <b>{moment(this.state.booking_date, "YYYY MM DD").format("YYYY-MM-DD")} {this.state.booking_time}</b>. Duration is <b>{this.state.serviceDuration}</b> mins.</h3>                            */}
+                                            {/* booking Summary */}
+                                        </CardBody>
+                                    </Card>
+                            }
+                            </div>
+                            <GridContainer justify="space-between" alignItems="center">
+                                <GridItem>
+                                </GridItem>
+                                <GridItem>
+                                    <Button color="info" disabled={!this.canNext()} onClick={() => this.handlerStep()}>{button_name}</Button>
+                                </GridItem>
+                            </GridContainer>
+                            <div className={classes.divider}></div>
                         </div>
                     )
-                }                
+                }                 
             </div>
         );
     }
