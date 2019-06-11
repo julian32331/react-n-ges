@@ -365,6 +365,9 @@ class Sidebar extends React.Component {
             });
           if (prop.name === "Butik") {
             let href = prop.path + this.props.token
+            if (this.props.isEmployee) {
+              return null;
+            }
             return (
               <ListItem key={key} className={customItem}>
                 <a href={href} className={navLinkClasses}>
@@ -536,9 +539,10 @@ Sidebar.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    token   : state.auth.token,
-    avatar  : state.auth.avatar,
-    username: state.auth.username
+    token     : state.auth.token,
+    avatar    : state.auth.avatar,
+    username  : state.auth.username,
+    isEmployee: state.auth.isEmployee
   };
 }
 export default withStyles(sidebarStyle)(withRouter(connect(mapStateToProps)(Sidebar)));
