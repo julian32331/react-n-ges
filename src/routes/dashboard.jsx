@@ -112,7 +112,7 @@ export var dashRoutes1 = [
     // isDev: true
   },  
   {
-    path: "/b2bshop",
+    path: "https://shop.geselle-one.com/authenticate/?token=",
     name: "Butik",
     icon: Shop,
     component: Blank

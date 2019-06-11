@@ -309,9 +309,6 @@ class Sidebar extends React.Component {
                 <Collapse in={this.state[prop.state]} unmountOnExit>
                   <List className={classes.list + " " + classes.collapseList}>
                     {prop.views.map((prop, key) => {
-                      if (prop.redirect || prop.name === 'Shopping Cart') {
-                        return null;
-                      }
                       const navLinkClasses =
                         classes.collapseItemLink +
                         " " +
@@ -366,6 +363,27 @@ class Sidebar extends React.Component {
             cx({
               [classes.itemIconRTL]: rtlActive
             });
+          if (prop.name === "Butik") {
+            let href = prop.path + this.props.token
+            return (
+              <ListItem key={key} className={customItem}>
+                <a href={href} className={navLinkClasses}>
+                  <ListItemIcon className={itemIcon}>
+                    {typeof prop.icon === "string" ? (
+                      <Icon>{prop.icon}</Icon>
+                    ) : (
+                      <prop.icon />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={prop.name}
+                    disableTypography={true}
+                    className={itemText}
+                  />
+                </a>
+              </ListItem>
+            )
+          }
           return (
             <ListItem key={key} className={customItem}>
               <NavLink to={prop.path} className={navLinkClasses}>
@@ -518,7 +536,8 @@ Sidebar.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    avatar: state.auth.avatar,
+    token   : state.auth.token,
+    avatar  : state.auth.avatar,
     username: state.auth.username
   };
 }
