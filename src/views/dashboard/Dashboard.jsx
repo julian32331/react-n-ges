@@ -17,8 +17,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
+import { FormattedMessage } from 'react-intl';
+
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboard/dashboardStyle.jsx";
 import SelectSalon from "./modals/SelectSalon.jsx";
+import locales from './homeLocals.json';
 
 class Dashboard extends React.Component {
 
@@ -30,6 +33,7 @@ class Dashboard extends React.Component {
   }
   
   componentDidMount() {
+    this.props.setLocales(locales)
     this.props.getUser().then(() => {
       if(!this.props.token) {
         this.props.history.push("/login");
@@ -61,7 +65,9 @@ class Dashboard extends React.Component {
       <Card className={classes.card}>
         <CardBody className={classes.cardContent}>
           <div className={classes.container}>
-            <div className={classes.title}>VARMT VÄLKOMMEN TILL GESELLE</div>
+            <div className={classes.title}>
+              <FormattedMessage id="title" defaultMessage="VARMT VÄLKOMMEN TILL GESELLE" />
+            </div>
             <p className={classes.content}>
               Nordeuropas största frisörkedja för frisörer och salonger med frisörlicens & gesäll brev.
             </p>
@@ -101,7 +107,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getUser     : Actions.getUser,
-    updateUser  : Actions.updateUser
+    updateUser  : Actions.updateUser,
+    setLocales  : Actions.setLocales
   }, dispatch);
 }
 

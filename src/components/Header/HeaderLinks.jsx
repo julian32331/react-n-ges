@@ -7,10 +7,12 @@ import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 
+import store from 'store';
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
 import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
+import { updateIntl } from 'react-intl-redux'
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -29,6 +31,9 @@ import Person from "@material-ui/icons/Person";
 
 // core components
 import Button from "components/CustomButtons/Button.jsx";
+
+import ReactFlagsSelect from 'react-flags-select';
+import 'react-flags-select/css/react-flags-select.css';
 
 import headerLinksStyle from "assets/jss/material-dashboard-pro-react/components/headerLinksStyle";
 
@@ -74,6 +79,21 @@ class HeaderLinks extends React.Component {
       isEmployee    : companyAuthLevel === "EMPLOYEE"? true : false
     });
   };
+
+  onSelectFlag = (countryCode) => {
+    let code;
+    if (countryCode === "US") {
+      code = "en"
+    } else if (countryCode === "SE") {
+      code = "sv"
+    }
+    store.dispatch(
+      updateIntl({
+        locale: code,
+        messages: this.props.locales[code],
+      })
+    )
+  }
 
   render() {
     const { classes, rtlActive } = this.props;
@@ -149,6 +169,13 @@ class HeaderLinks extends React.Component {
             </Select>
           </FormControl>
         </div>
+        <ReactFlagsSelect 
+          countries={["SE", "US"]} 
+          customLabels={{"SE": "SE", "US": "EN"}}
+          defaultCountry="SE"
+          alignOptions="left"
+          onSelect={this.onSelectFlag}
+        />
         <div className={managerClasses}>
           <Button
             color="transparent"
@@ -237,7 +264,8 @@ HeaderLinks.propTypes = {
 function mapStateToProps(state) {
   return {
     workingFor    : state.auth.workingFor,
-    workingForId  : state.auth.workingForId
+    workingForId  : state.auth.workingForId,
+    locales       : state.locales.locales
   };
 }
 

@@ -9,6 +9,7 @@ import b2b_shop from './b2b_shop';
 import company from './company_info';
 import my_ledger from './my_ledger';
 import profile from './profile';
+import locales from './locales.reducer';
 
 import employees from "./employees.reducer";
 import mySalons from "./mySalons.reducer";
@@ -17,6 +18,7 @@ const createReducer = (asyncReducers) =>
     combineReducers({
         intl: intlReducer,
 
+        locales,
         booking,
         auth,
         my_salon,

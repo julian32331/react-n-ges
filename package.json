@@ -23,6 +23,7 @@
     "react-csv": "^1.0.19",
     "react-datetime": "2.15.0",
     "react-dom": "^16.8.6",
+    "react-flags-select": "^1.1.10",
     "react-google-maps": "9.4.5",
     "react-infinite-calendar": "^2.3.1",
     "react-intl": "^2.9.0",

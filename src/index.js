@@ -2,8 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { addLocaleData } from "react-intl";
 import { IntlProvider } from "react-intl-redux";
-import itLocaleData from 'react-intl/locale-data/it'
-import zhLocaleData from 'react-intl/locale-data/zh'
+import svLocaleData from 'react-intl/locale-data/sv'
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
 
@@ -14,13 +13,13 @@ import store from 'store';
 
 import "assets/scss/material-dashboard-pro-react.css?v=1.4.0";
 
-addLocaleData([...itLocaleData, ...zhLocaleData]);
+addLocaleData([...svLocaleData]);
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-    <IntlProvider>
+    <IntlProvider defaultLocale="sv">
       <Router history={hist}>
         <Switch>
           {indexRoutes.map((prop, key) => {
