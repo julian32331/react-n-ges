@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import { intlReducer } from 'react-intl-redux';
 
 import booking from './booking';
 import auth from './auth';
@@ -14,6 +15,8 @@ import mySalons from "./mySalons.reducer";
 
 const createReducer = (asyncReducers) =>
     combineReducers({
+        intl: intlReducer,
+
         booking,
         auth,
         my_salon,
