@@ -21,7 +21,14 @@ const enhancer = composeEnhancers(
     applyMiddleware(thunk)
 );
 
-const store = createStore(createReducer(), enhancer);
+const initialState = {
+    intl: {
+        defaultLocale: 'sv',
+        locale: 'sv',
+    }
+}
+
+const store = createStore(createReducer(), initialState, enhancer);
 
 store.asyncReducers = {};
 

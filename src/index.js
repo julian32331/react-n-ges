@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { addLocaleData } from "react-intl";
 import { IntlProvider } from "react-intl-redux";
-import svLocaleData from 'react-intl/locale-data/sv'
+import enLocaleData from 'react-intl/locale-data/en';
+import svLocaleData from 'react-intl/locale-data/sv';
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
 
@@ -13,7 +14,7 @@ import store from 'store';
 
 import "assets/scss/material-dashboard-pro-react.css?v=1.4.0";
 
-addLocaleData([...svLocaleData]);
+addLocaleData([...svLocaleData, ...enLocaleData]);
 
 const hist = createBrowserHistory();
 
