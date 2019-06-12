@@ -20,7 +20,7 @@ const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-    <IntlProvider defaultLocale="sv">
+    <IntlProvider>
       <Router history={hist}>
         <Switch>
           {indexRoutes.map((prop, key) => {

@@ -21,7 +21,7 @@ import { FormattedMessage } from 'react-intl';
 
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboard/dashboardStyle.jsx";
 import SelectSalon from "./modals/SelectSalon.jsx";
-import locales from './homeLocals.json';
+import locales from './homeLocales.json';
 
 class Dashboard extends React.Component {
 

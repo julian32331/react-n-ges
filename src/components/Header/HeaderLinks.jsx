@@ -44,6 +44,9 @@ class HeaderLinks extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
+    let code = nextProps.locale === "sv"? "SE" : "US"
+    this.refs.langFlag.updateSelected(code)
+
     if(nextProps.workingForId) {
       this.setState({
         selectedSalon: Number(nextProps.workingForId)
@@ -103,9 +106,9 @@ class HeaderLinks extends React.Component {
       classes.infoHover,
       { [classes.dropdownItemRTL]: rtlActive }
     );
-    const wrapper = classNames({
-      [classes.wrapperRTL]: rtlActive
-    });
+    // const wrapper = classNames({
+    //   [classes.wrapperRTL]: rtlActive
+    // });
     const managerClasses = classNames({
       [classes.managerClasses]: true
     });
@@ -169,7 +172,8 @@ class HeaderLinks extends React.Component {
             </Select>
           </FormControl>
         </div>
-        <ReactFlagsSelect 
+        <ReactFlagsSelect
+          ref="langFlag" 
           countries={["SE", "US"]} 
           customLabels={{"SE": "SE", "US": "EN"}}
           defaultCountry="SE"
@@ -265,7 +269,8 @@ function mapStateToProps(state) {
   return {
     workingFor    : state.auth.workingFor,
     workingForId  : state.auth.workingForId,
-    locales       : state.locales.locales
+    locales       : state.locales.locales,
+    locale        : state.intl.locale
   };
 }
 
