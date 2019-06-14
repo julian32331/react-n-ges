@@ -88,11 +88,8 @@ class CreateSalon extends React.Component {
             case "address":
             case "zip":
             case "city":
-            case "phone":
             case "description":
-            case "s_co":
             case "s_address1":
-            case "s_address2":
             case "s_zip":
             case "s_city":
             case "s_country":
@@ -105,7 +102,19 @@ class CreateSalon extends React.Component {
                 } else {
                     this.setState({ [stateName + "State"]: "error" });
                 }
-                break;
+                break;                
+            case "phone":
+            case "s_co":
+            case "s_address2":
+                this.setState({
+                    [stateName]: event.target.value
+                })
+                if (Validator.verifyLength(event.target.value, stateNameEqualTo)) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "" });
+                }
+                break; 
             case "email":
                 this.setState({
                     email: event.target.value
@@ -113,7 +122,7 @@ class CreateSalon extends React.Component {
                 if (Validator.verifyEmail(event.target.value)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else {
-                    this.setState({ [stateName + "State"]: "error" });
+                    this.setState({ [stateName + "State"]: "" });
                 }
                 break;
             case "network":
@@ -122,10 +131,8 @@ class CreateSalon extends React.Component {
                 })
                 if (Validator.verifyUrl(event.target.value)) {
                     this.setState({ [stateName + "State"]: "success" });
-                } else if (Validator.verifyUrl(event.target.value) === "") {
-                    this.setState({ [stateName + "State"]: "" });
                 } else {
-                    this.setState({ [stateName + "State"]: "error" });
+                    this.setState({ [stateName + "State"]: "" });
                 }
                 break;
             default:
@@ -142,12 +149,7 @@ class CreateSalon extends React.Component {
             this.state.addressState === "success" &&
             this.state.zipState === "success" &&
             this.state.cityState === "success" &&
-            this.state.phoneState === "success" &&
-            this.state.emailState === "success" &&
-            // this.state.networkState === "success" &&
-            // this.state.s_coState === "success" &&
             this.state.s_address1State === "success" &&
-            // this.state.s_address2State === "success" &&
             this.state.s_cityState === "success" &&
             this.state.s_zipState === "success" &&
             this.state.s_mobileState === "success" &&
@@ -308,20 +310,12 @@ class CreateSalon extends React.Component {
                             <CustomInput
                                 success={this.state.phoneState === "success"}
                                 error={this.state.phoneState === "error"}
-                                labelText="Mobilnummer *"
+                                labelText="Mobilnummer"
                                 id="phone"
                                 formControlProps={{
                                     fullWidth: true
                                 }}
                                 inputProps={{
-                                    endAdornment:
-                                      this.state.phoneState === "error" ? (
-                                        <InputAdornment position="end">
-                                          <Warning className={classes.danger} />
-                                        </InputAdornment>
-                                      ) : (
-                                        undefined
-                                    ),
                                     onChange: event =>
                                         this.change(event, "phone", "phone", 1),
                                     value: this.state.phone,
@@ -333,20 +327,12 @@ class CreateSalon extends React.Component {
                             <CustomInput
                                 success={this.state.emailState === "success"}
                                 error={this.state.emailState === "error"}
-                                labelText="E-post *"
+                                labelText="E-post"
                                 id="email"
                                 formControlProps={{
                                     fullWidth: true
                                 }}
                                 inputProps={{
-                                    endAdornment:
-                                      this.state.emailState === "error" ? (
-                                        <InputAdornment position="end">
-                                          <Warning className={classes.danger} />
-                                        </InputAdornment>
-                                      ) : (
-                                        undefined
-                                    ),
                                     onChange: event =>
                                         this.change(event, "email", "email", 0),
                                     value: this.state.email,
@@ -356,22 +342,14 @@ class CreateSalon extends React.Component {
                         </GridItem>
                         <GridItem xs={12} sm={12} md={4}>
                             <CustomInput
-                                // success={this.state.networkState === "success"}
-                                // error={this.state.networkState === "error"}
+                                success={this.state.networkState === "success"}
+                                error={this.state.networkState === "error"}
                                 labelText="Hemsida"
                                 id="network"
                                 formControlProps={{
                                     fullWidth: true
                                 }}
                                 inputProps={{
-                                    // endAdornment:
-                                    //   this.state.networkState === "error" ? (
-                                    //     <InputAdornment position="end">
-                                    //       <Warning className={classes.danger} />
-                                    //     </InputAdornment>
-                                    //   ) : (
-                                    //     undefined
-                                    // ),
                                     onChange: event =>
                                         this.change(event, "network", "network", 0),
                                     value: this.state.network,
@@ -451,22 +429,14 @@ class CreateSalon extends React.Component {
                     <GridContainer>
                         <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
-                                // success={this.state.s_coState === "success"}
-                                // error={this.state.s_coState === "error"}
+                                success={this.state.s_coState === "success"}
+                                error={this.state.s_coState === "error"}
                                 labelText="Co"
                                 id="city"
                                 formControlProps={{
                                     fullWidth: true
                                 }}
                                 inputProps={{
-                                    // endAdornment:
-                                    //   this.state.s_coState === "error" ? (
-                                    //     <InputAdornment position="end">
-                                    //       <Warning className={classes.danger} />
-                                    //     </InputAdornment>
-                                    //   ) : (
-                                    //     undefined
-                                    // ),
                                     onChange: event =>
                                         this.change(event, "s_co", "s_co", 0),
                                     value: this.state.s_co,
@@ -526,22 +496,14 @@ class CreateSalon extends React.Component {
                         </GridItem>
                         <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
-                                // success={this.state.s_address2State === "success"}
-                                // error={this.state.s_address2State === "error"}
+                                success={this.state.s_address2State === "success"}
+                                error={this.state.s_address2State === "error"}
                                 labelText="Adress2"
                                 id="address"
                                 formControlProps={{
                                     fullWidth: true
                                 }}
                                 inputProps={{
-                                    // endAdornment:
-                                    //   this.state.s_address2State === "error" ? (
-                                    //     <InputAdornment position="end">
-                                    //       <Warning className={classes.danger} />
-                                    //     </InputAdornment>
-                                    //   ) : (
-                                    //     undefined
-                                    // ),
                                     onChange: event =>
                                         this.change(event, "s_address2", "s_address2", 0),
                                     value: this.state.s_address2,
