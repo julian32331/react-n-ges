@@ -290,7 +290,7 @@ class Check extends React.Component {
     this.list.map((item, index) => {
       let temp = [];
       if (index >= (activedPageNo - 1) * 10 && index < activedPageNo * 10) {
-        if(item.checkInEditable || item.checkOutEditable || item.editComment) {
+        if(item.checkInEditable && item.checkOutEditable) {
           temp.push("(Redigerad)")
         } else {
           temp.push("")

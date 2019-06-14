@@ -46,9 +46,13 @@ class EditCheck extends React.Component {
         super(props);
         this.state = {
             checkInEditableDate : "",
+            checkInEditableDateState: "",
             checkInEditableTime : "",
+            checkInEditableTimeState: "",
             checkOutEditableDate: "",
+            checkOutEditableDateState: "",
             checkOutEditableTime: "",
+            checkOutEditableTimeState: "",
             editComment         : "",
             editCommentState    : ""
         }
@@ -58,10 +62,14 @@ class EditCheck extends React.Component {
         if(nextProps.data) {
             console.log('data: ', nextProps.data);
             this.setState({
-                checkInEditableDate: nextProps.data.checkInEditable? moment(nextProps.data.checkInEditable).format("YYYY-MM-DD") : "",
-                checkInEditableTime: nextProps.data.checkInEditable? moment(nextProps.data.checkInEditable).format("HH:mm") : "",
-                checkOutEditableDate: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("YYYY-MM-DD HH:mm") : "",
-                checkOutEditableTime: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("HH:mm") : "",
+                checkInEditableDate: nextProps.data.checkInEditable? moment(nextProps.data.checkInEditable).format("YYYY-MM-DD") : moment(nextProps.data.checkIn).format("YYYY-MM-DD"),
+                checkInEditableDateState: nextProps.data.checkInEditableDate || nextProps.data.checkIn ? "success" : "error",
+                checkInEditableTime: nextProps.data.checkInEditable? moment(nextProps.data.checkInEditable).format("HH:mm") : moment(nextProps.data.checkIn).format("HH:mm"),
+                checkInEditableTimeState: nextProps.data.checkInEditableTime || nextProps.data.checkIn ? "success" : "error",
+                checkOutEditableDate: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("YYYY-MM-DD") : (nextProps.data.checkOut? moment(nextProps.data.checkOut).format("YYYY-MM-DD") : ""),
+                checkOutEditableDateState: nextProps.data.checkOutEditableDate || nextProps.data.checkOut ? "success" : "error",
+                checkOutEditableTime: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("HH:mm") : (nextProps.data.checkOut? moment(nextProps.data.checkOut).format("HH:mm") : ""),
+                checkOutEditableTimeState: nextProps.data.checkOutEditableTime || nextProps.data.checkOut ? "success" : "error",
                 editComment: nextProps.data.editComment? nextProps.data.editComment : ""
             })
         }
@@ -128,7 +136,10 @@ class EditCheck extends React.Component {
     }
 
     canSave() {
-        return false;
+        if(this.state.checkInEditableDateState === "success" && this.state.checkOutEditableDateState === "success" && this.state.checkInEditableTimeState === "success" && this.state.checkOutEditableTimeState === "success")
+            return true;
+        else
+            return false;
     }
 
     render() {
@@ -237,7 +248,7 @@ class EditCheck extends React.Component {
                         onClick={() => this.save()}
                         color="info"
                         size="sm"
-                        disabled={this.canSave()}
+                        disabled={!this.canSave()}
                     >
                         Save
                     </Button>
