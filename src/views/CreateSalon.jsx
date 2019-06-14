@@ -63,10 +63,10 @@ class CreateSalon extends React.Component {
 
             s_co: "",
             s_coState: "",
-            s_address1: "",
-            s_address1State: "",
-            s_address2: "",
-            s_address2State: "",
+            // s_address1: "",
+            // s_address1State: "",
+            // s_address2: "",
+            // s_address2State: "",
             s_city: "",
             s_cityState: "",
             s_zip: "",
@@ -89,7 +89,7 @@ class CreateSalon extends React.Component {
             case "zip":
             case "city":
             case "description":
-            case "s_address1":
+            // case "s_address1":
             case "s_zip":
             case "s_city":
             case "s_country":
@@ -105,7 +105,7 @@ class CreateSalon extends React.Component {
                 break;                
             case "phone":
             case "s_co":
-            case "s_address2":
+            // case "s_address2":
                 this.setState({
                     [stateName]: event.target.value
                 })
@@ -149,7 +149,7 @@ class CreateSalon extends React.Component {
             this.state.addressState === "success" &&
             this.state.zipState === "success" &&
             this.state.cityState === "success" &&
-            this.state.s_address1State === "success" &&
+            // this.state.s_address1State === "success" &&
             this.state.s_cityState === "success" &&
             this.state.s_zipState === "success" &&
             this.state.s_mobileState === "success" &&
@@ -174,8 +174,8 @@ class CreateSalon extends React.Component {
             city: this.state.city,
             country: "Sweden",
             shippingAddress: {
-                street1: this.state.s_address1,
-                street2: this.state.s_address2,
+                // street1: this.state.s_address1,
+                // street2: this.state.s_address2,
                 postalCode: this.state.s_zip,
                 city: this.state.s_city,
                 country: this.state.s_country,
@@ -469,7 +469,7 @@ class CreateSalon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                        <GridItem xs={12} sm={6} md={3}>
+                        {/* <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
                                 success={this.state.s_address1State === "success"}
                                 error={this.state.s_address1State === "error"}
@@ -510,7 +510,7 @@ class CreateSalon extends React.Component {
                                     type: "text"
                                 }}
                             />
-                        </GridItem>
+                        </GridItem> */}
                         <GridItem xs={12} sm={6} md={4}>
                             <CustomInput
                                 success={this.state.s_cityState === "success"}
