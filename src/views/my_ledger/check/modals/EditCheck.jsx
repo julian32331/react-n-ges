@@ -60,16 +60,15 @@ class EditCheck extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.data) {
-            console.log('data: ', nextProps.data);
             this.setState({
                 checkInEditableDate: nextProps.data.checkInEditable? moment(nextProps.data.checkInEditable).format("YYYY-MM-DD") : moment(nextProps.data.checkIn).format("YYYY-MM-DD"),
                 checkInEditableDateState: nextProps.data.checkInEditableDate || nextProps.data.checkIn ? "success" : "error",
                 checkInEditableTime: nextProps.data.checkInEditable? moment(nextProps.data.checkInEditable).format("HH:mm") : moment(nextProps.data.checkIn).format("HH:mm"),
                 checkInEditableTimeState: nextProps.data.checkInEditableTime || nextProps.data.checkIn ? "success" : "error",
-                checkOutEditableDate: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("YYYY-MM-DD") : (nextProps.data.checkOut? moment(nextProps.data.checkOut).format("YYYY-MM-DD") : ""),
-                checkOutEditableDateState: nextProps.data.checkOutEditableDate || nextProps.data.checkOut ? "success" : "error",
-                checkOutEditableTime: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("HH:mm") : (nextProps.data.checkOut? moment(nextProps.data.checkOut).format("HH:mm") : ""),
-                checkOutEditableTimeState: nextProps.data.checkOutEditableTime || nextProps.data.checkOut ? "success" : "error",
+                checkOutEditableDate: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("YYYY-MM-DD") : (nextProps.data.checkOut? moment(nextProps.data.checkOut).format("YYYY-MM-DD") : moment().format("YYYY-MM-DD")),
+                checkOutEditableDateState: "success",
+                checkOutEditableTime: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("HH:mm") : (nextProps.data.checkOut? moment(nextProps.data.checkOut).format("HH:mm") : moment().format("HH:mm")),
+                checkOutEditableTimeState: "success",
                 editComment: nextProps.data.editComment? nextProps.data.editComment : ""
             })
         }
@@ -105,16 +104,28 @@ class EditCheck extends React.Component {
     changeForm(event, stateName, type, length) {
         switch (type) {
             case "checkInEditableDate":
-            case "checkOutEditableDate":
                 if(!moment(event._d).isSame(moment())) {
                     this.setState({ [stateName]: moment(event._d).format("YYYY-MM-DD"), [stateName + "State"]: "success" });
                 } else {
                     this.setState({ [stateName]: "", [stateName + "State"]: "error" });
                 }
                 break;
+            case "checkOutEditableDate":
+                if(!moment(event._d).isSame(moment()) && moment(event._d).isSameOrAfter(moment(this.state.checkInEditableDate))) {
+                    this.setState({ [stateName]: moment(event._d).format("YYYY-MM-DD"), [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName]: "", [stateName + "State"]: "error" });
+                }
+                break;
             case "checkInEditableTime":
-            case "checkOutEditableTime":
                 if(!moment(event._d).isSame(moment())) {
+                    this.setState({ [stateName]: moment(event._d).format("HH:mm"), [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName]: "", [stateName + "State"]: "error" });
+                }
+                break;
+            case "checkOutEditableTime":
+                if(!moment(event._d).isSame(moment()) && moment(event._d).isSameOrAfter(moment(this.state.checkInEditableDate + " " + this.state.checkInEditableTime))) {
                     this.setState({ [stateName]: moment(event._d).format("HH:mm"), [stateName + "State"]: "success" });
                 } else {
                     this.setState({ [stateName]: "", [stateName + "State"]: "error" });
