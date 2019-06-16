@@ -61,20 +61,20 @@ class CreateSalon extends React.Component {
             accessCheck: false,
             description: "",
 
-            s_co: "",
-            s_coState: "",
+            // s_co: "",
+            // s_coState: "",
             // s_address1: "",
             // s_address1State: "",
             // s_address2: "",
             // s_address2State: "",
-            s_city: "",
-            s_cityState: "",
-            s_zip: "",
-            s_zipState: "",
-            s_country: "",
-            s_countryState: "",
-            s_mobile: "",
-            s_mobileState: ""
+            // s_city: "",
+            // s_cityState: "",
+            // s_zip: "",
+            // s_zipState: "",
+            // s_country: "",
+            // s_countryState: "",
+            // s_mobile: "",
+            // s_mobileState: ""
         }
     }
 
@@ -90,10 +90,10 @@ class CreateSalon extends React.Component {
             case "city":
             case "description":
             // case "s_address1":
-            case "s_zip":
-            case "s_city":
-            case "s_country":
-            case "s_mobile":
+            // case "s_zip":
+            // case "s_city":
+            // case "s_country":
+            // case "s_mobile":
                 this.setState({
                     [stateName]: event.target.value
                 })
@@ -104,7 +104,7 @@ class CreateSalon extends React.Component {
                 }
                 break;                
             case "phone":
-            case "s_co":
+            // case "s_co":
             // case "s_address2":
                 this.setState({
                     [stateName]: event.target.value
@@ -148,12 +148,13 @@ class CreateSalon extends React.Component {
         if(this.state.nameState === "success" &&
             this.state.addressState === "success" &&
             this.state.zipState === "success" &&
-            this.state.cityState === "success" &&
+            this.state.cityState === "success"
             // this.state.s_address1State === "success" &&
-            this.state.s_cityState === "success" &&
-            this.state.s_zipState === "success" &&
-            this.state.s_mobileState === "success" &&
-            this.state.s_countryState === "success") {
+            // this.state.s_cityState === "success" &&
+            // this.state.s_zipState === "success" &&
+            // this.state.s_mobileState === "success" &&
+            // this.state.s_countryState === "success"
+            ) {
             return false;
         } else {
             return true
@@ -173,15 +174,15 @@ class CreateSalon extends React.Component {
             post: this.state.zip,
             city: this.state.city,
             country: "Sweden",
-            shippingAddress: {
-                // street1: this.state.s_address1,
-                // street2: this.state.s_address2,
-                postalCode: this.state.s_zip,
-                city: this.state.s_city,
-                country: this.state.s_country,
-                co: this.state.s_co,
-                mobile: this.state.s_mobile
-            }
+            // shippingAddress: {
+            //     // street1: this.state.s_address1,
+            //     // street2: this.state.s_address2,
+            //     postalCode: this.state.s_zip,
+            //     city: this.state.s_city,
+            //     country: this.state.s_country,
+            //     co: this.state.s_co,
+            //     mobile: this.state.s_mobile
+            // }
         }).then((response) => {
             let companyAuthLevel = response.data.workingFor.find(item => {
                 return item.workingForId === Number(this.props.workingForId)
@@ -423,7 +424,7 @@ class CreateSalon extends React.Component {
                             </div>
                         </GridItem>
                     </GridContainer>            
-                    <div className={classes.cardHeader}>
+                    {/* <div className={classes.cardHeader}>
                         <h3 className={classes.cardTitle}>Leveransadress</h3>
                     </div>
                     <GridContainer>
@@ -469,7 +470,7 @@ class CreateSalon extends React.Component {
                                 }}
                             />
                         </GridItem>
-                        {/* <GridItem xs={12} sm={6} md={3}>
+                        <GridItem xs={12} sm={6} md={3}>
                             <CustomInput
                                 success={this.state.s_address1State === "success"}
                                 error={this.state.s_address1State === "error"}
@@ -510,7 +511,7 @@ class CreateSalon extends React.Component {
                                     type: "text"
                                 }}
                             />
-                        </GridItem> */}
+                        </GridItem>
                         <GridItem xs={12} sm={6} md={4}>
                             <CustomInput
                                 success={this.state.s_cityState === "success"}
@@ -606,7 +607,7 @@ class CreateSalon extends React.Component {
                                     </MenuItem>
                                 </Select>
                             </FormControl>
-                            {/* <CustomInput
+                            <CustomInput
                                 success={this.state.s_countryState === "success"}
                                 error={this.state.s_countryState === "error"}
                                 labelText="Land *"
@@ -628,9 +629,9 @@ class CreateSalon extends React.Component {
                                     value: this.state.s_country,
                                     type: "text"
                                 }}
-                            /> */}
+                            />
                         </GridItem>
-                    </GridContainer>
+                    </GridContainer> */}
                     <GridContainer justify="flex-end" alignItems="flex-end">                   
                         <GridItem xs={12} sm={12} md={6}>                    
                             <Button color="info" size="sm" className={classes.submit} disabled={this.canSubmit()} onClick={this.addSalonInfo.bind(this)}>Spara</Button>

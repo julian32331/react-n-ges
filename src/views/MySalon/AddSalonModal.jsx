@@ -65,21 +65,21 @@ class AddSalonModal extends React.Component {
             city: "",
             cityState: "",
             country: "Sweden",
-            countryState: "",
+            countryState: "success",
             hasPark: false,
 
-            s_co: "",
-            s_coState: "",
-            s_address1: "",
-            s_address1State: "",
-            s_address2: "",
-            s_address2State: "",
-            s_city: "",
-            s_cityState: "",
-            s_zip: "",
-            s_zipState: "",
-            s_mobile: "",
-            s_mobileState: "",
+            // s_co: "",
+            // s_coState: "",
+            // s_address1: "",
+            // s_address1State: "",
+            // s_address2: "",
+            // s_address2State: "",
+            // s_city: "",
+            // s_cityState: "",
+            // s_zip: "",
+            // s_zipState: "",
+            // s_mobile: "",
+            // s_mobileState: "",
         }
         this.save = this.save.bind(this);
     }
@@ -106,18 +106,18 @@ class AddSalonModal extends React.Component {
             countryState: "success",
             hasPark: false,
             
-            s_co: "",
-            s_coState: "",
-            s_address1: "",
-            s_address1State: "",
-            s_address2: "",
-            s_address2State: "",
-            s_city: "",
-            s_cityState: "",
-            s_zip: "",
-            s_zipState: "",
-            s_mobile: "",
-            s_mobileState: "",
+            // s_co: "",
+            // s_coState: "",
+            // s_address1: "",
+            // s_address1State: "",
+            // s_address2: "",
+            // s_address2State: "",
+            // s_city: "",
+            // s_cityState: "",
+            // s_zip: "",
+            // s_zipState: "",
+            // s_mobile: "",
+            // s_mobileState: "",
         })
     }
 
@@ -140,15 +140,15 @@ class AddSalonModal extends React.Component {
             post: this.state.zip,
             city: this.state.city,
             country: this.state.country,
-            shippingAddress: {
-                street1: this.state.s_address1,
-                street2: this.state.s_address2,
-                postalCode: this.state.s_zip,
-                city: this.state.s_city,
-                country: this.state.country,
-                co: this.state.s_co,
-                mobile: this.state.s_mobile
-            }
+            // shippingAddress: {
+            //     street1: this.state.s_address1,
+            //     street2: this.state.s_address2,
+            //     postalCode: this.state.s_zip,
+            //     city: this.state.s_city,
+            //     country: this.state.country,
+            //     co: this.state.s_co,
+            //     mobile: this.state.s_mobile
+            // }
         })
         this.initState();
         this.props.onClose();
@@ -162,12 +162,12 @@ class AddSalonModal extends React.Component {
             case "city":
             case "zip":
             case "country":
-            case "s_co":
+            // case "s_co":
             // case "s_address1":
             // case "s_address2":
-            case "s_zip":
-            case "s_city":
-            case "s_mobile":
+            // case "s_zip":
+            // case "s_city":
+            // case "s_mobile":
                 console.log('test: ', event.target.value)
                 this.setState({
                     [stateName]: event.target.value
@@ -228,10 +228,11 @@ class AddSalonModal extends React.Component {
             this.state.addressState === "success" && 
             this.state.zipState === "success" && 
             this.state.cityState === "success" && 
-            this.state.countryState === "success" && 
-            this.state.s_cityState === "success" &&
-            this.state.s_mobileState === "success" &&
-            this.state.s_zipState === "success") {
+            this.state.countryState === "success"
+            // this.state.s_cityState === "success" &&
+            // this.state.s_mobileState === "success" &&
+            // this.state.s_zipState === "success"
+            ) {
             return false;
         } else {
             return true;
@@ -525,7 +526,7 @@ class AddSalonModal extends React.Component {
                             />
                         </GridItem>
                     </GridContainer>
-                    <div style={{fontSize: '18px', fontWeight: '500', textAlign: 'left'}}>Leveransadress</div>
+                    {/* <div style={{fontSize: '18px', fontWeight: '500', textAlign: 'left'}}>Leveransadress</div>
                     <CustomInput
                         success={this.state.s_coState === "success"}
                         error={this.state.s_coState === "error"}
@@ -609,7 +610,7 @@ class AddSalonModal extends React.Component {
                             value: this.state.s_zip,
                             type: "number"
                         }}
-                    />
+                    /> */}
                 </form>
                 </DialogContent>
                 <DialogActions className={classes.modalFooter}>

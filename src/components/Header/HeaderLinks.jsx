@@ -116,13 +116,23 @@ class HeaderLinks extends React.Component {
     let companies = [];
 
     if(this.props.workingFor) {
+      if (typeof this.props.workingFor === "string") {
         JSON.parse(this.props.workingFor).map(item => {
-            let temp = {}
-            temp['name'] = item.Salon? item.Company.legalName + "/" + item.Salon.name : item.Company.legalName;
-            temp['value'] = item.workingForId;
+          let temp = {}
+          temp['name'] = item.Salon? item.Company.legalName + "/" + item.Salon.name : item.Company.legalName;
+          temp['value'] = item.workingForId;
 
-            companies.push(temp);
+          companies.push(temp);
         });
+      } else {
+        this.props.workingFor.map(item => {
+          let temp = {}
+          temp['name'] = item.Salon? item.Company.legalName + "/" + item.Salon.name : item.Company.legalName;
+          temp['value'] = item.workingForId;
+
+          companies.push(temp);
+        });
+      }
     }
 
     return (

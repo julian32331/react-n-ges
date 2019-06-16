@@ -81,9 +81,16 @@ class Dashboard extends React.Component {
   render() {
     let routes = dashRoutes1;
     if(this.props.workingFor) {
-      let Salon = JSON.parse(this.props.workingFor).find(item => {
-        return item.workingForId == this.props.workingForId
-      });
+      let Salon;
+      if (typeof this.props.workingFor === "string") {
+        Salon = JSON.parse(this.props.workingFor).find(item => {
+          return item.workingForId == this.props.workingForId
+        });
+      } else {
+        Salon = this.props.workingFor.find(item => {
+          return item.workingForId == this.props.workingForId
+        });
+      }      
       if(Salon) {
         if(Salon.Salon) {
           routes = dashRoutes1;

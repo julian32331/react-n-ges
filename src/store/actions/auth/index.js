@@ -42,7 +42,12 @@ export const UPDATE_USER = '[AUTH] UPDATE USER';
 
 export function updateUser(data) {
     Object.keys(data).map(key => {
-        localStorage.setItem(key, data[key])
+        if (key === "workingFor") {
+            console.log('focus: ', JSON.stringify(data[key]))
+            localStorage.setItem(key, JSON.stringify(data[key]))
+        } else {
+            localStorage.setItem(key, data[key])
+        }
     })
     return (dispatch) => {
         dispatch({
