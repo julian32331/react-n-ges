@@ -64,6 +64,7 @@ class NewModal extends React.Component {
             imagePreviewUrl: defaultAvatar,
             firstStep: true,
             secondStep: false,
+            isAdd: false,
             thirdStep: false,
 
             name: "",
@@ -125,6 +126,7 @@ class NewModal extends React.Component {
             imagePreviewUrl: defaultAvatar,
             firstStep: true,
             secondStep: false,
+            isAdd: false,
             thirdStep: false,
             
             name: "",
@@ -213,11 +215,17 @@ class NewModal extends React.Component {
                 workingForId: this.props.workingForId,
                 email: this.state.email
             })
-            this.handleClose();
+            this.setState({
+                secondStep: false,
+                thirdStep: true,
+                isAdd: false
+            })
+            // this.handleClose();
         } else {
             this.setState({
                 secondStep: false,
                 thirdStep: true,
+                isAdd: true,
                 imagePreviewUrl: defaultAvatar,
                 consumerOwner: "SALON",
                 bookingPaymentFor: "COMPANY",
@@ -374,8 +382,8 @@ class NewModal extends React.Component {
                     }
 
                     {
-                        // Third step
-                        this.state.thirdStep? (
+                        // Third step add
+                        this.state.thirdStep && this.state.isAdd &&
                             <form>                                  
                                 <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
                                 <a onClick={() => this.handleClick()}>
@@ -764,7 +772,11 @@ class NewModal extends React.Component {
                                 }
                                                        
                             </form>
-                        ) : undefined
+                    }
+                    {
+                        // Third step invite
+                        this.state.thirdStep && !this.state.isAdd  &&
+                            <h3>Waiting for employe to accept email invite</h3>
                     }
                 </DialogContent>
                 {
@@ -826,8 +838,8 @@ class NewModal extends React.Component {
                 }
 
                 {
-                    // Third step
-                    this.state.thirdStep? (                        
+                    // Third step add
+                    this.state.thirdStep && this.state.isAdd? (                        
                         <DialogActions className={classes.modalFooter}>
                             <Button
                                 onClick={() => this.handleClose()}
@@ -846,6 +858,19 @@ class NewModal extends React.Component {
                             </Button>
                         </DialogActions>      
                     ) : undefined
+                }
+                {
+                    // Third step invite
+                    this.state.thirdStep && !this.state.isAdd &&
+                        <DialogActions className={classes.modalFooter}>
+                            <Button
+                                onClick={() => this.handleClose()}
+                                color="info"
+                                style={{width: '100%'}}
+                            >
+                                Ok
+                            </Button>
+                        </DialogActions>      
                 }
             </Dialog>
         );
