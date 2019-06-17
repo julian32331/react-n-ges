@@ -106,6 +106,12 @@ class EditCheck extends React.Component {
             case "checkInEditableDate":
                 if(!moment(event._d).isSame(moment())) {
                     this.setState({ [stateName]: moment(event._d).format("YYYY-MM-DD"), [stateName + "State"]: "success" });
+                    if(moment(moment(event._d).format("YYYY-MM-DD")).isAfter(moment(this.state.checkOutEditableDate))) {
+                        this.setState({ "checkOutEditableDate": "", ["checkOutEditableDateState"]: "error" });
+                    }
+                    if(moment(moment(event._d).format("YYYY-MM-DD")).isAfter(moment(this.state.checkOutEditableDate + " " + this.state.checkOutEditableTime))) {
+                        this.setState({ "checkOutEditableTime": "", ["checkOutEditableTimeState"]: "error" });
+                    }
                 } else {
                     this.setState({ [stateName]: "", [stateName + "State"]: "error" });
                 }
@@ -120,12 +126,15 @@ class EditCheck extends React.Component {
             case "checkInEditableTime":
                 if(!moment(event._d).isSame(moment())) {
                     this.setState({ [stateName]: moment(event._d).format("HH:mm"), [stateName + "State"]: "success" });
+                    if(moment(this.state.checkInEditableDate + " " + moment(event._d).format("HH:mm")).isAfter(moment(this.state.checkOutEditableDate + " " + this.state.checkOutEditableTime))) {
+                        this.setState({ "checkOutEditableTime": "", ["checkOutEditableTimeState"]: "error" });
+                    }
                 } else {
                     this.setState({ [stateName]: "", [stateName + "State"]: "error" });
                 }
                 break;
             case "checkOutEditableTime":
-                if(!moment(event._d).isSame(moment()) && moment(event._d).isSameOrAfter(moment(this.state.checkInEditableDate + " " + this.state.checkInEditableTime))) {
+                if(!moment(event._d).isSame(moment()) && this.state.checkOutEditableDate && moment(this.state.checkOutEditableDate + " " + moment(event._d).format("HH:mm")).isAfter(moment(this.state.checkInEditableDate + " " + this.state.checkInEditableTime))) {
                     this.setState({ [stateName]: moment(event._d).format("HH:mm"), [stateName + "State"]: "success" });
                 } else {
                     this.setState({ [stateName]: "", [stateName + "State"]: "error" });
