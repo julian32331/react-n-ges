@@ -363,14 +363,14 @@ class Sidebar extends React.Component {
             cx({
               [classes.itemIconRTL]: rtlActive
             });
-          if (prop.name === "Butik") {
+          if (prop.name === "Butik" || prop.name === "Express") {
             let href = prop.path + this.props.token
             if (this.props.isEmployee) {
               return null;
             }
             return (
               <ListItem key={key} className={customItem}>
-                <a href={href} className={navLinkClasses}>
+                <a href={href} className={navLinkClasses} target="_blank">
                   <ListItemIcon className={itemIcon}>
                     {typeof prop.icon === "string" ? (
                       <Icon>{prop.icon}</Icon>

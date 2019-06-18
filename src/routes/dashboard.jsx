@@ -32,6 +32,7 @@ import Home from "@material-ui/icons/Home";
 import AlarmOn from "@material-ui/icons/AlarmOn";
 import NewReleases from "@material-ui/icons/NewReleases";
 import Shop from "@material-ui/icons/Shop";
+import LocalShipping from "@material-ui/icons/LocalShipping";
 import DateRange from "@material-ui/icons/DateRange";
 
 export var dashRoutes1 = [ 
@@ -115,6 +116,12 @@ export var dashRoutes1 = [
     path: "https://shop.geselle-one.com/authenticate/?token=",
     name: "Butik",
     icon: Shop,
+    component: Blank
+  },
+  {
+    path: "https://geselle.se/authenticate/?token=",
+    name: "Express",
+    icon: LocalShipping,
     component: Blank
   },
   // {
