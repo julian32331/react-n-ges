@@ -49,6 +49,7 @@ class EditCheck extends React.Component {
             checkInEditableDateState: "",
             checkInEditableTime : "",
             checkInEditableTimeState: "",
+            isCheckOuted: false,
             checkOutEditableDate: "",
             checkOutEditableDateState: "",
             checkOutEditableTime: "",
@@ -65,9 +66,10 @@ class EditCheck extends React.Component {
                 checkInEditableDateState: nextProps.data.checkInEditableDate || nextProps.data.checkIn ? "success" : "error",
                 checkInEditableTime: nextProps.data.checkInEditable? moment(nextProps.data.checkInEditable).format("HH:mm") : moment(nextProps.data.checkIn).format("HH:mm"),
                 checkInEditableTimeState: nextProps.data.checkInEditableTime || nextProps.data.checkIn ? "success" : "error",
-                checkOutEditableDate: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("YYYY-MM-DD") : (nextProps.data.checkOut? moment(nextProps.data.checkOut).format("YYYY-MM-DD") : moment().format("YYYY-MM-DD")),
+                isCheckOuted: nextProps.data.checkOut? true : false,
+                checkOutEditableDate: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("YYYY-MM-DD") : (nextProps.data.checkOut? moment(nextProps.data.checkOut).format("YYYY-MM-DD") : ""),
                 checkOutEditableDateState: "success",
-                checkOutEditableTime: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("HH:mm") : (nextProps.data.checkOut? moment(nextProps.data.checkOut).format("HH:mm") : moment().format("HH:mm")),
+                checkOutEditableTime: nextProps.data.checkOutEditable? moment(nextProps.data.checkOutEditable).format("HH:mm") : (nextProps.data.checkOut? moment(nextProps.data.checkOut).format("HH:mm") : ""),
                 checkOutEditableTimeState: "success",
                 editComment: nextProps.data.editComment? nextProps.data.editComment : ""
             })
@@ -78,6 +80,7 @@ class EditCheck extends React.Component {
         this.setState({
             checkInEditableDate : "",
             checkInEditableTime : "",
+            isCheckOuted        : false,
             checkOutEditableDate: "",
             checkOutEditableTime: "",
             editComment         : "",
@@ -91,13 +94,25 @@ class EditCheck extends React.Component {
     }
 
     save() {
-        this.props.updateCheckInOut({
-            workingForId: this.props.workingForId,
-            personnelListId: this.props.data.personnelListId,
-            checkInEditable: this.state.checkInEditableDate + " " + this.state.checkInEditableTime + ":00",
-            checkOutEditable: this.state.checkOutEditableDate + " " + this.state.checkOutEditableTime + ":00",
-            editComment: this.state.editComment                  
-        })
+        if (this.state.isCheckOuted)
+            this.props.updateCheckInOut({
+                workingForId: this.props.workingForId,
+                editCheckInOutData: {
+                    personnelListId: this.props.data.personnelListId,
+                    checkInEditable: this.state.checkInEditableDate + " " + this.state.checkInEditableTime + ":00",
+                    checkOutEditable: this.state.checkOutEditableDate + " " + this.state.checkOutEditableTime + ":00",
+                    editComment: this.state.editComment                  
+                }
+            })
+        else             
+            this.props.updateCheckInOut({
+                workingForId: this.props.workingForId,
+                editCheckInOutData: {
+                    personnelListId: this.props.data.personnelListId,
+                    checkInEditable: this.state.checkInEditableDate + " " + this.state.checkInEditableTime + ":00",
+                    editComment: this.state.editComment                  
+                }
+            })
         this.handleClose();
     }
 
@@ -156,7 +171,9 @@ class EditCheck extends React.Component {
     }
 
     canSave() {
-        if(this.state.checkInEditableDateState === "success" && this.state.checkOutEditableDateState === "success" && this.state.checkInEditableTimeState === "success" && this.state.checkOutEditableTimeState === "success")
+        if(this.state.isCheckOuted && this.state.checkInEditableDateState === "success" && this.state.checkOutEditableDateState === "success" && this.state.checkInEditableTimeState === "success" && this.state.checkOutEditableTimeState === "success")
+            return true;
+        else if(!this.state.isCheckOuted && this.state.checkInEditableDateState === "success" && this.state.checkInEditableTimeState === "success")
             return true;
         else
             return false;
@@ -211,28 +228,35 @@ class EditCheck extends React.Component {
                                         onChange={event => this.changeForm(event, "checkInEditableTime", "checkInEditableTime")}
                                     />
                                 </FormControl> 
-                            </GridItem><GridItem xs={7}>        
-                                <FormControl fullWidth style={{paddingTop: '27px', marginBottom: '17px',}}>
-                                    <Datetime
-                                        dateFormat={"DD/MM/YYYY"}
-                                        timeFormat={false}
-                                        inputProps={{ placeholder: "CheckOutDate" }}
-                                        value={this.state.checkOutEditableDate}
-                                        onChange={event => this.changeForm(event, "checkOutEditableDate", "checkOutEditableDate")}
-                                    />
-                                </FormControl> 
                             </GridItem>
-                            <GridItem xs={5}>        
-                                <FormControl fullWidth style={{paddingTop: '27px', marginBottom: '17px',}}>
-                                    <Datetime
-                                        dateFormat={false}
-                                        timeFormat={"HH:mm"}
-                                        inputProps={{ placeholder: "CheckOutTime" }}
-                                        value={this.state.checkOutEditableTime}
-                                        onChange={event => this.changeForm(event, "checkOutEditableTime", "checkOutEditableTime")}
-                                    />
-                                </FormControl> 
-                            </GridItem>
+                            {
+                                this.state.isCheckOuted && 
+                                    <GridItem xs={7}>        
+                                        <FormControl fullWidth style={{paddingTop: '27px', marginBottom: '17px',}}>
+                                            <Datetime
+                                                dateFormat={"DD/MM/YYYY"}
+                                                timeFormat={false}
+                                                inputProps={{ placeholder: "CheckOutDate" }}
+                                                value={this.state.checkOutEditableDate}
+                                                onChange={event => this.changeForm(event, "checkOutEditableDate", "checkOutEditableDate")}
+                                            />
+                                        </FormControl> 
+                                    </GridItem>
+                            }
+                            {
+                                this.state.isCheckOuted && 
+                                    <GridItem xs={5}>        
+                                        <FormControl fullWidth style={{paddingTop: '27px', marginBottom: '17px',}}>
+                                            <Datetime
+                                                dateFormat={false}
+                                                timeFormat={"HH:mm"}
+                                                inputProps={{ placeholder: "CheckOutTime" }}
+                                                value={this.state.checkOutEditableTime}
+                                                onChange={event => this.changeForm(event, "checkOutEditableTime", "checkOutEditableTime")}
+                                            />
+                                        </FormControl> 
+                                    </GridItem>
+                            }                            
                         </GridContainer>       
                         <CustomInput
                             success={this.state.nameState === "success"}

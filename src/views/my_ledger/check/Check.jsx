@@ -136,11 +136,11 @@ class Check extends React.Component {
     }) : this.props.list;
 
     temp = from? temp.filter( item => {
-      return moment(item.checkIn).isSameOrAfter(from);      
+      return item.checkInEditable? moment(item.checkInEditable).isSameOrAfter(from) : moment(item.checkIn).isSameOrAfter(from);      
     }) : temp;
 
     temp = to? temp.filter( item => {
-      return item.checkOut && moment(item.checkOut).isSameOrBefore(to);
+      return item.checkOutEditable? item.checkOutEditable && moment(item.checkOut).isSameOrBefore(to) : item.checkOut && moment(item.checkOut).isSameOrBefore(to);
     }) : temp;
 
     this.list = temp;
@@ -297,8 +297,8 @@ class Check extends React.Component {
         }
         temp.push(item.name);
         temp.push(item.SSNumber);
-        temp.push(moment(item.checkIn).format("YYYY-MM-DD HH:mm"));
-        temp.push(item.checkOut? moment(item.checkOut).format("YYYY-MM-DD HH:mm") : null);
+        item.checkInEditable? temp.push(moment(item.checkInEditable).format("YYYY-MM-DD HH:mm")) : temp.push(moment(item.checkIn).format("YYYY-MM-DD HH:mm"));
+        item.checkOutEditable? temp.push(moment(item.checkOutEditable).format("YYYY-MM-DD HH:mm")) : temp.push(item.checkOut? moment(item.checkOut).format("YYYY-MM-DD HH:mm") : null);
         item.canCheckOut? temp.push(actionButtons(item)) : temp.push(editButton(item))
 
         list.push(temp);
