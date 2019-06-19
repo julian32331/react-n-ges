@@ -3,6 +3,9 @@
  * Date: 4/30/2019
  */
 
+import {
+  dangerColor
+} from "assets/jss/material-dashboard-pro-react.jsx";
 import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
 import customCheckboxRadioSwitch from "assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.jsx";
 import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
@@ -19,6 +22,9 @@ const checkStyle = {
   },
   pt_22: {
     paddingTop: '22px',
+  },
+  edited_date: {
+    color: dangerColor
   }
 };
 

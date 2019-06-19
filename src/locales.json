@@ -1,0 +1,49 @@
+{
+    "sv": {
+        "profile.name": "Name *",
+        "profile.ssn": "Personnummer",
+        "profile.email": "E-post",
+        "profile.tel": "Telefonnummer *",
+        "profile.special": "Yrke",
+        "profile.about": "Om mig",
+
+        "companyinfo.title": "Företagsinformation",
+        "companyinfo.id": "Member Id *",
+        "companyinfo.name": "Legalt namn *",
+        "companyinfo.no": "Org.nr. *",
+        "companyinfo.email": "E-post *",
+        "companyinfo.tel": "Telefonnummer *",
+        "companyinfo.co": "C/O",
+        "companyinfo.address": "Adress *",
+        "companyinfo.city": "Postort *",
+        "companyinfo.country": "Land *",
+        "companyinfo.zip": "Postnummer *",
+        "companyinfo.eco": "Ekonomi",
+        "companyinfo.eco_email": "E-post för fakturor *",
+        "companyinfo.eco_account_no": "Kontonummer",
+        "companyinfo.eco_bank": "Bankgiro",
+        "companyinfo.eco_zip": "Postgiro",
+
+        "salons.title": "Företag/salonger",
+        "salons.add_company": "Lägg till företag",
+        "salons.add_salon": "Lägg till salong",
+
+        "dashboard.title": "VARMT VÄLKOMMEN TILL GESELLE",
+        "dashboard.text1": "Nordeuropas största frisörkedja för frisörer och salonger med frisörlicens & gesäll brev.",
+        "dashboard.text2": "Vi ser fram emot att ta väl hand om dig, och att vi tillsammans skapar förutsättningarna för att återta kraften online och offline till alla våra medlemmar.",
+        "dashboard.text3": "Geselle One är världens modernaste IT plattform för frisörer & salonger, och vår grundfilosofi är att det ska vara enkelt att driva salong och att lönsamheten till våra medlemmar är vårt fokus.",
+        "dashboard.text4": "På Geselle One intranät kommer vi löpande gå ut med nyheter i världklass.",
+
+        "saloninfo.title": "Salongsinformation",
+        "saloninfo.enable_booking": "Stäng av online-bokning?",
+        "saloninfo.external_link": "Bokningssida",
+        "saloninfo.booking_weeks": "Enalbed booking weeks",
+        "saloninfo.name": "Salongens namn *",
+        "saloninfo.address": "Adress *",
+        "saloninfo.city": "Postort *"
+
+    },
+    "en": {
+        "email": "Email"
+    }
+}

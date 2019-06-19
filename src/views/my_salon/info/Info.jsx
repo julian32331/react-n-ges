@@ -31,9 +31,12 @@ import CardBody from "components/Card/CardBody.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
+import { FormattedMessage } from 'react-intl';
+
 import * as Utils from "utils/api";
 import * as Validator from "utils/validator";
 import infoStyle from "assets/jss/material-dashboard-pro-react/views/my_salon/info/infoStyle.jsx";
+import locales from './../../../locales.json';
 
 class Info extends React.Component {
     constructor(props) {
@@ -87,6 +90,7 @@ class Info extends React.Component {
     }
 
     componentWillMount() {
+        this.props.setLocales(locales)
         this.props.getUser().then(() => {
             this.props.getSalonInfo({
                 workingForId: this.props.workingForId
@@ -721,163 +725,7 @@ class Info extends React.Component {
                                                 />
                                             </div>
                                         </GridItem>
-                                    </GridContainer>            
-                                    {/* <div className={classes.cardHeader}>
-                                        <h3 className={classes.cardTitle}>Leveransadress</h3>
-                                    </div>
-                                    <GridContainer>
-                                        <GridItem xs={12} sm={6} md={3}>
-                                            <CustomInput
-                                                success={this.state.s_coState === "success"}
-                                                error={this.state.s_coState === "error"}
-                                                labelText="C/O"
-                                                id="co"
-                                                formControlProps={{
-                                                    fullWidth: true
-                                                }}
-                                                inputProps={{
-                                                    disabled: !this.state.isEdit,
-                                                    onChange: event =>
-                                                        this.changeForm(event, "s_co", "s_co", 1),
-                                                    value: this.state.s_co,
-                                                    type: "text"
-                                                }}
-                                            />
-                                        </GridItem>
-                                        <GridItem xs={12} sm={6} md={3}>
-                                            <CustomInput
-                                                success={this.state.s_mobileState === "success"}
-                                                error={this.state.s_mobileState === "error"}
-                                                labelText="Telefonnummer *"
-                                                id="phone"
-                                                formControlProps={{
-                                                    fullWidth: true
-                                                }}
-                                                inputProps={{
-                                                    endAdornment:
-                                                        this.state.s_mobileState === "error"  &&
-                                                            <InputAdornment position="end">
-                                                                <Warning className={classes.danger} />
-                                                            </InputAdornment>,
-                                                    disabled: !this.state.isEdit,
-                                                    onChange: event =>
-                                                        this.changeForm(event, "s_mobile", "s_mobile", 1),
-                                                    value: this.state.s_mobile,
-                                                    type: "text"
-                                                }}
-                                            />
-                                        </GridItem>
-                                        <GridItem xs={12} sm={6} md={3}>
-                                            <CustomInput
-                                                success={this.state.s_address1State === "success"}
-                                                error={this.state.s_address1State === "error"}
-                                                labelText="Adress1 *"
-                                                id="address"
-                                                formControlProps={{
-                                                    fullWidth: true
-                                                }}
-                                                inputProps={{
-                                                    endAdornment:
-                                                        this.state.s_address1State === "error"  &&
-                                                            <InputAdornment position="end">
-                                                                <Warning className={classes.danger} />
-                                                            </InputAdornment>,
-                                                    disabled: !this.state.isEdit,
-                                                    onChange: event =>
-                                                        this.changeForm(event, "s_address1", "s_address1", 1),
-                                                    value: this.state.s_address1,
-                                                    type: "text"
-                                                }}
-                                            />
-                                        </GridItem>
-                                        <GridItem xs={12} sm={6} md={3}>
-                                            <CustomInput
-                                                success={this.state.s_address2State === "success"}
-                                                error={this.state.s_address2State === "error"}
-                                                labelText="Adress2"
-                                                id="address"
-                                                formControlProps={{
-                                                    fullWidth: true
-                                                }}
-                                                inputProps={{
-                                                    disabled: !this.state.isEdit,
-                                                    onChange: event =>
-                                                        this.changeForm(event, "s_address2", "s_address2", 1),
-                                                    value: this.state.s_address2,
-                                                    type: "text"
-                                                }}
-                                            />
-                                        </GridItem>
-                                        <GridItem xs={12} sm={6} md={4}>
-                                            <CustomInput
-                                                success={this.state.s_cityState === "success"}
-                                                error={this.state.s_cityState === "error"}
-                                                labelText="Postort *"
-                                                id="city"
-                                                formControlProps={{
-                                                    fullWidth: true
-                                                }}
-                                                inputProps={{
-                                                    endAdornment:
-                                                        this.state.s_cityState === "error"  &&
-                                                            <InputAdornment position="end">
-                                                                <Warning className={classes.danger} />
-                                                            </InputAdornment>,
-                                                    disabled: !this.state.isEdit,
-                                                    onChange: event =>
-                                                        this.changeForm(event, "s_city", "s_city", 1),
-                                                    value: this.state.s_city,
-                                                    type: "text"
-                                                }}
-                                            />
-                                        </GridItem>
-                                        <GridItem xs={12} sm={6} md={4}>
-                                            <CustomInput
-                                                success={this.state.s_zipState === "success"}
-                                                error={this.state.s_zipState === "error"}
-                                                labelText="Postnummer *"
-                                                id="zip"
-                                                formControlProps={{
-                                                    fullWidth: true
-                                                }}
-                                                inputProps={{
-                                                    endAdornment:
-                                                        this.state.s_zipState === "error"  &&
-                                                            <InputAdornment position="end">
-                                                                <Warning className={classes.danger} />
-                                                            </InputAdornment>,
-                                                    disabled: !this.state.isEdit,
-                                                    onChange: event =>
-                                                        this.changeForm(event, "s_zip", "s_zip", 1),
-                                                    value: this.state.s_zip,
-                                                    type: "number"
-                                                }}
-                                            />
-                                        </GridItem>
-                                        <GridItem xs={12} sm={6} md={4}>
-                                            <CustomInput
-                                                success={this.state.s_countryState === "success"}
-                                                error={this.state.s_countryState === "error"}
-                                                labelText="Land *"
-                                                id="s_country"
-                                                formControlProps={{
-                                                    fullWidth: true
-                                                }}
-                                                inputProps={{
-                                                    endAdornment:
-                                                        this.state.s_countryState === "error"  &&
-                                                            <InputAdornment position="end">
-                                                                <Warning className={classes.danger} />
-                                                            </InputAdornment>,
-                                                    disabled: !this.state.isEdit,
-                                                    onChange: event =>
-                                                        this.changeForm(event, "s_country", "s_country", 1),
-                                                    value: this.state.s_country,
-                                                    type: "text"
-                                                }}
-                                            />
-                                        </GridItem>
-                                    </GridContainer> */}
+                                    </GridContainer> 
                                     <GridContainer justify="flex-end" alignItems="flex-end">
                                     {
                                         this.state.isEdit? (                      
@@ -992,7 +840,8 @@ function mapDispatchToProps(dispatch) {
         updateSalonInfo     : Actions.updateSalonInfo,
         addSalonGallery     : Actions.addSalonGallery,
         updateSalonGallery  : Actions.updateSalonGallery,
-        deleteSalonGallery  : Actions.deleteSalonGallery
+        deleteSalonGallery  : Actions.deleteSalonGallery,
+        setLocales          : Actions.setLocales
     }, dispatch);
 }
 

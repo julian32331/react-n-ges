@@ -265,6 +265,15 @@ class Check extends React.Component {
     const { classes, loading } = this.props;
     const { activedPageNo } = this.state;
 
+    const dateContainer = (date1, date2) => {
+      return (
+        <div>
+          <div className={classes.edited_date}>{date2? moment(date2).format("YYYY-MM-DD HH:mm") : ""}</div>
+          <div>{date1? moment(date1).format("YYYY-MM-DD HH:mm") : ""}</div>
+        </div>
+      )
+    } 
+
     const actionButtons = data => {
       return (        
         <div>
@@ -290,15 +299,10 @@ class Check extends React.Component {
     this.list.map((item, index) => {
       let temp = [];
       if (index >= (activedPageNo - 1) * 10 && index < activedPageNo * 10) {
-        if(item.checkInEditable && item.checkOutEditable) {
-          temp.push("(Redigerad)")
-        } else {
-          temp.push("")
-        }
         temp.push(item.name);
         temp.push(item.SSNumber);
-        item.checkInEditable? temp.push(moment(item.checkInEditable).format("YYYY-MM-DD HH:mm")) : temp.push(moment(item.checkIn).format("YYYY-MM-DD HH:mm"));
-        item.checkOutEditable? temp.push(moment(item.checkOutEditable).format("YYYY-MM-DD HH:mm")) : temp.push(item.checkOut? moment(item.checkOut).format("YYYY-MM-DD HH:mm") : null);
+        temp.push(dateContainer(item.checkIn, item.checkInEditable));
+        temp.push(dateContainer(item.checkOut, item.checkOutEditable));
         item.canCheckOut? temp.push(actionButtons(item)) : temp.push(editButton(item))
 
         list.push(temp);
@@ -469,7 +473,6 @@ class Check extends React.Component {
 
           <Table
             tableHead={[
-              "",
               "Namn",
               "Personnummer",
               "Incheckad",
@@ -485,18 +488,16 @@ class Check extends React.Component {
               classes.center + " " + classes.td,
               classes.center + " " + classes.td,
               classes.center + " " + classes.td,
-              classes.center + " " + classes.td,
             ]}
-            customClassesForCells={[0, 1, 2, 3, 4, 5]}
+            customClassesForCells={[0, 1, 2, 3, 4]}
             customHeadCellClasses={[
               classes.center + " " + classes.th,
               classes.center + " " + classes.th,
               classes.center + " " + classes.th,
               classes.center + " " + classes.th,
               classes.center + " " + classes.th,
-              classes.center + " " + classes.th,
             ]}
-            customHeadClassesForCells={[0, 1, 2, 3, 4, 5]}
+            customHeadClassesForCells={[0, 1, 2, 3, 4]}
           />
 
           <GridContainer>
