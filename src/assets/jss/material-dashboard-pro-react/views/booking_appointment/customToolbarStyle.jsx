@@ -4,9 +4,11 @@
  */
 
 import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
+import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
 
 const customToolbarStyle = {
     ...commonStyle,
+    ...customSelectStyle,
     actionButton: {
       margin: "0 0 0 5px",
       padding: "5px",
@@ -27,6 +29,15 @@ const customToolbarStyle = {
     },
     pr_0: {
         paddingRight: '0px !important',
+    },
+    marginRight: {
+      marginRight: '5px',
+    },
+    label: {
+      fontSize: '18px', 
+      fontWeight: '500', 
+      padding: '8px 0 7px', 
+      fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif"
     }
 };
 

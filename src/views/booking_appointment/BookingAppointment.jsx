@@ -35,7 +35,10 @@ class BookingAppointment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      calendarView      : "day",
       initDate          : moment().toDate(),
+      resourceId        : 0,
+      resources         : null,
       showSetBreak      : false,
       hairdresserId     : "",
       start             : "",
@@ -50,6 +53,14 @@ class BookingAppointment extends React.Component {
     this.props.getUser().then(() => {
       this.getAppointment(this.state.initDate)
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.employees) {
+      this.setState({
+        resources: nextProps.employees
+      })
+    }
   }
 
   getAppointment(date) {
@@ -130,6 +141,24 @@ class BookingAppointment extends React.Component {
     });
   }
 
+  filter = (id) => {
+    console.log('focus: ', this.state.resources)
+    if (id == 0) {
+      this.setState({
+        resourceId: 0,
+        resources: this.props.employees
+      })
+    } else {
+      let employee = this.props.employees.find(employee => {
+        return employee.hairdresser_id == id
+      })
+      this.setState({
+        resourceId: id,
+        resources: [employee]
+      })
+    }
+  }
+
   render() {
     const { classes, loading } = this.props;
 
@@ -184,6 +213,51 @@ class BookingAppointment extends React.Component {
     // }    
     /** show closing in calender */
 
+    const toolbar = () => {
+      let label;      
+      if(this.state.calendarView === "day") {
+        label = moment(this.state.initDate).format("YYYY-MM-DD")
+      } else if(this.state.calendarView === "week") {
+        label = moment(this.state.initDate).startOf("week").format("YYYY MMM DD") + " - " + moment(this.state.initDate).endOf("week").format("DD")
+      } else {
+        label = moment(this.state.initDate).format("YYYY MMM")
+      }
+      return <CustomToolbar
+        employees={this.props.employees}
+        resourceId={this.state.resourceId}
+        filter={(id) => this.filter(id)} 
+        date={this.state.initDate}
+        view={this.state.calendarView}
+        label={label}
+        onNavigate={(val1, val2) => {
+          if(val1 === "DATE") {
+            this.onChangeDate(val2)
+          } else if(val1 === "PREV") {
+            var temp;
+            if(this.state.calendarView === "day") {
+              temp = moment(this.state.initDate).subtract(1, "day");
+            } else if(this.state.calendarView === "week") {
+              temp = moment(this.state.initDate).subtract(1, "week");
+            } else {
+              temp = moment(this.state.initDate).subtract(1, "month");
+            }
+            this.onChangeDate(temp.toDate())
+          } else {
+            var temp;
+            if(this.state.calendarView === "day") {
+              temp = moment(this.state.initDate).add(1, "day");
+            } else if(this.state.calendarView === "week") {
+              temp = moment(this.state.initDate).add(1, "week");
+            } else {
+              temp = moment(this.state.initDate).add(1, "month");
+            }
+            this.onChangeDate(temp.toDate())
+          }
+        }}
+        onView={(view)=> this.setState({calendarView: view})}
+      />
+    }
+
     return (
       <div>
         <GridContainer justify="center">
@@ -233,14 +307,15 @@ class BookingAppointment extends React.Component {
                       timeslots={8}
                       min={new Date(2019, 1, 0, 8, 0, 0)}
                       defaultView="day"
-                      views={['day']}
+                      view={this.state.calendarView}
+                      views={['month', 'week','day']}
                       components={
                         {
-                          toolbar: CustomToolbar
+                          toolbar: toolbar
                         }
                       }
                       eventPropGetter={this.eventColors}
-                      resources={this.props.employees}
+                      resources={this.state.resources}
                       resourceIdAccessor="hairdresser_id"
                       resourceTitleAccessor="name"
                       events={data}
@@ -252,6 +327,7 @@ class BookingAppointment extends React.Component {
                       onSelecting = {slot => console.log("slot: ", slot)}
                       onSelectSlot={this.onOpenSetBreak}
                       onSelectEvent={(event) => this.onOpenDetailedEvent(event)}
+                      onView={(view)=> this.setState({calendarView: view})}
                     />             
                   </CardBody> 
                 </div>

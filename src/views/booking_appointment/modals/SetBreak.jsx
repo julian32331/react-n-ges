@@ -131,7 +131,7 @@ class SetBreak extends React.Component {
 
     render() {
         const { classes, data, employees } = this.props;
-        console.log("data: ", data)
+        // console.log("data: ", data)
 
         return (
             <Dialog
