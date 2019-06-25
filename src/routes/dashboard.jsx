@@ -120,7 +120,7 @@ export var dashRoutes1 = [
   },
   {
     path: "https://geselle.se/authenticate/?token=",
-    name: "Express",
+    name: "Direkt",
     icon: LocalShipping,
     component: Blank
   },

@@ -363,7 +363,7 @@ class Sidebar extends React.Component {
             cx({
               [classes.itemIconRTL]: rtlActive
             });
-          if (prop.name === "Butik" || prop.name === "Express") {
+          if (prop.name === "Butik" || prop.name === "Direkt") {
             let href = prop.path + this.props.token
             if (this.props.isEmployee) {
               return null;
