@@ -48,6 +48,7 @@ class ForgotPassword extends React.Component {
   changeForm(event, stateName, type) {
     switch (type) {
       case "email":
+        console.log('focus')
         this.setState({
           email: event.target.value
         })
@@ -140,7 +141,7 @@ class ForgotPassword extends React.Component {
                     }}
                   />
                   <div className={classes.center}>
-                    <Button color="info" className={classes.w_100_p} disabled={!this.canSubmit() || this.state.loading}>
+                    <Button color="info" className={classes.w_100_p} disabled={!this.canSubmit() || this.state.loading} type="submit">
                       Skicka
                     </Button>   
                     <div className={classes.pt_15}>
