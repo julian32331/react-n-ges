@@ -28,6 +28,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 
 // @material-ui/icons
 import Warning from "@material-ui/icons/Warning";
+import Close from "@material-ui/icons/Close";
+import Edit from "@material-ui/icons/Edit";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -35,6 +37,7 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Danger from "components/Typography/Danger.jsx";
+import Avatar from 'react-avatar-edit'
 
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 import defaultAvatar from "assets/img/default-avatar.png";
@@ -249,8 +252,35 @@ class NewModal extends React.Component {
     }
     handleClick() {
         if(!this.props.employee) {
-            this.refs.fileInput.click();
+            /** avatar crop */
+            // this.refs.fileInput.click();
+            this.setState({
+                showAvatarCrop: true
+            })
+            /** avatar crop */
         }
+    }    
+    onCrop = (preview) => {
+        fetch(preview)
+            .then(res => res.blob())
+            .then(blob => {
+                const data = new File([blob], "avatar.png");
+                let reader = new FileReader();
+                reader.onloadend = () => {
+                    this.setState({
+                        file: data,
+                        withAvatar: true,
+                        imagePreviewUrl: reader.result
+                    });
+                };
+                reader.readAsDataURL(data);
+        })
+    }
+    cancelCrop = () => {         
+        this.setState({
+            showAvatarCrop: false,
+            avatarPreviewUrl: this.props.data.EmployeeInformation.picturePath? Utils.root + this.props.data.EmployeeInformation.picturePath : defaultAvatar
+        });
     }
 
     canSave() {
@@ -384,14 +414,31 @@ class NewModal extends React.Component {
                     {
                         // Third step add
                         this.state.thirdStep && this.state.isAdd &&
-                            <form>                                  
-                                <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
-                                <a onClick={() => this.handleClick()}>
-                                    <img src={this.state.imagePreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%'}} alt="..." />
-                                </a>     
+                            <form>    
                                 {
-                                    console.log('test: ', this.state.nameState)
-                                }                         
+                                    this.state.showAvatarCrop? (
+                                        <div>
+                                            <Avatar
+                                                width={'100%'}
+                                                height={180}
+                                                onCrop={(data) => this.onCrop(data)}
+                                            />
+                                            <div style={{marginTop: 15}}>              
+                                                <Button color="danger" className={classes.actionButton} onClick={()=>this.cancelCrop()}>
+                                                    <Close className={classes.icon} />
+                                                </Button>
+                                                <Button color="info" className={classes.actionButton} onClick={()=>this.setState({showAvatarCrop: false})}>
+                                                    <Edit className={classes.icon} />
+                                                </Button>  
+                                            </div>
+                                        </div>
+                                    ) : (                                  
+                                        <a onClick={() => this.handleClick()}>
+                                            <img src={this.state.imagePreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%'}} alt="..." />
+                                        </a>
+                                    )
+                                }   
+                                <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />                     
                                 <CustomInput
                                     success={this.props.employee !== null || this.state.nameState === "success"}
                                     error={this.state.nameState === "error"}

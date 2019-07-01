@@ -116,9 +116,9 @@ class Profile extends React.Component {
   handleClick() {
     if(this.state.isEdit) {
       /** image crop */
-      //this.onOpenImageCrop();
+      this.onOpenImageCrop();
       /** image crop */
-      this.refs.fileInput.click();
+      // this.refs.fileInput.click();
     }
   }
   handleImageChange(e) {

@@ -130,7 +130,15 @@ const modalStyle = theme => ({
   modalSmallFooterSecondButton: {
     marginBottom: "0",
     marginLeft: "5px"
-  }
+  },
+  
+  actionButton: {
+    margin: "0 0 0 5px",
+    padding: "5px",
+    "& svg,& .fab,& .fas,& .far,& .fal,& .material-icons": {
+      marginRight: "0px"
+    }
+  },
 });
 
 export default modalStyle;

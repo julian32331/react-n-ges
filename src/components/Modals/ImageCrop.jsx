@@ -41,6 +41,7 @@ class ImageCrop extends React.Component {
     }
     
     onCrop = (preview) => {
+        console.log('preview: ', preview)
         fetch(preview)
             .then(res => res.blob())
             .then(blob => {

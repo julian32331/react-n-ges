@@ -28,6 +28,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 
 // @material-ui/icons
 import Warning from "@material-ui/icons/Warning";
+import Close from "@material-ui/icons/Close";
+import Edit from "@material-ui/icons/Edit";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -35,8 +37,9 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Danger from "components/Typography/Danger.jsx";
+import Avatar from 'react-avatar-edit'
 
-import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
+import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 import avatar from "assets/img/faces/marc.jpg";
 import defaultAvatar from "assets/img/default-avatar.png";
 import cert from "assets/img/cert.png";
@@ -167,7 +170,12 @@ class NewModal extends React.Component {
     handleClick(name) {
         if(name=="avatar") {
             if(!this.props.employee) {
-                this.refs.avatarInput.click();
+                /** avatar crop */
+                // this.refs.avatarInput.click();
+                this.setState({
+                    showAvatarCrop: true
+                })
+                /** avatar crop */
             }
         } else {
             if(!this.props.employee) {
@@ -175,7 +183,29 @@ class NewModal extends React.Component {
             }
         }
         
+    }    
+    onCrop = (preview) => {
+        fetch(preview)
+            .then(res => res.blob())
+            .then(blob => {
+                const file = new File([blob], "avatar.png");
+                let reader = new FileReader();
+                reader.onloadend = () => {
+                    this.setState({
+                    avatar: file,
+                    isChangedAvatar: true,
+                    avatarPreviewUrl: reader.result
+                    });
+                };
+                reader.readAsDataURL(file);
+        })
     }
+    cancelCrop = () => {
+        this.setState({
+            showAvatarCrop: false,
+            avatarPreviewUrl: this.props.data.EmployeeInformation.picturePath? Utils.root + this.props.data.EmployeeInformation.picturePath : defaultAvatar
+        });
+    } 
 
     canSave() {         
         if(this.state.nameState === "success" && this.state.emailState === "success" && this.state.phoneState === "success" && this.state.professionState === "success" && this.state.descriptionState === "success") {
@@ -197,7 +227,7 @@ class NewModal extends React.Component {
         payload.append('description', this.state.description);
         payload.append('employeeId', this.props.data.EmployeeInformation.employee_id);
         payload.append('employeeInformationId', this.props.data.EmployeeInformation.id);
-        payload.append('license', this.state.license, 'license.png');
+        if(this.state.license) payload.append('license', this.state.license, 'license.png');
 
         this.props.updateEmployee(payload, this.props.workingForId)
         this.handleClose();
@@ -231,12 +261,31 @@ class NewModal extends React.Component {
                     className={classes.modalBody}
                 >
                     <form>     
-                        <GridContainer alignItems="center">
+                        <GridContainer>
                             <GridItem xs={6}>
+                                {
+                                    this.state.showAvatarCrop? (
+                                        <div>
+                                            <Avatar
+                                                height={180}
+                                                onCrop={(data) => this.onCrop(data)}
+                                            />
+                                            <div style={{marginTop: 15}}>              
+                                                <Button color="danger" className={classes.actionButton} onClick={()=>this.cancelCrop()}>
+                                                    <Close className={classes.icon} />
+                                                </Button>
+                                                <Button color="info" className={classes.actionButton} onClick={()=>this.setState({showAvatarCrop: false})}>
+                                                    <Edit className={classes.icon} />
+                                                </Button>  
+                                            </div>
+                                        </div>
+                                    ) : (                                        
+                                        <a onClick={() => this.handleClick("avatar")}>
+                                            <img src={this.state.avatarPreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%', border: 'solid 1px', padding: '4px', overflow: 'hidden'}} alt="..." />
+                                        </a>
+                                    )
+                                }
                                 <input type="file" hidden onChange={this.handleAvatarChange.bind(this)} ref="avatarInput" />
-                                <a onClick={() => this.handleClick("avatar")}>
-                                    <img src={this.state.avatarPreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%', border: 'solid 1px', padding: '4px', overflow: 'hidden'}} alt="..." />
-                                </a>
                             </GridItem>
                             <GridItem xs={6}>
                                 <input type="file" hidden onChange={this.handleLicenseChange.bind(this)} ref="licenseInput" />
@@ -244,11 +293,7 @@ class NewModal extends React.Component {
                                     <img src={this.state.licensePreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%', border: 'solid 1px', padding: '4px', overflow: 'hidden'}} alt="..." />
                                 </a>
                             </GridItem>
-                        </GridContainer>                             
-                        {/* <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
-                        <a onClick={() => this.handleClick()}>
-                            <img src={this.state.imagePreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%'}} alt="..." />
-                        </a>                            */}
+                        </GridContainer>
                         <CustomInput
                             success={this.state.nameState === "success"}
                             error={this.state.nameState === "error"}
@@ -366,4 +411,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default withStyles(commonModalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(NewModal)));
+export default withStyles(modalStyle)(withRouter(connect(mapStateToProps, mapDispatchToProps)(NewModal)));
