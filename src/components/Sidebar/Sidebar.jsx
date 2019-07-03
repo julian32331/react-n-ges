@@ -365,9 +365,15 @@ class Sidebar extends React.Component {
             });
           if (prop.name === "Butik" || prop.name === "Direkt") {
             let href = prop.path + this.props.token
-            if (this.props.isEmployee) {
-              return null;
-            }
+            // let isEmployee;
+            // if(typeof this.props.isEmployee === "string") {
+            //   isEmployee = this.props.isEmployee === 'true'
+            // } else {
+            //   isEmployee = this.props.isEmployee
+            // }
+            // if (isEmployee) {
+            //   return null;
+            // }
             return (
               <ListItem key={key} className={customItem}>
                 <a href={href} className={navLinkClasses} target="_blank">
