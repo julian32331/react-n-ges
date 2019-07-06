@@ -13,6 +13,9 @@ import Check from "views/my_ledger/check/Check.jsx";
 import MyEmployees from "views/my_ledger/MyEmployees/MyEmployees.jsx";
 
 import BookingAppointment from "views/booking_appointment/BookingAppointment.jsx";
+
+import SocialMarketing from "views/social_marketing/SocialMarketing.jsx";
+
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
 import Products from "views/B2BShop/Products/Products.jsx";
@@ -34,6 +37,7 @@ import NewReleases from "@material-ui/icons/NewReleases";
 import Shop from "@material-ui/icons/Shop";
 import LocalShipping from "@material-ui/icons/LocalShipping";
 import DateRange from "@material-ui/icons/DateRange";
+import TrendingUp from "@material-ui/icons/TrendingUp"
 
 export var dashRoutes1 = [ 
   {
@@ -104,14 +108,20 @@ export var dashRoutes1 = [
         component: MyEmployees
       }
     ]
-  },,
+  },
   {
     path: "/bookingappointment",
     name: "Bokningssytem",
     icon: DateRange,
     component: BookingAppointment,
     // isDev: true
-  },  
+  }, 
+  {
+    path: "/social-marketing",
+    name: "Social Marketing",
+    icon: TrendingUp,
+    component: SocialMarketing,
+  }, 
   {
     path: "https://shop.geselle-one.com/authenticate/?token=",
     name: "Butik",
