@@ -171,10 +171,10 @@ class NewModal extends React.Component {
         if(name=="avatar") {
             if(!this.props.employee) {
                 /** avatar crop */
-                this.refs.avatarInput.click();
-                // this.setState({
-                //     showAvatarCrop: true
-                // })
+                // this.refs.avatarInput.click();
+                this.setState({
+                    showAvatarCrop: true
+                })
                 /** avatar crop */
             }
         } else {

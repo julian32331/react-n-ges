@@ -45,7 +45,7 @@ class HeaderLinks extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     let code = nextProps.locale === "sv"? "SE" : "US"
-    // this.refs.langFlag.updateSelected(code)
+    this.refs.langFlag.updateSelected(code)
 
     if(nextProps.workingForId) {
       this.setState({
@@ -182,14 +182,14 @@ class HeaderLinks extends React.Component {
             </Select>
           </FormControl>
         </div>
-        {/* <ReactFlagsSelect
+        <ReactFlagsSelect
           ref="langFlag" 
           countries={["SE", "US"]} 
           customLabels={{"SE": "SE", "US": "EN"}}
           defaultCountry="SE"
           alignOptions="left"
           onSelect={this.onSelectFlag}
-        /> */}
+        />
         <div className={managerClasses}>
           <Button
             color="transparent"

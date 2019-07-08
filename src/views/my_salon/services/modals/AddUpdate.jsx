@@ -351,12 +351,12 @@ class AddUpdate extends React.Component {
                             </Select>
                         </FormControl>
                         {/* colorcode booking */}
-                        {/* <GridContainer justify="center">
+                        <GridContainer justify="center">
                             <GridItem>
                                 <div className={classes.py_15}>Color of service</div>
                                 <HuePicker />
                             </GridItem>
-                        </GridContainer> */}
+                        </GridContainer>
                         {/* colorcode booking */}
                     </form>
                 </DialogContent>

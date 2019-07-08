@@ -175,7 +175,7 @@ class BookingAppointment extends React.Component {
 
     const data = [];
     /** show closing in calender */
-    // if(this.props.isSalonOpen) {
+    if(this.props.isSalonOpen) {
       this.props.data.map(list => {
         let temp = {};
         temp.comment = list.comment;
@@ -192,25 +192,25 @@ class BookingAppointment extends React.Component {
 
         data.push(temp);
       });
-    // } else {
-    //   let today = moment(this.state.initDate).format("YYYY-MM-DD")
-    //   this.props.employees.map(employee => {
-    //     let temp = {};
-    //     temp.comment = "Salon is closed.";
-    //     temp.consumerName = null;
-    //     temp.consumerEmail = null;
-    //     temp.consumerMobile = null;
-    //     temp.service = null;
-    //     temp.employee = employeesObj[employee.hairdresser_id];
-    //     temp.resourceId = employee.hairdresser_id;
-    //     //temp.id = list.id;
-    //     temp.plannedStartTime = moment(today + " 00:00").toDate();
-    //     temp.plannedEndTime = moment(today + " 23:59").toDate();
-    //     temp.bookingType = "BREAK";
+    } else {
+      let today = moment(this.state.initDate).format("YYYY-MM-DD")
+      this.props.employees.map(employee => {
+        let temp = {};
+        temp.comment = "Salon is closed.";
+        temp.consumerName = null;
+        temp.consumerEmail = null;
+        temp.consumerMobile = null;
+        temp.service = null;
+        temp.employee = employeesObj[employee.hairdresser_id];
+        temp.resourceId = employee.hairdresser_id;
+        //temp.id = list.id;
+        temp.plannedStartTime = moment(today + " 00:00").toDate();
+        temp.plannedEndTime = moment(today + " 23:59").toDate();
+        temp.bookingType = "BREAK";
 
-    //     data.push(temp);
-    //   })
-    // }    
+        data.push(temp);
+      })
+    }    
     /** show closing in calender */
 
     const toolbar = () => {

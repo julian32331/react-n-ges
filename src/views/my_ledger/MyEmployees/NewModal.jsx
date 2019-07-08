@@ -253,10 +253,10 @@ class NewModal extends React.Component {
     handleClick() {
         if(!this.props.employee) {
             /** avatar crop */
-            this.refs.fileInput.click();
-            // this.setState({
-            //     showAvatarCrop: true
-            // })
+            // this.refs.fileInput.click();
+            this.setState({
+                showAvatarCrop: true
+            })
             /** avatar crop */
         }
     }    
