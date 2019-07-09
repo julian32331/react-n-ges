@@ -60,6 +60,9 @@ const modalStyle = theme => ({
     paddingTop: "0",
     margin: "0"
   },
+  between: {
+    justifyContent: 'space-between !important'
+  },
   left: {
     textAlign: 'left'
   },

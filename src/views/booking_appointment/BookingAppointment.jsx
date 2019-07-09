@@ -25,6 +25,8 @@ import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonSty
 import CustomToolbar from "./CutomToolbar";
 import SetBreak from './modals/SetBreak';
 import DetailedEvent from './modals/DetailedEvent';
+import Selector from "./modals/Selector";
+import DirectBook from "./modals/DirectBook";
 
 const localizer = BigCalendar.momentLocalizer(moment);
 const colors = [
@@ -94,6 +96,27 @@ class BookingAppointment extends React.Component {
     // TODO;
     // this.props.history.push('/booking/' + salon.Salon.id);
     window.open('/salonbooking/' + salon.Salon.id, '_blank')
+  }
+
+  onOpenSelector = ({resourceId, start, end}) => {
+    this.setState({
+      showSelector: true,
+      hairdresserId : resourceId,
+      start         : moment(start).format('YYYY-MM-DD HH:mm'),
+      end           : moment(end).format('YYYY-MM-DD HH:mm')
+    })
+  }
+  toBreak = () => {
+    this.setState({
+      showSelector: false,
+      showSetBreak  : true,
+    });
+  }
+  toBook = () => {
+    this.setState({
+      showSelector: false,
+      showDirectBook: true
+    });
   }
   
   // Setting break time
@@ -325,7 +348,7 @@ class BookingAppointment extends React.Component {
                       onNavigate={(date) => this.onChangeDate(date)}
                       selectable
                       onSelecting = {slot => console.log("slot: ", slot)}
-                      onSelectSlot={this.onOpenSetBreak}
+                      onSelectSlot={this.onOpenSelector}
                       onSelectEvent={(event) => this.onOpenDetailedEvent(event)}
                       onView={(view)=> this.setState({calendarView: view})}
                     />             
@@ -333,6 +356,13 @@ class BookingAppointment extends React.Component {
                 </div>
             }                     
             </Card>
+
+            <Selector
+              onOpen={this.state.showSelector}
+              toBreak={this.toBreak}
+              toBook={this.toBook}
+              onClose={() => this.setState({ showSelector: false })}
+            />
                         
             <SetBreak 
               onOpen={this.state.showSetBreak}
@@ -342,6 +372,11 @@ class BookingAppointment extends React.Component {
                 start         : this.state.start,
                 end           : this.state.end
               }}
+            />
+
+            <DirectBook 
+              onOpen={this.state.showDirectBook}
+              hairdresssers={this.props.employees}
             />
 
             <DetailedEvent 
