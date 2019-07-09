@@ -254,7 +254,7 @@ class SetBreak extends React.Component {
                             type: "text"
                         }}
                     /> 
-                    {/* <FormControl
+                    <FormControl
                             fullWidth
                             className={classes.selectFormControl}
                         >
@@ -309,7 +309,7 @@ class SetBreak extends React.Component {
                             value={this.state.finalDate}
                             onChange={event => this.change(event, "finalDate", "finalDate")}
                         />
-                    </FormControl> */}
+                    </FormControl>
                 </DialogContent>
                 <DialogActions className={classes.modalFooter}>
                     <Button 
