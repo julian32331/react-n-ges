@@ -265,6 +265,27 @@ class DetailedEvent extends React.Component {
                                             disabled: !this.state.isEdit
                                         }}
                                     />
+                                    <CustomInput
+                                        success={this.state.serviceState === "success"}
+                                        error={this.state.serviceState === "error"}
+                                        labelText="Price *"
+                                        id="price"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            endAdornment:
+                                                this.state.serviceState === "error" &&
+                                                    <InputAdornment position="end">
+                                                        <Warning className={classes.danger} />
+                                                    </InputAdornment>,
+                                            onChange: event =>
+                                                this.changeForm(event, "service", "service", 1),
+                                            type: "text",
+                                            // value: this.state.service,
+                                            disabled: !this.state.isEdit
+                                        }}
+                                    />
                                 </div>
                         }
                         <GridContainer>
