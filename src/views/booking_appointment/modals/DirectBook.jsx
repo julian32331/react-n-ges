@@ -313,9 +313,7 @@ class Selector extends React.Component {
                 </DialogContent>
                 <DialogActions
                     className={
-                        classes.modalFooter +
-                        " " +
-                        classes.between
+                        classes.modalFooter
                     }
                 >
                     <Button
@@ -323,14 +321,14 @@ class Selector extends React.Component {
                         color="danger"
                         size="sm"
                     >
-                    Prev
+                    Cancel
                     </Button>
                     <Button
                         onClick={() => this.handleBook()}
                         color="info"
                         size="sm"
                     >
-                    Next
+                    Save
                     </Button>
                 </DialogActions>
             </Dialog>

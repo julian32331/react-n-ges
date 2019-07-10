@@ -311,7 +311,7 @@ class CreateSalon extends React.Component {
                             <CustomInput
                                 success={this.state.phoneState === "success"}
                                 error={this.state.phoneState === "error"}
-                                labelText="Mobilnummer"
+                                labelText="Telefonnummer"
                                 id="phone"
                                 formControlProps={{
                                     fullWidth: true
