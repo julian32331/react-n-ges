@@ -16,11 +16,10 @@ import BookingAppointment from "views/booking_appointment/BookingAppointment.jsx
 
 import SocialMarketing from "views/social_marketing/SocialMarketing.jsx";
 
+import MyCustomers from "views/my_customers/MyCustomers.jsx";
+
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
-import Products from "views/B2BShop/Products/Products.jsx";
-import ShoppingCart from "views/B2BShop/ShoppingCart/ShoppingCart.jsx";
-import Orders from "views/B2BShop/Orders/Orders.jsx";
 import Blank from "views/B2BShop/Blank.jsx";
 
 import Profile from "views/profile/Profile.jsx";
@@ -37,7 +36,8 @@ import NewReleases from "@material-ui/icons/NewReleases";
 import Shop from "@material-ui/icons/Shop";
 import LocalShipping from "@material-ui/icons/LocalShipping";
 import DateRange from "@material-ui/icons/DateRange";
-import TrendingUp from "@material-ui/icons/TrendingUp"
+import TrendingUp from "@material-ui/icons/TrendingUp";
+import Group from "@material-ui/icons/Group"
 
 export var dashRoutes1 = [ 
   {
@@ -121,6 +121,12 @@ export var dashRoutes1 = [
     name: "Social Marketing",
     icon: TrendingUp,
     component: SocialMarketing,
+  }, 
+  {
+    path: "/my-customers",
+    name: "My Customers",
+    icon: Group,
+    component: MyCustomers,
   }, 
   {
     path: "https://shop.geselle-one.com/authenticate/?token=",
