@@ -234,7 +234,7 @@ class Sidebar extends React.Component {
           if (prop.redirect) {
             return null;
           }
-          if(prop.name === 'Min Profil' || prop.name === 'Företagsinformation' || prop.name === 'Mina Salonger') {
+          if(prop.name === 'Min Profil' || prop.name === 'Företagsinformation' || prop.name === 'Mina Salonger' || prop.name === 'CustomerProfile') {
             return null;
           }
           const customItem = prop.isDev? classes.item + " " + classes.disabledItem : classes.item;

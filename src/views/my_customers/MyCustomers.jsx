@@ -67,7 +67,7 @@ class MyCustomers extends React.Component {
 
         const details = () => {
             return (
-                <Button color="info" simple size="sm">
+                <Button color="info" simple size="sm" onClick={() => this.props.history.push('/customer-profile')}>
                     Details
                 </Button>
             )
@@ -99,10 +99,10 @@ class MyCustomers extends React.Component {
                                 <Button
                                     color="info"
                                     size="sm"
-                                    // onClick={() => this.onOpenNewModal('Ny person')}
+                                    // onClick={() => this.props.history.push('/customer-profile')}
                                 >
                                     <Add /> Invite
-                    </Button>
+                                </Button>
                             </GridItem>
                         </GridContainer>
                     </div>

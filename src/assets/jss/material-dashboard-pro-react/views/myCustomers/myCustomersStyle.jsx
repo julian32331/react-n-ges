@@ -1,6 +1,6 @@
 /**
- * Description: My employees Style
- * Date: 12/27/2018
+ * Description: My customers Style
+ * Date: 7/15/2019
  */
 
 import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";

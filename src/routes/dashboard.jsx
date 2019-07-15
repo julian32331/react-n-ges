@@ -17,6 +17,7 @@ import BookingAppointment from "views/booking_appointment/BookingAppointment.jsx
 import SocialMarketing from "views/social_marketing/SocialMarketing.jsx";
 
 import MyCustomers from "views/my_customers/MyCustomers.jsx";
+import CustomerProfile from "views/my_customers/CustomerProfile.jsx";
 
 import News from "views/Intranett/News.jsx";
 import Contacts from "views/Intranett/Contacts/Contacts.jsx";
@@ -127,6 +128,12 @@ export var dashRoutes1 = [
     name: "My Customers",
     icon: Group,
     component: MyCustomers,
+  }, 
+  {
+    path: "/customer-profile",
+    name: "CustomerProfile",
+    icon: Group,
+    component: CustomerProfile,
   }, 
   {
     path: "https://shop.geselle-one.com/authenticate/?token=",
