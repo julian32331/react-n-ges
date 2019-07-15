@@ -161,7 +161,6 @@ class NewModal extends React.Component {
         reader.onloadend = () => {
           this.setState({
             license: file,
-            isChangedAvatar: true,
             licensePreviewUrl: reader.result
           });
         };

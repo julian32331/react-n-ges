@@ -41,6 +41,7 @@ import Avatar from 'react-avatar-edit'
 
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 import defaultAvatar from "assets/img/default-avatar.png";
+import cert from "assets/img/cert.png";
 
 import * as Validator from "utils/validator";
 import * as Utils from 'utils/api';
@@ -65,6 +66,8 @@ class NewModal extends React.Component {
             file: null,
             withAvatar: false,
             imagePreviewUrl: defaultAvatar,
+            license: null,
+            licensePreviewUrl: cert,
             firstStep: true,
             secondStep: false,
             isAdd: false,
@@ -97,7 +100,7 @@ class NewModal extends React.Component {
                     this.setState({
                         firstStep: false,
                         thirdStep: true,
-                        imagePreviewUrl: nextProps.employee.EmployeeInformatio? Utils.root + nextProps.employee.EmployeeInformation.picturePath : defaultAvatar,
+                        imagePreviewUrl: nextProps.employee.EmployeeInformation? Utils.root + nextProps.employee.EmployeeInformation.picturePath : defaultAvatar,
                         consumerOwner: "SALON",
                         bookingPaymentFor: nextProps.employee.hasCompany? "COMPANY" : "",
                         productPaymentFor: nextProps.employee.hasCompany? "COMPANY" : ""
@@ -127,6 +130,8 @@ class NewModal extends React.Component {
             file: null,
             withAvatar: false,
             imagePreviewUrl: defaultAvatar,
+            license: null,
+            licensePreviewUrl: cert,
             firstStep: true,
             secondStep: false,
             isAdd: false,
@@ -250,14 +255,32 @@ class NewModal extends React.Component {
         };
         reader.readAsDataURL(file);
     }
-    handleClick() {
-        if(!this.props.employee) {
-            /** avatar crop */
-            // this.refs.fileInput.click();
-            this.setState({
-                showAvatarCrop: true
-            })
-            /** avatar crop */
+    handleLicenseChange(e) {
+        e.preventDefault();
+        let reader = new FileReader();
+        let file = e.target.files[0];
+        reader.onloadend = () => {
+          this.setState({
+            license: file,
+            licensePreviewUrl: reader.result
+          });
+        };
+        reader.readAsDataURL(file);
+    }
+    handleClick(name) {
+        if(name=="avatar") {
+            if(!this.props.employee) {
+                /** avatar crop */
+                // this.refs.fileInput.click();
+                this.setState({
+                    showAvatarCrop: true
+                })
+                /** avatar crop */
+            }
+        } else {            
+            if(!this.props.employee) {
+                this.refs.licenseInput.click();
+            }
         }
     }    
     onCrop = (preview) => {
@@ -279,7 +302,7 @@ class NewModal extends React.Component {
     cancelCrop = () => {         
         this.setState({
             showAvatarCrop: false,
-            avatarPreviewUrl: this.props.data.EmployeeInformation.picturePath? Utils.root + this.props.data.EmployeeInformation.picturePath : defaultAvatar
+            imagePreviewUrl: this.props.employee.EmployeeInformation? Utils.root + this.props.employee.EmployeeInformation.picturePath : defaultAvatar,
         });
     }
 
@@ -317,6 +340,7 @@ class NewModal extends React.Component {
             let payload = new FormData();
             payload.append('avatar', this.state.file, 'avatar.png');
             payload.append('withAvatar', this.state.withAvatar);
+            // if(this.state.license) payload.append('license', this.state.license, 'license.png');
             payload.append('workingForId', this.props.workingForId);
             payload.append('email', this.state.email);
             payload.append('name', this.state.name);
@@ -414,31 +438,41 @@ class NewModal extends React.Component {
                     {
                         // Third step add
                         this.state.thirdStep && this.state.isAdd &&
-                            <form>    
-                                {
-                                    this.state.showAvatarCrop? (
-                                        <div>
-                                            <Avatar
-                                                width={'100%'}
-                                                height={180}
-                                                onCrop={(data) => this.onCrop(data)}
-                                            />
-                                            <div style={{marginTop: 15}}>              
-                                                <Button color="danger" className={classes.actionButton} onClick={()=>this.cancelCrop()}>
-                                                    <Close className={classes.icon} />
-                                                </Button>
-                                                <Button color="info" className={classes.actionButton} onClick={()=>this.setState({showAvatarCrop: false})}>
-                                                    <Edit className={classes.icon} />
-                                                </Button>  
-                                            </div>
-                                        </div>
-                                    ) : (                                  
-                                        <a onClick={() => this.handleClick()}>
-                                            <img src={this.state.imagePreviewUrl} style={{width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%'}} alt="..." />
+                            <form>   
+                                <GridContainer>
+                                    <GridItem xs={6}>
+                                        {
+                                            this.state.showAvatarCrop ? (
+                                                <div>
+                                                    <Avatar
+                                                        width={'100%'}
+                                                        height={180}
+                                                        onCrop={(data) => this.onCrop(data)}
+                                                    />
+                                                    <div style={{ marginTop: 15 }}>
+                                                        <Button color="danger" className={classes.actionButton} onClick={() => this.cancelCrop()}>
+                                                            <Close className={classes.icon} />
+                                                        </Button>
+                                                        <Button color="info" className={classes.actionButton} onClick={() => this.setState({ showAvatarCrop: false })}>
+                                                            <Edit className={classes.icon} />
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <a onClick={() => this.handleClick('avatar')}>
+                                                    <img src={this.state.imagePreviewUrl} style={{ width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%' }} alt="..." />
+                                                </a>
+                                            )
+                                        }
+                                        <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
+                                    </GridItem>
+                                    <GridItem xs={6}>
+                                        <input type="file" hidden onChange={this.handleLicenseChange.bind(this)} ref="licenseInput" />
+                                        <a onClick={() => this.handleClick("license")}>
+                                            <img src={this.state.licensePreviewUrl} style={{ width: '130px', height: '130px', minWidth: '130px', minHeight: '130px', borderRadius: '50%', border: 'solid 1px', padding: '4px', overflow: 'hidden' }} alt="..." />
                                         </a>
-                                    )
-                                }   
-                                <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />                     
+                                    </GridItem>
+                                </GridContainer>                  
                                 <CustomInput
                                     success={this.props.employee !== null || this.state.nameState === "success"}
                                     error={this.state.nameState === "error"}
