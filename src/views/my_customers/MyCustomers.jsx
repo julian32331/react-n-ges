@@ -27,7 +27,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Table from "components/Table/Table.jsx";
 
-import myCustomersStyle from "assets/jss/material-dashboard-pro-react/views/myCustomers/myCustomersStyle";
+import myCustomersStyle from "assets/jss/material-dashboard-pro-react/views/my_customers/myCustomersStyle";
 
 class MyCustomers extends React.Component {
 

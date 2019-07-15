@@ -33,7 +33,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import PictureUpload from "components/CustomUpload/PictureUpload.jsx";
 
-import customerProfileStyle from "assets/jss/material-dashboard-pro-react/views/myCustomers/customerProfileStyle";
+import customerProfileStyle from "assets/jss/material-dashboard-pro-react/views/my_customers/customerProfileStyle";
 
 import AddImage from "assets/img/add.png";
 
