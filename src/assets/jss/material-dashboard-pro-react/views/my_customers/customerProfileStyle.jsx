@@ -39,6 +39,9 @@ const myCustomersStyle = theme => ({
     },
     mr_8: {
         marginRight: '8px',
+    },
+    pt_22: {
+        paddingTop: '22px',
     }
 });
 

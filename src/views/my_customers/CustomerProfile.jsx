@@ -5,6 +5,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+import Datetime from "react-datetime";
 
 import {bindActionCreators} from 'redux';
 import * as Actions from 'store/actions';
@@ -18,6 +19,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from '@material-ui/core/TextField';
+import FormLabel from "@material-ui/core/FormLabel";
 
 // @material-ui/icons
 import Add from "@material-ui/icons/Add";
@@ -42,6 +44,8 @@ class CustomerProfile extends React.Component {
     constructor() {
         super();
         this.state = {
+            tabIndex        : 1,
+
             name            : "",
             nameState       : "",
             email           : "",
@@ -65,158 +69,308 @@ class CustomerProfile extends React.Component {
                         <GridContainer>
                             <GridItem xs={12} className={classes.center}>
                                 <div className={classes.buttonGroup}>
-                                    <Button color="info" className={classes.firstButton}>
+                                    <Button color={this.state.tabIndex === 1? "info" : "default"} className={classes.firstButton} onClick={() => this.setState({tabIndex: 1})}>
                                         Profile
                                     </Button>
-                                    <Button color="default" className={classes.lastButton}>
-                                        Purchases
+                                    <Button color={this.state.tabIndex === 2? "info" : "default"} className={classes.lastButton} onClick={() => this.setState({tabIndex: 2})}>
+                                        Bookings
                                     </Button>
                                 </div>
                             </GridItem>
                         </GridContainer>
                     </div>
                 </CardHeader>
-                <CardBody className={classes.pt_0}>
-                    <GridContainer justify="center">
-                        <GridItem xs={12} sm={6} md={2}>
-                            <PictureUpload />
-                        </GridItem>
-                    </GridContainer>
-                    <GridContainer justify="center">
-                        <GridItem xs={12} sm={6}>
-                            <GridContainer>
-                                <GridItem xs={12} md={4}>
-                                    <CustomInput
-                                        // success={this.state.nameState === "success"}
-                                        // error={this.state.nameState === "error"}
-                                        labelText="Namn *"
-                                        id="legal-name"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            endAdornment:
-                                                this.state.nameState === "error" &&
-                                                <InputAdornment position="end">
-                                                    <Warning className={classes.danger} />
-                                                </InputAdornment>,
-                                            onChange: event =>
-                                                this.changeForm(event, "name", "name", 1),
-                                            value: this.state.name,
-                                            type: "text"
-                                        }}
-                                    />
+                {
+                    this.state.tabIndex === 1 &&
+                        <CardBody className={classes.pt_0}>
+                            <GridContainer justify="center">
+                                <GridItem xs={12} sm={6} md={2}>
+                                    <PictureUpload />
                                 </GridItem>
-                                <GridItem xs={12} md={4}>
-                                    <CustomInput
-                                        success={this.state.orgNoState === "success"}
-                                        error={this.state.orgNoState === "error"}
-                                        labelText="E-post *"
-                                        id="org-number"
-                                        formControlProps={{
-                                        fullWidth: true
-                                        }}
-                                        inputProps={{
-                                            onChange: event =>
-                                                this.changeForm(event, "orgNo", "orgNo", 1),
-                                            value: this.state.orgNo,
-                                            type: "text"
-                                        }}
-                                    />
+                            </GridContainer>
+                            <GridContainer justify="center">
+                                <GridItem xs={12} sm={6}>
+                                    <GridContainer>
+                                        <GridItem xs={12} md={4}>
+                                            <CustomInput
+                                                // success={this.state.nameState === "success"}
+                                                // error={this.state.nameState === "error"}
+                                                labelText="Namn *"
+                                                id="legal-name"
+                                                formControlProps={{
+                                                    fullWidth: true
+                                                }}
+                                                inputProps={{
+                                                    endAdornment:
+                                                        this.state.nameState === "error" &&
+                                                        <InputAdornment position="end">
+                                                            <Warning className={classes.danger} />
+                                                        </InputAdornment>,
+                                                    onChange: event =>
+                                                        this.changeForm(event, "name", "name", 1),
+                                                    value: this.state.name,
+                                                    type: "text"
+                                                }}
+                                            />
+                                        </GridItem>
+                                        <GridItem xs={12} md={4}>
+                                            <CustomInput
+                                                success={this.state.orgNoState === "success"}
+                                                error={this.state.orgNoState === "error"}
+                                                labelText="E-post *"
+                                                id="org-number"
+                                                formControlProps={{
+                                                fullWidth: true
+                                                }}
+                                                inputProps={{
+                                                    onChange: event =>
+                                                        this.changeForm(event, "orgNo", "orgNo", 1),
+                                                    value: this.state.orgNo,
+                                                    type: "text"
+                                                }}
+                                            />
+                                        </GridItem>
+                                        <GridItem xs={12} md={4}>
+                                            <CustomInput
+                                                success={this.state.orgNoState === "success"}
+                                                error={this.state.orgNoState === "error"}
+                                                labelText="Personnummer"
+                                                id="org-number"
+                                                formControlProps={{
+                                                fullWidth: true
+                                                }}
+                                                inputProps={{
+                                                    onChange: event =>
+                                                        this.changeForm(event, "orgNo", "orgNo", 1),
+                                                    value: this.state.orgNo,
+                                                    type: "number"
+                                                }}
+                                            />
+                                        </GridItem>
+                                    </GridContainer>
+                                </GridItem>                        
+                            </GridContainer>
+                            <GridContainer justify="center">
+                                <GridItem xs={12} sm={6}>
+                                    <FormControl
+                                        fullWidth
+                                        className={classes.selectFormControl}
+                                    >
+                                        <InputLabel
+                                            htmlFor="employee"
+                                            className={classes.selectLabel}
+                                        >
+                                            Select Employee
+                                        </InputLabel>
+                                        <Select
+                                            MenuProps={{
+                                                className: classes.selectMenu
+                                            }}
+                                            classes={{
+                                                select: classes.select + " " + classes.text_left
+                                            }}
+                                            value={this.state.employee}
+                                            onChange={this.handleEmployee}
+                                            inputProps={{
+                                                name: "employee",
+                                                id: "employee"
+                                            }}
+                                        >
+                                            <MenuItem
+                                                disabled
+                                                classes={{
+                                                root: classes.selectMenuItem
+                                                }}
+                                            >
+                                                Select Employee
+                                            </MenuItem>
+                                        </Select>
+                                    </FormControl>
                                 </GridItem>
-                                <GridItem xs={12} md={4}>
-                                    <CustomInput
-                                        success={this.state.orgNoState === "success"}
-                                        error={this.state.orgNoState === "error"}
-                                        labelText="Personnummer"
-                                        id="org-number"
-                                        formControlProps={{
-                                        fullWidth: true
+                            </GridContainer>
+                            <GridContainer justify="center">
+                                <GridItem xs={12} sm={6}>
+                                    <TextField
+                                        id="outlined-bare"
+                                        className={classes.textArea}
+                                        InputProps={{
+                                            classes: {
+                                                multiline: classes.multiline,
+                                                inputMultiline: classes.inputMultiline
+                                            },
+                                            onChange: event => this.change(event, "comment", "comment", 1),
                                         }}
-                                        inputProps={{
-                                            onChange: event =>
-                                                this.changeForm(event, "orgNo", "orgNo", 1),
-                                            value: this.state.orgNo,
-                                            type: "number"
-                                        }}
+                                        multiline
+                                        rows="4"
+                                        fullWidth
+                                        placeholder="Kommentar"
+                                        margin="none"
+                                        variant="outlined"
                                     />
                                 </GridItem>
                             </GridContainer>
-                        </GridItem>                        
-                    </GridContainer>
-                    <GridContainer justify="center">
-                        <GridItem xs={12} sm={6}>
-                            <FormControl
-                                fullWidth
-                                className={classes.selectFormControl}
-                            >
-                                <InputLabel
-                                    htmlFor="employee"
-                                    className={classes.selectLabel}
-                                >
-                                    Select Employee
-                                </InputLabel>
-                                <Select
-                                    MenuProps={{
-                                        className: classes.selectMenu
-                                    }}
-                                    classes={{
-                                        select: classes.select + " " + classes.text_left
-                                    }}
-                                    value={this.state.employee}
-                                    onChange={this.handleEmployee}
-                                    inputProps={{
-                                        name: "employee",
-                                        id: "employee"
-                                    }}
-                                >
-                                    <MenuItem
-                                        disabled
-                                        classes={{
-                                        root: classes.selectMenuItem
-                                        }}
-                                    >
-                                        Select Employee
-                                    </MenuItem>
-                                </Select>
-                            </FormControl>
-                        </GridItem>
-                    </GridContainer>
-                    <GridContainer justify="center">
-                        <GridItem xs={12} sm={6}>
-                            <TextField
-                                id="outlined-bare"
-                                className={classes.textArea}
-                                InputProps={{
-                                    classes: {
-                                        multiline: classes.multiline,
-                                        inputMultiline: classes.inputMultiline
-                                    },
-                                    onChange: event => this.change(event, "comment", "comment", 1),
-                                }}
-                                multiline
-                                rows="4"
-                                fullWidth
-                                placeholder="Kommentar"
-                                margin="none"
-                                variant="outlined"
-                            />
-                        </GridItem>
-                    </GridContainer>
-                    <GridContainer justify="center" className={classes.pt_20}>
-                        <GridItem xs={12} sm={6} className={classes.center}>
-                            <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
-                            <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
-                            <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
-                            <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
-                            <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
-                            <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
-                            <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
-                            
-                            <img src={AddImage} className={classes.img_add} alt="..." />
-                        </GridItem>
-                    </GridContainer>
-                </CardBody>
+                            <GridContainer justify="center" className={classes.pt_20}>
+                                <GridItem xs={12} sm={6} className={classes.center}>
+                                    <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
+                                    <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
+                                    <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
+                                    <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
+                                    <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
+                                    <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
+                                    <img src={this.state.licensePreviewUrl} className={classes.img} alt="..." />
+                                    
+                                    <img src={AddImage} className={classes.img_add} alt="..." />
+                                </GridItem>
+                            </GridContainer>
+                        </CardBody>
+                }
+                {
+                    this.state.tabIndex === 2 &&
+                        <CardBody className={classes.pt_0}>
+                            <GridContainer>
+                                <GridItem sm={12} md={6}>
+                                    <GridContainer>
+                                        <GridItem xs={12} sm={6} md={4} lg={2}>
+                                            <FormLabel className={classes.labelHorizontal}>
+                                                Sök :
+                                            </FormLabel>
+                                        </GridItem>
+                                        <GridItem xs={12} sm={6} md={6} lg={4}>
+                                            <CustomInput
+                                                id="search"
+                                                formControlProps={{
+                                                    fullWidth: true
+                                                }}
+                                                inputProps={{
+                                                    type: "search",
+                                                    // onChange: event =>
+                                                    //     this.searchHandler("search", event),
+                                                    value: this.state.search
+                                                }}
+                                            />
+                                        </GridItem>
+                                    </GridContainer>
+                                </GridItem> 
+                                <GridItem sm={12} md={6}>
+                                    <GridContainer>
+                                        <GridItem xs={12} sm={6} md={4} lg={4}>
+                                            <FormLabel className={classes.labelHorizontal}>
+                                                Booking/Purchases :
+                                            </FormLabel>
+                                        </GridItem>
+                                        <GridItem xs={12} sm={6} md={6} lg={4}>
+                                            <FormControl fullWidth className={classes.pt_22}>
+                                                <Datetime
+                                                dateFormat={"YYYY-MM-DD"}
+                                                timeFormat={false}
+                                                // value={this.state.searchFrom}
+                                                // onChange={event => this.timeHandler("searchFrom", event)}
+                                                />
+                                            </FormControl>
+                                        </GridItem>
+                                    </GridContainer>
+                                </GridItem>                               
+                            </GridContainer>
+                            <GridContainer>
+                                <GridItem xs={12} sm={2}>
+                                    <Card>
+                                        <CardHeader>
+                                            <h3>Purchase #003</h3>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <h4>Name: purchase1</h4>
+                                            <h4>Date: 2019-7-17</h4>
+                                            <h4>Price: $21</h4>
+                                        </CardBody>
+                                    </Card>
+                                </GridItem>
+                                <GridItem xs={12} sm={2}>
+                                    <Card>
+                                        <CardHeader>
+                                            <h3>Booking #221</h3>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <h4>Service: service1</h4>
+                                            <h4>Date: 2019-7-17</h4>
+                                            <h4>Price: $4</h4>
+                                        </CardBody>
+                                    </Card>
+                                </GridItem>
+                                <GridItem xs={12} sm={2}>
+                                    <Card>
+                                        <CardHeader>
+                                            <h3>Purchase #003</h3>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <h4>Name: purchase1</h4>
+                                            <h4>Date: 2019-7-17</h4>
+                                            <h4>Price: $21</h4>
+                                        </CardBody>
+                                    </Card>
+                                </GridItem>
+                                <GridItem xs={12} sm={2}>
+                                    <Card>
+                                        <CardHeader>
+                                            <h3>Booking #221</h3>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <h4>Service: service1</h4>
+                                            <h4>Date: 2019-7-17</h4>
+                                            <h4>Price: $4</h4>
+                                        </CardBody>
+                                    </Card>
+                                </GridItem>
+                                <GridItem xs={12} sm={2}>
+                                    <Card>
+                                        <CardHeader>
+                                            <h3>Purchase #003</h3>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <h4>Name: purchase1</h4>
+                                            <h4>Date: 2019-7-17</h4>
+                                            <h4>Price: $21</h4>
+                                        </CardBody>
+                                    </Card>
+                                </GridItem>
+                                <GridItem xs={12} sm={2}>
+                                    <Card>
+                                        <CardHeader>
+                                            <h3>Booking #221</h3>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <h4>Service: service1</h4>
+                                            <h4>Date: 2019-7-17</h4>
+                                            <h4>Price: $4</h4>
+                                        </CardBody>
+                                    </Card>
+                                </GridItem>
+                                <GridItem xs={12} sm={2}>
+                                    <Card>
+                                        <CardHeader>
+                                            <h3>Purchase #003</h3>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <h4>Name: purchase1</h4>
+                                            <h4>Date: 2019-7-17</h4>
+                                            <h4>Price: $21</h4>
+                                        </CardBody>
+                                    </Card>
+                                </GridItem>
+                                <GridItem xs={12} sm={2}>
+                                    <Card>
+                                        <CardHeader>
+                                            <h3>Booking #221</h3>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <h4>Service: service1</h4>
+                                            <h4>Date: 2019-7-17</h4>
+                                            <h4>Price: $4</h4>
+                                        </CardBody>
+                                    </Card>
+                                </GridItem>
+                            </GridContainer>
+                        </CardBody>
+                }
             </Card>
         );
     }
