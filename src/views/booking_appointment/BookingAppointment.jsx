@@ -37,6 +37,7 @@ class BookingAppointment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showCal           : true,
       calendarView      : "day",
       initDate          : moment().toDate(),
       resourceId        : 0,
@@ -168,6 +169,7 @@ class BookingAppointment extends React.Component {
     console.log('focus: ', this.state.resources)
     if (id == 0) {
       this.setState({
+        showCal: false,
         resourceId: 0,
         resources: this.props.employees
       })
@@ -176,10 +178,16 @@ class BookingAppointment extends React.Component {
         return employee.hairdresser_id == id
       })
       this.setState({
+        showCal: false,
         resourceId: id,
         resources: [employee]
       })
     }
+    setTimeout(() => {
+      this.setState({
+        showCal: true
+      })
+    }, 100);
   }
 
   render() {
@@ -322,36 +330,40 @@ class BookingAppointment extends React.Component {
                     </div>
                   </CardHeader>
                   <CardBody calendar>
-                    <BigCalendar
-                      formats={formats}
-                      localizer={localizer}
-                      date={this.state.initDate}
-                      step={15}
-                      timeslots={8}
-                      min={new Date(2019, 1, 0, 8, 0, 0)}
-                      defaultView="day"
-                      view={this.state.calendarView}
-                      views={['month', 'week','day']}
-                      components={
-                        {
-                          toolbar: toolbar
-                        }
-                      }
-                      eventPropGetter={this.eventColors}
-                      resources={this.state.resources}
-                      resourceIdAccessor="hairdresser_id"
-                      resourceTitleAccessor="name"
-                      events={data}
-                      titleAccessor={(event) => event.consumerName? event.consumerName : event.comment}
-                      startAccessor="plannedStartTime"
-                      endAccessor="plannedEndTime"
-                      onNavigate={(date) => this.onChangeDate(date)}
-                      selectable
-                      onSelecting = {slot => console.log("slot: ", slot)}
-                      onSelectSlot={this.onOpenSelector}
-                      onSelectEvent={(event) => this.onOpenDetailedEvent(event)}
-                      onView={(view)=> this.setState({calendarView: view})}
-                    />             
+                    {
+                      this.state.showCal && 
+                        <BigCalendar
+                          formats={formats}
+                          localizer={localizer}
+                          date={this.state.initDate}
+                          step={15}
+                          timeslots={8}
+                          min={new Date(2019, 1, 0, 8, 0, 0)}
+                          defaultView="day"
+                          view={this.state.calendarView}
+                          views={['month', 'week','day']}
+                          components={
+                            {
+                              toolbar: toolbar
+                            }
+                          }
+                          eventPropGetter={this.eventColors}
+                          resources={this.state.resources}
+                          resourceIdAccessor="hairdresser_id"
+                          resourceTitleAccessor="name"
+                          events={data}
+                          titleAccessor={(event) => event.consumerName? event.consumerName : event.comment}
+                          startAccessor="plannedStartTime"
+                          endAccessor="plannedEndTime"
+                          onNavigate={(date) => this.onChangeDate(date)}
+                          selectable
+                          onSelecting = {slot => console.log("slot: ", slot)}
+                          onSelectSlot={this.onOpenSelector}
+                          onSelectEvent={(event) => this.onOpenDetailedEvent(event)}
+                          onView={(view)=> this.setState({calendarView: view})}
+                        />
+                    }
+                                   
                   </CardBody> 
                 </div>
             }                     
