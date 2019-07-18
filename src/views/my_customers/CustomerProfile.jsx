@@ -272,7 +272,7 @@ class CustomerProfile extends React.Component {
                                 </GridItem>                               
                             </GridContainer>
                             <GridContainer>
-                                <GridItem xs={12} sm={2}>
+                                {/* <GridItem xs={12} sm={2}>
                                     <Card>
                                         <CardHeader>
                                             <h3>Purchase #003</h3>
@@ -283,89 +283,285 @@ class CustomerProfile extends React.Component {
                                             <h4>Price: $21</h4>
                                         </CardBody>
                                     </Card>
-                                </GridItem>
-                                <GridItem xs={12} sm={2}>
+                                </GridItem> */}
+                                <GridItem xs={12} sm={3}>
                                     <Card>
-                                        <CardHeader>
-                                            <h3>Booking #221</h3>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <h4>Service: service1</h4>
-                                            <h4>Date: 2019-7-17</h4>
-                                            <h4>Price: $4</h4>
-                                        </CardBody>
+                                        <div className={classes.paypal}>
+                                            <div className={classes.paypal_header}>
+                                                <div className={classes.paypal_logo_wrapper}>
+                                                    <img src="https://s32.postimg.org/8riyo788h/paypal.png" alt="Paypal" className={classes.paypal_logo} />
+                                                </div>
+
+                                                <div className={classes.paypal_header_info}>
+                                                    <span className={classes.paypal_date}>25.04.2016</span>
+                                                    <span className={classes.paypal_ref}>0f-113</span>
+                                                </div>
+                                            </div>
+
+                                            <div className={classes.paypal_subheader_wrapper}>
+                                                <div className={classes.paypal_subheader}>
+                                                    <h1 className={classes.paypal_username}>VladysLav, Hi</h1>
+                                                    <span className={classes.paypal_help_text}>you've purchased three (3) items in our store:</span>
+                                                </div>
+                                            </div>
+
+                                            <div className={classes.paypal_cart}>
+                                                <h2 className={classes.paypal_cart_title}>Cart:</h2>
+
+                                                <ul className={classes.paypal_cart_list}>
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>1</span>
+                                                        <span className={classes.paypal_item_name}>t-Shirt Lacoste</span>
+                                                        <span className={classes.paypal_item_price}>$48.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>2</span>
+                                                        <span className={classes.paypal_item_name}>Snickers Nike</span>
+                                                        <span className={classes.paypal_item_price}>$125.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>3</span>
+                                                        <span className={classes.paypal_item_name}>All Stars</span>
+                                                        <span className={classes.paypal_item_price}>$95.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_cart_total}>Total</span>
+                                                        <span className={classes.paypal_item_price}>$268.00</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div className={classes.paypal_footer}>
+                                                <img src="https://s32.postimg.org/w4h06poc1/barcode.png" alt="Paypal Barcode" className={classes.paypal_barcode} />
+                                            </div>
+                                        </div>
                                     </Card>
                                 </GridItem>
-                                <GridItem xs={12} sm={2}>
+                                <GridItem xs={12} sm={3}>
                                     <Card>
-                                        <CardHeader>
-                                            <h3>Purchase #003</h3>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <h4>Name: purchase1</h4>
-                                            <h4>Date: 2019-7-17</h4>
-                                            <h4>Price: $21</h4>
-                                        </CardBody>
+                                        <div className={classes.paypal}>
+                                            <div className={classes.paypal_header}>
+                                                <div className={classes.paypal_logo_wrapper}>
+                                                    <img src="https://s32.postimg.org/8riyo788h/paypal.png" alt="Paypal" className={classes.paypal_logo} />
+                                                </div>
+
+                                                <div className={classes.paypal_header_info}>
+                                                    <span className={classes.paypal_date}>25.04.2016</span>
+                                                    <span className={classes.paypal_ref}>0f-113</span>
+                                                </div>
+                                            </div>
+
+                                            <div className={classes.paypal_subheader_wrapper}>
+                                                <div className={classes.paypal_subheader}>
+                                                    <h1 className={classes.paypal_username}>VladysLav, Hi</h1>
+                                                    <span className={classes.paypal_help_text}>you've purchased three (3) items in our store:</span>
+                                                </div>
+                                            </div>
+
+                                            <div className={classes.paypal_cart}>
+                                                <h2 className={classes.paypal_cart_title}>Cart:</h2>
+
+                                                <ul className={classes.paypal_cart_list}>
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>1</span>
+                                                        <span className={classes.paypal_item_name}>t-Shirt Lacoste</span>
+                                                        <span className={classes.paypal_item_price}>$48.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>2</span>
+                                                        <span className={classes.paypal_item_name}>Snickers Nike</span>
+                                                        <span className={classes.paypal_item_price}>$125.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>3</span>
+                                                        <span className={classes.paypal_item_name}>All Stars</span>
+                                                        <span className={classes.paypal_item_price}>$95.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_cart_total}>Total</span>
+                                                        <span className={classes.paypal_item_price}>$268.00</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div className={classes.paypal_footer}>
+                                                <img src="https://s32.postimg.org/w4h06poc1/barcode.png" alt="Paypal Barcode" className={classes.paypal_barcode} />
+                                            </div>
+                                        </div>
                                     </Card>
                                 </GridItem>
-                                <GridItem xs={12} sm={2}>
+                                <GridItem xs={12} sm={3}>
                                     <Card>
-                                        <CardHeader>
-                                            <h3>Booking #221</h3>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <h4>Service: service1</h4>
-                                            <h4>Date: 2019-7-17</h4>
-                                            <h4>Price: $4</h4>
-                                        </CardBody>
+                                        <div className={classes.paypal}>
+                                            <div className={classes.paypal_header}>
+                                                <div className={classes.paypal_logo_wrapper}>
+                                                    <img src="https://s32.postimg.org/8riyo788h/paypal.png" alt="Paypal" className={classes.paypal_logo} />
+                                                </div>
+
+                                                <div className={classes.paypal_header_info}>
+                                                    <span className={classes.paypal_date}>25.04.2016</span>
+                                                    <span className={classes.paypal_ref}>0f-113</span>
+                                                </div>
+                                            </div>
+
+                                            <div className={classes.paypal_subheader_wrapper}>
+                                                <div className={classes.paypal_subheader}>
+                                                    <h1 className={classes.paypal_username}>VladysLav, Hi</h1>
+                                                    <span className={classes.paypal_help_text}>you've purchased three (3) items in our store:</span>
+                                                </div>
+                                            </div>
+
+                                            <div className={classes.paypal_cart}>
+                                                <h2 className={classes.paypal_cart_title}>Cart:</h2>
+
+                                                <ul className={classes.paypal_cart_list}>
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>1</span>
+                                                        <span className={classes.paypal_item_name}>t-Shirt Lacoste</span>
+                                                        <span className={classes.paypal_item_price}>$48.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>2</span>
+                                                        <span className={classes.paypal_item_name}>Snickers Nike</span>
+                                                        <span className={classes.paypal_item_price}>$125.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>3</span>
+                                                        <span className={classes.paypal_item_name}>All Stars</span>
+                                                        <span className={classes.paypal_item_price}>$95.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_cart_total}>Total</span>
+                                                        <span className={classes.paypal_item_price}>$268.00</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div className={classes.paypal_footer}>
+                                                <img src="https://s32.postimg.org/w4h06poc1/barcode.png" alt="Paypal Barcode" className={classes.paypal_barcode} />
+                                            </div>
+                                        </div>
                                     </Card>
                                 </GridItem>
-                                <GridItem xs={12} sm={2}>
+                                <GridItem xs={12} sm={3}>
                                     <Card>
-                                        <CardHeader>
-                                            <h3>Purchase #003</h3>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <h4>Name: purchase1</h4>
-                                            <h4>Date: 2019-7-17</h4>
-                                            <h4>Price: $21</h4>
-                                        </CardBody>
+                                        <div className={classes.paypal}>
+                                            <div className={classes.paypal_header}>
+                                                <div className={classes.paypal_logo_wrapper}>
+                                                    <img src="https://s32.postimg.org/8riyo788h/paypal.png" alt="Paypal" className={classes.paypal_logo} />
+                                                </div>
+
+                                                <div className={classes.paypal_header_info}>
+                                                    <span className={classes.paypal_date}>25.04.2016</span>
+                                                    <span className={classes.paypal_ref}>0f-113</span>
+                                                </div>
+                                            </div>
+
+                                            <div className={classes.paypal_subheader_wrapper}>
+                                                <div className={classes.paypal_subheader}>
+                                                    <h1 className={classes.paypal_username}>VladysLav, Hi</h1>
+                                                    <span className={classes.paypal_help_text}>you've purchased three (3) items in our store:</span>
+                                                </div>
+                                            </div>
+
+                                            <div className={classes.paypal_cart}>
+                                                <h2 className={classes.paypal_cart_title}>Cart:</h2>
+
+                                                <ul className={classes.paypal_cart_list}>
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>1</span>
+                                                        <span className={classes.paypal_item_name}>t-Shirt Lacoste</span>
+                                                        <span className={classes.paypal_item_price}>$48.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>2</span>
+                                                        <span className={classes.paypal_item_name}>Snickers Nike</span>
+                                                        <span className={classes.paypal_item_price}>$125.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>3</span>
+                                                        <span className={classes.paypal_item_name}>All Stars</span>
+                                                        <span className={classes.paypal_item_price}>$95.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_cart_total}>Total</span>
+                                                        <span className={classes.paypal_item_price}>$268.00</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div className={classes.paypal_footer}>
+                                                <img src="https://s32.postimg.org/w4h06poc1/barcode.png" alt="Paypal Barcode" className={classes.paypal_barcode} />
+                                            </div>
+                                        </div>
                                     </Card>
                                 </GridItem>
-                                <GridItem xs={12} sm={2}>
+                                <GridItem xs={12} sm={3}>
                                     <Card>
-                                        <CardHeader>
-                                            <h3>Booking #221</h3>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <h4>Service: service1</h4>
-                                            <h4>Date: 2019-7-17</h4>
-                                            <h4>Price: $4</h4>
-                                        </CardBody>
-                                    </Card>
-                                </GridItem>
-                                <GridItem xs={12} sm={2}>
-                                    <Card>
-                                        <CardHeader>
-                                            <h3>Purchase #003</h3>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <h4>Name: purchase1</h4>
-                                            <h4>Date: 2019-7-17</h4>
-                                            <h4>Price: $21</h4>
-                                        </CardBody>
-                                    </Card>
-                                </GridItem>
-                                <GridItem xs={12} sm={2}>
-                                    <Card>
-                                        <CardHeader>
-                                            <h3>Booking #221</h3>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <h4>Service: service1</h4>
-                                            <h4>Date: 2019-7-17</h4>
-                                            <h4>Price: $4</h4>
-                                        </CardBody>
+                                        <div className={classes.paypal}>
+                                            <div className={classes.paypal_header}>
+                                                <div className={classes.paypal_logo_wrapper}>
+                                                    <img src="https://s32.postimg.org/8riyo788h/paypal.png" alt="Paypal" className={classes.paypal_logo} />
+                                                </div>
+
+                                                <div className={classes.paypal_header_info}>
+                                                    <span className={classes.paypal_date}>25.04.2016</span>
+                                                    <span className={classes.paypal_ref}>0f-113</span>
+                                                </div>
+                                            </div>
+
+                                            <div className={classes.paypal_subheader_wrapper}>
+                                                <div className={classes.paypal_subheader}>
+                                                    <h1 className={classes.paypal_username}>VladysLav, Hi</h1>
+                                                    <span className={classes.paypal_help_text}>you've purchased three (3) items in our store:</span>
+                                                </div>
+                                            </div>
+
+                                            <div className={classes.paypal_cart}>
+                                                <h2 className={classes.paypal_cart_title}>Cart:</h2>
+
+                                                <ul className={classes.paypal_cart_list}>
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>1</span>
+                                                        <span className={classes.paypal_item_name}>t-Shirt Lacoste</span>
+                                                        <span className={classes.paypal_item_price}>$48.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>2</span>
+                                                        <span className={classes.paypal_item_name}>Snickers Nike</span>
+                                                        <span className={classes.paypal_item_price}>$125.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_index}>3</span>
+                                                        <span className={classes.paypal_item_name}>All Stars</span>
+                                                        <span className={classes.paypal_item_price}>$95.00</span>
+                                                    </li>
+
+                                                    <li className={classes.paypal_cart_item}>
+                                                        <span className={classes.paypal_cart_total}>Total</span>
+                                                        <span className={classes.paypal_item_price}>$268.00</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div className={classes.paypal_footer}>
+                                                <img src="https://s32.postimg.org/w4h06poc1/barcode.png" alt="Paypal Barcode" className={classes.paypal_barcode} />
+                                            </div>
+                                        </div>
                                     </Card>
                                 </GridItem>
                             </GridContainer>
