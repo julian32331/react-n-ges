@@ -12,6 +12,7 @@ export * from './company_info';
 export * from './my_ledger';
 export * from './profile';
 export * from './locales.actions';
+export * from './social_marketing';
 
 export * from './employees.actions';
 export * from './mySalons.actions';

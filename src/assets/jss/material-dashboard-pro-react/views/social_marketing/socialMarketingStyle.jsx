@@ -6,8 +6,10 @@
 import {
   cardTitle
 } from "assets/jss/material-dashboard-pro-react.jsx";
+import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
 
 const socialMarketingStyle = {
+  ...commonStyle,
   cardProductTitle: {
     ...cardTitle,
     marginTop: "0px",
@@ -37,6 +39,9 @@ const socialMarketingStyle = {
       fontSize: "16px",
       marginRight: "3px"
     }
+  },
+  social_button: {
+    display: 'inline-flex',
   }
 };
 

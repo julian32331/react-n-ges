@@ -10,6 +10,7 @@ import company from './company_info';
 import my_ledger from './my_ledger';
 import profile from './profile';
 import locales from './locales.reducer';
+import social_marketing from './social_marketing';
 
 import employees from "./employees.reducer";
 import mySalons from "./mySalons.reducer";
@@ -27,6 +28,7 @@ const createReducer = (asyncReducers) =>
         company,
         my_ledger,
         profile,
+        social_marketing,
         
         employees,
         mySalons,
