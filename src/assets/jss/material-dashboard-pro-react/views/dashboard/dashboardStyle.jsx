@@ -55,6 +55,14 @@ const dashboardStyle = theme => ({
       lineHeight: '20px',
       margin: '16px 0'
     }
+  },
+  px_30: {
+    padding: '0 30px',
+  },
+  dashImg: {
+    width: '100%',
+    borderRadius: '10px',
+    boxShadow: '0 5px 15px -8px rgba(0, 0, 0, 0.24), 0 8px 10px -5px rgba(0, 0, 0, 0.2)'
   }
 });
 
