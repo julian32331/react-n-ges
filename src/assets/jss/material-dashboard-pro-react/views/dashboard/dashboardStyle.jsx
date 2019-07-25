@@ -56,12 +56,19 @@ const dashboardStyle = theme => ({
       margin: '16px 0'
     }
   },
-  px_30: {
-    padding: '0 30px',
+  p10: {
+    padding: '10px',
+  },
+  imgContainer: {
+    width: 'calc(100% + 10px) !important',
+    margin: '-5px !important'
+  },
+  p5: {
+    padding: '5px !important',
   },
   dashImg: {
     width: '100%',
-    borderRadius: '10px',
+    // borderRadius: '10px',
     boxShadow: '0 5px 15px -8px rgba(0, 0, 0, 0.24), 0 8px 10px -5px rgba(0, 0, 0, 0.2)'
   }
 });

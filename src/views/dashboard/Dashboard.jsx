@@ -28,6 +28,7 @@ import locales from './homeLocales.json';
 import dash1 from "assets/img/dash1.jpg";
 import dash2 from "assets/img/dash2.jpg";
 import dash3 from "assets/img/dash3.jpg";
+import marketing from "assets/img/marketing-1.jpg";
 
 class Dashboard extends React.Component {
 
@@ -68,37 +69,25 @@ class Dashboard extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Card className={classes.px_30}>
-        <GridContainer>
-          <GridItem xs={12} sm={6} md={4}>
-            <Card>
-              <img src={dash1} className={classes.dashImg} alt="..." />
-            </Card>
+      <Card className={classes.p10}>
+        <GridContainer className={classes.imgContainer}>
+          <GridItem xs={12} sm={6} md={4} className={classes.p5}>
+              <img src={marketing} className={classes.dashImg} alt="..." />
           </GridItem>
-          <GridItem xs={12} sm={6} md={4}>
-            <Card>
-              <img src={dash2} className={classes.dashImg} alt="..." />
-            </Card>
+          <GridItem xs={12} sm={6} md={4} className={classes.p5}>
+              <img src={marketing} className={classes.dashImg} alt="..." />
           </GridItem>
-          <GridItem xs={12} sm={6} md={4}>
-            <Card>
-              <img src={dash3} className={classes.dashImg} alt="..." />
-            </Card>
+          <GridItem xs={12} sm={6} md={4} className={classes.p5}>
+              <img src={marketing} className={classes.dashImg} alt="..." />
           </GridItem>
-          <GridItem xs={12} sm={6} md={4}>
-            <Card>
-              <img src={dash2} className={classes.dashImg} alt="..." />
-            </Card>
+          <GridItem xs={12} sm={6} md={4} className={classes.p5}>
+              <img src={marketing} className={classes.dashImg} alt="..." />
           </GridItem>
-          <GridItem xs={12} sm={6} md={4}>
-            <Card>
-              <img src={dash3} className={classes.dashImg} alt="..." />
-            </Card>
+          <GridItem xs={12} sm={6} md={4} className={classes.p5}>
+              <img src={marketing} className={classes.dashImg} alt="..." />
           </GridItem>
-          <GridItem xs={12} sm={6} md={4}>
-            <Card>
-              <img src={dash1} className={classes.dashImg} alt="..." />
-            </Card>
+          <GridItem xs={12} sm={6} md={4} className={classes.p5}>
+              <img src={marketing} className={classes.dashImg} alt="..." />
           </GridItem>
           <SelectSalon
               onOpen={this.state.showSelectSalon}
