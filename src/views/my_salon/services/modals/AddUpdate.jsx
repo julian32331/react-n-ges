@@ -11,7 +11,7 @@ import * as Actions from 'store/actions';
 import {withRouter} from 'react-router-dom';
 import connect from 'react-redux/es/connect/connect';
 
-import { ChromePicker, SliderPicker, HuePicker } from 'react-color';
+import { CirclePicker } from 'react-color';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -55,6 +55,7 @@ class AddUpdate extends React.Component {
             description: "",
             descriptionState: "",
             selectedEmployees: [],
+            color: ""
         }
         setTimeout(() => {
             this.props.getEmployees({ 
@@ -74,7 +75,8 @@ class AddUpdate extends React.Component {
                 priceState: "success",
                 description: nextProps.data.description,
                 descriptionState: "success",
-                selectedEmployees: nextProps.selectedEmployees? nextProps.selectedEmployees : []             
+                selectedEmployees: nextProps.selectedEmployees? nextProps.selectedEmployees : [],
+                color: nextProps.data.color             
             })
         } else {
             this.initState();
@@ -91,7 +93,8 @@ class AddUpdate extends React.Component {
             priceState: "",
             description: "",
             descriptionState: "",
-            selectedEmployees: []
+            selectedEmployees: [],
+            color: ""
         })
     }
     
@@ -122,6 +125,11 @@ class AddUpdate extends React.Component {
             case "selectedEmployees":
                 this.setState({
                     [stateName]: event.target.value
+                });
+                break;
+            case "color":
+                this.setState({
+                    [stateName]: event.hex
                 })
             default:
                 break;
@@ -141,7 +149,8 @@ class AddUpdate extends React.Component {
                     name: this.state.title,
                     description: this.state.description,
                     price: this.state.price,
-                    durationInMinutes: this.state.time
+                    durationInMinutes: this.state.time,
+                    color: this.state.color
                 },
                 assignData: {
                     addedEmployeeIds: this.state.selectedEmployees
@@ -167,7 +176,8 @@ class AddUpdate extends React.Component {
                     name: this.state.title,
                     description: this.state.description,
                     price: this.state.price,
-                    durationInMinutes: this.state.time
+                    durationInMinutes: this.state.time,
+                    color: this.state.color
                 },
                 assignData: {
                     addedEmployeeIds: addedEmployeeIds,
@@ -354,7 +364,7 @@ class AddUpdate extends React.Component {
                         <GridContainer justify="center">
                             <GridItem>
                                 <div className={classes.py_15}>Color of service</div>
-                                <HuePicker />
+                                <CirclePicker  color={this.state.color} onChangeComplete={(color) => this.changeForm(color, 'color', 'color')} />
                             </GridItem>
                         </GridContainer>
                         {/* colorcode booking */}
