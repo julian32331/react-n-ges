@@ -81,10 +81,10 @@ class BookingAppointment extends React.Component {
   }
 
   eventColors(event) {
-    let color_id = event.resourceId % 4;
+    let color = event.color? event.color.replace("#", "") : "";
 
-    let backgroundColor = "event-" + colors[color_id];    
-    if(event.bookingType === "BREAK" || event.bookingType === "OFF")
+    let backgroundColor = "event-" + color;    
+    if(event.bookingType === "BREAK" || event.bookingType === "OFF" || color === "")
       backgroundColor = "event-red";
 
     return {
@@ -216,6 +216,7 @@ class BookingAppointment extends React.Component {
         temp.consumerEmail = list.consumerEmail;
         temp.consumerMobile = list.consumerMobile;
         temp.service = list.Service? list.Service.name : "";
+        temp.color = list.Service? list.Service.color : "#7da8ae"
         temp.employee = employeesObj[list.hairdresser_id];
         temp.resourceId = list.hairdresser_id;
         temp.id = list.id;
