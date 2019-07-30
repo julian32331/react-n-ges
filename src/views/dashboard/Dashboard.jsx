@@ -25,10 +25,12 @@ import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashbo
 import SelectSalon from "./modals/SelectSalon.jsx";
 import locales from './homeLocales.json';
 
-import dash1 from "assets/img/dash1.jpg";
-import dash2 from "assets/img/dash2.jpg";
-import dash3 from "assets/img/dash3.jpg";
-import marketing from "assets/img/marketing-1.jpg";
+import image from "assets/img/Geselle One Mall 1 ppt.jpg";
+import image1 from "assets/img/Geselle One Mall 2 ppt.jpg";
+import image3 from "assets/img/Geselle One Mall 3 ppt.jpg";
+import image4 from "assets/img/Geselle One Mall 4 ppt.jpg";
+import image5 from "assets/img/Geselle One Mall 5 ppt.jpg";
+import image6 from "assets/img/Geselle One Mall 6 ppt.jpg";
 
 class Dashboard extends React.Component {
 
@@ -72,22 +74,22 @@ class Dashboard extends React.Component {
       <Card className={classes.p10}>
         <GridContainer className={classes.imgContainer}>
           <GridItem xs={12} sm={6} md={4} className={classes.p5}>
-              <img src={marketing} className={classes.dashImg} alt="..." />
+              <img src={image} className={classes.dashImg} alt="..." />
           </GridItem>
           <GridItem xs={12} sm={6} md={4} className={classes.p5}>
-              <img src={marketing} className={classes.dashImg} alt="..." />
+              <img src={image1} className={classes.dashImg} alt="..." />
           </GridItem>
           <GridItem xs={12} sm={6} md={4} className={classes.p5}>
-              <img src={marketing} className={classes.dashImg} alt="..." />
+              <img src={image3} className={classes.dashImg} alt="..." />
           </GridItem>
           <GridItem xs={12} sm={6} md={4} className={classes.p5}>
-              <img src={marketing} className={classes.dashImg} alt="..." />
+              <img src={image4} className={classes.dashImg} alt="..." />
           </GridItem>
           <GridItem xs={12} sm={6} md={4} className={classes.p5}>
-              <img src={marketing} className={classes.dashImg} alt="..." />
+              <img src={image5} className={classes.dashImg} alt="..." />
           </GridItem>
           <GridItem xs={12} sm={6} md={4} className={classes.p5}>
-              <img src={marketing} className={classes.dashImg} alt="..." />
+              <img src={image6} className={classes.dashImg} alt="..." />
           </GridItem>
           <SelectSalon
               onOpen={this.state.showSelectSalon}
