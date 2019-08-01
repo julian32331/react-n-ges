@@ -40,7 +40,7 @@ import headerLinksStyle from "assets/jss/material-dashboard-pro-react/components
 class HeaderLinks extends React.Component {
   state = {
     openUser      : false,
-    selectedSalon : Number(this.props.workingForId),
+    selectedSalon : this.props.workingForId? Number(this.props.workingForId) : "",
   };
 
   componentWillReceiveProps(nextProps) {

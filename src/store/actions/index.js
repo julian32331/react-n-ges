@@ -5,6 +5,7 @@
 
 export * from './booking';
 export * from './auth';
+export * from './dashboard';
 export * from './my_salon';
 export * from './booking_appointment';
 export * from './b2b_shop';
