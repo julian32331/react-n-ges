@@ -62,6 +62,10 @@ class Dashboard extends React.Component {
     })
   }
 
+  onClickImg = (link) => {
+    window.open(link, '_blank')
+  }
+
   render() {
     const { classes, loading, campaigns } = this.props;
     return (
@@ -76,11 +80,12 @@ class Dashboard extends React.Component {
           {
             campaigns.length > 0 &&
               campaigns.map((campaign, key) => {
-                return (                  
-                  <GridItem xs={12} sm={6} md={4} className={classes.p5} key={key}>
-                    <img src={campaign.better_featured_image.source_url} className={classes.dashImg} alt="..." />
-                  </GridItem>
-                )
+                if (campaign.better_featured_image)
+                  return (                  
+                    <GridItem xs={12} sm={6} md={4} className={classes.p5} key={key}>
+                      <img src={campaign.better_featured_image.source_url} className={classes.dashImg} alt="..." onClick={() => this.onClickImg(campaign.link)}/>
+                    </GridItem>
+                  )
               })
           }
           <SelectSalon
