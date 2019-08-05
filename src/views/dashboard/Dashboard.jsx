@@ -63,7 +63,7 @@ class Dashboard extends React.Component {
   }
 
   onClickImg = (link) => {
-    window.open(link, '_blank')
+    window.open('https://shop.geselle-one.com/authenticate?token=' + this.props.token + '&redirect=' + link, '_blank')
   }
 
   render() {
@@ -83,7 +83,7 @@ class Dashboard extends React.Component {
                 if (campaign.better_featured_image)
                   return (                  
                     <GridItem xs={12} sm={6} md={4} className={classes.p5} key={key}>
-                      <img src={campaign.better_featured_image.source_url} className={classes.dashImg} alt="..." onClick={() => this.onClickImg(campaign.link)}/>
+                      <img src={campaign.better_featured_image.source_url} className={classes.dashImg} alt="..." onClick={() => this.onClickImg(campaign.acf.image_url)}/>
                     </GridItem>
                   )
               })

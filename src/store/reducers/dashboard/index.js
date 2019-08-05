@@ -17,8 +17,7 @@ const dashboard = function (state = initialState, action) {
             return {
                 ...state,
                 loading : true,
-                error   : '',
-                campaigns: []
+                error   : ''
             };
         case Actions.GET_DASHBOARD_CAMPAIGNS_SUCCESS:
             return {

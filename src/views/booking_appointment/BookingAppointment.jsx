@@ -41,7 +41,7 @@ class BookingAppointment extends React.Component {
       calendarView      : "day",
       initDate          : moment().toDate(),
       resourceId        : 0,
-      resources         : null,
+      resources         : this.props.employees,
       showSelector      : false,
       showSetBreak      : false,
       showDirectBook    : false,
@@ -71,7 +71,8 @@ class BookingAppointment extends React.Component {
   getAppointment(date) {
     this.props.getAppointment({
       workingForId: this.props.workingForId,
-      date: moment(date).format("YYYY-MM-DD")
+      date: moment(date).format("YYYY-MM-DD"),
+      viewMode: this.state.calendarView
     })
   }
 
