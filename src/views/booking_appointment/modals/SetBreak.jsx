@@ -35,6 +35,16 @@ function Transition(props) {
     return <Slide direction="down" {...props} />;
 }
 
+const daysToInt = {
+    "Söndag": 0,
+    "Måndag": 1,
+    "Tisdag": 2,
+    "Onsdag": 3,
+    "Torsdag": 4,
+    "Fredag": 5,
+    "Lördag": 6
+}
+
 class SetBreak extends React.Component {
     constructor(props) {
         super(props);
@@ -45,6 +55,7 @@ class SetBreak extends React.Component {
             commentState    : "", 
             hairdresserId   : "",
             repeatedDays    : [],
+            repeatedDaysState: "",
             finalDate       : "",
             finalDateState  : ""
         }
@@ -78,6 +89,16 @@ class SetBreak extends React.Component {
                     this.setState({ [stateName]: "", [stateName + "State"]: "error" });
                 }
             break;
+            case "repeatedDays":
+                this.setState({
+                    [stateName]: event.target.value
+                })
+                if (event.target.value.length > 0) {
+                    this.setState({ [stateName + "State"]: "success" });
+                } else {
+                    this.setState({ [stateName + "State"]: "error" });
+                }
+                break;
             case "comment":
                 this.setState({
                     [stateName]: event.target.value
@@ -103,28 +124,37 @@ class SetBreak extends React.Component {
             date            : "",
             comment         : "",        
             commentState    : "",
-            hairdresserId   : ""
+            hairdresserId   : "",
+            repeatedDays    : [],
+            finalDate       : ""
         })
     }
 
     canSubmit = () => {
-        if((this.state.commentState === "success" && this.state.hairdresserId && this.state.dateState === "success") || (this.state.commentState === "success" && this.props.data.hairdresserId))
+        if((this.state.commentState === "success" && this.state.hairdresserId && this.state.dateState === "success" && this.state.repeatedDaysState === "success" && this.state.finalDateState === "success")
+            || (this.state.commentState === "success" && this.props.data.hairdresserId && this.state.repeatedDaysState === "success" && this.state.finalDateState === "success"))
             return true;
         else
             return false;
     }
 
-    save = () => {
+    save = () => {        
         const { workingForId, data } = this.props;
         let root = data.hairdresserId? 'time' : 'day';
         let key = data.hairdresserId? "breakStartAt" : "date";
         let date = data.hairdresserId? data.start : this.state.date;
+        let repeatedDays = [];
+        this.state.repeatedDays.map(day => {
+            repeatedDays.push(daysToInt[day])
+        });
         this.props.setBreak({
             workingForId    : workingForId,
             hairdresserId   : data.hairdresserId || this.state.hairdresserId,
             [key]           : date,
             breakEndAt      : data.hairdresserId? data.end : null,
-            comment         : this.state.comment
+            comment         : this.state.comment,
+            repeatDays      : repeatedDays,
+            breakEndDate    : this.state.finalDate
         }, root)
         this.handleClose();
     }
@@ -267,7 +297,7 @@ class SetBreak extends React.Component {
                         <Select
                             multiple
                             value={this.state.repeatedDays}
-                            onChange={(event) => this.changeForm(event, "repeatedDays", "repeatedDays")}
+                            onChange={(event) => this.change(event, "repeatedDays", "repeatedDays")}
                             MenuProps={{ className: classes.selectMenu }}
                             classes={{ select: classes.select }}
                             inputProps={{
