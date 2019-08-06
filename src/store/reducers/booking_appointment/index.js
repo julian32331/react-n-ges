@@ -8,9 +8,10 @@ import * as Actions from './../../actions';
 const initialState = {
     loading     : false,
     error       : '',
-    isSalonOpen : true,
+    // isSalonOpen : true,
     data        : [],
     employees   : [],
+    closedDays  : []
 };
 
 const booking_appointment = function (state = initialState, action) {
@@ -19,7 +20,8 @@ const booking_appointment = function (state = initialState, action) {
             return {
                 ...state,
                 loading     : true,
-                isSalonOpen : true,
+                // isSalonOpen : true,
+                closedDays  : [],
                 error       : '',
                 data        : []
             };
@@ -27,7 +29,8 @@ const booking_appointment = function (state = initialState, action) {
             return {
                 ...state,
                 loading     : false,
-                isSalonOpen : action.payload.isSalonOpen,
+                // isSalonOpen : action.payload.isSalonOpen,
+                closedDays  : action.payload.closedDays,
                 data        : action.payload.bookingData,
                 employees   : action.payload.hairdressers
             };

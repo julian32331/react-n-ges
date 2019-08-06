@@ -68,17 +68,22 @@ class BookingAppointment extends React.Component {
     }
   }
 
-  getAppointment(date) {
+  getAppointment(date, mode) {
     this.props.getAppointment({
       workingForId: this.props.workingForId,
       date: moment(date).format("YYYY-MM-DD"),
-      viewMode: this.state.calendarView
+      viewMode: mode
     })
   }
 
   onChangeDate(date) {
     this.setState({ initDate: date });
-    this.getAppointment(date)
+    this.getAppointment(date, this.state.calendarView)
+  }
+
+  onView(view) {
+    this.setState({calendarView: view});
+    this.getAppointment(this.state.initDate, view)
   }
 
   eventColors(event) {
@@ -209,7 +214,7 @@ class BookingAppointment extends React.Component {
 
     const data = [];
     /** show closing in calender */
-    if(this.props.isSalonOpen) {
+    // if(this.props.isSalonOpen) {
       this.props.data.map(list => {
         let temp = {};
         temp.comment = list.comment;
@@ -227,25 +232,28 @@ class BookingAppointment extends React.Component {
 
         data.push(temp);
       });
-    } else {
-      let today = moment(this.state.initDate).format("YYYY-MM-DD")
-      this.props.employees.map(employee => {
-        let temp = {};
-        temp.comment = "Salon is closed.";
-        temp.consumerName = null;
-        temp.consumerEmail = null;
-        temp.consumerMobile = null;
-        temp.service = null;
-        temp.employee = employeesObj[employee.hairdresser_id];
-        temp.resourceId = employee.hairdresser_id;
-        //temp.id = list.id;
-        temp.plannedStartTime = moment(today + " 00:00").toDate();
-        temp.plannedEndTime = moment(today + " 23:59").toDate();
-        temp.bookingType = "BREAK";
-
-        data.push(temp);
+    // } else {
+      // let today = moment(this.state.initDate).format("YYYY-MM-DD")
+      this.props.closedDays.map(day => {
+        this.props.employees.map(employee => {
+          let temp = {};
+          temp.comment = "Salon is closed.";
+          temp.consumerName = null;
+          temp.consumerEmail = null;
+          temp.consumerMobile = null;
+          temp.service = null;
+          temp.employee = employeesObj[employee.hairdresser_id];
+          temp.resourceId = employee.hairdresser_id;
+          //temp.id = list.id;
+          temp.plannedStartTime = moment(day.date + " 00:00").toDate();
+          temp.plannedEndTime = moment(day.date + " 23:59").toDate();
+          temp.bookingType = "BREAK";
+  
+          data.push(temp);
+        })
       })
-    }    
+      console.log('data: ',data)
+    // }    
     /** show closing in calender */
 
     const toolbar = () => {
@@ -289,7 +297,7 @@ class BookingAppointment extends React.Component {
             this.onChangeDate(temp.toDate())
           }
         }}
-        onView={(view)=> this.setState({calendarView: view})}
+        onView={(view)=> this.onView(view)}
       />
     }
 
@@ -364,7 +372,7 @@ class BookingAppointment extends React.Component {
                           onSelecting = {slot => console.log("slot: ", slot)}
                           onSelectSlot={this.onOpenSelector}
                           onSelectEvent={(event) => this.onOpenDetailedEvent(event)}
-                          onView={(view)=> this.setState({calendarView: view})}
+                          onView={() => {}}
                         />
                     }
                                    
@@ -415,7 +423,8 @@ function mapStateToProps(state) {
     workingFor  : state.auth.workingFor,
     username    : state.auth.username,
     loading     : state.booking_appointment.loading,
-    isSalonOpen : state.booking_appointment.isSalonOpen,
+    // isSalonOpen : state.booking_appointment.isSalonOpen,
+    closedDays  : state.booking_appointment.closedDays,
     data        : state.booking_appointment.data,
     employees   : state.booking_appointment.employees
   }

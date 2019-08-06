@@ -10,7 +10,8 @@ export const APPOINTMENT_SUCCESS = '[BOOKING APPOINTMENT] SUCCESS';
 export const APPOINTMENT_FAILED  = '[BOOKING APPOINTMENT] FAILED';
 
 export function getAppointment(data) {
-    const request = Utils.xapi().post('booking/dashboard/timelineday', data);
+    // const request = Utils.xapi().post('booking/dashboard/timelineday', data);
+    const request = Utils.xapi().post('booking/dashboard/timeline', data);
 
     return (dispatch) => {
         dispatch({
