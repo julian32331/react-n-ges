@@ -41,7 +41,7 @@ class BookingAppointment extends React.Component {
       calendarView      : "day",
       initDate          : moment().toDate(),
       resourceId        : 0,
-      resources         : this.props.employees,
+      resources         : [],
       showSelector      : false,
       showSetBreak      : false,
       showDirectBook    : false,
@@ -61,7 +61,7 @@ class BookingAppointment extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.employees) {
+    if(nextProps.employees && this.state.resources.length === 0 ) {
       this.setState({
         resources: nextProps.employees
       })
