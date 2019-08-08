@@ -235,22 +235,37 @@ class BookingAppointment extends React.Component {
     // } else {
       // let today = moment(this.state.initDate).format("YYYY-MM-DD")
       this.props.closedDays.map(day => {
-        this.props.employees.map(employee => {
+        if (this.state.calendarView === "month") {
           let temp = {};
           temp.comment = "Salon is closed.";
           temp.consumerName = null;
           temp.consumerEmail = null;
           temp.consumerMobile = null;
           temp.service = null;
-          temp.employee = employeesObj[employee.hairdresser_id];
-          temp.resourceId = employee.hairdresser_id;
-          //temp.id = list.id;
+          temp.employee = employeesObj[this.props.employees[0].hairdresser_id];
+          temp.resourceId = this.props.employees[0].hairdresser_id;
           temp.plannedStartTime = moment(day.date + " 00:00").toDate();
           temp.plannedEndTime = moment(day.date + " 23:59").toDate();
           temp.bookingType = "BREAK";
   
           data.push(temp);
-        })
+        } else {
+          this.state.resources.map(employee => {
+            let temp = {};
+            temp.comment = this.state.calendarView === "week" && this.state.resources.length > 1? "" : "Salon is closed.";
+            temp.consumerName = null;
+            temp.consumerEmail = null;
+            temp.consumerMobile = null;
+            temp.service = null;
+            temp.employee = employeesObj[employee.hairdresser_id];
+            temp.resourceId = employee.hairdresser_id;
+            temp.plannedStartTime = moment(day.date + " 00:00").toDate();
+            temp.plannedEndTime = moment(day.date + " 23:59").toDate();
+            temp.bookingType = "BREAK";
+    
+            data.push(temp);
+          })
+        }
       })
       console.log('data: ',data)
     // }    
