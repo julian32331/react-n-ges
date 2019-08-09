@@ -40,8 +40,8 @@ class BookingAppointment extends React.Component {
       showCal           : true,
       calendarView      : "day",
       initDate          : moment().toDate(),
-      resourceId        : 0,
-      resources         : [],
+      resourceIds       : [9],
+      resources         : this.props.employees,
       showSelector      : false,
       showSetBreak      : false,
       showDirectBook    : false,
@@ -173,24 +173,28 @@ class BookingAppointment extends React.Component {
     });
   }
 
-  filter = (id) => {
+  filter = (ids) => {
     console.log('focus: ', this.state.resources)
-    if (id == 0) {
-      this.setState({
-        showCal: false,
-        resourceId: 0,
-        resources: this.props.employees
-      })
-    } else {
+    // if (id == 0) {
+    //   this.setState({
+    //     showCal: false,
+    //     resourceId: 0,
+    //     resources: this.props.employees
+    //   })
+    // } else {
+    let resources = []
+    ids.map(id => {
       let employee = this.props.employees.find(employee => {
         return employee.hairdresser_id == id
       })
-      this.setState({
-        showCal: false,
-        resourceId: id,
-        resources: [employee]
-      })
-    }
+      resources.push(employee);
+    })      
+    this.setState({
+      showCal: false,
+      resourceIds: ids,
+      resources: resources
+    })
+    // }
     setTimeout(() => {
       this.setState({
         showCal: true
@@ -242,8 +246,8 @@ class BookingAppointment extends React.Component {
           temp.consumerEmail = null;
           temp.consumerMobile = null;
           temp.service = null;
-          temp.employee = employeesObj[this.props.employees[0].hairdresser_id];
-          temp.resourceId = this.props.employees[0].hairdresser_id;
+          temp.employee = employeesObj[this.state.resources[0].hairdresser_id];
+          temp.resourceId = this.state.resources[0].hairdresser_id;
           temp.plannedStartTime = moment(day.date + " 00:00").toDate();
           temp.plannedEndTime = moment(day.date + " 23:59").toDate();
           temp.bookingType = "BREAK";
@@ -282,8 +286,8 @@ class BookingAppointment extends React.Component {
       }
       return <CustomToolbar
         employees={this.props.employees}
-        resourceId={this.state.resourceId}
-        filter={(id) => this.filter(id)} 
+        resourceIds={this.state.resourceIds}
+        filter={(ids) => this.filter(ids)} 
         date={this.state.initDate}
         view={this.state.calendarView}
         label={label}

@@ -30,7 +30,7 @@ class CustomToolbar extends React.PureComponent {
         super(props);
         this.state = {
             showDatePicker: false,        
-            employee: this.props.resourceId,
+            employees: this.props.resourceIds,
         };
     }
 
@@ -39,8 +39,11 @@ class CustomToolbar extends React.PureComponent {
     }
 
     handleEmployee = event => {
-        this.setState({ [event.target.name]: event.target.value });
-        this.props.filter(event.target.value);
+        console.log('handleEmployee: ', event.target)
+        if (event.target.value.length > 0) {
+            this.setState({ [event.target.name]: event.target.value });
+            this.props.filter(event.target.value);
+        }
     };
 
     handleChange = (event) => {
@@ -72,22 +75,23 @@ class CustomToolbar extends React.PureComponent {
                                     classes={{
                                         select: classes.select + " " + classes.text_left
                                     }}
-                                    value={this.state.employee}
+                                    value={this.state.employees}
                                     onChange={this.handleEmployee}
                                     inputProps={{
-                                        name: "employee",
-                                        id: "employee"
+                                        name: "employees",
+                                        id: "employees"
                                     }}
+                                    multiple
                                 >
                                     <MenuItem
                                         disabled
                                         classes={{
-                                        root: classes.selectMenuItem
+                                            root: classes.selectMenuItem
                                         }}
                                     >
                                         Select Hairdresser
                                     </MenuItem>
-                                    <MenuItem
+                                    {/* <MenuItem
                                         classes={{
                                             root: classes.selectMenuItem,
                                             selected: classes.selectMenuItemSelected
@@ -95,14 +99,14 @@ class CustomToolbar extends React.PureComponent {
                                         value={0}
                                     >
                                         All
-                                    </MenuItem>
+                                    </MenuItem> */}
                                     {
                                         this.props.employees.map((employee, index) => {
                                             return (
                                                 <MenuItem
                                                     classes={{
                                                         root: classes.selectMenuItem,
-                                                        selected: classes.selectMenuItemSelected
+                                                        selected: classes.selectMenuItemSelectedMultiple
                                                     }}
                                                     value={employee.hairdresser_id}
                                                     key={index}
