@@ -48,7 +48,8 @@ class Dashboard extends React.Component {
         } else {
           this.props.updateUser({
             workingForId  : Number(workingFor[0]['workingForId']),
-            isEmployee    : workingFor[0]['companyAuthLevel'] === "EMPLOYEE"? true : false
+            isEmployee    : workingFor[0]['companyAuthLevel'] === "EMPLOYEE"? true : false,
+            hairdresserId  : Number(workingFor[0]['hairdresserId'])
           });
         }
         this.props.getDashboardCampaigns();

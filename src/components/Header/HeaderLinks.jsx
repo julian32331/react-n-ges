@@ -74,12 +74,16 @@ class HeaderLinks extends React.Component {
     let companyAuthLevel = JSON.parse(this.props.workingFor).find(item => {
       return item.workingForId === event.target.value
     }).companyAuthLevel;
+    let hairdresserId = JSON.parse(this.props.workingFor).find(item => {
+      return item.workingForId === event.target.value
+    }).hairdresserId;
     this.setState({ 
       [event.target.name]: Number(event.target.value)
     });
     this.props.updateUser({
       workingForId  : Number(event.target.value),
-      isEmployee    : companyAuthLevel === "EMPLOYEE"? true : false
+      isEmployee    : companyAuthLevel === "EMPLOYEE"? true : false,
+      workingForId  : Number(hairdresserId),
     });
   };
 

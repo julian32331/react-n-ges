@@ -27,13 +27,14 @@ export const GET_USER = '[AUTH] GET USER';
 export function getUser() {    
     return async (dispatch) => {
         dispatch({
-            type        : GET_USER,
-            token       : localStorage.token,
-            workingFor  : localStorage.workingFor,
-            workingForId: localStorage.workingForId,
-            isEmployee  : localStorage.isEmployee,
-            avatar      : localStorage.avatar,
-            username    : localStorage.username
+            type            : GET_USER,
+            token           : localStorage.token,
+            workingFor      : localStorage.workingFor,
+            workingForId    : localStorage.workingForId,
+            isEmployee      : localStorage.isEmployee,
+            avatar          : localStorage.avatar,
+            username        : localStorage.username,
+            hairdresserId   : localStorage.hairdresserId
         })
     }
 }

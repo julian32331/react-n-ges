@@ -37,11 +37,11 @@ class BookingAppointment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCal           : true,
+      showCal           : false,
       calendarView      : "day",
       initDate          : moment().toDate(),
-      resourceIds       : [9],
-      resources         : this.props.employees,
+      resourceIds       : [],
+      resources         : [],
       showSelector      : false,
       showSetBreak      : false,
       showDirectBook    : false,
@@ -56,14 +56,29 @@ class BookingAppointment extends React.Component {
 
   componentDidMount() {
     this.props.getUser().then(() => {
+      this.setState({
+        resourceIds: [Number(this.props.hairdresserId)]
+      })
       this.getAppointment(this.state.initDate)
     })
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.employees && this.state.resources.length === 0 ) {
+    if(nextProps.employees.length > 0 && this.state.resources.length === 0 ) {
+      let resources = []
+      this.state.resourceIds.map(id => {
+        let employee = nextProps.employees.find(employee => {
+          return employee.hairdresser_id == id
+        })
+        resources.push(employee);
+      }) 
+      if (resources.length > 0) {
+        this.setState({
+          showCal: true
+        })
+      }
       this.setState({
-        resources: nextProps.employees
+        resources: resources
       })
     }
   }
@@ -102,8 +117,6 @@ class BookingAppointment extends React.Component {
     let salon = JSON.parse(this.props.workingFor).find(item => {
       return item.workingForId == this.props.workingForId;      
     });
-    // TODO;
-    // this.props.history.push('/booking/' + salon.Salon.id);
     window.open('/salonbooking/' + salon.Salon.id, '_blank')
   }
 
@@ -174,14 +187,6 @@ class BookingAppointment extends React.Component {
   }
 
   filter = (ids) => {
-    console.log('focus: ', this.state.resources)
-    // if (id == 0) {
-    //   this.setState({
-    //     showCal: false,
-    //     resourceId: 0,
-    //     resources: this.props.employees
-    //   })
-    // } else {
     let resources = []
     ids.map(id => {
       let employee = this.props.employees.find(employee => {
@@ -194,7 +199,6 @@ class BookingAppointment extends React.Component {
       resourceIds: ids,
       resources: resources
     })
-    // }
     setTimeout(() => {
       this.setState({
         showCal: true
@@ -217,63 +221,56 @@ class BookingAppointment extends React.Component {
     })
 
     const data = [];
-    /** show closing in calender */
-    // if(this.props.isSalonOpen) {
-      this.props.data.map(list => {
+    this.props.data.map(list => {
+      let temp = {};
+      temp.comment = list.comment;
+      temp.consumerName = list.consumerName;
+      temp.consumerEmail = list.consumerEmail;
+      temp.consumerMobile = list.consumerMobile;
+      temp.service = list.Service? list.Service.name : "";
+      temp.color = list.Service? list.Service.color : "#7da8ae"
+      temp.employee = employeesObj[list.hairdresser_id];
+      temp.resourceId = list.hairdresser_id;
+      temp.id = list.id;
+      temp.plannedEndTime = moment(list.plannedEndTime).toDate();
+      temp.plannedStartTime = moment(list.plannedStartTime).toDate();
+      temp.bookingType = list.bookingType;
+
+      data.push(temp);
+    });
+    this.props.closedDays.map(day => {
+      if (this.state.calendarView === "month") {
         let temp = {};
-        temp.comment = list.comment;
-        temp.consumerName = list.consumerName;
-        temp.consumerEmail = list.consumerEmail;
-        temp.consumerMobile = list.consumerMobile;
-        temp.service = list.Service? list.Service.name : "";
-        temp.color = list.Service? list.Service.color : "#7da8ae"
-        temp.employee = employeesObj[list.hairdresser_id];
-        temp.resourceId = list.hairdresser_id;
-        temp.id = list.id;
-        temp.plannedEndTime = moment(list.plannedEndTime).toDate();
-        temp.plannedStartTime = moment(list.plannedStartTime).toDate();
-        temp.bookingType = list.bookingType;
+        temp.comment = "Salon is closed.";
+        temp.consumerName = null;
+        temp.consumerEmail = null;
+        temp.consumerMobile = null;
+        temp.service = null;
+        temp.employee = employeesObj[this.state.resources[0].hairdresser_id];
+        temp.resourceId = this.state.resources[0].hairdresser_id;
+        temp.plannedStartTime = moment(day.date + " 00:00").toDate();
+        temp.plannedEndTime = moment(day.date + " 23:59").toDate();
+        temp.bookingType = "BREAK";
 
         data.push(temp);
-      });
-    // } else {
-      // let today = moment(this.state.initDate).format("YYYY-MM-DD")
-      this.props.closedDays.map(day => {
-        if (this.state.calendarView === "month") {
+      } else {
+        this.state.resources.map(employee => {
           let temp = {};
-          temp.comment = "Salon is closed.";
+          temp.comment = this.state.calendarView === "week" && this.state.resources.length > 1? "" : "Salon is closed.";
           temp.consumerName = null;
           temp.consumerEmail = null;
           temp.consumerMobile = null;
           temp.service = null;
-          temp.employee = employeesObj[this.state.resources[0].hairdresser_id];
-          temp.resourceId = this.state.resources[0].hairdresser_id;
+          temp.employee = employeesObj[employee.hairdresser_id];
+          temp.resourceId = employee.hairdresser_id;
           temp.plannedStartTime = moment(day.date + " 00:00").toDate();
           temp.plannedEndTime = moment(day.date + " 23:59").toDate();
           temp.bookingType = "BREAK";
   
           data.push(temp);
-        } else {
-          this.state.resources.map(employee => {
-            let temp = {};
-            temp.comment = this.state.calendarView === "week" && this.state.resources.length > 1? "" : "Salon is closed.";
-            temp.consumerName = null;
-            temp.consumerEmail = null;
-            temp.consumerMobile = null;
-            temp.service = null;
-            temp.employee = employeesObj[employee.hairdresser_id];
-            temp.resourceId = employee.hairdresser_id;
-            temp.plannedStartTime = moment(day.date + " 00:00").toDate();
-            temp.plannedEndTime = moment(day.date + " 23:59").toDate();
-            temp.bookingType = "BREAK";
-    
-            data.push(temp);
-          })
-        }
-      })
-      console.log('data: ',data)
-    // }    
-    /** show closing in calender */
+        })
+      }
+    })
 
     const toolbar = () => {
       let label;      
@@ -439,6 +436,7 @@ class BookingAppointment extends React.Component {
 function mapStateToProps(state) {
   return {
     workingForId: state.auth.workingForId,
+    hairdresserId: state.auth.hairdresserId,
     workingFor  : state.auth.workingFor,
     username    : state.auth.username,
     loading     : state.booking_appointment.loading,

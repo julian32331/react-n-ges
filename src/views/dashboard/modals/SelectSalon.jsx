@@ -52,9 +52,13 @@ class SelectSalon extends React.Component {
         let companyAuthLevel = JSON.parse(this.props.workingFor).find(item => {
             return item.workingForId == event.target.value
         }).companyAuthLevel;
+        let hairdresserId = JSON.parse(this.props.workingFor).find(item => {
+          return item.workingForId === event.target.value
+        }).hairdresserId;
         this.setState({ 
             [event.target.name] : Number(event.target.value),
-            isEmployee          : companyAuthLevel === "EMPLOYEE"? true : false
+            isEmployee          : companyAuthLevel === "EMPLOYEE"? true : false,
+            hairdresserId       : Number(hairdresserId)
         });
     };
 
@@ -62,7 +66,8 @@ class SelectSalon extends React.Component {
         if(this.state.company) {
             this.props.updateUser({
                 workingForId    : this.state.company,
-                isEmployee      : this.state.isEmployee
+                isEmployee      : this.state.isEmployee,
+                hairdresserId   : this.state.hairdresserId
             });
             this.props.onClose();
         }

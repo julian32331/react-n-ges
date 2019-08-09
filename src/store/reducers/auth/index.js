@@ -6,12 +6,13 @@
 import *as Actions from './../../actions';
 
 const initialState = {
-    token       : null,
-    workingFor  : null,
-    workingForId: null,
-    isEmployee  : null,
-    avatar      : null,
-    username    : null
+    token         : null,
+    workingFor    : null,
+    workingForId  : null,
+    isEmployee    : null,
+    avatar        : null,
+    username      : null,
+    hairdresserId : null
 }
 
 const auth = function (state = initialState, action) {
@@ -26,12 +27,13 @@ const auth = function (state = initialState, action) {
             };
         case Actions.GET_USER:
             return {
-                token       : action.token,
-                workingFor  : action.workingFor,
-                workingForId: action.workingForId,
-                isEmployee  : action.isEmployee,
-                avatar      : action.avatar,
-                username    : action.username
+                token           : action.token,
+                workingFor      : action.workingFor,
+                workingForId    : action.workingForId,
+                isEmployee      : action.isEmployee,
+                avatar          : action.avatar,
+                username        : action.username,
+                hairdresserId   : action.hairdresserId
             };
         case Actions.UPDATE_USER:
             return {
