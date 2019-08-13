@@ -25,24 +25,50 @@ import Button from "components/CustomButtons/Button.jsx";
 
 import customToolbarStyle from "assets/jss/material-dashboard-pro-react/views/booking_appointment/customToolbarStyle.jsx";
 
+let allIds = [];
+
 class CustomToolbar extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             showDatePicker: false,        
             employees: this.props.resourceIds,
+            allName: ''
         };
     }
 
     componentDidMount() {
-        console.log('view: ', this.props.view)
+        console.log('focus: ', this.props.resourceIds)
+        if (this.props.resourceIds.length === this.props.employees.length) {
+            this.setState({
+                allName: 'None'
+            })
+        } else {
+            this.setState({
+                allName: 'All'
+            })
+        }
+        allIds = [];
+        this.props.employees.map(e => {
+            allIds.push(e.hairdresser_id)
+        })
     }
 
     handleEmployee = event => {
-        console.log('handleEmployee: ', event.target)
-        if (event.target.value.length > 0) {
-            this.setState({ [event.target.name]: event.target.value });
-            this.props.filter(event.target.value);
+        const len = event.target.value.length;
+        if (len > 0) {
+            if (event.target.value[len - 1].length > 1) {
+                if (this.state.allName === 'All') {
+                    this.setState({ [event.target.name]: allIds });
+                    this.props.filter(allIds);
+                } else {
+                    this.setState({ [event.target.name]: [] });
+                    this.props.filter([]);
+                }
+            } else {
+                this.setState({ [event.target.name]: event.target.value });
+                this.props.filter(event.target.value);
+            }
         }
     };
 
@@ -91,15 +117,15 @@ class CustomToolbar extends React.PureComponent {
                                     >
                                         Select Hairdresser
                                     </MenuItem>
-                                    {/* <MenuItem
+                                    <MenuItem
                                         classes={{
                                             root: classes.selectMenuItem,
                                             selected: classes.selectMenuItemSelected
                                         }}
-                                        value={0}
+                                        value={allIds}
                                     >
-                                        All
-                                    </MenuItem> */}
+                                        {this.state.allName}
+                                    </MenuItem>
                                     {
                                         this.props.employees.map((employee, index) => {
                                             return (

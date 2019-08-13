@@ -34,7 +34,7 @@ export function getUser() {
             isEmployee      : localStorage.isEmployee,
             avatar          : localStorage.avatar,
             username        : localStorage.username,
-            hairdresserId   : localStorage.hairdresserId
+            hairdresserId   : Number(localStorage.hairdresserId)
         })
     }
 }

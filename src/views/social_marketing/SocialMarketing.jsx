@@ -70,10 +70,10 @@ class SocialMarketing extends React.Component {
                     data.length > 0 &&
                         data.map((item, key) => {
                             return (
-                                <GridItem xs={12} sm={12} md={3} key={key}>
+                                <GridItem xs={12} sm={12} md={4} key={key}>
                                     <Card product>
                                         <CardHeader image>
-                                            <a href="#pablo" onClick={e => e.preventDefault()}>
+                                            <a href="" onClick={e => e.preventDefault()}>
                                                 {
                                                     item.image !== ""? (
                                                         <img src={item.image} alt="..." />
@@ -85,7 +85,7 @@ class SocialMarketing extends React.Component {
                                         </CardHeader>
                                         <CardBody>
                                             <h4 className={classes.cardProductTitle}>
-                                                <a href="#pablo" onClick={e => e.preventDefault()}>
+                                                <a href="" onClick={e => e.preventDefault()}>
                                                     {item.title}
                                             </a>
                                             </h4>

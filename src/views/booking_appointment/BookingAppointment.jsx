@@ -188,15 +188,22 @@ class BookingAppointment extends React.Component {
 
   filter = (ids) => {
     let resources = []
-    ids.map(id => {
-      let employee = this.props.employees.find(employee => {
-        return employee.hairdresser_id == id
+    if (ids.length > 0) {
+      ids.map(id => {
+        let employee = this.props.employees.find(employee => {
+          return employee.hairdresser_id == id
+        })
+        resources.push(employee);
       })
-      resources.push(employee);
-    })      
+    } else {
+      let employee = this.props.employees.find(e => {
+        return e.hairdresser_id == this.props.hairdresserId
+      })
+      resources.push(employee)
+    }
     this.setState({
       showCal: false,
-      resourceIds: ids,
+      resourceIds: ids.length > 0 ? ids : [this.props.hairdresserId],
       resources: resources
     })
     setTimeout(() => {
