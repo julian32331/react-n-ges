@@ -101,12 +101,16 @@ class BookingAppointment extends React.Component {
     this.getAppointment(this.state.initDate, view)
   }
 
-  eventColors(event) {
+  eventColors = (event) => {
     let color = event.color? event.color.replace("#", "") : "";
 
     let backgroundColor = "event-" + color;    
     if(event.bookingType === "BREAK" || event.bookingType === "OFF" || color === "")
       backgroundColor = "event-red";
+    
+    if(this.state.calendarView === 'week' && this.state.resourceIds.length > 1) {
+      backgroundColor = backgroundColor + " no-text"
+    }
 
     return {
       className: backgroundColor
@@ -218,6 +222,7 @@ class BookingAppointment extends React.Component {
 
     const formats = {
       timeGutterFormat: "HH:mm",
+      dayFormat: "DD/dd",
       dayHeaderFormat: "YYYY-MM-DD",
       eventTimeRangeFormat: ({start, end}, culture, local) => local.format(start, "HH:mm", culture) + " - " + local.format(end, "HH:mm", culture)
     }
@@ -374,6 +379,7 @@ class BookingAppointment extends React.Component {
                           step={15}
                           timeslots={8}
                           min={new Date(2019, 1, 0, 8, 0, 0)}
+                          max={new Date(2019, 1, 0, 19, 59, 59)}
                           defaultView="day"
                           view={this.state.calendarView}
                           views={['month', 'week','day']}

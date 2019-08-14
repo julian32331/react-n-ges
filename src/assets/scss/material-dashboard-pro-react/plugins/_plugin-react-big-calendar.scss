@@ -799,3 +799,12 @@ button.rbc-input::-moz-focus-inner {
   border-top: 1px solid #DDD;
   padding: 5px 0px;
 }
+
+.rbc-time-view .rbc-header a {
+  font-size: 10px !important;
+}
+
+.no-text > div.rbc-event-label,
+.no-text > div.rbc-event-content {
+  display: none;
+}
