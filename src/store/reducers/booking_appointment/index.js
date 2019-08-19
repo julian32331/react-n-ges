@@ -37,6 +37,7 @@ const booking_appointment = function (state = initialState, action) {
         case Actions.APPOINTMENT_FAILED:
         case Actions.BREAK_FAILED:
         case Actions.DELETE_EVENT_FAILED:
+        case Actions.UPDATE_EVENT_FAILED:
             return {
                 ...state,
                 loading     : false,
@@ -55,6 +56,15 @@ const booking_appointment = function (state = initialState, action) {
                 return event.id == action.payload;
             });
             state.data.splice(index, 1);
+            return {
+                ...state,
+                data: state.data.concat()
+            };
+        case Actions.UPDATE_EVENT_SUCCESS:
+            index = state.data.findIndex((x) => {
+                return x.id == action.payload.id;
+            });
+            state.data[index] = action.payload;
             return {
                 ...state,
                 data: state.data.concat()

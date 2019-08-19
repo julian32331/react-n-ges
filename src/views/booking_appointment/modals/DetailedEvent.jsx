@@ -48,6 +48,7 @@ class DetailedEvent extends React.Component {
             consumerEmailState: "",
             consumerMobile: "",
             consumerMobileState: "",
+            price: "",
             startTime: "",
             startTimeState: "",
             endTime: "",
@@ -80,7 +81,8 @@ class DetailedEvent extends React.Component {
                 employee: nextProps.data.resourceId,
                 employeeState: nextProps.data.resourceId? "success" : "",
                 comment: nextProps.data.comment,
-                commentState: nextProps.data.comment? "success" : "",        
+                commentState: nextProps.data.comment? "success" : "",
+                price: nextProps.data.price? nextProps.data.price : ""      
             })
         }
     }
@@ -127,6 +129,7 @@ class DetailedEvent extends React.Component {
                 }
                 break;
             case "employee":
+            case "price":
                 this.setState({
                     [stateName]: event.target.value
                 })
@@ -138,6 +141,22 @@ class DetailedEvent extends React.Component {
     deleteEvent = () => {
         this.props.onDelete();
         this.props.onClose();
+    }
+
+    save = () => {
+        if (this.state.consumerNameState === "success" && this.state.consumerEmailState === "success" && this.state.consumerMobileState === "success" && this.state.commentState === "success") {
+            let data = {
+                "workingForId": this.props.workingForId,
+                "bookingId": this.props.data.id,
+                "consumerName": this.state.consumerName,
+                "consumerEmail": this.state.consumerEmail,
+                "consumerMobile": this.state.consumerMobile,
+                "price": this.state.price,
+                "comment": this.state.comment
+            }
+            this.props.onUpdate(data);
+            this.props.onClose();
+        }
     }
 
     render() {
@@ -262,7 +281,7 @@ class DetailedEvent extends React.Component {
                                                 this.changeForm(event, "service", "service", 1),
                                             type: "text",
                                             value: this.state.service,
-                                            disabled: !this.state.isEdit
+                                            disabled: true
                                         }}
                                     />
                                     <CustomInput
@@ -280,9 +299,9 @@ class DetailedEvent extends React.Component {
                                                         <Warning className={classes.danger} />
                                                     </InputAdornment>,
                                             onChange: event =>
-                                                this.changeForm(event, "service", "service", 1),
-                                            type: "text",
-                                            // value: this.state.service,
+                                                this.changeForm(event, "price", "price", 1),
+                                            type: "number",
+                                            value: this.state.price,
                                             disabled: !this.state.isEdit
                                         }}
                                     />
@@ -302,7 +321,7 @@ class DetailedEvent extends React.Component {
                                         dateFormat={"YYYY-MM-DD"}
                                         inputProps={{ 
                                             placeholder: this.state.startTimeState == "success"? "" : "Start Time *",
-                                            disabled: !this.state.isEdit
+                                            disabled: true
                                         }}
                                         value={this.state.startTime}
                                         onChange={event => this.changeForm(event, "startTime", "startTime")}
@@ -322,7 +341,7 @@ class DetailedEvent extends React.Component {
                                         dateFormat={"YYYY-MM-DD"}
                                         inputProps={{ 
                                             placeholder: this.state.endTimeState == "success"? "" : "End Time *",
-                                            disabled: !this.state.isEdit
+                                            disabled: true
                                          }}
                                         value={this.state.endTime}
                                         onChange={event => this.changeForm(event, "endTime", "endTime")}
@@ -348,7 +367,7 @@ class DetailedEvent extends React.Component {
                                 inputProps={{
                                     name: "employee",
                                     id: "employee-select",
-                                    disabled: !this.state.isEdit
+                                    disabled: true
                                 }}
                             >
                                 <MenuItem
@@ -413,10 +432,9 @@ class DetailedEvent extends React.Component {
                                 Cancel
                             </Button>
                             <Button
-                                onClick={() => this.save(this.props.data? false : true)}
+                                onClick={() => this.save()}
                                 color="info"
                                 size="sm"
-                                // disabled={!this.canSave()}
                             >
                                 Save
                             </Button>
@@ -427,7 +445,6 @@ class DetailedEvent extends React.Component {
                                 onClick={() => this.setState({isEdit: true})}
                                 color="info"
                                 size="sm"
-                                // disabled={!this.canSave()}
                             >
                                 Edit
                             </Button>

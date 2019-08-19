@@ -205,7 +205,8 @@ class DirectBook extends React.Component {
             comment: this.state.comment
         };
         Utils.xapi().post('booking/makeappointment', data)
-        this.cancel();
+        this.initState();
+        this.props.onClose(true);
     }
 
     cancel() {

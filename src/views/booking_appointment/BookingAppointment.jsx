@@ -133,6 +133,14 @@ class BookingAppointment extends React.Component {
       end           : moment(end).format('YYYY-MM-DD HH:mm')
     })
   }
+  onOpenBreak = ({resourceId, start, end}) => {
+    this.setState({
+      showSetBreak  : true,
+      hairdresserId : resourceId,
+      start         : moment(start).format('YYYY-MM-DD HH:mm'),
+      end           : moment(end).format('YYYY-MM-DD HH:mm')
+    })
+  }
   toBreak = () => {
     this.setState({
       showSelector: false,
@@ -180,18 +188,20 @@ class BookingAppointment extends React.Component {
           bookingWeeks: response.data.bookingWeeks
       })
     })
-    // this.setState({
-    //   showSelector: false,
-    //   showDirectBook: true
-    // });
   }
-  onCloseDirectBook = () => {
+  onCloseDirectBook = (isFinished = false) => {
     this.setState({
       showDirectBook: false,
       hairdresserId : "",
       start         : "",
       end           : ""
     })
+
+    if (isFinished) {
+      setTimeout(() => {
+        this.getAppointment(this.initDate)        
+      }, 500);
+    }
   }
   onOpenSetBreakWithoutId = () => {
     this.setState({
@@ -219,6 +229,10 @@ class BookingAppointment extends React.Component {
       workingForId: this.props.workingForId,
       bookingId: this.state.detailedData.id
     });
+  }
+
+  updateEvent = (data) => {
+    this.props.updateBookingEvent(data);
   }
 
   filter = (ids) => {
@@ -389,12 +403,19 @@ class BookingAppointment extends React.Component {
                           >                         
                             Boka tid
                           </Button>
-                          <Button 
+                          {/* <Button 
                             color="info" 
                             size="sm"
                             onClick={() => this.onOpenSetBreakWithoutId()}
                           >                         
                             Lägg in ledig dag 
+                          </Button> */}
+                          <Button 
+                            color="info" 
+                            size="sm"
+                            onClick={() => this.toBook()}
+                          >                         
+                            Direct Booking
                           </Button>
                         </GridItem>
                       </GridContainer>
@@ -430,7 +451,8 @@ class BookingAppointment extends React.Component {
                           onNavigate={(date) => this.onChangeDate(date)}
                           selectable
                           onSelecting = {slot => console.log("slot: ", slot)}
-                          onSelectSlot={this.onOpenSelector}
+                          // onSelectSlot={this.onOpenSelector}
+                          onSelectSlot={this.onOpenBreak}
                           onSelectEvent={(event) => this.onOpenDetailedEvent(event)}
                           onView={() => {}}
                         />
@@ -470,6 +492,7 @@ class BookingAppointment extends React.Component {
               onOpen={this.state.showDetailedEvent}
               onClose={this.onCloseDetailedEvent}
               onDelete={this.deleteEvent}
+              onUpdate={this.updateEvent}
               data={this.state.detailedData}
               employees={this.props.employees}
             />
@@ -499,7 +522,8 @@ function mapDispatchToProps(dispatch) {
     getUser             : Actions.getUser,
     getAppointment      : Actions.getAppointment,
     deleteBookingEvent  : Actions.deleteBookingEvent,    
-    getBookingServices  : Actions.getBookingServices
+    getBookingServices  : Actions.getBookingServices,
+    updateBookingEvent  : Actions.updateBookingEvent
   }, dispatch);
 }
   

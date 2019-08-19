@@ -72,3 +72,24 @@ export function deleteBookingEvent(data) {
         });
     }
 }
+
+export const UPDATE_EVENT_SUCCESS = '[BOOKING APPOINTMENT] UPDATE SUCCESS';
+export const UPDATE_EVENT_FAILED  = '[BOOKING APPOINTMENT] UPDATE FAILED';
+
+export function updateBookingEvent(data) {
+    const request = Utils.xapi().post('booking/dashboard/update', data);
+    
+    return (dispatch) => {
+        request.then((response) =>
+            dispatch({
+                type    : UPDATE_EVENT_SUCCESS,
+                payload : response.data
+            })
+        ).catch((error) => {
+            dispatch({
+                type    : UPDATE_EVENT_FAILED,
+                payload : error
+            })
+        });
+    }
+}
