@@ -323,7 +323,7 @@ class Booking extends React.Component {
 
         let button_name = "Nästa";
         if(step === 4) button_name = "Bekräfta";
-        if(step === 5) button_name = "Go Back";
+        if(step === 5) button_name = "Klar";
 
         const services = this.makeServices(this.props.services);
 
@@ -744,7 +744,7 @@ class Booking extends React.Component {
                                                         <div>Bokningen är klar!</div>                                                        
                                                         {/* booking Summary */}
                                                         <h2 className={classes.salonTitle}>Bokningen är klar!</h2>
-                                                        <h3 className={classes.center}>Your booking is <b>{this.state.serviceName}</b>. <b>{this.state.hairdresserName}</b> will serve you on <b>{moment(this.state.booking_date, "YYYY MM DD").format("YYYY-MM-DD")} {this.state.booking_time}</b>. Duration is <b>{this.state.serviceDuration}</b> mins.</h3>                           
+                                                        <h3 className={classes.center}>Du har bokat <b>{this.state.hairdresserName}</b> för <b>{this.state.serviceName} {moment(this.state.booking_date, "YYYY MM DD").format("YYYY-MM-DD")} {this.state.booking_time}</b>. Bokningen är <b>{this.state.serviceDuration}</b> minuter.</h3>
                                                         {/* booking Summary */}
                                                     </CardBody>
                                                 </Card>
