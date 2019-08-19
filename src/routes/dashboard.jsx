@@ -136,13 +136,13 @@ export var dashRoutes1 = [
     component: CustomerProfile,
   }, 
   {
-    path: "https://shop.geselle-one.com/authenticate/?token=",
+    path: "https://shop.geselle-one.com//logoutandredirect/?token=",
     name: "Butik",
     icon: Shop,
     component: Blank
   },
   {
-    path: "https://geselle.se/authenticate/?token=",
+    path: "https://geselle.se//logoutandredirect/?token=",
     name: "Direkt",
     icon: LocalShipping,
     component: Blank

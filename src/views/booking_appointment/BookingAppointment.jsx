@@ -27,6 +27,7 @@ import SetBreak from './modals/SetBreak';
 import DetailedEvent from './modals/DetailedEvent';
 import Selector from "./modals/Selector";
 import DirectBook from "./modals/DirectBook";
+import * as Utils from 'utils/api';
 
 const localizer = BigCalendar.momentLocalizer(moment);
 const colors = [
@@ -138,34 +139,64 @@ class BookingAppointment extends React.Component {
       showSetBreak  : true,
     });
   }
-  toBook = () => {
+  onCloseSetBreak = () => {
     this.setState({
-      showSelector: false,
-      showDirectBook: true
-    });
+      showSetBreak  : false,
+      hairdresserId : "",
+      start         : "",
+      end           : ""
+    })
   }
-  
-  // Setting break time
-  onOpenSetBreak = ({resourceId, start, end}) => {
+  toBook = () => {
+    let salon = JSON.parse(this.props.workingFor).find(item => {
+      return item.workingForId == this.props.workingForId;      
+    });
+    this.setState({salonId: salon.Salon.id});
+
+    Utils.xapi().post('booking/checksalon', {salonId: salon.Salon.id}).then(response => {
+      if(response.data.bookingEnabled) {
+          this.props.getBookingServices({
+              salonId: salon.Salon.id
+          })
+      } else {
+          this.setState({
+              isDisabled: true,
+              disabledSalonInfo: {
+                  address: response.data.address,
+                  bookingEnabled: response.data.bookingEnabled,
+                  city: response.data.city,
+                  country: response.data.country,
+                  email: response.data.email,
+                  externalBookingUrl: response.data.externalBookingUrl,
+                  post: response.data.post,
+                  telephone: response.data.telephone,
+                  website: response.data.website
+              }
+          })
+      }
+      this.setState({
+          showSelector: false,
+          showDirectBook: true,
+          bookingWeeks: response.data.bookingWeeks
+      })
+    })
+    // this.setState({
+    //   showSelector: false,
+    //   showDirectBook: true
+    // });
+  }
+  onCloseDirectBook = () => {
     this.setState({
-      showSetBreak  : true,
-      hairdresserId : resourceId,
-      start         : moment(start).format('YYYY-MM-DD HH:mm'),
-      end           : moment(end).format('YYYY-MM-DD HH:mm')
+      showDirectBook: false,
+      hairdresserId : "",
+      start         : "",
+      end           : ""
     })
   }
   onOpenSetBreakWithoutId = () => {
     this.setState({
       showSetBreak  : true,
       start         : moment(this.state.initDate).format('YYYY-MM-DD'),
-      end           : ""
-    })
-  }
-  onCloseSetBreak = () => {
-    this.setState({
-      showSetBreak  : false,
-      hairdresserId : "",
-      start         : "",
       end           : ""
     })
   }
@@ -429,7 +460,10 @@ class BookingAppointment extends React.Component {
 
             <DirectBook 
               onOpen={this.state.showDirectBook}
-              hairdresssers={this.props.employees}
+              onClose={this.onCloseDirectBook}
+              salonId={this.state.salonId}
+              isDisabled={this.state.isDisabled}
+              disabledSalonInfo={this.state.disabledSalonInfo}
             />
 
             <DetailedEvent 
@@ -464,7 +498,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({          
     getUser             : Actions.getUser,
     getAppointment      : Actions.getAppointment,
-    deleteBookingEvent  : Actions.deleteBookingEvent
+    deleteBookingEvent  : Actions.deleteBookingEvent,    
+    getBookingServices  : Actions.getBookingServices
   }, dispatch);
 }
   

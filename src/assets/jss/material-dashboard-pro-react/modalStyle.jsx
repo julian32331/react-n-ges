@@ -142,6 +142,42 @@ const modalStyle = theme => ({
       marginRight: "0px"
     }
   },
+
+  datePickerLabel: {
+    top: '-7px',
+    color: 'rgba(0, 0, 0, 0.54) !important',
+    fontSize: '11px',
+    fontWeight: '400'
+  },
+  danger: {
+    color: dangerColor
+  },
+  key: {
+    textAlign: 'right',
+    [theme.breakpoints.down("sm")]: {      
+      textAlign: 'left',
+    }
+  },
+  externalSite: {
+    padding: '0',
+    margin: '0',
+    color: '#000',
+    textTransform: 'lowercase',    
+    "&:hover": {
+      color: '#000',
+    }
+  },
+  bookingLink: {
+    borderBottom: '1px solid ' + infoColor,
+    marginTop: '0'
+  },
+
+  loadingContainer: {
+    padding: '30px 0',
+  },
+  loading: {
+    color: infoColor
+  }
 });
 
 export default modalStyle;
