@@ -546,7 +546,7 @@ class Register extends React.Component {
                             </FormControl>                              
                             <div className={classes.center + " " + classes.pt_15}>  
                               <Button type="submit" color="info" className={classes.w_100_p} disabled={!this.canRegister() || this.state.loading}>
-                                Sign up
+                                Skaffa konto
                               </Button>
                               <Button type="button" color="danger" className={classes.w_100_p} onClick={() => this.cancel()}>
                                 Cancel

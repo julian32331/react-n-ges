@@ -281,7 +281,7 @@ class Check extends React.Component {
               <Remove className={classes.icon} /> Check Out
           </Button>                
           <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenEditCheck(data)}>
-              <Edit className={classes.icon} /> Edit
+              <Edit className={classes.icon} /> Redigera
           </Button>
         </div> 
       )
@@ -290,7 +290,7 @@ class Check extends React.Component {
     const editButton = data => {
       return (               
         <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenEditCheck(data)}>
-            <Edit className={classes.icon} /> Edit
+            <Edit className={classes.icon} /> Redigera
         </Button>
       )
     }

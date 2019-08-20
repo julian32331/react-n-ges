@@ -252,7 +252,7 @@ class HeaderLinks extends React.Component {
                       >
                         {rtlActive
                           ? "إجلاء أوزار الأسيوي حين بل, كما"
-                          : "My Profile"}
+                          : "Min Profil"}
                       </MenuItem>
                       <MenuItem
                         onClick={this.logout}
