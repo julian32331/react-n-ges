@@ -29,9 +29,12 @@ import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Confirm from "components/Modals/Confirm.jsx";
 
+import { FormattedMessage } from 'react-intl';
+
 import servicesStyle from "assets/jss/material-dashboard-pro-react/views/my_salon/services/servicesStyle.jsx";
 import AddUpdate from "./modals/AddUpdate.jsx";
 import * as Utils from 'utils/api';
+import locales from './../../../locales.json';
 
 class Services extends React.Component {
     constructor(props) {
@@ -45,6 +48,7 @@ class Services extends React.Component {
     }
 
     componentWillMount() {
+        this.props.setLocales(locales)
         this.props.getUser().then(() => {
             this.props.getSalonServices({
                 workingForId: this.props.workingForId
@@ -134,7 +138,12 @@ class Services extends React.Component {
                                 <div className={classes.cardHeader}>
                                     <GridContainer>
                                         <GridItem xs={12} sm={6}>
-                                            <h3 className={classes.cardTitle}>Salongstjänster</h3>
+                                            <h3 className={classes.cardTitle}>
+                                                <FormattedMessage
+                                                    id="service.title"
+                                                    defaultMessage="Salongstjänster"
+                                                />
+                                            </h3>
                                         </GridItem>
                                         <GridItem xs={12} sm={6} className={classes.text_right}>
                                             <Button 
@@ -142,7 +151,11 @@ class Services extends React.Component {
                                                 size="sm"
                                                 onClick={() => this.onOpenAddUpdate("Ny tjänst", null)}
                                             >                            
-                                                <Add /> Lägg till tjänst
+                                                <Add /> 
+                                                <FormattedMessage
+                                                    id="service.add_service_btn"
+                                                    defaultMessage="Lägg till tjänst"
+                                                />
                                             </Button>
                                         </GridItem>
                                     </GridContainer>
@@ -163,10 +176,18 @@ class Services extends React.Component {
                                                                         <div className={classes.title}>{service.name}</div>
                                                                     </GridItem>
                                                                     <GridItem xs={6} md={12}>
-                                                                        <div className={classes.time}><span className={classes.title_item}>Tid :&nbsp;&nbsp;</span> {service.durationInMinutes}min</div>
+                                                                        <div className={classes.time}><span className={classes.title_item}>
+                                                                            <FormattedMessage
+                                                                                id="service.time"
+                                                                                defaultMessage="Tid"
+                                                                            /> :&nbsp;&nbsp;</span> {service.durationInMinutes}min</div>
                                                                     </GridItem>
                                                                     <GridItem xs={6} md={12}>
-                                                                        <div className={classes.price}><span className={classes.title_item}>Pris kr :&nbsp;&nbsp;</span> {service.price}</div>
+                                                                        <div className={classes.price}><span className={classes.title_item}>
+                                                                            <FormattedMessage
+                                                                                id="service.price"
+                                                                                defaultMessage="Pris kr"
+                                                                            /> :&nbsp;&nbsp;</span> {service.price}</div>
                                                                     </GridItem>
                                                                 </GridContainer>
                                                             </div>
@@ -247,7 +268,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         getUser             : Actions.getUser,
         getSalonServices    : Actions.getSalonServices,
-        deleteSalonService  : Actions.deleteSalonService
+        deleteSalonService  : Actions.deleteSalonService,
+        setLocales          : Actions.setLocales
     }, dispatch);
 }
 

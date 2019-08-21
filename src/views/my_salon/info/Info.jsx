@@ -438,7 +438,12 @@ class Info extends React.Component {
                         <div>
                             <CardHeader>            
                                 <div className={classes.cardHeader}>
-                                    <h3 className={classes.cardTitle}>Salongsinformation</h3>
+                                    <h3 className={classes.cardTitle}>
+                                        <FormattedMessage
+                                            id="info.information"
+                                            defaultMessage="Salongsinformation"
+                                            />
+                                    </h3>
                                 </div>
                             </CardHeader>
                             <CardBody>
@@ -463,7 +468,11 @@ class Info extends React.Component {
                                                 classes={{
                                                     label: classes.label
                                                 }}
-                                                label="Stäng av online-bokning?"
+                                                label={ <FormattedMessage
+                                                    id="info.isOff"
+                                                    defaultMessage="Stäng av online-bokning?"
+                                                    />
+                                                }
                                             />      
                                         </GridItem>
                                         {
@@ -472,7 +481,11 @@ class Info extends React.Component {
                                                     <CustomInput
                                                         success={this.state.externalBookingUrlState === "success"}
                                                         error={this.state.externalBookingUrlState === "error"}
-                                                        labelText="Bokningssida"
+                                                        labelText={ <FormattedMessage
+                                                            id="info.external_site"
+                                                            defaultMessage="Bokningssida"
+                                                            />
+                                                        }
                                                         id="externalBooking"
                                                         formControlProps={{
                                                             fullWidth: true
@@ -491,7 +504,11 @@ class Info extends React.Component {
                                                     <CustomInput
                                                         success={this.state.bookingWeeksState === "success"}
                                                         error={this.state.bookingWeeksState === "error"}
-                                                        labelText="Enalbed booking weeks"
+                                                        labelText={ <FormattedMessage
+                                                            id="info.booking_weeks"
+                                                            defaultMessage="Enalbed booking weeks"
+                                                            />
+                                                        }
                                                         id="bookingWeeks"
                                                         formControlProps={{
                                                             fullWidth: true
@@ -513,7 +530,11 @@ class Info extends React.Component {
                                             <CustomInput
                                                 success={this.state.nameState === "success"}
                                                 error={this.state.nameState === "error"}
-                                                labelText="Salongens namn *"
+                                                labelText={ <FormattedMessage
+                                                    id="info.name"
+                                                    defaultMessage="Salongens namn *"
+                                                    />
+                                                }
                                                 id="name"
                                                 formControlProps={{
                                                     fullWidth: true
@@ -536,7 +557,11 @@ class Info extends React.Component {
                                             <CustomInput
                                                 success={this.state.addressState === "success"}
                                                 error={this.state.addressState === "error"}
-                                                labelText="Adress *"
+                                                labelText={ <FormattedMessage
+                                                    id="info.address"
+                                                    defaultMessage="Adress *"
+                                                    />
+                                                }
                                                 id="address"
                                                 formControlProps={{
                                                     fullWidth: true
@@ -559,7 +584,11 @@ class Info extends React.Component {
                                             <CustomInput
                                                 success={this.state.cityState === "success"}
                                                 error={this.state.cityState === "error"}
-                                                labelText="Postort *"
+                                                labelText={ <FormattedMessage
+                                                    id="info.city"
+                                                    defaultMessage="Postort *"
+                                                    />
+                                                }
                                                 id="city"
                                                 formControlProps={{
                                                     fullWidth: true
@@ -582,7 +611,11 @@ class Info extends React.Component {
                                             <CustomInput
                                                 success={this.state.zipState === "success"}
                                                 error={this.state.zipState === "error"}
-                                                labelText="Postnummer *"
+                                                labelText={ <FormattedMessage
+                                                    id="info.zip"
+                                                    defaultMessage="Postnummer *"
+                                                    />
+                                                }
                                                 id="zip"
                                                 formControlProps={{
                                                     fullWidth: true
@@ -605,7 +638,11 @@ class Info extends React.Component {
                                             <CustomInput
                                                 success={this.state.phoneState === "success"}
                                                 error={this.state.phoneState === "error"}
-                                                labelText="Telefonnummer"
+                                                labelText={ <FormattedMessage
+                                                    id="common.tel"
+                                                    defaultMessage="Telefonnummer"
+                                                    />
+                                                }
                                                 id="phone"
                                                 formControlProps={{
                                                     fullWidth: true
@@ -623,7 +660,11 @@ class Info extends React.Component {
                                             <CustomInput
                                                 success={this.state.emailState === "success"}
                                                 error={this.state.emailState === "error"}
-                                                labelText="E-post"
+                                                labelText={ <FormattedMessage
+                                                    id="info.email"
+                                                    defaultMessage="E-post"
+                                                    />
+                                                }
                                                 id="email"
                                                 formControlProps={{
                                                     fullWidth: true
@@ -641,7 +682,11 @@ class Info extends React.Component {
                                             <CustomInput
                                                 success={this.state.networkState === "success"}
                                                 error={this.state.networkState === "error"}
-                                                labelText="Hemsida"
+                                                labelText={ <FormattedMessage
+                                                    id="info.website"
+                                                    defaultMessage="Hemsida"
+                                                    />
+                                                }
                                                 id="network"
                                                 formControlProps={{
                                                     fullWidth: true
@@ -659,7 +704,11 @@ class Info extends React.Component {
                                             <CustomInput
                                                 success={this.state.descriptionState === "success"}
                                                 error={this.state.descriptionState === "error"}
-                                                labelText="Salongsbeskrivning"
+                                                labelText={ <FormattedMessage
+                                                    id="info.about"
+                                                    defaultMessage="Salongsbeskrivning"
+                                                    />
+                                                }
                                                 id="description"
                                                 formControlProps={{
                                                     fullWidth: true
@@ -696,7 +745,11 @@ class Info extends React.Component {
                                                     classes={{
                                                         label: classes.label
                                                     }}
-                                                    label="Har salongen Parkering"
+                                                    label={ <FormattedMessage
+                                                        id="info.parking"
+                                                        defaultMessage="Har salongen Parkering"
+                                                        />
+                                                    }
                                                 />
                                             </div>
                                         </GridItem>
@@ -721,7 +774,11 @@ class Info extends React.Component {
                                                     classes={{
                                                         label: classes.label
                                                     }}
-                                                    label="Tillgänglighetsanpassat"
+                                                    label={ <FormattedMessage
+                                                        id="info.accessiblity"
+                                                        defaultMessage="Tillgänglighetsanpassat"
+                                                        />
+                                                    }
                                                 />
                                             </div>
                                         </GridItem>
@@ -730,12 +787,27 @@ class Info extends React.Component {
                                     {
                                         this.state.isEdit? (                      
                                             <GridItem xs={12} sm={12} md={6} className={classes.right}>       
-                                                <Button color="danger" size="sm" className={classes.mr_8} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
-                                                <Button color="info" size="sm" disabled={!this.canUpdateInfo()} onClick={this.updateSalonInfo.bind(this)}>Spara</Button>
+                                                <Button color="danger" size="sm" className={classes.mr_8} onClick={this.cancelEdit.bind(this)}>
+                                                    <FormattedMessage
+                                                        id="common.cancel"
+                                                        defaultMessage="Cancel"
+                                                    />
+                                                </Button>
+                                                <Button color="info" size="sm" disabled={!this.canUpdateInfo()} onClick={this.updateSalonInfo.bind(this)}>
+                                                    <FormattedMessage
+                                                        id="common.save"
+                                                        defaultMessage="Spara"
+                                                    />
+                                                </Button>
                                             </GridItem>                                
                                         ) : (
                                             <GridItem xs={12} sm={12} md={6} className={classes.right}>                    
-                                                <Button color="info" size="sm" className={classes.submit} onClick={this.enableEditInfo.bind(this)}>Redigera</Button>
+                                                <Button color="info" size="sm" className={classes.submit} onClick={this.enableEditInfo.bind(this)}>
+                                                    <FormattedMessage
+                                                        id="common.edit"
+                                                        defaultMessage="Redigera"
+                                                    />
+                                                </Button>
                                             </GridItem> 
                                         )
                                     } 
@@ -760,7 +832,12 @@ class Info extends React.Component {
                                 <div className={classes.cardHeader}>
                                     <GridContainer>
                                         <GridItem xs={12} sm={6}>
-                                            <h3 className={classes.cardTitle}>Galleries</h3>
+                                            <h3 className={classes.cardTitle}>
+                                                <FormattedMessage
+                                                    id="info.gallery"
+                                                    defaultMessage="Galleries"
+                                                />
+                                            </h3>
                                         </GridItem>
                                         {
                                             this.state.isEditImage? (
@@ -770,15 +847,21 @@ class Info extends React.Component {
                                                         size="sm"
                                                         onClick={() => this.cancelImageEdit()}
                                                         className={classes.mr_8}
-                                                    >                            
-                                                        Cancel
+                                                    >      
+                                                        <FormattedMessage
+                                                            id="common.cancel"
+                                                            defaultMessage="Cancel"
+                                                        />
                                                     </Button>
                                                     <Button 
                                                         color="info" 
                                                         size="sm"
                                                         onClick={() => this.saveImage()}
-                                                    >                            
-                                                        Save
+                                                    >   
+                                                        <FormattedMessage
+                                                            id="common.save"
+                                                            defaultMessage="Spara"
+                                                        />
                                                     </Button>
                                                 </GridItem>
                                             ) : (
@@ -788,15 +871,28 @@ class Info extends React.Component {
                                                         size="sm"
                                                         onClick={() => this.deleteImage()}
                                                         className={classes.mr_8}
-                                                    >                            
-                                                        Delete
+                                                    >     
+                                                        <FormattedMessage
+                                                            id="info.delete"
+                                                            defaultMessage="Delete"
+                                                        />                                                        
                                                     </Button>
                                                     <Button 
                                                         color="info" 
                                                         size="sm"
                                                         onClick={() => this.handleClick()}
                                                     >                            
-                                                        {this.state.imageData? "Update" : "Add"}
+                                                        {this.state.imageData? (
+                                                            <FormattedMessage
+                                                                id="info.update"
+                                                                defaultMessage="Update"
+                                                            />
+                                                        ) : (
+                                                            <FormattedMessage
+                                                                id="info.add"
+                                                                defaultMessage="Add"
+                                                            />
+                                                        )}
                                                     </Button>
                                                 </GridItem>
                                             )
@@ -806,7 +902,12 @@ class Info extends React.Component {
                             </CardHeader>
                             <CardBody>
                                 <div className={classes.center}>
-                                    <h4>Här kan du lägga till bilder från din salong som visas för kunderna i appen</h4>
+                                    <h4>
+                                        <FormattedMessage
+                                            id="info.description"
+                                            defaultMessage="Här kan du lägga till bilder från din salong som visas för kunderna i appen"
+                                        />
+                                    </h4>
                                     <input type="file" hidden onChange={this.handleImageChange.bind(this)} ref="fileInput" />
                                     <img src={this.state.imagePreviewUrl} className={classes.img} />
                                 </div>
