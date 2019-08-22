@@ -214,6 +214,11 @@ class DirectBook extends React.Component {
         this.props.onClose();
     }
 
+    isPastDate = (current) => {
+        var yesterday = Datetime.moment().subtract( 1, 'day' );
+        return current.isAfter( yesterday );
+    }
+
     isDisabledDay = (current) => {
         let isDisabled = this.props.daysOff.salonClosingDays.find(item => {
             return item.dayId === current.day()
@@ -384,7 +389,7 @@ class DirectBook extends React.Component {
                                                     inputProps={{ placeholder: "Select Date *", disabled: this.state.step !== 3 }}
                                                     value={this.state.date}
                                                     onChange={event => this.changeForm(event, "date", "date")}
-                                                    isValidDate={ this.isDisabledDay || this.isDisabledDate }
+                                                    isValidDate={ this.isPastDate || this.isDisabledDay || this.isDisabledDate }
                                                 />
                                             </FormControl>
                                         </GridItem>
