@@ -661,7 +661,7 @@ class Info extends React.Component {
                                                 success={this.state.emailState === "success"}
                                                 error={this.state.emailState === "error"}
                                                 labelText={ <FormattedMessage
-                                                    id="info.email"
+                                                    id="common.email"
                                                     defaultMessage="E-post"
                                                     />
                                                 }

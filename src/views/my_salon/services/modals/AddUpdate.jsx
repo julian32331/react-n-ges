@@ -35,6 +35,8 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
+import { FormattedMessage } from 'react-intl';
+
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 import * as Validator from "utils/validator";
 
@@ -218,7 +220,21 @@ class AddUpdate extends React.Component {
                     disableTypography
                     className={classes.modalHeader}
                 >
-                    <h3 className={classes.modalTitle}>{this.props.title}</h3>
+                    <h3 className={classes.modalTitle}>
+                        {
+                            this.props.title === "add_service"? (
+                                <FormattedMessage
+                                    id="service.add_service"
+                                    defaultMessage="Ny tjänst"
+                                />
+                            ) : (
+                                <FormattedMessage
+                                    id="service.update_service"
+                                    defaultMessage="Redigera tjänst"
+                                />
+                            )
+                        }
+                    </h3>
                 </DialogTitle>
                 <DialogContent
                     id="saloon-service-add-update-modal-description"
@@ -228,7 +244,12 @@ class AddUpdate extends React.Component {
                         <CustomInput
                             success={this.state.titleState === "success"}
                             error={this.state.titleState === "error"}
-                            labelText="Tjänstens namn *"
+                            labelText={                                
+                                <FormattedMessage
+                                    id="service.modal_name"
+                                    defaultMessage="Tjänstens namn *"
+                                />
+                            }
                             id="title"
                             formControlProps={{
                                 fullWidth: true
@@ -250,7 +271,12 @@ class AddUpdate extends React.Component {
                                 <CustomInput
                                     success={this.state.timeState === "success"}
                                     error={this.state.timeState === "error"}
-                                    labelText="Tid (min) *"
+                                    labelText={                                
+                                        <FormattedMessage
+                                            id="service.modal_time"
+                                            defaultMessage="Tid (min) *"
+                                        />
+                                    }
                                     id="time"
                                     formControlProps={{
                                         fullWidth: true
@@ -272,7 +298,12 @@ class AddUpdate extends React.Component {
                                 <CustomInput
                                     success={this.state.priceState === "success"}
                                     error={this.state.priceState === "error"}
-                                    labelText="Pris (kr) *"
+                                    labelText={                                
+                                        <FormattedMessage
+                                            id="service.modal_price"
+                                            defaultMessage="Pris (kr) *"
+                                        />
+                                    }
                                     id="price"
                                     formControlProps={{
                                         fullWidth: true
@@ -294,7 +325,12 @@ class AddUpdate extends React.Component {
                         <CustomInput
                             success={this.state.descriptionState === "success"}
                             error={this.state.descriptionState === "error"}
-                            labelText="Beskrivning *"
+                            labelText={                                
+                                <FormattedMessage
+                                    id="service.modal_description"
+                                    defaultMessage="Beskrivning *"
+                                />
+                            }
                             id="description"
                             formControlProps={{
                                 fullWidth: true
@@ -320,8 +356,13 @@ class AddUpdate extends React.Component {
                             <InputLabel
                                 htmlFor="multiple-select"
                                 className={classes.selectLabel}
-                            >
-                                Assign to Employees
+                            >                                
+                                {                                
+                                    <FormattedMessage
+                                        id="service.modal_assign"
+                                        defaultMessage="Tilldela"
+                                    />
+                                }
                             </InputLabel>
                             <Select
                                 multiple
@@ -340,7 +381,12 @@ class AddUpdate extends React.Component {
                                         root: classes.selectMenuItem
                                     }}
                                 >
-                                    Assign to Employees
+                                    {                                
+                                        <FormattedMessage
+                                            id="service.modal_assign"
+                                            defaultMessage="Tilldela"
+                                        />
+                                    }
                                 </MenuItem>
                                 {
                                     this.props.employees.map((employee, key) => {
@@ -363,7 +409,14 @@ class AddUpdate extends React.Component {
                         {/* colorcode booking */}
                         <GridContainer justify="center">
                             <GridItem>
-                                <div className={classes.py_15}>Color of service</div>
+                                <div className={classes.py_15}>
+                                    {                                
+                                        <FormattedMessage
+                                            id="service.modal_color"
+                                            defaultMessage="Färg i kalendern"
+                                        />
+                                    }
+                                </div>
                                 <CirclePicker  color={this.state.color} onChangeComplete={(color) => this.changeForm(color, 'color', 'color')} />
                             </GridItem>
                         </GridContainer>
@@ -376,7 +429,12 @@ class AddUpdate extends React.Component {
                         size="sm"
                         onClick={() => this.handleClose()}
                     >
-                        Cancel
+                        {                                
+                            <FormattedMessage
+                                id="common.cancel"
+                                defaultMessage="Avbryt"
+                            />
+                        }
                     </Button>
                     <Button
                         onClick={() => this.save(this.props.data? false : true)}
@@ -384,7 +442,12 @@ class AddUpdate extends React.Component {
                         size="sm"
                         disabled={!this.canSave()}
                     >
-                        Save
+                        {                                
+                            <FormattedMessage
+                                id="common.save"
+                                defaultMessage="Spara"
+                            />
+                        }
                     </Button>
                 </DialogActions>
             </Dialog>

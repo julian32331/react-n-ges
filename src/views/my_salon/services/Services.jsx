@@ -149,7 +149,7 @@ class Services extends React.Component {
                                             <Button 
                                                 color="info" 
                                                 size="sm"
-                                                onClick={() => this.onOpenAddUpdate("Ny tjänst", null)}
+                                                onClick={() => this.onOpenAddUpdate('add_service', null)}
                                             >                            
                                                 <Add /> 
                                                 <FormattedMessage
@@ -203,7 +203,7 @@ class Services extends React.Component {
                                                                     color="info"
                                                                     size="sm"
                                                                     className={classes.mx_10}
-                                                                    onClick={() => this.onOpenAddUpdate("Update Service", service)}
+                                                                    onClick={() => this.onOpenAddUpdate("update_service", service)}
                                                                 >
                                                                     <Create />
                                                                 </Button>                        
