@@ -94,7 +94,7 @@ class SocialMarketing extends React.Component {
                                         </p>
                                         </CardBody>
                                         <CardFooter product>
-                                            <CopyToClipboard text={item.shareUrl}
+                                            <CopyToClipboard text={item.permalink}
                                                 onCopy={() => this.setState({copied: true})}>
                                                 <Button justIcon color="github" simple>
                                                     <i
@@ -106,7 +106,7 @@ class SocialMarketing extends React.Component {
                                             </CopyToClipboard>
                                             <div className={classes.stats}>
                                                 <FacebookShareButton
-                                                    url={item.shareUrl}
+                                                    url={item.permalink}
                                                     quote={item.title}
                                                     className={classes.social_button}>                                                        
                                                         <Button justIcon color="facebook" simple>
@@ -118,7 +118,7 @@ class SocialMarketing extends React.Component {
                                                         </Button>
                                                 </FacebookShareButton>
                                                 <EmailShareButton
-                                                    url={item.shareUrl}
+                                                    url={item.permalink}
                                                     quote={item.title}
                                                     className={classes.social_button}>
                                                     <Button justIcon color="google" simple>
@@ -130,7 +130,7 @@ class SocialMarketing extends React.Component {
                                                     </Button>
                                                 </EmailShareButton>                                                
                                                 <TwitterShareButton
-                                                    url={item.shareUrl}
+                                                    url={item.permalink}
                                                     quote={item.title}
                                                     className={classes.social_button}>
                                                     <Button justIcon color="twitter" simple>
@@ -142,7 +142,7 @@ class SocialMarketing extends React.Component {
                                                     </Button>
                                                 </TwitterShareButton>                                                  
                                                 <LinkedinShareButton
-                                                    url={item.shareUrl}
+                                                    url={item.permalink}
                                                     windowWidth={750}
                                                     windowHeight={600}
                                                     className={classes.social_button}>
