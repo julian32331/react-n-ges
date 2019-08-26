@@ -25,11 +25,14 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardAvatar from "components/Card/CardAvatar.jsx";
 import ImageCrop from "components/Modals/ImageCrop.jsx";
 
+import { FormattedMessage } from 'react-intl';
+
 import profileStyles from "assets/jss/material-dashboard-pro-react/views/profile/profileStyles.jsx";
 import defaultAvatar from "assets/img/default-avatar.png";
 
 import * as Validator from "utils/validator";
 import * as Utils from 'utils/api';
+import locales from './../../locales.json';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -56,6 +59,7 @@ class Profile extends React.Component {
   }
 
   componentWillMount() {
+    this.props.setLocales(locales)
     this.props.getUser().then(() => {
       this.props.getProfileData({
         workingForId: this.props.workingForId
@@ -236,7 +240,14 @@ class Profile extends React.Component {
                       <CustomInput
                         success={this.state.nameState === "success"}
                         error={this.state.nameState === "error"}
-                        labelText="Namn *"
+                        labelText={
+                          <div>
+                            <FormattedMessage
+                              id="common.name"
+                              defaultMessage="Namn"
+                            /> *
+                          </div>
+                        }
                         id="legal-name"
                         formControlProps={{
                             fullWidth: true
@@ -259,7 +270,12 @@ class Profile extends React.Component {
                       <CustomInput
                         success={this.state.orgNoState === "success"}
                         error={this.state.orgNoState === "error"}
-                        labelText="Personnummer"
+                        labelText={
+                          <FormattedMessage
+                            id="common.personal_no"
+                            defaultMessage="Personnummer"
+                          />
+                        }
                         id="org-number"
                         formControlProps={{
                           fullWidth: true
@@ -279,7 +295,12 @@ class Profile extends React.Component {
                       <CustomInput
                         success={this.state.emailState === "success"}
                         error={this.state.emailState === "error"}
-                        labelText="E-post"
+                        labelText={
+                          <FormattedMessage
+                            id="common.email"
+                            defaultMessage="E-post"
+                          />
+                        }
                         id="email"
                         formControlProps={{
                           fullWidth: true
@@ -297,7 +318,14 @@ class Profile extends React.Component {
                       <CustomInput
                         success={this.state.phoneState === "success"}
                         error={this.state.phoneState === "error"}
-                        labelText="Telefonnummer *"
+                        labelText={
+                          <div>
+                            <FormattedMessage
+                              id="common.tel"
+                              defaultMessage="Telefonnummer"
+                            /> *
+                          </div> 
+                        }
                         id="phone"
                         formControlProps={{
                           fullWidth: true
@@ -320,7 +348,12 @@ class Profile extends React.Component {
                       <CustomInput
                         success={this.state.professionState === "success"}
                         error={this.state.professionState === "error"}
-                        labelText="Yrke"
+                        labelText={
+                          <FormattedMessage
+                            id="common.profession"
+                            defaultMessage="Yrke"
+                          />
+                        }
                         id="profession"
                         formControlProps={{
                           fullWidth: true
@@ -340,7 +373,12 @@ class Profile extends React.Component {
                       <CustomInput
                         success={this.state.descriptionState === "success"}
                         error={this.state.descriptionState === "error"}
-                        labelText="Om mig"
+                        labelText={
+                          <FormattedMessage
+                            id="common.introduction"
+                            defaultMessage="Om mig"
+                          />
+                        }
                         id="about-me"
                         formControlProps={{
                           fullWidth: true
@@ -363,12 +401,33 @@ class Profile extends React.Component {
                   {
                     this.state.isEdit? (                      
                       <GridItem xs={12} className={classes.right}>                    
-                        <Button color="danger" size="sm" className={classes.mr_8} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
-                        <Button color="info" size="sm" disabled={!this.canSubmit()} onClick={this.save.bind(this)}>Save</Button>
+                        <Button color="danger" size="sm" className={classes.mr_8} onClick={this.cancelEdit.bind(this)}>
+                          {
+                            <FormattedMessage
+                              id="common.cancel"
+                              defaultMessage="Avbryt"
+                            />
+                          }
+                        </Button>
+                        <Button color="info" size="sm" disabled={!this.canSubmit()} onClick={this.save.bind(this)}>
+                          {
+                            <FormattedMessage
+                              id="common.save"
+                              defaultMessage="Spara"
+                            />
+                          }
+                        </Button>
                       </GridItem>                                
                     ) : (
                       <GridItem xs={12} className={classes.right}>                    
-                        <Button color="info" size="sm" disabled={this.props.isEmployee === 'true'} onClick={this.enableEdit.bind(this)}>Edit</Button>
+                        <Button color="info" size="sm" disabled={this.props.isEmployee === 'true'} onClick={this.enableEdit.bind(this)}>
+                          {
+                            <FormattedMessage
+                              id="common.edit"
+                              defaultMessage="Redigera"
+                            />
+                          }
+                        </Button>
                       </GridItem> 
                     )
                   } 
@@ -401,7 +460,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getUser       : Actions.getUser,
     getProfileData: Actions.getProfileData,
-    updateProfile : Actions.updateProfile
+    updateProfile : Actions.updateProfile,
+    setLocales    : Actions.setLocales
   }, dispatch);
 }
 

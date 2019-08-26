@@ -24,8 +24,11 @@ import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Table from "components/Table/Table.jsx";
 
+import { FormattedMessage } from 'react-intl';
+
 import mySalonStyle from "assets/jss/material-dashboard-pro-react/views/mySalon/mySalonStyle.jsx";
 import AddSalonModal from "./AddSalonModal";
+import locales from './../../locales.json';
 
 class MySalon extends React.Component {
 
@@ -37,6 +40,7 @@ class MySalon extends React.Component {
   }
 
   componentWillMount() {
+    this.props.setLocales(locales)
     this.props.getUser().then(() => {
       this.getCompanySalon(this.props.workingForId);
     })
@@ -127,7 +131,7 @@ class MySalon extends React.Component {
                     size="sm"
                     onClick={() => this.onOpenAddSalonModal()}
                 >                            
-                    <Add /> Lägg till salong
+                    <Add /> <FormattedMessage id="salons.add_salon_btn" defaultMessage="Lägg till salong" />
                 </Button>
               </GridItem>
               <GridItem xs={12}>
@@ -162,7 +166,9 @@ class MySalon extends React.Component {
                 <div className={classes.cardHeader}>
                   <GridContainer>
                       <GridItem xs={12} sm={6}>
-                          <h3 className={classes.cardTitle}>Företag/salonger</h3>
+                          <h3 className={classes.cardTitle}>
+                            <FormattedMessage id="salons.title" defaultMessage="Företag/salonger" />
+                          </h3>
                       </GridItem>
                       <GridItem xs={12} sm={6} className={classes.text_right}>
                           <Button 
@@ -170,7 +176,7 @@ class MySalon extends React.Component {
                               size="sm"
                               onClick={() => this.props.history.push('/register')}
                           >                            
-                              <Add /> Lägg till företag
+                              <Add /> <FormattedMessage id="salons.add_company_btn" defaultMessage="Lägg till företag" />
                           </Button>
                       </GridItem>
                   </GridContainer>
@@ -203,8 +209,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-      getUser: Actions.getUser,
-      getCompanySalon: Actions.getCompanySalon 
+      getUser         : Actions.getUser,
+      getCompanySalon : Actions.getCompanySalon,
+      setLocales      : Actions.setLocales
   }, dispatch);
 }
 

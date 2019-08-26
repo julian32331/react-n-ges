@@ -27,9 +27,12 @@ import CardBody from "components/Card/CardBody.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
+import { FormattedMessage } from 'react-intl';
+
 import * as Validator from "utils/validator";
 
 import commonStyle from "assets/jss/material-dashboard-pro-react/views/commonStyle.jsx";
+import locales from './../../locales.json';
 
 class CompanyInfo extends React.Component {
     constructor(props) {
@@ -68,6 +71,7 @@ class CompanyInfo extends React.Component {
     }
     
     componentWillMount() {  
+        this.props.setLocales(locales)
         this.props.getUser().then(() => {
             this.getCompanyInfo(this.props.workingForId);
         })
@@ -279,7 +283,11 @@ class CompanyInfo extends React.Component {
                     <div>                        
                         <CardHeader>            
                             <div className={classes.cardHeader}>
-                                <h3 className={classes.cardTitle}>Företagsinformation</h3>
+                                <h3 className={classes.cardTitle}>
+                                    {
+                                        <FormattedMessage id="company.title" defaultMessage="Företagsinformation" />
+                                    }
+                                </h3>
                             </div>
                         </CardHeader>
                         <CardBody>
@@ -289,7 +297,10 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.memberIdState === "success"}
                                             error={this.state.memberIdState === "error"}
-                                            labelText="Member Id *"
+                                            labelText=
+                                                {
+                                                    <FormattedMessage id="company.member_id" defaultMessage="Medlemsid *" />
+                                                }
                                             id="name"
                                             formControlProps={{
                                                 fullWidth: true
@@ -315,7 +326,10 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.nameState === "success"}
                                             error={this.state.nameState === "error"}
-                                            labelText="Legalt namn *"
+                                            labelText=
+                                                {
+                                                    <FormattedMessage id="company.legal_name" defaultMessage="Legalt namn *" />
+                                                }
                                             id="name"
                                             formControlProps={{
                                                 fullWidth: true
@@ -341,7 +355,12 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.orgNoState === "success"}
                                             error={this.state.addressState === "error"}
-                                            labelText="Org.nr. *"
+                                            labelText=
+                                                {
+                                                    <div>
+                                                        <FormattedMessage id="common.org.no" defaultMessage="Org.nr." /> *
+                                                    </div>
+                                                }
                                             id="org-no"
                                             formControlProps={{
                                                 fullWidth: true
@@ -369,7 +388,12 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.emailState === "success"}
                                             error={this.state.emailState === "error"}
-                                            labelText="E-post *"
+                                            labelText=
+                                                {
+                                                    <div>
+                                                        <FormattedMessage id="common.email" defaultMessage="e-post" /> *
+                                                    </div>
+                                                }
                                             id="email"
                                             formControlProps={{
                                                 fullWidth: true
@@ -395,7 +419,12 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.phoneState === "success"}
                                             error={this.state.phoneState === "error"}
-                                            labelText="Telefonnummer *"
+                                            labelText=
+                                                {
+                                                    <div>
+                                                        <FormattedMessage id="common.tel" defaultMessage="Telefonnummer" /> *
+                                                    </div>
+                                                }
                                             id="phone"
                                             formControlProps={{
                                                 fullWidth: true
@@ -423,7 +452,10 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.addressCOState === "success"}
                                             error={this.state.addressCOState === "error"}
-                                            labelText="C/O"
+                                            labelText=
+                                                {
+                                                    <FormattedMessage id="common.c/o" defaultMessage="C/O" />
+                                                }
                                             id="addressCO"
                                             formControlProps={{
                                                 fullWidth: true
@@ -441,7 +473,12 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.addressState === "success"}
                                             error={this.state.addressState === "error"}
-                                            labelText="Adress *"
+                                            labelText=
+                                                {
+                                                    <div>
+                                                        <FormattedMessage id="common.address" defaultMessage="Adress" /> *
+                                                    </div>
+                                                }
                                             id="address"
                                             formControlProps={{
                                                 fullWidth: true
@@ -469,7 +506,12 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.cityState === "success"}
                                             error={this.state.cityState === "error"}
-                                            labelText="Postort *"
+                                            labelText=
+                                                {
+                                                    <div>
+                                                        <FormattedMessage id="common.city" defaultMessage="Postort" /> *
+                                                    </div>
+                                                }
                                             id="city"
                                             formControlProps={{
                                                 fullWidth: true
@@ -495,7 +537,12 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.countryState === "success"}
                                             error={this.state.countryState === "error"}
-                                            labelText="Land *"
+                                            labelText=
+                                                {
+                                                    <div>
+                                                        <FormattedMessage id="common.country" defaultMessage="Land" /> *
+                                                    </div>
+                                                }
                                             id="country"
                                             formControlProps={{
                                                 fullWidth: true
@@ -521,7 +568,12 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.zipState === "success"}
                                             error={this.state.zipState === "error"}
-                                            labelText="Postnummer *"
+                                            labelText=
+                                                {
+                                                    <div>
+                                                        <FormattedMessage id="common.zip" defaultMessage="Postnr" /> *
+                                                    </div>
+                                                }
                                             id="zip"
                                             formControlProps={{
                                                 fullWidth: true
@@ -547,7 +599,11 @@ class CompanyInfo extends React.Component {
                                 <GridContainer>
                                     <GridItem xs={12}>
                                         <div className={classes.cardHeader}>
-                                            <h3 className={classes.cardTitle}>Ekonomi</h3>
+                                            <h3 className={classes.cardTitle}>
+                                                {
+                                                    <FormattedMessage id="company.economy" defaultMessage="Ekonomi" />
+                                                }
+                                            </h3>
                                         </div>
                                     </GridItem>
                                 </GridContainer>
@@ -556,7 +612,10 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.billingEmailState === "success"}
                                             error={this.state.billingEmailState === "error"}
-                                            labelText="E-post för fakturor *"
+                                            labelText=
+                                                {
+                                                    <FormattedMessage id="company.email_for_invoice" defaultMessage="e-post för fakturor *" />
+                                                }
                                             id="billing-email"
                                             formControlProps={{
                                                 fullWidth: true
@@ -582,7 +641,10 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.accountNoState === "success"}
                                             error={this.state.accountNoState === "error"}
-                                            labelText="Kontonummer"
+                                            labelText=
+                                                {
+                                                    <FormattedMessage id="company.account_no" defaultMessage="Kontonr." />
+                                                }
                                             id="account-no"
                                             formControlProps={{
                                                 fullWidth: true
@@ -602,7 +664,10 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.bankgiroNoState === "success"}
                                             error={this.state.bankgiroNoState === "error"}
-                                            labelText="Bankgiro"
+                                            labelText=
+                                                {
+                                                    <FormattedMessage id="company.bank" defaultMessage="Bankgiro" />
+                                                }
                                             id="bankgiro-no"
                                             formControlProps={{
                                                 fullWidth: true
@@ -620,7 +685,10 @@ class CompanyInfo extends React.Component {
                                         <CustomInput
                                             success={this.state.plusgiroNoState === "success"}
                                             error={this.state.plusgiroNoState === "error"}
-                                            labelText="Postgiro"
+                                            labelText=
+                                                {
+                                                    <FormattedMessage id="company.zip" defaultMessage="Postgiro" />
+                                                }
                                             id="plusgiro-no"
                                             formControlProps={{
                                                 fullWidth: true
@@ -639,12 +707,24 @@ class CompanyInfo extends React.Component {
                                     {
                                         this.state.isEdit? (                      
                                             <GridItem xs={12} sm={12} md={6} className={classes.right}>                    
-                                                <Button color="danger" size="sm" className={classes.mr_8} onClick={this.cancelEdit.bind(this)}>Cancel</Button>
-                                                <Button color="info" size="sm" disabled={!this.canSubmit()} onClick={this.updateCompanyInfo.bind(this)}>LAGRE</Button>                                    
+                                                <Button color="danger" size="sm" className={classes.mr_8} onClick={this.cancelEdit.bind(this)}>
+                                                    {
+                                                        <FormattedMessage id="common.cancel" defaultMessage="Avbryt" />
+                                                    }
+                                                </Button>
+                                                <Button color="info" size="sm" disabled={!this.canSubmit()} onClick={this.updateCompanyInfo.bind(this)}>
+                                                    {
+                                                        <FormattedMessage id="common.save" defaultMessage="Spara" />
+                                                    }
+                                                </Button>                                    
                                             </GridItem>                                
                                         ) : (
                                             <GridItem xs={12} sm={12} md={6} className={classes.right}>                    
-                                                <Button color="info" size="sm" onClick={this.enableEdit.bind(this)}>Edit</Button>
+                                                <Button color="info" size="sm" onClick={this.enableEdit.bind(this)}>
+                                                    {
+                                                        <FormattedMessage id="common.edit" defaultMessage="Redigera" />
+                                                    }
+                                                </Button>
                                             </GridItem> 
                                         )
                                     } 
@@ -675,7 +755,8 @@ function mapStateToProps(state) {
       return bindActionCreators({
         getUser             : Actions.getUser,
         getCompanyInfo      : Actions.getCompanyInfo,        
-        updateCompanyInfo   : Actions.updateCompanyInfo
+        updateCompanyInfo   : Actions.updateCompanyInfo,
+        setLocales          : Actions.setLocales
       }, dispatch);
   }
   
