@@ -36,6 +36,8 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
+import { FormattedMessage } from 'react-intl';
+
 import commonModalStyle from "assets/jss/material-dashboard-pro-react/views/commonModalStyle.jsx";
 
 import * as Validator from "utils/validator";
@@ -66,20 +68,7 @@ class AddSalonModal extends React.Component {
             cityState: "",
             country: "Sweden",
             countryState: "success",
-            hasPark: false,
-
-            // s_co: "",
-            // s_coState: "",
-            // s_address1: "",
-            // s_address1State: "",
-            // s_address2: "",
-            // s_address2State: "",
-            // s_city: "",
-            // s_cityState: "",
-            // s_zip: "",
-            // s_zipState: "",
-            // s_mobile: "",
-            // s_mobileState: "",
+            hasPark: false
         }
         this.save = this.save.bind(this);
     }
@@ -104,20 +93,7 @@ class AddSalonModal extends React.Component {
             cityState: "",
             country: "Sweden",
             countryState: "success",
-            hasPark: false,
-            
-            // s_co: "",
-            // s_coState: "",
-            // s_address1: "",
-            // s_address1State: "",
-            // s_address2: "",
-            // s_address2State: "",
-            // s_city: "",
-            // s_cityState: "",
-            // s_zip: "",
-            // s_zipState: "",
-            // s_mobile: "",
-            // s_mobileState: "",
+            hasPark: false
         })
     }
 
@@ -139,16 +115,7 @@ class AddSalonModal extends React.Component {
             address: this.state.address,
             post: this.state.zip,
             city: this.state.city,
-            country: this.state.country,
-            // shippingAddress: {
-            //     street1: this.state.s_address1,
-            //     street2: this.state.s_address2,
-            //     postalCode: this.state.s_zip,
-            //     city: this.state.s_city,
-            //     country: this.state.country,
-            //     co: this.state.s_co,
-            //     mobile: this.state.s_mobile
-            // }
+            country: this.state.country
         })
         this.initState();
         this.props.onClose();
@@ -162,12 +129,6 @@ class AddSalonModal extends React.Component {
             case "city":
             case "zip":
             case "country":
-            // case "s_co":
-            // case "s_address1":
-            // case "s_address2":
-            // case "s_zip":
-            // case "s_city":
-            // case "s_mobile":
                 console.log('test: ', event.target.value)
                 this.setState({
                     [stateName]: event.target.value
@@ -189,15 +150,9 @@ class AddSalonModal extends React.Component {
                 }
                 break;
             case "telephone":
-                // if(this.state.telephone.length === 0) {
-                //     this.setState({
-                //         telephone: "+46" + event.target.value
-                //     })
-                // } else {
-                    this.setState({
-                        telephone: event.target.value
-                    })
-                // }
+                this.setState({
+                    telephone: event.target.value
+                })
                 if (Validator.verifyPhone(event.target.value)) {
                     this.setState({ [stateName + "State"]: "success" });
                 } else {
@@ -229,9 +184,6 @@ class AddSalonModal extends React.Component {
             this.state.zipState === "success" && 
             this.state.cityState === "success" && 
             this.state.countryState === "success"
-            // this.state.s_cityState === "success" &&
-            // this.state.s_mobileState === "success" &&
-            // this.state.s_zipState === "success"
             ) {
             return false;
         } else {
@@ -261,7 +213,7 @@ class AddSalonModal extends React.Component {
                     disableTypography
                     className={classes.modalHeader}
                 >
-                    <h3 className={classes.modalTitle}>Lägg till Salong</h3>
+                    <h3 className={classes.modalTitle}><FormattedMessage id="salons.add_salon_btn" defaultMessage="Lägg till salong" /></h3>
                 </DialogTitle>
                 <DialogContent
                     id="add-salon-modal-description"
@@ -271,7 +223,12 @@ class AddSalonModal extends React.Component {
                         <CustomInput
                             success={this.state.nameState === "success"}
                             error={this.state.nameState === "error"}
-                            labelText="Namn *"
+                            labelText=
+                                {
+                                    <div>
+                                        <FormattedMessage id="common.name" defaultMessage="Namn" /> *
+                                    </div>
+                                }
                             id="name"
                             formControlProps={{
                                 fullWidth: true
@@ -294,7 +251,10 @@ class AddSalonModal extends React.Component {
                         <CustomInput
                             success={this.state.emailState === "success"}
                             error={this.state.emailState === "error"}
-                            labelText="E-post"
+                            labelText=
+                                {
+                                    <FormattedMessage id="common.email" defaultMessage="e-post" />
+                                }
                             id="email"
                             formControlProps={{
                                 fullWidth: true
@@ -309,7 +269,10 @@ class AddSalonModal extends React.Component {
                         <CustomInput
                             success={this.state.telephoneState === "success"}
                             error={this.state.telephoneState === "error"}
-                            labelText="Telefon"
+                            labelText=
+                                {
+                                    <FormattedMessage id="common.tel" defaultMessage="Telefonnummer" />
+                                }
                             id="telephone"
                             formControlProps={{
                                 fullWidth: true
@@ -324,7 +287,10 @@ class AddSalonModal extends React.Component {
                         <CustomInput
                             success={this.state.websiteState === "success"}
                             error={this.state.websiteState === "error"}
-                            labelText="Hemsida"
+                            labelText=
+                                {
+                                    <FormattedMessage id="info.website" defaultMessage="Hemsida" />
+                                }
                             id="web-site"
                             formControlProps={{
                                 fullWidth: true
@@ -339,7 +305,12 @@ class AddSalonModal extends React.Component {
                         <CustomInput
                             success={this.state.descriptionState === "success"}
                             error={this.state.descriptionState === "error"}
-                            labelText="Beskrivning *"
+                            labelText=
+                                {
+                                    <div>
+                                        <FormattedMessage id="info.about" defaultMessage="Salongsbeskrivning" /> *
+                                    </div>
+                                }
                             id="description"
                             formControlProps={{
                                 fullWidth: true
@@ -366,7 +337,12 @@ class AddSalonModal extends React.Component {
                                 <CustomInput
                                     success={this.state.addressState === "success"}
                                     error={this.state.addressState === "error"}
-                                    labelText="Adress *"
+                                    labelText=
+                                        {
+                                            <div>
+                                                <FormattedMessage id="common.address" defaultMessage="Adress" /> *
+                                            </div>    
+                                        }
                                     id="address"
                                     formControlProps={{
                                         fullWidth: true
@@ -391,7 +367,12 @@ class AddSalonModal extends React.Component {
                                 <CustomInput
                                     success={this.state.zipState === "success"}
                                     error={this.state.zipState === "error"}
-                                    labelText="Postnr *"
+                                    labelText=
+                                        {
+                                            <div>
+                                                <FormattedMessage id="common.zip" defaultMessage="Postnr." /> *
+                                            </div>    
+                                        }
                                     id="zip"
                                     formControlProps={{
                                         fullWidth: true
@@ -416,7 +397,12 @@ class AddSalonModal extends React.Component {
                         <CustomInput
                             success={this.state.cityState === "success"}
                             error={this.state.cityState === "error"}
-                            labelText="Postort *"
+                            labelText=
+                                {
+                                    <div>
+                                        <FormattedMessage id="common.city" defaultMessage="Postort" /> *
+                                    </div>    
+                                }
                             id="city"
                             formControlProps={{
                                 fullWidth: true
@@ -444,7 +430,7 @@ class AddSalonModal extends React.Component {
                                 htmlFor="country-select"
                                 className={this.state.country? classes.selectLabel + " " + classes.success : classes.selectLabel}
                             >
-                                Välj Land *
+                                <FormattedMessage id="common.country" defaultMessage="Land" /> *
                             </InputLabel>
                             <Select
                                 MenuProps={{
@@ -467,7 +453,7 @@ class AddSalonModal extends React.Component {
                                         root: classes.selectMenuItem
                                     }}
                                 >
-                                    Välj Land
+                                    <FormattedMessage id="common.country" defaultMessage="Land" />
                                 </MenuItem>
                                 <MenuItem
                                     classes={{
@@ -500,7 +486,11 @@ class AddSalonModal extends React.Component {
                                 classes={{
                                     label: classes.label
                                 }}
-                                label="Har parkering?"
+                                label={
+                                    <div>
+                                        <FormattedMessage id="info.parking" defaultMessage="Har salongen Parkering" />?
+                                    </div>
+                                }
                             />
                         </GridItem>
                         <GridItem xs={12} className={classes.left}>
@@ -522,95 +512,14 @@ class AddSalonModal extends React.Component {
                                 classes={{
                                     label: classes.label
                                 }}
-                                label="Tillgänglighetsanpassat"
+                                label={
+                                    <div>
+                                        <FormattedMessage id="info.accessiblity" defaultMessage="Tillgänglighetsanpassat" />?
+                                    </div>
+                                }
                             />
                         </GridItem>
                     </GridContainer>
-                    {/* <div style={{fontSize: '18px', fontWeight: '500', textAlign: 'left'}}>Leveransadress</div>
-                    <CustomInput
-                        success={this.state.s_coState === "success"}
-                        error={this.state.s_coState === "error"}
-                        labelText="C/O"
-                        id="city"
-                        formControlProps={{
-                            fullWidth: true
-                        }}
-                        inputProps={{
-                            onChange: event =>
-                                this.change(event, "s_co", "s_co", 0),
-                            value: this.state.s_co,
-                            type: "text"
-                        }}
-                    />                    
-                    <CustomInput
-                        success={this.state.s_mobileState === "success"}
-                        error={this.state.s_mobileState === "error"}
-                        labelText="Telefonnummer *"
-                        id="phone"
-                        formControlProps={{
-                            fullWidth: true
-                        }}
-                        inputProps={{
-                            endAdornment:
-                            this.state.s_mobileState === "error" ? (
-                                <InputAdornment position="end">
-                                <Warning className={classes.danger} />
-                                </InputAdornment>
-                            ) : (
-                                undefined
-                            ),
-                            onChange: event =>
-                                this.change(event, "s_mobile", "s_mobile", 1),
-                            value: this.state.s_mobile,
-                            type: "text"
-                        }}
-                    />
-                    <CustomInput
-                        success={this.state.s_cityState === "success"}
-                        error={this.state.s_cityState === "error"}
-                        labelText="Postort *"
-                        id="city"
-                        formControlProps={{
-                            fullWidth: true
-                        }}
-                        inputProps={{
-                            endAdornment:
-                                this.state.s_cityState === "error" ? (
-                                <InputAdornment position="end">
-                                    <Warning className={classes.danger} />
-                                </InputAdornment>
-                                ) : (
-                                undefined
-                            ),
-                            onChange: event =>
-                                this.change(event, "s_city", "s_city", 1),
-                            value: this.state.s_city,
-                            type: "text"
-                        }}
-                    />
-                    <CustomInput
-                        success={this.state.s_zipState === "success"}
-                        error={this.state.s_zipState === "error"}
-                        labelText="Postnummer *"
-                        id="zip"
-                        formControlProps={{
-                            fullWidth: true
-                        }}
-                        inputProps={{
-                            endAdornment:
-                                this.state.s_zipState === "error" ? (
-                                <InputAdornment position="end">
-                                    <Warning className={classes.danger} />
-                                </InputAdornment>
-                                ) : (
-                                undefined
-                            ),
-                            onChange: event =>
-                                this.change(event, "s_zip", "s_zip", 1),
-                            value: this.state.s_zip,
-                            type: "number"
-                        }}
-                    /> */}
                 </form>
                 </DialogContent>
                 <DialogActions className={classes.modalFooter}>
@@ -619,7 +528,7 @@ class AddSalonModal extends React.Component {
                         size="sm"
                         onClick={() => this.handleClose()}
                     >
-                        Cancel
+                        <FormattedMessage id="common.cancel" defaultMessage="Avbryt" />
                     </Button>
                     <Button
                         onClick={() => this.save()}
@@ -627,7 +536,7 @@ class AddSalonModal extends React.Component {
                         size="sm"
                         disabled={this.canSave()}
                     >
-                        Save
+                        <FormattedMessage id="common.save" defaultMessage="Spara" />
                     </Button>
                 </DialogActions>
             </Dialog>

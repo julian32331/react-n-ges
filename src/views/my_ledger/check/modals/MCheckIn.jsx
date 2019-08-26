@@ -27,6 +27,8 @@ import Warning from "@material-ui/icons/Warning";
 import Button from "components/CustomButtons/Button.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
+import { FormattedMessage } from 'react-intl';
+
 import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 import * as Validator from "utils/validator";
 
@@ -116,7 +118,9 @@ class MCheckIn extends React.Component {
                     disableTypography
                     className={classes.modalHeader}
                 >
-                    <h3 className={classes.modalTitle}>Manuell incheckning</h3>
+                    <h3 className={classes.modalTitle}>
+                        <FormattedMessage id="check.m_checkin" defaultMessage="Manuell incheckning" />
+                    </h3>
                 </DialogTitle>
                 <DialogContent
                     id="manual-check-in-modal-description"
@@ -126,7 +130,11 @@ class MCheckIn extends React.Component {
                         <CustomInput
                             success={this.state.nameState === "success"}
                             error={this.state.nameState === "error"}
-                            labelText="Namn *"
+                            labelText={
+                                <div>
+                                    <FormattedMessage id="common.name" defaultMessage="Namn" /> *
+                                </div>
+                            }
                             id="name"
                             formControlProps={{
                                 fullWidth: true
@@ -146,7 +154,11 @@ class MCheckIn extends React.Component {
                         <CustomInput
                             success={this.state.ssnState === "success"}
                             error={this.state.ssnState === "error"}
-                            labelText="SSN *"
+                            labelText={
+                                <div>
+                                    <FormattedMessage id="common.ssn" defaultMessage="SSN" /> *
+                                </div>
+                            }
                             id="ssn"
                             formControlProps={{
                                 fullWidth: true
@@ -171,7 +183,7 @@ class MCheckIn extends React.Component {
                         size="sm"
                         onClick={() => this.handleClose()}
                     >
-                        Cancel
+                        <FormattedMessage id="common.cancel" defaultMessage="Avbryt" /> 
                     </Button>
                     <Button
                         onClick={() => this.save()}
@@ -179,7 +191,7 @@ class MCheckIn extends React.Component {
                         size="sm"
                         disabled={!this.canSave()}
                     >
-                        Save
+                        <FormattedMessage id="common.save" defaultMessage="Spara" /> 
                     </Button>
                 </DialogActions>
             </Dialog>

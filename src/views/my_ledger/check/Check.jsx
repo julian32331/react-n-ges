@@ -40,11 +40,13 @@ import Pagination from "components/Pagination/Pagination.jsx";
 import Confirm from "components/Modals/Confirm.jsx";
 
 import {CSVLink} from 'react-csv';
+import { FormattedMessage } from 'react-intl';
 
 import checkStyle from "assets/jss/material-dashboard-pro-react/views/my_ledger/check/checkStyle.jsx";
 import CheckIn from "./modals/CheckIn";
 import MCheckIn from "./modals/MCheckIn";
 import EditCheck from "./modals/EditCheck";
+import locales from './../../../locales.json';
 
 class Check extends React.Component {
 
@@ -68,6 +70,7 @@ class Check extends React.Component {
   }
 
   componentWillMount() {
+    this.props.setLocales(locales)
     this.props.getUser().then(() => {
       this.props.getLedgerChecks({
         workingForId: this.props.workingForId
@@ -278,10 +281,10 @@ class Check extends React.Component {
       return (        
         <div>
           <Button color="info" className={classes.actionButton} onClick={() => this.onOpenConfirm(data)}>
-              <Remove className={classes.icon} /> Check Out
+              <Remove className={classes.icon} /> <FormattedMessage id="check.checkout" defaultMessage="Utcheckad" />
           </Button>                
           <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenEditCheck(data)}>
-              <Edit className={classes.icon} /> Redigera
+              <Edit className={classes.icon} /> <FormattedMessage id="common.edit" defaultMessage="Redigera" />
           </Button>
         </div> 
       )
@@ -290,7 +293,7 @@ class Check extends React.Component {
     const editButton = data => {
       return (               
         <Button color="danger" className={classes.actionButton} onClick={() => this.onOpenEditCheck(data)}>
-            <Edit className={classes.icon} /> Redigera
+            <Edit className={classes.icon} /> <FormattedMessage id="common.edit" defaultMessage="Redigera" />
         </Button>
       )
     }
@@ -349,9 +352,9 @@ class Check extends React.Component {
 
     if (totalPages > 0)
       pageNations = [
-        { text: "PREV", onClick: () => this.skipOne(-1) },
+        { text: (<FormattedMessage id="common.prev" defaultMessage="Föregående" />), onClick: () => this.skipOne(-1) },
         ...temp,
-        { text: "NEXT", onClick: () => this.skipOne(1) }
+        { text: (<FormattedMessage id="common.next" defaultMessage="Nästa" />), onClick: () => this.skipOne(1) }
       ]
 
     return (
@@ -369,7 +372,9 @@ class Check extends React.Component {
               <div className={classes.cardHeader}>
                 <GridContainer>
                     <GridItem xs={12} sm={6}>
-                      <h3 className={classes.cardTitle}>Checka in/ut</h3>
+                      <h3 className={classes.cardTitle}>
+                        <FormattedMessage id="check.title" defaultMessage="Checka in/ut" />
+                      </h3>
                     </GridItem>
                     <GridItem xs={12} sm={6} className={classes.right}>
                       <Button 
@@ -379,7 +384,7 @@ class Check extends React.Component {
                           onClick={() => this.downloadCSV()}
                           className={classes.mr_8}
                       >                            
-                          <ImportExport /> Exportera CSV
+                          <ImportExport /> <FormattedMessage id="check.export_csv_btn" defaultMessage="Exportera CSV" />
                       </Button>
                       <Button 
                           color="info" 
@@ -387,14 +392,14 @@ class Check extends React.Component {
                           onClick={() => this.onOpenCheckIn()}
                           className={classes.mr_8}
                       >                            
-                          <Add /> Checka in
+                          <Add /> <FormattedMessage id="check.checkin_btn" defaultMessage="Checka in" />
                       </Button>
                       <Button 
                           color="info" 
                           size="sm"
                           onClick={() => this.onOpenMCheckIn()}
                       >                            
-                          <Add /> Manuell incheckning
+                          <Add /> <FormattedMessage id="check.m_checkin_btn" defaultMessage="Manuell incheckning" />
                       </Button>
                     </GridItem>
                 </GridContainer>
@@ -404,7 +409,7 @@ class Check extends React.Component {
           <GridContainer>
             <GridItem xs={4} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
-                Sök :
+                <FormattedMessage id="common.search" defaultMessage="Sök" /> :
               </FormLabel>
             </GridItem>
             <GridItem xs={8} sm={3} md={3} lg={2}>
@@ -423,7 +428,7 @@ class Check extends React.Component {
             </GridItem>
             <GridItem xs={4} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
-                Från :
+                <FormattedMessage id="common.from" defaultMessage="Från" /> :
               </FormLabel>
             </GridItem>
             <GridItem xs={8} sm={2}>
@@ -438,7 +443,7 @@ class Check extends React.Component {
             </GridItem>
             <GridItem xs={4} sm={1} md={2} lg={1}>
               <FormLabel className={classes.labelHorizontal}>
-                Till :
+                <FormattedMessage id="common.to" defaultMessage="Till" /> :
               </FormLabel>
             </GridItem>
             <GridItem xs={8} sm={2}>
@@ -465,7 +470,8 @@ class Check extends React.Component {
                         this.search(null, null, null)
                       }
                     }
-                > Rensa filter
+                >
+                  <FormattedMessage id="check.reset_filter" defaultMessage="Rensa filter" />
                 </Button>
               </div>
             </GridItem>
@@ -473,11 +479,11 @@ class Check extends React.Component {
 
           <Table
             tableHead={[
-              "Namn",
-              "Personnummer",
-              "Incheckad",
-              "Utcheckad",
-              "Åtgärder"
+              (<FormattedMessage id="common.name" defaultMessage="Namn" />),
+              (<FormattedMessage id="common.personal_no" defaultMessage="Personnummer" />),
+              (<FormattedMessage id="check.checkin" defaultMessage="Incheckad" />),
+              (<FormattedMessage id="check.checkout" defaultMessage="Utcheckad" />),
+              (<FormattedMessage id="common.actions" defaultMessage="Åtgärder" />)
             ]}
             tableData={
               list
@@ -575,7 +581,8 @@ function mapDispatchToProps(dispatch) {
     getUser         : Actions.getUser,
     getLedgerChecks : Actions.getLedgerChecks,
     getEmployees    : Actions.getEmployees,    
-    checkOut        : Actions.checkOut
+    checkOut        : Actions.checkOut,
+    setLocales      : Actions.setLocales
   }, dispatch);
 }
 

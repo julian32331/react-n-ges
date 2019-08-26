@@ -29,6 +29,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 
+import { FormattedMessage } from 'react-intl';
+
 import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.jsx";
 
 function Transition(props) {
@@ -87,13 +89,15 @@ class CheckIn extends React.Component {
                     disableTypography
                     className={classes.modalHeader}
                 >
-                    <h3 className={classes.modalTitle}>Checka in</h3>
+                    <h3 className={classes.modalTitle}>
+                        <FormattedMessage id="check.new_checkin" defaultMessage="Ny incheckning" />
+                    </h3>
                 </DialogTitle>
                 <DialogContent
                     id="checkin-modal-description"
                     className={classes.modalBody}
                 >
-                    <h4>Who do you wanna check in {checkInTime}?</h4>
+                    <h4><FormattedMessage id="check.checkin_who" defaultMessage="Vem" /> {checkInTime}?</h4>
                     <FormControl
                         fullWidth
                         className={classes.selectFormControl}
@@ -102,7 +106,7 @@ class CheckIn extends React.Component {
                             htmlFor="employee"
                             className={classes.selectLabel}
                         >
-                            Select Employee
+                            <FormattedMessage id="check.select_employee" defaultMessage="Välj anställd" />
                         </InputLabel>
                         <Select
                             MenuProps={{
@@ -124,7 +128,7 @@ class CheckIn extends React.Component {
                                 root: classes.selectMenuItem
                                 }}
                             >
-                                Select Employee
+                                <FormattedMessage id="check.select_employee" defaultMessage="Välj anställd" />
                             </MenuItem>
                             {
                                 this.props.employees.map((employee, index) => {
@@ -151,14 +155,14 @@ class CheckIn extends React.Component {
                         size="sm"
                         onClick={() => this.handleClose()}
                     >
-                        Cancel
+                        <FormattedMessage id="common.cancel" defaultMessage="Avbryt" />
                     </Button>
                     <Button
                         onClick={() => this.checkIn()}
                         color="info"
                         size="sm"
                     >
-                        Save
+                        <FormattedMessage id="common.save" defaultMessage="Spara" />
                     </Button>
                 </DialogActions>
             </Dialog>
